@@ -4,7 +4,7 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
 const files = ["index.html", "styles.css", "app.js"];
-const dirs = ["src"];
+const dirs = ["src", "sample-characters"];
 
 function copyFile(from, to) {
   fs.mkdirSync(path.dirname(to), { recursive: true });

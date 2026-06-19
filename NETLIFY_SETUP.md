@@ -16,3 +16,9 @@ These are already defined in `netlify.toml`.
 - No login or server database is required.
 - `Export JSON` and `Import JSON` let players back up, move, or share characters between devices.
 - Browser-local saves do not automatically sync across devices.
+
+## Sample Characters
+
+- Public example characters live in `sample-characters/`.
+- Update `sample-characters/manifest.json` when adding samples.
+- The build script copies `sample-characters/` into `dist/` for Netlify.
