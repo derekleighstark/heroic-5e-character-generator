@@ -422,7 +422,7 @@ p {
 
 .ability-card {
   display: grid;
-  grid-template-columns: 48px 1fr 46px 42px;
+  grid-template-columns: 44px minmax(92px, 1fr) 48px 42px;
   align-items: center;
   gap: 8px;
   padding: 8px;
@@ -439,10 +439,14 @@ p {
 .ability-card span,
 .ability-card em {
   color: var(--navy);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-style: normal;
   font-weight: 900;
   text-align: center;
+}
+
+.ability-card select {
+  font-weight: 900;
 }
 
 .power-builder {

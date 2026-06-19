@@ -17,6 +17,11 @@ const {
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const ACCESSIBILITY_KEY = "heroic5e_generator_accessibility";
 const LIBRARY_KEY = "heroic5e_generator_library";
+const abilityArrays = {
+  "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
+  "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
+  "World Class": [20, 18, 16, 15, 14, 12, 10, 8]
+};
 const defaults = {
   rank: "Mid-Level",
   level: 1,
@@ -100,6 +105,53 @@ function characterId(name) {
 
 function cloneSheet(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function rankAbilityArray(rank = sheet.rank) {
+  return abilityArrays[rank] || abilityArrays["Mid-Level"];
+}
+
+function normalizeAbilityScores() {
+  const array = [...rankAbilityArray()];
+  const used = new Set();
+
+  for (const [key] of abilities) {
+    const field = `${key}Score`;
+    const value = Number(sheet[field]);
+    if (array.includes(value) && !used.has(value)) {
+      sheet[field] = value;
+      used.add(value);
+    } else {
+      sheet[field] = "";
+    }
+  }
+
+  const remaining = array.filter(value => !used.has(value));
+  for (const [key] of abilities) {
+    const field = `${key}Score`;
+    if (!sheet[field]) sheet[field] = remaining.shift();
+  }
+}
+
+function abilityArrayOptions(key) {
+  const usedByOthers = new Set(
+    abilities
+      .filter(([otherKey]) => otherKey !== key)
+      .map(([otherKey]) => Number(sheet[`${otherKey}Score`]))
+      .filter(Boolean)
+  );
+
+  return rankAbilityArray().map(value => `
+    <option value="${value}" ${selected(Number(sheet[`${key}Score`]), value)} ${usedByOthers.has(value) ? "disabled" : ""}>${value}</option>
+  `).join("");
+}
+
+function abilityArrayStatus() {
+  const array = rankAbilityArray();
+  const assigned = abilities.map(([key]) => Number(sheet[`${key}Score`])).filter(Boolean);
+  const unique = new Set(assigned);
+  const complete = assigned.length === array.length && unique.size === array.length && assigned.every(value => array.includes(value));
+  return complete ? "All array values assigned once." : "Assign each value from the campaign rank array exactly once.";
 }
 
 function initialsFor(name) {
@@ -282,6 +334,7 @@ function ensureClassSaves(reset = false) {
 }
 
 function initialize(reset = false) {
+  normalizeAbilityScores();
   ensureOrigin();
   ensureClassSaves(reset);
   fillOrigin();
@@ -445,9 +498,10 @@ function renderAbilityScores() {
   return `
     <div class="ability-builder">
       ${abilities.map(([key, short, name]) => `
-        <div class="ability-card"><strong>${short}</strong><label>${name}<input type="number" min="1" max="30" data-field="${key}Score" value="${Number(sheet[`${key}Score`] || 10)}"></label><span>${abilityScore(key)}</span><em>${signed(abilityMod(key))}</em></div>
+        <div class="ability-card"><strong>${short}</strong><label>${name}<select data-field="${key}Score">${abilityArrayOptions(key)}</select></label><span>${abilityScore(key)}</span><em>${signed(abilityMod(key))}</em></div>
       `).join("")}
     </div>
+    <div class="rule-card"><h2>${html(sheet.rank)} Array</h2><p>${rankAbilityArray().join(", ")}. ${abilityArrayStatus()}</p></div>
     <div class="rule-card"><h2>Origin Bonuses Included</h2><p>Displayed totals include the selected Origin's +2 and +1 ability bonuses. Choose the Origin in Step 3 to change those bonuses.</p></div>
   `;
 }
@@ -668,7 +722,9 @@ function renderSheet() {
 }
 
 function updateField(field, value) {
+  if (field.endsWith("Score")) value = Number(value);
   sheet[field] = value;
+  if (field === "rank") normalizeAbilityScores();
   if (["origin", "originPrimaryBonus", "originSecondaryBonus", "originTrait", "originSkill1", "originSkill2"].includes(field)) fillOrigin();
   if (field === "className") {
     ensureClassSaves(true);
