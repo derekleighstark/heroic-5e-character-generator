@@ -498,7 +498,14 @@ function renderAbilityScores() {
   return `
     <div class="ability-builder">
       ${abilities.map(([key, short, name]) => `
-        <div class="ability-card"><strong>${short}</strong><label>${name}<select data-field="${key}Score">${abilityArrayOptions(key)}</select></label><span>${abilityScore(key)}</span><em>${signed(abilityMod(key))}</em></div>
+        <div class="ability-card">
+          <div class="ability-card-title"><strong>${short}</strong><span>${name}</span></div>
+          <div class="ability-card-row">
+            <label><small>Score</small><select data-field="${key}Score">${abilityArrayOptions(key)}</select></label>
+            <span><small>Total</small>${abilityScore(key)}</span>
+            <em><small>Mod</small>${signed(abilityMod(key))}</em>
+          </div>
+        </div>
       `).join("")}
     </div>
     <div class="rule-card"><h2>${html(sheet.rank)} Array</h2><p>${rankAbilityArray().join(", ")}. ${abilityArrayStatus()}</p></div>
@@ -623,18 +630,29 @@ function renderTalent() {
 
 function renderDefenses() {
   const values = calc();
+  const compactStat = (label, value) => `<div><span>${label}</span><strong>${value}</strong></div>`;
   return `
-    <div class="mechanic-grid">
-      <div><span>Parry / Block</span><strong>${values.parry}</strong></div><div><span>Dodge</span><strong>${values.dodge}</strong></div><div><span>Willpower</span><strong>${values.willpower}</strong></div><div><span>Social</span><strong>${values.socialDefense}</strong></div><div><span>Initiative</span><strong>${values.initiative}</strong></div><div><span>Class EV</span><strong>${values.classEV}</strong></div>
+    <div class="compact-stat-grid defense-stat-grid">
+      ${compactStat("Parry / Block", values.parry)}
+      ${compactStat("Dodge", values.dodge)}
+      ${compactStat("Willpower", values.willpower)}
+      ${compactStat("Social", values.socialDefense)}
+      ${compactStat("Initiative", values.initiative)}
+      ${compactStat("Class EV", values.classEV)}
     </div>
-    <div class="form-grid two">
+    <div class="defense-layout">
       <section><h2>Saves</h2><div class="check-grid compact">
         ${abilities.map(([key, short]) => {
           const total = abilityMod(key) + (sheet[`save_${key}_trained`] ? values.pro : 0);
           return `<label class="check-row"><input type="checkbox" data-field="save_${key}_trained" ${checked(sheet[`save_${key}_trained`])}><span>${short} Save</span><strong>${signed(total)}</strong></label>`;
         }).join("")}
       </div></section>
-      <section><h2>Attacks</h2><div class="mechanic-grid"><div><span>Melee</span><strong>${values.meleeAttack}</strong></div><div><span>Ranged</span><strong>${values.rangedAttack}</strong></div><div><span>Mental</span><strong>${values.mentalAttack}</strong></div><div><span>Social</span><strong>${values.socialAttack}</strong></div></div></section>
+      <section><h2>Attacks</h2><div class="compact-stat-grid attack-stat-grid">
+        ${compactStat("Melee", values.meleeAttack)}
+        ${compactStat("Ranged", values.rangedAttack)}
+        ${compactStat("Mental", values.mentalAttack)}
+        ${compactStat("Social", values.socialAttack)}
+      </div></section>
     </div>
   `;
 }

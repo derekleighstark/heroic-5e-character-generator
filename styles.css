@@ -417,36 +417,134 @@ p {
 }
 
 .ability-builder {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(128px, 1fr));
 }
 
 .ability-card {
   display: grid;
-  grid-template-columns: 44px minmax(92px, 1fr) 48px 42px;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
+  gap: 6px;
+  min-width: 0;
+  padding: 7px;
   background: var(--panel);
   border-left: 5px solid var(--gold);
 }
 
-.ability-card > strong {
+.ability-card-title {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+}
+
+.ability-card-title strong {
   color: var(--navy);
-  font-size: 1.4rem;
+  font-size: 1.35rem;
+  line-height: 1;
   text-align: center;
+}
+
+.ability-card-title span {
+  overflow: hidden;
+  color: var(--navy);
+  font-size: .72rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.ability-card-row {
+  display: grid;
+  grid-template-columns: minmax(54px, 1fr) 30px 32px;
+  align-items: end;
+  gap: 4px;
+  min-width: 0;
+}
+
+.ability-card label {
+  min-width: 0;
+}
+
+.ability-card small {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-size: .58rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
 }
 
 .ability-card span,
 .ability-card em {
   color: var(--navy);
-  font-size: 1.1rem;
+  font-size: .95rem;
   font-style: normal;
   font-weight: 900;
   text-align: center;
 }
 
 .ability-card select {
+  width: 100%;
+  min-width: 0;
+  height: 32px;
+  padding: 4px 20px 4px 7px;
   font-weight: 900;
+}
+
+.compact-stat-grid {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.defense-stat-grid {
+  grid-template-columns: repeat(6, minmax(82px, 1fr));
+}
+
+.attack-stat-grid {
+  grid-template-columns: repeat(4, minmax(74px, 1fr));
+}
+
+.compact-stat-grid div {
+  min-width: 0;
+  min-height: 48px;
+  padding: 7px 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--blue);
+}
+
+.compact-stat-grid span {
+  display: block;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .62rem;
+  font-weight: 900;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.compact-stat-grid strong {
+  display: block;
+  color: var(--navy);
+  font-size: 1.25rem;
+  line-height: 1.05;
+}
+
+.defense-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, .95fr) minmax(220px, 1.05fr);
+  gap: 12px;
+}
+
+.defense-layout h2 {
+  margin: 0 0 6px;
+  color: var(--ink);
+  font-size: 1.1rem;
 }
 
 .power-builder {
@@ -938,6 +1036,8 @@ p {
   .ability-builder,
   .power-builder,
   .mechanic-grid,
+  .compact-stat-grid,
+  .defense-layout,
   .sheet-abilities,
   .sheet-stats,
   .sheet-skills,
