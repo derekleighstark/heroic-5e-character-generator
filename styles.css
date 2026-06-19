@@ -168,15 +168,14 @@ p {
 
 .generator-shell {
   display: grid;
-  grid-template-columns: 250px minmax(420px, 760px) minmax(520px, 1fr);
+  grid-template-columns: 250px minmax(0, 1fr);
   gap: 14px;
   align-items: start;
   padding: 14px;
 }
 
 .step-rail,
-.builder-panel,
-.sheet-stage {
+.builder-panel {
   border: 1px solid rgba(16, 32, 51, .16);
   background: var(--paper);
   box-shadow: var(--shadow);
@@ -812,17 +811,13 @@ p {
   gap: 8px;
 }
 
-.sheet-stage {
-  padding: 12px;
-}
-
 .sheet-actions {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin: -12px -12px 12px;
-  padding: 10px 12px;
+  margin: -18px -18px 18px;
+  padding: 12px 18px;
   background: var(--navy);
   color: #fff;
   border-bottom: 4px solid var(--gold);
@@ -1046,11 +1041,7 @@ p {
 
 @media (max-width: 1320px) {
   .generator-shell {
-    grid-template-columns: 230px minmax(420px, 1fr);
-  }
-
-  .sheet-stage {
-    grid-column: 1 / -1;
+    grid-template-columns: 230px minmax(0, 1fr);
   }
 }
 
@@ -1118,7 +1109,7 @@ p {
 
   .app-topbar,
   .step-rail,
-  .builder-panel,
+  .builder-header,
   .json-drawer,
   .library-drawer,
   .sheet-actions {
@@ -1126,7 +1117,7 @@ p {
   }
 
   .generator-shell,
-  .sheet-stage,
+  .builder-panel,
   #sheet {
     display: block;
     width: auto;

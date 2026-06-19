@@ -301,7 +301,8 @@ const steps = [
   ["defenses", "Active Defenses & Saves", "Defenses, saves, and attacks"],
   ["edge", "Record Edge", "Starting Edge, cap, and triggers"],
   ["gear", "Choose Gear", "Gear, enhancements, costume, and notes"],
-  ["identity", "Finalize Identity", "Name, identity, portrait, export, and print"]
+  ["identity", "Finalize Identity", "Name, identity, portrait, export, and print"],
+  ["characterSheet", "Character Sheet", "Review, print, and export the finished sheet"]
 ];
 
 const app = document.querySelector("#app");
@@ -695,10 +696,6 @@ function renderApp() {
         <nav class="step-list"></nav>
       </aside>
       <section class="builder-panel"></section>
-      <section class="sheet-stage">
-        <div class="sheet-actions"><strong>Live Character Sheet</strong><button type="button" data-action="clear">Clear</button></div>
-        <div id="sheet"></div>
-      </section>
     </main>
     <section class="json-drawer" data-json-drawer hidden>
       <div class="json-panel">
@@ -731,7 +728,6 @@ function renderApp() {
   `;
   applyAccess();
   renderBuilder();
-  renderSheet();
   renderProgress();
 }
 
@@ -777,7 +773,8 @@ function renderStep(id) {
   if (id === "defenses") return renderDefenses();
   if (id === "edge") return renderEdge();
   if (id === "gear") return renderGear();
-  return renderIdentity();
+  if (id === "identity") return renderIdentity();
+  return renderCharacterSheet();
 }
 
 function renderConcept() {
@@ -1036,11 +1033,23 @@ function listBlock(items) {
   return `<ul>${clean.map(item => `<li>${html(item)}</li>`).join("")}</ul>`;
 }
 
+function renderCharacterSheet() {
+  return `
+    <div class="sheet-actions"><strong>Character Sheet</strong><button type="button" data-action="clear">Clear</button></div>
+    <div id="sheet">${renderSheetMarkup()}</div>
+  `;
+}
+
 function renderSheet() {
+  const target = document.querySelector("#sheet");
+  if (target) target.innerHTML = renderSheetMarkup();
+}
+
+function renderSheetMarkup() {
   const values = calc();
   const origin = origins[sheet.origin] || origins.Enhanced;
   const powers = chosenPowers();
-  document.querySelector("#sheet").innerHTML = `
+  return `
     <article class="sheet-page">
       <header class="sheet-title"><p>HEROIC 5e</p><h1>${html(sheet.heroName || "Character Sheet")}</h1></header>
       <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
@@ -1399,7 +1408,11 @@ app.addEventListener("click", event => {
     renderProgress();
   }
   if (action === "import-json") document.querySelector("#importFile").click();
-  if (action === "print") window.print();
+  if (action === "print") {
+    activeStep = "characterSheet";
+    renderBuilder();
+    setTimeout(() => window.print(), 0);
+  }
   if (action === "clear" && confirm("Clear this HEROIC 5e character?")) {
     sheet = { ...defaults };
     initialize(true);
