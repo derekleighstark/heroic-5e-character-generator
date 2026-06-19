@@ -157,16 +157,6 @@ p {
   border-bottom-color: var(--gold);
 }
 
-.auth-status {
-  padding: 7px 9px;
-  background: rgba(255, 255, 255, .12);
-  border: 1px solid rgba(255, 255, 255, .22);
-  color: #fff;
-  font-size: .72rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
 .check-control input,
 .wide-check input,
 .check-row input[type="checkbox"] {
@@ -596,34 +586,12 @@ p {
   grid-template-rows: auto minmax(260px, 64vh);
 }
 
-.library-header-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.cloud-status {
-  padding: 9px 12px;
-  background: var(--panel);
-  border-bottom: 1px solid var(--line);
-  color: var(--navy);
-  font-size: .82rem;
-  font-weight: 900;
-}
-
 .library-list {
   display: grid;
   align-content: start;
   gap: 10px;
   padding: 12px;
   overflow: auto;
-}
-
-.library-list h3 {
-  margin: 8px 0 0;
-  color: var(--navy);
-  font-size: .85rem;
-  letter-spacing: .08em;
-  text-transform: uppercase;
 }
 
 .library-empty {
@@ -656,13 +624,6 @@ p {
   color: var(--navy);
   font-size: 1.15rem;
   text-transform: uppercase;
-}
-
-.library-item strong em {
-  margin-left: 5px;
-  color: var(--red);
-  font-size: .68rem;
-  font-style: normal;
 }
 
 .library-item span {

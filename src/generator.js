@@ -51,9 +51,6 @@ const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = load(STORAGE_KEY, defaults);
 let accessibility = load(ACCESSIBILITY_KEY, { zoom: "normal", dyslexic: false });
-let currentUser = null;
-let cloudCharacters = [];
-let cloudStatus = "";
 
 function load(key, fallback) {
   try {
@@ -94,15 +91,6 @@ function characterId(name) {
 
 function cloneSheet(value) {
   return JSON.parse(JSON.stringify(value));
-}
-
-function identity() {
-  return window.netlifyIdentity;
-}
-
-function authToken() {
-  const user = identity()?.currentUser();
-  return user?.token?.access_token || "";
 }
 
 function mod(score) {
@@ -325,9 +313,6 @@ function renderApp() {
           <option value="xlarge" ${selected(accessibility.zoom, "xlarge")}>130%</option>
         </select></label>
         <label class="check-control"><input type="checkbox" data-access="dyslexic" ${checked(accessibility.dyslexic)}> Dyslexic Font</label>
-        <span class="auth-status" data-auth-status>Offline</span>
-        <button type="button" data-action="login">Log In</button>
-        <button type="button" data-action="logout" hidden>Log Out</button>
         <button type="button" data-action="save-character">Save Character</button>
         <button type="button" data-action="open-library">Load Character</button>
         <button type="button" data-action="export-json">Export JSON</button>
@@ -370,12 +355,8 @@ function renderApp() {
             <strong>Saved Characters</strong>
             <span data-library-count></span>
           </div>
-          <div class="library-header-actions">
-            <button type="button" data-action="refresh-cloud">Sync Cloud</button>
-            <button type="button" data-action="close-library">Close</button>
-          </div>
+          <button type="button" data-action="close-library">Close</button>
         </header>
-        <div class="cloud-status" data-cloud-status></div>
         <div class="library-list" data-library-list></div>
       </div>
     </section>
@@ -622,58 +603,6 @@ function applyAccess() {
   document.body.dataset.dyslexic = accessibility.dyslexic ? "true" : "false";
 }
 
-function initIdentity() {
-  if (!identity()) {
-    currentUser = null;
-    cloudStatus = "Netlify Identity is available after deploy.";
-    updateAuthUi();
-    return;
-  }
-
-  identity().init();
-  currentUser = identity().currentUser();
-  identity().on("login", user => {
-    currentUser = user;
-    cloudStatus = `Signed in as ${user.email}`;
-    updateAuthUi();
-    refreshCloudCharacters().then(() => {
-      if (!document.querySelector("[data-library-drawer]")?.hidden) renderLibrary();
-    });
-  });
-  identity().on("logout", () => {
-    currentUser = null;
-    cloudCharacters = [];
-    cloudStatus = "Signed out. Local saves are still available.";
-    updateAuthUi();
-    if (!document.querySelector("[data-library-drawer]")?.hidden) renderLibrary();
-  });
-  updateAuthUi();
-}
-
-function updateAuthUi() {
-  const user = identity()?.currentUser() || currentUser;
-  const loginButton = document.querySelector('[data-action="login"]');
-  const logoutButton = document.querySelector('[data-action="logout"]');
-  const status = document.querySelector("[data-auth-status]");
-  if (!loginButton || !logoutButton || !status) return;
-
-  loginButton.hidden = Boolean(user);
-  logoutButton.hidden = !user;
-  status.textContent = user ? user.email : "Not signed in";
-}
-
-function login() {
-  if (!identity()) {
-    alert("Login is available after the app is deployed to Netlify with Identity enabled.");
-    return;
-  }
-  identity().open("login");
-}
-
-function logout() {
-  identity()?.logout();
-}
-
 function exportPayload() {
   return {
     type: "HEROIC 5e Character Generator",
@@ -730,15 +659,14 @@ async function copyJson() {
   }
 }
 
-async function saveCharacterToLibrary() {
+function saveCharacterToLibrary() {
   const currentName = characterName();
   const name = prompt("Save character as:", currentName);
   if (!name) return;
 
   const record = makeCharacterRecord(name);
   saveRecordLocal(record);
-  await saveRecordCloud(record);
-  await openLibrary();
+  openLibrary();
 }
 
 function makeCharacterRecord(name) {
@@ -770,35 +698,9 @@ function saveRecordLocal(record) {
   saveLibrary(nextLibrary);
 }
 
-async function saveRecordCloud(record) {
-  if (!authToken()) {
-    cloudStatus = "Saved locally. Log in to sync across devices.";
-    return;
-  }
-
-  try {
-    const response = await fetch("/.netlify/functions/characters", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${authToken()}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(record)
-    });
-    if (!response.ok) throw new Error(`Cloud save failed (${response.status})`);
-    cloudStatus = "Saved locally and synced to your account.";
-    await refreshCloudCharacters(false);
-    renderLibrary();
-  } catch (error) {
-    cloudStatus = `Saved locally. Cloud sync failed: ${error.message}`;
-    renderLibrary();
-  }
-}
-
-async function openLibrary() {
+function openLibrary() {
   const drawer = document.querySelector("[data-library-drawer]");
   drawer.hidden = false;
-  await refreshCloudCharacters(false);
   renderLibrary();
 }
 
@@ -808,40 +710,35 @@ function closeLibrary() {
 
 function renderLibrary() {
   const library = loadLibrary().sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
-  const cloud = cloudCharacters.sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
   const list = document.querySelector("[data-library-list]");
-  document.querySelector("[data-library-count]").textContent = `${library.length} local, ${cloud.length} cloud`;
-  document.querySelector("[data-cloud-status]").textContent = cloudStatus || (currentUser ? `Signed in as ${currentUser.email}` : "Log in to sync characters across devices.");
+  document.querySelector("[data-library-count]").textContent = `${library.length} saved`;
 
-  if (!library.length && !cloud.length) {
+  if (!library.length) {
     list.innerHTML = `<div class="library-empty">No saved characters yet.</div>`;
     return;
   }
 
-  list.innerHTML = `
-    ${cloud.length ? `<h3>Cloud Saves</h3>${cloud.map(character => libraryItem(character, "cloud")).join("")}` : ""}
-    ${library.length ? `<h3>Local Saves</h3>${library.map(character => libraryItem(character, "local")).join("")}` : ""}
-  `;
+  list.innerHTML = library.map(character => libraryItem(character)).join("");
 }
 
-function libraryItem(character, source) {
+function libraryItem(character) {
   return `
     <article class="library-item">
       <div>
-        <strong>${html(character.name)} <em>${source}</em></strong>
+        <strong>${html(character.name)}</strong>
         <span>${html([character.origin, character.className, character.calling].filter(Boolean).join(" - ") || "No build details")}</span>
         <small>Level ${html(character.level || 1)} ${html(character.rank || "")} - Saved ${html(new Date(character.updatedAt).toLocaleString())}</small>
       </div>
       <div class="library-item-actions">
-        <button type="button" data-action="load-character" data-character-source="${source}" data-character-id="${html(character.id)}">Load</button>
-        <button type="button" data-action="delete-character" data-character-source="${source}" data-character-id="${html(character.id)}">Delete</button>
+        <button type="button" data-action="load-character" data-character-id="${html(character.id)}">Load</button>
+        <button type="button" data-action="delete-character" data-character-id="${html(character.id)}">Delete</button>
       </div>
     </article>
   `;
 }
 
-function loadCharacter(id, source = "local") {
-  const library = source === "cloud" ? cloudCharacters : loadLibrary();
+function loadCharacter(id) {
+  const library = loadLibrary();
   const record = library.find(character => character.id === id);
   if (!record) return;
   sheet = { ...defaults, ...record.sheet };
@@ -852,49 +749,12 @@ function loadCharacter(id, source = "local") {
   renderProgress();
 }
 
-async function deleteCharacter(id, source = "local") {
-  const library = source === "cloud" ? cloudCharacters : loadLibrary();
+function deleteCharacter(id) {
+  const library = loadLibrary();
   const record = library.find(character => character.id === id);
   if (!record || !confirm(`Delete saved character "${record.name}"?`)) return;
-
-  if (source === "cloud") {
-    try {
-      const response = await fetch(`/.netlify/functions/characters?id=${encodeURIComponent(id)}`, {
-        method: "DELETE",
-        headers: { "Authorization": `Bearer ${authToken()}` }
-      });
-      if (!response.ok) throw new Error(`Cloud delete failed (${response.status})`);
-      cloudCharacters = cloudCharacters.filter(character => character.id !== id);
-      cloudStatus = "Cloud character deleted.";
-    } catch (error) {
-      cloudStatus = error.message;
-    }
-  } else {
-    saveLibrary(library.filter(character => character.id !== id));
-  }
-
+  saveLibrary(library.filter(character => character.id !== id));
   renderLibrary();
-}
-
-async function refreshCloudCharacters(showMessage = true) {
-  if (!authToken()) {
-    cloudCharacters = [];
-    cloudStatus = "Log in to sync characters across devices.";
-    return;
-  }
-
-  try {
-    const response = await fetch("/.netlify/functions/characters", {
-      headers: { "Authorization": `Bearer ${authToken()}` }
-    });
-    if (!response.ok) throw new Error(`Cloud load failed (${response.status})`);
-    const payload = await response.json();
-    cloudCharacters = Array.isArray(payload.characters) ? payload.characters : [];
-    if (showMessage) cloudStatus = "Cloud saves synced.";
-  } catch (error) {
-    cloudCharacters = [];
-    cloudStatus = `Cloud sync unavailable: ${error.message}`;
-  }
 }
 
 function importJson(file) {
@@ -987,11 +847,8 @@ app.addEventListener("click", event => {
   if (action === "save-character") saveCharacterToLibrary();
   if (action === "open-library") openLibrary();
   if (action === "close-library") closeLibrary();
-  if (action === "refresh-cloud") refreshCloudCharacters().then(renderLibrary);
-  if (action === "login") login();
-  if (action === "logout") logout();
-  if (action === "load-character") loadCharacter(button.dataset.characterId, button.dataset.characterSource);
-  if (action === "delete-character") deleteCharacter(button.dataset.characterId, button.dataset.characterSource);
+  if (action === "load-character") loadCharacter(button.dataset.characterId);
+  if (action === "delete-character") deleteCharacter(button.dataset.characterId);
   if (action === "import-json") document.querySelector("#importFile").click();
   if (action === "print") window.print();
   if (action === "clear" && confirm("Clear this HEROIC 5e character?")) {
@@ -1005,4 +862,3 @@ app.addEventListener("click", event => {
 
 initialize();
 renderApp();
-initIdentity();
