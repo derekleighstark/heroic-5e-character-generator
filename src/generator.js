@@ -134,16 +134,11 @@ function normalizeAbilityScores() {
 }
 
 function abilityArrayOptions(key) {
-  const usedByOthers = new Set(
-    abilities
-      .filter(([otherKey]) => otherKey !== key)
-      .map(([otherKey]) => Number(sheet[`${otherKey}Score`]))
-      .filter(Boolean)
-  );
+  const current = Number(sheet[`${key}Score`]);
 
-  return rankAbilityArray().map(value => `
-    <option value="${value}" ${selected(Number(sheet[`${key}Score`]), value)} ${usedByOthers.has(value) ? "disabled" : ""}>${value}</option>
-  `).join("");
+  return rankAbilityArray()
+    .map(value => `<option value="${value}" ${selected(current, value)}>${value}</option>`)
+    .join("");
 }
 
 function abilityArrayStatus() {
@@ -740,7 +735,12 @@ function renderSheet() {
 }
 
 function updateField(field, value) {
-  if (field.endsWith("Score")) value = Number(value);
+  if (field.endsWith("Score")) {
+    const previous = Number(sheet[field]);
+    value = Number(value);
+    const duplicateAbility = abilities.find(([key]) => `${key}Score` !== field && Number(sheet[`${key}Score`]) === value);
+    if (duplicateAbility && rankAbilityArray().includes(previous)) sheet[`${duplicateAbility[0]}Score`] = previous;
+  }
   sheet[field] = value;
   if (field === "rank") normalizeAbilityScores();
   if (["origin", "originPrimaryBonus", "originSecondaryBonus", "originTrait", "originSkill1", "originSkill2"].includes(field)) fillOrigin();
