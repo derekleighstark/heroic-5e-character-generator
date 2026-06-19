@@ -28,6 +28,7 @@
       "id": "threshold-derek-briggs-import",
       "name": "Threshold",
       "realName": "Derek Briggs",
+      "portrait": "/sample-characters/portraits/portrait-threshold.png",
       "file": "threshold-derek-briggs-import.json",
       "origin": "Enhanced",
       "className": "Sentinel",

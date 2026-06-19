@@ -5,6 +5,7 @@
   "sheet": {
     "heroName": "Threshold",
     "realName": "Derek Briggs",
+    "portrait": "/sample-characters/portraits/portrait-threshold.png",
     "identity": "Public",
     "side": "Heroic",
     "rank": "Street Level",
