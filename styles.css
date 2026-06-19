@@ -441,24 +441,13 @@ p {
 }
 
 .ability-card-title {
-  display: grid;
-  grid-template-columns: 38px minmax(0, 1fr);
-  align-items: baseline;
-  gap: 6px;
   min-width: 0;
-}
-
-.ability-card-title strong {
-  color: var(--navy);
-  font-size: 1.35rem;
-  line-height: 1;
-  text-align: center;
 }
 
 .ability-card-title span {
   overflow: hidden;
   color: var(--navy);
-  font-size: .72rem;
+  font-size: .78rem;
   font-weight: 900;
   text-overflow: ellipsis;
   text-transform: uppercase;

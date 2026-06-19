@@ -195,6 +195,78 @@ const flawRules = {
   "Vulnerable Reputation": "Rating 1-2. Public trust in you is fragile. When framed, criticized, or scandalized, suffer Disadvantage on public Influence until actively repaired.",
   "Weak Support System": "Rating 1. You lack reliable anchors. During Downtime recovery from trauma, scandal, or serious stress, suffer Disadvantage unless another hero or NPC helps."
 };
+Object.assign(meritRules, {
+  "Altered Physiology": "Origin Merit. Your body or mind has been permanently changed beyond ordinary human limits. This supports the chosen Enhanced trait and can justify biological advantages, unusual resilience, or nonstandard physical responses.",
+  "Beyond Mortal": "Origin Merit. Your existence has moved beyond normal mortal limits. This supports the chosen Transcendent benefit and may justify resistance to age, death, metaphysical pressure, or ordinary assumptions about identity.",
+  "Cosmic Signature": "Origin Merit. Your power leaves a recognizable cosmic imprint. This supports the chosen Cosmic feature and can justify insight into stellar, dimensional, or universal phenomena.",
+  "Gear Access": "Rating 1. You have reliable access to tools, maintenance parts, storage, charging infrastructure, workshop space, or supply channels needed to support heroic equipment.",
+  "Inhuman Body": "Origin Merit. Your body is visibly or functionally outside ordinary human norms. This supports the chosen Monster trait and can justify natural weapons, unusual anatomy, night adaptation, or frightening presence.",
+  "Mystic Attunement": "Origin Merit. You are attuned to supernatural forces, spirits, curses, relics, or magical practice. This supports the chosen Mystic practice and can justify interaction with unseen powers.",
+  "Prepared Foundation": "Origin Merit. Choose one prepared foundation such as Base of Operations, Connected, Gear Access, Legal Authority, Local Support, Mentor, Prepared Cache, or Safehouse Network. It does not count against your starting Merit allowance.",
+  "Strange Biology": "Origin Merit. Your species or biology functions differently from ordinary humans. Choose an alien biological trait; that trait defines the specific mechanical benefit.",
+  "Synthetic Construction": "Origin Merit. You are built, not born. This supports the chosen Artificial trait and can justify interface, repair, hardening, or other constructed-body advantages.",
+  "The Name": "Origin Merit. You carry a mantle, family name, symbol, or legacy with history. This supports the chosen Legacy benefit and can grant inherited contacts, public trust, or mentor support."
+});
+Object.assign(flawRules, {
+  "Constructed Nature": "Origin Flaw. Your artificial nature can create limits, vulnerabilities, maintenance needs, social friction, or situations where normal biology-based solutions do not apply.",
+  "Feared": "Origin Flaw. Your monstrous nature or reputation frightens ordinary people. When it actively complicates a scene rather than serving as background, the GM may invoke it and award 1 Edge.",
+  "Gear Dependency": "Origin Flaw. Your heroic work depends on gear, armor, weapons, vehicles, relics, or devices that can be damaged, stolen, disabled, jammed, hacked, lost, or separated from you.",
+  "Losing Humanity": "Origin Flaw. Your changing nature creates alienation, temptation, collateral risk, emotional distance, or metaphysical danger. When that pressure matters, the GM may invoke it and award 1 Edge.",
+  "Marked by Change": "Origin Flaw. Your altered nature can be detected, studied, feared, or used against you. Medical, scientific, or technological investigation may reveal what happened to you.",
+  "Only Human": "Origin Flaw. Unless Powers say otherwise, your body remains fundamentally mortal. Exhaustion, injury, aging, hunger, thirst, and ordinary physical limits can still create pressure.",
+  "Supernatural Burden": "Origin Flaw. Your connection to the unseen world attracts attention from spirits, demons, cults, curses, entities, or forces that want something from you.",
+  "The Expectation": "Origin Flaw. Your Legacy creates pressure. Allies, enemies, institutions, or the public measure you against the name, mantle, symbol, or history you carry.",
+  "Too Bright to Hide": "Origin Flaw. Your cosmic signature is difficult to conceal. Attempts to track or identify that signature gain Advantage when the tracker has appropriate means."
+});
+const talentRules = {
+  "Actor": "Social. Gain Advantage on Influence and Finesse checks to impersonate, disguise your voice, mimic behavior, or perform under observation. After studying a person for at least one minute, casual observers have Disadvantage to detect your mimicry.",
+  "Alert": "Investigation, Combat. Gain Advantage on Initiative rolls and cannot be surprised while conscious unless an effect bypasses mundane awareness. Also gain Advantage on Notice checks to detect ambushes, hidden enemies, or imminent danger.",
+  "Appeal": "Social. Gain Advantage on Influence checks to charm, persuade, or attract positive attention. Once per scene, after succeeding, you may give one ally Advantage on their next social check involving the same target or group.",
+  "Athlete": "Mobility. Standing from Prone costs no movement and climbing costs no additional movement. Once per Turn on Athletics or Acrobatics checks involving running, jumping, climbing, swimming, or controlled movement, add Prowess if untrained or gain Advantage if trained.",
+  "Battlefield Leader": "Leadership. Once per encounter when Initiative is rolled, choose allies up to your CHA or INT within 60 feet who can perceive you; each may move 10 feet without provoking. Allies following your spoken tactical direction gain Advantage on one related check before their next Turn ends.",
+  "Cold Reader": "Social, Investigation. After speaking with or observing a creature for at least one minute, gain Advantage on your next Insight, Influence, or Intimidation check against it. On success, learn its emotional state, immediate desire, obvious fear, or best social leverage.",
+  "Counterguard": "Combat. When a hostile creature within your reach willingly moves away, you may make an Opportunity Attack even if it Disengages. If you hit, its Speed becomes 0 until the end of the current Turn.",
+  "Defensive Fighter": "Combat. When you take the Dodge action, you may also move up to 10 feet without provoking. Once per encounter when an attack misses you, grant one adjacent ally temporary HP equal to your Prowess.",
+  "Durable": "Resilience. During a Breather, when you spend Recovery, treat any die roll lower than your CON plus Prowess as that result. Once per encounter, ignore Shaken from injury.",
+  "Fast Draw": "Combat. Draw, stow, ready, or switch one weapon or handheld device as part of any attack or Reaction. Once per encounter when Initiative is rolled, immediately draw a weapon or device and move 10 feet.",
+  "Field Commander": "Leadership. As a Bonus Action, choose one ally within 60 feet who can hear you. That ally may move 10 feet or stand from Prone as a free action. Uses per encounter equal to Prowess, with no ally benefiting more than once per Turn.",
+  "Forensic Expert": "Investigation. Gain Advantage on Investigation and Medicine checks involving crime scenes, evidence, wounds, cause of death, ballistic traces, chemical residue, or staged scenes. After 10 minutes examining a scene, ask the GM one direct question about what most likely happened.",
+  "Grappler": "Combat. Gain Advantage on checks to grapple, maintain a grapple, escape a grapple, or shove a creature you are grappling. Once per Turn after successfully grappling, reduce the target's Speed by an additional 10 feet until the grapple ends.",
+  "Hard to Kill": "Resilience. Gain Advantage on Grit Saves. Once per day when you fail a Grit Save, treat it as a success. On a natural 20 Grit Save, gain temporary HP equal to Prowess when you return to consciousness.",
+  "Improvised Fighter": "Combat. Treat improvised weapons as normal weapons. Once per Turn after hitting with an improvised weapon or environmental attack, push 5 feet, knock over a small object/cover, break fragile terrain/barriers, or impose Shaken until the target's next Turn ends.",
+  "Inspiring Leader": "Leadership. Once per Breather after speaking for at least one minute, choose creatures up to CHA + Prowess who can hear and understand you; each gains temporary HP equal to Level + CHA. Once per encounter as a Bonus Action, grant one ally within 60 feet temporary HP equal to Prowess + CHA.",
+  "Interrogator": "Social. Gain Advantage on Intimidation and Insight during interrogation, questioning, or pressure conversations. Once per scene, when a creature lies and you succeed on Insight, ask whether the lie protects a person, place, object, motive, or fear.",
+  "Iron Will": "Resilience. Gain Advantage on saves against Frightened, Charmed, Shaken, intimidation, emotional manipulation, and despair. Once per encounter after failing one of those saves, choose to succeed instead but become Shaken until your next Turn ends.",
+  "Jack of All Trades": "General. When you make an untrained Skill check, add half your Prowess, rounded down. This does not apply to attack rolls or saves.",
+  "Linguist": "General. Learn three additional languages. Gain Advantage on checks to decode unfamiliar languages, recognize dialects, identify coded speech, or communicate basic ideas across a language barrier using improvised signals and context.",
+  "Lucky": "General. Once per session after rolling a d20, reroll it and use either result. You may also use this after an attack roll against you, forcing the attacker to reroll and using whichever result you choose.",
+  "Martial Artist": "Combat. Your unarmed damage die becomes d6, or d8 if both hands are free. Add FIG to unarmed damage in addition to STR. Once per Turn after hitting unarmed, attempt to shove, trip, or disarm as a Bonus Action.",
+  "Marksman": "Combat. Choose one ranged weapon group. Attacks with that group ignore half cover. Once per Turn, reroll one damage die from a successful attack using that group and take the higher result.",
+  "Master Negotiator": "Social. Gain Advantage on Influence checks to negotiate, bargain, de-escalate, mediate, or broker terms. Once per scene before violence begins, force one tense or hostile NPC to pause long enough for one clear sentence or offer unless mindless or committed to immediate violence.",
+  "Master of Combat": "Combat. Once per encounter when you make an attack roll, reroll one die and use the higher result. Also gain Advantage on checks to identify fighting styles, predict an opponent's next move in combat, or analyze combat techniques.",
+  "Mobile": "Mobility. Speed increases by 10 feet. When you move at least 15 feet before a melee attack or damaging Power use, that target cannot make Opportunity Attacks against you until the end of your Turn. Vanguards with Fluid Motion gain only the Speed increase.",
+  "Never Give Up": "Leadership, Resilience. Once per encounter, when an ally within 60 feet you can perceive would be reduced to 0 HP, use your Reaction to let them remain at 1 HP instead. That ally becomes Shaken until their next Turn ends.",
+  "Observant": "Investigation. Gain Advantage on passive and active Notice and Investigation checks involving small details, hidden clues, concealed objects, surveillance setups, or reading lips. If you can see a creature's mouth and know the language, you can understand speech unless obscured or encoded.",
+  "Pain Tolerance": "Resilience. Gain Advantage on saves against Dazed, Stunned from physical injury, torture, pain, or shock. Once per encounter, ignore one Shaken, Dazed, or Prone effect caused by damage.",
+  "Pattern Recognition": "Investigation. Once per scene after observing a creature, system, crime scene, battle pattern, or social situation for at least one round, make Investigation, Insight, Notice, Science, or Technology with Advantage to identify a weakness, repeated behavior, hidden structure, or likely next move.",
+  "Performer": "Social. Choose one performance form. Gain Advantage on Influence checks using it. Once per scene when performing for a crowd, shift the crowd's mood one step toward calm, excitement, fear, sympathy, distraction, or awe if the situation allows.",
+  "Power Control": "Power Support. Choose one Power Set. Once per encounter, when you would cause collateral damage, lose control, or suffer Disadvantage from unstable use of that Power Set, ignore that complication. May be selected multiple times for different Power Sets.",
+  "Power Focus": "Power Support. Choose one At-Will Power. Once per encounter, gain Advantage on an attack roll with it or impose Disadvantage on one target's save against it. May be selected multiple times for different At-Will Powers.",
+  "Provocateur": "Social, Combat. Once per encounter as a Bonus Action, choose one hostile creature within 60 feet that can hear or understand you. Roll CHA + Prowess against Social Value; on success, it has Disadvantage on its next attack against anyone but you before its next Turn ends.",
+  "Psychic Discipline": "Mystic, Mental. Gain Advantage on INT, WIS, and CHA saves against psychic intrusion, mind reading, emotional control, mental domination, and psychic damage. Once per encounter after succeeding, identify the direction or emotional signature of the source if in range.",
+  "Resilient": "Resilience. Choose one Ability Score save. Gain training in that save. If already trained, once per encounter reroll a failed save with that Ability Score and take the higher result.",
+  "Sharpshooter": "Combat. Ranged attacks ignore half cover and long range does not impose Disadvantage if you can clearly perceive the target. Once per Turn before a ranged attack, accept Disadvantage; on hit, add one additional Power Die to damage.",
+  "Skilled": "General. Gain training in two Skills. Alternatively, gain training in one Skill and one Specialty tied to a Skill you already have.",
+  "Specialist": "General. Choose one Skill Specialty. When it applies, gain Advantage. If you already had Advantage from another source, add Prowess to the roll instead. May be selected multiple times for different Specialties.",
+  "Surveillance Specialist": "Investigation, Technical. Gain Advantage on Notice and Technology checks involving cameras, sensors, listening devices, stakeouts, tracking signals, or overwatch. Once per encounter, if combat begins from a prepared observation position, one ally gains Advantage on Initiative.",
+  "Takedown Artist": "Combat. When you hit a creature that is Prone, Grappled, Restrained, Dazed, or Shaken, add Prowess to damage. Once per encounter after reducing a target to 0 HP, move 10 feet or shove one adjacent target as a free action.",
+  "Team Player": "Leadership. When you Help an ally, that ally also gains temporary HP equal to Prowess. Once per encounter when an ally within 30 feet misses while benefiting from your Help, they may reroll one damage die or attack die tied to that action and take the higher result.",
+  "Tireless": "Resilience. Gain Advantage on saves against exhaustion, forced marches, environmental fatigue, and Burnout recovery checks. During a Breather, automatically remove Shaken from yourself without spending a resource.",
+  "Tough": "Resilience. Maximum HP increases by 2 per character Level, retroactively. Once per encounter, when reduced below half maximum HP, gain temporary HP equal to Prowess.",
+  "Underwater Combatant": "Combat, Mobility. You do not suffer Disadvantage on attack rolls, Athletics, or Acrobatics due to being underwater. Gain Advantage to swim, fight currents, escape underwater grapples, or maneuver submerged. Does not grant water breathing.",
+  "War Caster": "Mystic, Mental. Gain Advantage on saves to maintain Sustained Powers after taking damage. When a hostile creature provokes an Opportunity Attack, you may use a Power instead of a basic attack if range and action type allow.",
+  "Weapon Specialist": "Combat. Choose one specific weapon or weapon group. Once per Turn, when you hit with it, add Prowess to damage. This does not stack with class features that already add Prowess to the same damage roll."
+};
 const defaults = {
   rank: "Mid-Level",
   level: 1,
@@ -456,6 +528,10 @@ function expandedRuleLines(value, rules) {
   });
 }
 
+function rulesList(items) {
+  return items.length ? `<ul>${items.map(item => `<li>${html(item)}</li>`).join("")}</ul>` : `<p class="empty">-</p>`;
+}
+
 function removeOriginLines() {
   const originMerits = Object.values(origins).map(origin => origin.merit);
   const originFlaws = Object.values(origins).map(origin => origin.flaw);
@@ -682,9 +758,9 @@ function renderConcept() {
 function renderAbilityScores() {
   return `
     <div class="ability-builder">
-      ${abilities.map(([key, short, name]) => `
+      ${abilities.map(([key, , name]) => `
         <div class="ability-card">
-          <div class="ability-card-title"><strong>${short}</strong><span>${name}</span></div>
+          <div class="ability-card-title"><span>${name}</span></div>
           <div class="ability-card-row">
             <label><small>Score</small><select data-field="${key}Score">${abilityArrayOptions(key)}</select></label>
             <span><small>Total</small>${abilityScore(key)}</span>
@@ -702,6 +778,10 @@ function renderOrigin() {
   const origin = origins[sheet.origin] || origins.Enhanced;
   const secondary = origin.secondary[sheet.originPrimaryBonus] || origin.secondary[origin.primary[0]] || [];
   const traitText = sheet.originTrait ? originTraitRules[sheet.originTrait] : "Choose a trait to see its rules text here.";
+  const builtInRules = [
+    `Merit - ${ratedRule(origin.merit, meritRules)}`,
+    `Flaw - ${ratedRule(origin.flaw, flawRules)}`
+  ];
   return `
     <div class="form-grid three">
       ${select("origin", "Origin", Object.keys(origins))}
@@ -712,6 +792,7 @@ function renderOrigin() {
       ${origin.skillPicks > 1 ? select("originSkill2", "Origin Skill 2", origin.skills) : "<div></div>"}
     </div>
     <div class="rule-card"><h2>${html(origin.talent)}</h2><div class="pill-row"><span>Merit: ${html(origin.merit)}</span><span>Flaw: ${html(origin.flaw)}</span></div><p>${html(origin.note)}</p></div>
+    <div class="rule-card"><h2>Built-In Merit & Flaw</h2>${rulesList(builtInRules)}</div>
     <div class="rule-card"><h2>${html(sheet.originTrait || origin.traitLabel)}</h2><p>${html(traitText)}</p></div>
   `;
 }
@@ -731,8 +812,7 @@ function renderClass() {
       <div><span>Recovery</span><strong>${signed(info.recovery)}</strong></div>
     </div>
     <div class="rule-card"><h2>${html(sheet.className || "Class")}</h2><p>${html(classText[sheet.className] || "")}</p></div>
-    <div class="rule-card"><h2>Class Feature Rules</h2><ul>${visibleFeatures.map(feature => `<li>${html(feature)}</li>`).join("")}</ul></div>
-    ${textarea("classFeatures", "Class Features", 8)}
+    <div class="rule-card"><h2>Class Feature Rules</h2>${rulesList(visibleFeatures)}</div>
   `;
 }
 
@@ -816,10 +896,12 @@ function renderPowers() {
 }
 
 function renderTalent() {
+  const talentText = expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules);
   return `
     <div class="form-grid two">
       <label>Talent Picker<select data-add-field="talents">${options(talents, "", "Choose Talent")}</select></label>
     </div>
+    <div class="rule-card"><h2>Selected Talent Rules</h2>${talentText.length ? rulesList(talentText) : "<p>Choose Talents to see their full rules text.</p>"}</div>
     <div class="form-grid two">${textarea("startingTalent", "Starting Talent", 7)}${textarea("talents", "Additional Talents", 7)}</div>
   `;
 }
@@ -928,7 +1010,7 @@ function renderSheet() {
     <article class="sheet-page">
       <header class="sheet-title"><p>Features and Powers</p><h1>${html(sheet.heroName || "Character")}</h1></header>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Class Features</h2>${listBlock(lines(sheet.classFeatures))}</div><div class="sheet-section text-list"><h2>Edge Triggers</h2>${listBlock([`Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`])}</div></section>
-      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...lines(sheet.startingTalent), ...lines(sheet.talents), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
+      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
       <section class="sheet-section"><h2>Powers</h2><div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${html(power.notes || "")}</p></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Gear</h2>${listBlock([...lines(sheet.gear), ...lines(sheet.enhancements), ...lines(sheet.limitationsText), sheet.costume])}</div><div class="sheet-section text-list"><h2>Backstory / Notes</h2>${listBlock([sheet.backstory, sheet.sessionNotes])}</div></section>
     </article>
