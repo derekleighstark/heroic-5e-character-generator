@@ -5,6 +5,7 @@
   "sheet": {
     "heroName": "The Motor City Sentinel",
     "realName": "Jake Fulton",
+    "portrait": "/sample-characters/portraits/portrait-motor-city-sentinel.png",
     "identity": "Not Public",
     "side": "Heroic",
     "rank": "Street Level",

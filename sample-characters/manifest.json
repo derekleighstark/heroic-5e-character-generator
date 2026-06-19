@@ -4,6 +4,7 @@
       "id": "motor-city-sentinel-jake-fulton-import",
       "name": "The Motor City Sentinel",
       "realName": "Jake Fulton",
+      "portrait": "/sample-characters/portraits/portrait-motor-city-sentinel.png",
       "file": "motor-city-sentinel-jake-fulton-import.json",
       "origin": "Enhanced",
       "className": "Striker",
