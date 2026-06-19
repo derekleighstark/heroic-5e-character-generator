@@ -15,7 +15,6 @@ const {
 } = Function(`${rulesPrefix}; return { abilities, ranks, classes, skills, origins, callings, talents, merits, flaws, powerSets, gearCatalog };`)();
 
 const STORAGE_KEY = "heroic5e_generator_sheet";
-const ACCESSIBILITY_KEY = "heroic5e_generator_accessibility";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
@@ -339,7 +338,6 @@ const steps = [
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = load(STORAGE_KEY, defaults);
-let accessibility = load(ACCESSIBILITY_KEY, { zoom: "normal", dyslexic: false });
 let sampleCharacters = [];
 let sampleStatus = "";
 
@@ -353,10 +351,6 @@ function load(key, fallback) {
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
-}
-
-function saveAccess() {
-  localStorage.setItem(ACCESSIBILITY_KEY, JSON.stringify(accessibility));
 }
 
 function loadLibrary() {
@@ -799,12 +793,6 @@ function renderApp() {
     <header class="app-topbar">
       <div class="brand"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
       <div class="topbar-tools">
-        <label>Zoom<select data-access="zoom">
-          <option value="normal" ${selected(accessibility.zoom, "normal")}>100%</option>
-          <option value="large" ${selected(accessibility.zoom, "large")}>115%</option>
-          <option value="xlarge" ${selected(accessibility.zoom, "xlarge")}>130%</option>
-        </select></label>
-        <label class="check-control"><input type="checkbox" data-access="dyslexic" ${checked(accessibility.dyslexic)}> Dyslexic Font</label>
         <button type="button" data-action="new-character">New Character</button>
         <button type="button" data-action="save-character">Save Character</button>
         <button type="button" data-action="open-library">Load Character</button>
@@ -850,7 +838,6 @@ function renderApp() {
       </div>
     </section>
   `;
-  applyAccess();
   renderBuilder();
   renderProgress();
 }
@@ -1195,7 +1182,7 @@ function renderIdentity() {
       <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
       <div class="portrait-uploader"><div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label></div>
     </div>
-    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-pdf">Export to PDF</button></div>
+    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button></div>
   `;
 }
 
@@ -1223,7 +1210,6 @@ function listBlock(items) {
 
 function renderCharacterSheet() {
   return `
-    <div class="sheet-actions"><strong>Character Sheet</strong><button type="button" data-action="export-pdf">Export to PDF</button></div>
     <div id="sheet">${renderSheetMarkup()}</div>
   `;
 }
@@ -1283,11 +1269,6 @@ function fieldValue(el) {
   if (el.type === "checkbox") return el.checked;
   if (el.type === "number") return Number(el.value || 0);
   return el.value;
-}
-
-function applyAccess() {
-  document.body.dataset.zoom = accessibility.zoom || "normal";
-  document.body.dataset.dyslexic = accessibility.dyslexic ? "true" : "false";
 }
 
 function exportPayload() {
@@ -1531,7 +1512,6 @@ app.addEventListener("input", event => {
 app.addEventListener("change", event => {
   const field = event.target.closest("[data-field]");
   const add = event.target.closest("[data-add-field]");
-  const access = event.target.closest("[data-access]");
 
   if (field) {
     updateField(field.dataset.field, fieldValue(field));
@@ -1547,12 +1527,6 @@ app.addEventListener("change", event => {
     renderBuilder();
     renderSheet();
     renderProgress();
-  }
-
-  if (access) {
-    accessibility[access.dataset.access] = access.type === "checkbox" ? access.checked : access.value;
-    saveAccess();
-    applyAccess();
   }
 
   if (event.target.id === "portraitInput") {
