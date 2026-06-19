@@ -22,6 +22,179 @@ const abilityArrays = {
   "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
   "World Class": [20, 18, 16, 15, 14, 12, 10, 8]
 };
+const originTraitRules = {
+  "Environmental Adaptation": "Gain Advantage on saves against one chosen environment: cold, heat, low oxygen, pressure, radiation, or low gravity.",
+  "Unusual Diet": "You can safely consume substances toxic to humans and go significantly longer without food, water, or sleep without mechanical penalty.",
+  "Natural Camouflage": "Gain Advantage on Stealth checks in environments matching your homeworld's terrain type.",
+  "Integrated Systems": "Once per encounter, gain Advantage on a Technology or Science check by directly interfacing with a compatible system.",
+  "Modular Repair": "During a Breather, you may restore additional HP equal to your Prowess through self-maintenance rather than rest.",
+  "Environmental Hardening": "Gain Advantage on saves against environmental hazards: extreme temperature, pressure, vacuum, radiation, or electrical surge.",
+  "Vacuum-Touched": "You can hold your breath for 10 x Prowess minutes and gain Advantage on saves against vacuum, pressure, and radiation hazards.",
+  "Energy-Born": "Choose Fire, Lightning, Radiant, Cold, or Cosmic. Once per encounter, reduce incoming damage of that type by your Prowess + CON.",
+  "Universal Perspective": "Once per encounter, gain Advantage on a Wisdom, Science, Occult, or Notice check involving cosmic scale, alien phenomena, or dimensional danger.",
+  "Heightened Reflexes": "Gain Advantage on Initiative rolls once per encounter.",
+  "Enhanced Recovery": "Once per Breather, when you spend Hit Dice, reroll one die and use the better result.",
+  "Unusual Senses": "Gain Advantage on Notice checks tied to one chosen sense: sight, hearing, smell, touch, or an exotic sense appropriate to the concept.",
+  "Keep It Running": "The gear continues functioning until the end of the encounter.",
+  "Emergency Bypass": "Ignore Disadvantage caused by gear damage or interference for one turn.",
+  "Reroute Power": "Regain use of one spent Encounter Power tied to the gear, but gain 1 Burnout.",
+  "Controlled Failure": "The gear fails, but you prevent collateral damage, injury to allies, or loss of critical data.",
+  "Inherited Network": "You begin with Connected 1, representing allies, informants, and institutional relationships inherited from the Legacy.",
+  "Famous Symbol": "You begin with Public Trust 1 among people who recognize the Legacy's symbol or name.",
+  "Mentor's Gift": "You begin with Mentor 1, representing someone with deep knowledge of the Legacy who remains available to you.",
+  "Natural Weapons": "Your unarmed strikes deal slashing, piercing, or bludgeoning damage as appropriate to your form.",
+  "Night Creature": "Gain darkvision or Advantage on Notice checks made in darkness or near-darkness.",
+  "Terrifying Form": "Gain Advantage on Intimidation checks when your appearance is a relevant factor in the scene.",
+  "Strange Anatomy": "Gain Advantage on saves against poison, disease, or effects that target mundane human biology.",
+  "Spellcraft": "Your magic is learned technique. Use this practice to frame occult study, ritual work, spell formulae, and trained magical problem solving.",
+  "Spirit Pact": "Your power comes through a bargain, bond, or relationship with spirits or unseen beings. The pact can create obligations and attention.",
+  "Divine Favor": "Your supernatural connection is sacred, blessed, or chosen. Use this practice when faith, devotion, or a patron power defines the magic.",
+  "Bloodline": "Your supernatural nature is inherited. The magic is part of who you are, not only what you know.",
+  "Relic-Bound": "Your practice is tied to an object, relic, weapon, symbol, or vessel that focuses the supernatural connection.",
+  "Curse-Bearer": "Your power is bound to a curse. It may protect, empower, tempt, or mark you, but it is never merely cosmetic.",
+  "Base of Operations": "You begin with Base of Operations 1. It does not count against your starting Merit allowance.",
+  "Connected": "You begin with Connected 1. It does not count against your starting Merit allowance.",
+  "Gear Access": "You begin with Gear Access 1. It does not count against your starting Merit allowance.",
+  "Legal Authority": "You begin with Legal Authority 1. It does not count against your starting Merit allowance.",
+  "Local Support": "You begin with Local Support 1. It does not count against your starting Merit allowance.",
+  "Mentor": "You begin with Mentor 1. It does not count against your starting Merit allowance.",
+  "Prepared Cache": "You begin with Prepared Cache 1. It does not count against your starting Merit allowance.",
+  "Safehouse Network": "You begin with a safehouse network treated as an appropriate Prepared Foundation Merit.",
+  "Ageless": "You do not age normally and gain Advantage on saves against mundane aging effects.",
+  "Strange Perception": "Gain Advantage on Notice or Insight checks involving supernatural, cosmic, psychic, or dimensional anomalies.",
+  "Death-Touched": "Gain Advantage on Grit Saves or saves against instant-death effects.",
+  "Conceptual Presence": "Gain Advantage on Influence or Intimidation checks when your otherworldly nature is obvious and directly relevant to the situation."
+};
+const classText = {
+  Beacon: "Beacons shape people. Leadership, inspiration, intimidation, morale, emotional influence, and force of personality define them. They are emotional gravity: their method is influence over the emotional state of everyone around them, ally and enemy alike.",
+  Bruiser: "Bruisers solve problems through force. They weaponize impact itself, turning every environment into a battlefield and every engagement into a contest of momentum they intend to win.",
+  Guardian: "Guardians endure and protect. They absorb punishment, place themselves between danger and the people who cannot protect themselves, and transform defense into battlefield influence.",
+  Sentinel: "Sentinels notice what others cannot: danger, patterns, tells, trajectories, and the half-second before an attack lands. They read the fight in advance and make enemy mistakes costly.",
+  Strategist: "Strategists win by knowing more than the enemy. They study the battlefield, identify vulnerabilities, and convert information into advantage for themselves and their allies.",
+  Striker: "Strikers treat combat as disciplined art: the right technique at the right moment against the right target. They hit smarter than everyone else.",
+  Vanguard: "Vanguards survive by never being where the attack lands. Motion, repositioning, and momentum control are their method.",
+  Warden: "Wardens master themselves first. Inner strength, spiritual resilience, emotional discipline, and mental endurance let them carry calm into chaos."
+};
+const classFeatureRules = {
+  "Commanding Presence": "While conscious and perceived by allies within Medium range, those allies have Advantage on saves against Shaken and Frightened. When you make an Influence or Intimidation check, add WIS in addition to CHA.",
+  "Taunt": "Once per Turn as a Bonus Action, roll 1d20 + CHA + Prowess against one creature's Social Value. On a success, it has Disadvantage attacking anyone but you until your next Turn; stronger successes also impose Shaken or Frightened.",
+  "Rally the Human Spirit": "Once per Turn, after a heroic social or morale trigger, spend a Bonus Action to grant an ally temporary HP, Advantage on a save, extra movement, or removal of Shaken.",
+  "Rally Cry": "Once per encounter as an Action, every ally who can perceive you gains temporary HP, ends one Condition of their choice, and may move up to half speed without provoking.",
+  "Break Them": "When you successfully Taunt or apply Shaken/Frightened through a Beacon feature or Power, spend a Bonus Action to roll against nearby enemies and spread Shaken.",
+  "Living Legend": "Once per encounter after a damaging hit, spend a Bonus Action to empower allies and pressure enemies based on your attack's degree of success.",
+  "Heavy Hitter": "When you hit with an attack or Power that deals damage, add STR to the damage roll. This applies to all damage types and attack forms.",
+  "Heavy Impact": "Once per encounter after a damaging hit, spend a Bonus Action and roll STR + Prowess against the target's STR Save Value to push, knock Prone, or Daze the target.",
+  "Breakthrough": "Choose one damage type. Your attacks and Powers ignore Resistance to that type. Against other reductions, reduce Resistance or flat reduction by your Prowess.",
+  "Devastating Force": "Once per encounter after a damaging hit, spend a Bonus Action before damage to maximize damage dice and splash half damage to nearby creatures your attack roll also beats.",
+  "Unstoppable": "When reduced to half HP or below, gain temporary HP equal to STR at the start of each Turn and Advantage on all saves for the rest of the encounter.",
+  "Irresistible Force": "Your Breakthrough damage treats Immunity as Resistance. Once per encounter, Chain Strike lets you make additional attacks equal to Prowess with decreasing damage.",
+  "Stand Between": "When an ally within Short range is hit by an attack you can perceive, use your Reaction to intercept. The ally takes no damage and you take the full damage.",
+  "Iron Presence": "Allies within Short range have Advantage on saves against fear, Shaken, and forced movement. Once per Turn as a Bonus Action, an ally may spend Recovery as a free action.",
+  "Breakthrough Resistance": "Choose one damage type. You have Resistance to it, and when Stand Between intercepts that type, you take the minimum possible damage.",
+  "Guardian's Mark": "Once per encounter, mark a creature until your next Turn. It has Disadvantage attacking others, and if it does, you may move and Stand Between with the same Reaction.",
+  "Immovable": "You cannot be moved, knocked Prone, or Restrained against your will unless the effect deals more than half your current HP. You are immune to Shaken and reduce intercepted damage by CON.",
+  "Last One Standing": "Once per encounter when reduced to 25% HP or below, gain temporary HP equal to CON x Prowess, use Stand Between freely until your next Turn, and mark creatures that damage you.",
+  "Threat Assessment": "Before initiative, learn the highest HP creature, highest Attack Value creature, and whether any creature has hidden objectives or special instructions. Gain Advantage detecting hidden threats.",
+  "Reactive Awareness": "Gain Advantage on Initiative and cannot be surprised while conscious. Once per encounter, use a Reaction to move toward or attack an enemy that attacks an ally or moves within Short range.",
+  "Threat Lock": "As a Bonus Action, designate one creature. You gain Advantage attacking it, know its position, and can react if it attacks someone else.",
+  "Decisive Strike": "Once per encounter as an Action, attack your Threat Lock target. On a hit, deal maximum damage and roll PER + Prowess to impose Prone and/or Slowed.",
+  "Read the Room": "At the start of each Turn, know visible creatures' HP status and remaining Encounter Power uses. Once per Turn after hitting a wounded target, impose Dazed, Slowed, or force an item drop.",
+  "Overwatch": "Once per encounter as an Action, trade your Turn for five special Reactions before your next Turn, covering ally defenses, movement, attacks, and battlefield control.",
+  "Tactical Analysis": "As a Bonus Action, analyze a creature to learn tactically relevant information and mark it for the encounter. You may maintain analyzed creatures up to INT.",
+  "Tactical Exploitation": "Once per Turn, when you or an ally acts against an analyzed creature, spend a Bonus Action to exploit the analysis for Advantage or a tactical benefit.",
+  "Contingency Planning": "Once per encounter, reveal a prepared contingency that changes positioning, supplies a plausible tool, protects an ally, or counters a complication with GM approval.",
+  "Calculated Pressure": "Use analysis and tactical timing to pressure enemies, creating openings and imposing consequences through INT-based class effects.",
+  "Expose the Pattern": "Once per encounter, reveal the enemy's pattern and turn it against them, granting allies stronger offensive or defensive positioning.",
+  "Master Plan": "Once per encounter, trigger a major tactical plan as a Reaction or Full Round Action, applying one large battlefield effect such as refreshing ally resources or collapsing enemy coordination.",
+  "Precision Strike": "When you hit with an attack or Power that deals damage, add FIG to the damage roll. This applies to all attack types and damage forms.",
+  "Exploit Opening": "Once per Turn after hitting a vulnerable, conditioned, damaged, or Advantage-granting target, spend a Bonus Action to add a Power Die and potentially Daze the target.",
+  "Combat Read": "At the start of each Turn, choose a creature and learn resistance, conditions, and HP state. Spend a Bonus Action before your first attack to gain Advantage against it.",
+  "Vital Strike": "Once per encounter after hitting a target suffering two or more Conditions, spend a Bonus Action to maximize damage dice. If reduced to 0 HP, make a follow-up attack at Disadvantage.",
+  "Killer Instinct": "You always know when visible creatures are below half HP. Against them, deal extra Prowess damage and improve Exploit Opening and critical-hit pressure.",
+  "Perfect Form": "Once per encounter as an Action, make one FIG attack against the highest Defense among creatures within Close range, damaging the primary target and partially affecting others.",
+  "Fluid Motion": "Standing, climbing, and difficult terrain do not slow you normally. Gain Advantage escaping restraint. If you move 15 feet before attacking, the attack has Advantage.",
+  "Evasive Strike": "Once per Turn after a damaging hit, spend a Bonus Action to move up to 15 feet without provoking Opportunity Attacks.",
+  "Momentum Shift": "When damaged by an attack, use a Reaction to move up to your speed without provoking. If you end 15 feet away, your next attack before next Turn has Advantage.",
+  "Blitz": "Once per encounter as an Action, move up to twice your speed in a line without provoking. Creatures you pass through test defense or take Power Die + DEX damage and fall Prone.",
+  "Untouchable": "When targeted by an attack you can perceive, use a Reaction to impose Disadvantage. If it hits, take half damage; if it misses, you may move 15 feet.",
+  "Apex Predator": "Gain Advantage against creatures that have not acted or are Prone, Restrained, or Dazed. Strong Success lets you move, and once per encounter you may mark a target with mutual pressure.",
+  "Inner Fortress": "Gain Advantage on saves against Shaken, Frightened, Dazed, and Charmed. Once per encounter, reroll a failed save. Steady On or Second Wind grants extra temporary HP.",
+  "Force of Will": "Once per Turn, when a creature targets you or an ally with Shaken, Frightened, Dazed, or Charmed, spend a Bonus Action to roll WIS + Prowess and turn pressure back on it.",
+  "Unshakable Ground": "You cannot be surprised while conscious. Once per encounter, when an ally within Short range fails a save against key mental conditions, use a Reaction to let them reroll.",
+  "Eye of the Storm": "Once per encounter as a Bonus Action, you and allies within Short range become immune to Shaken, Frightened, Dazed, and Charmed for Prowess Turns.",
+  "Turning the Tide": "When you save against key mental conditions, spend a Bonus Action to turn the effect back against its source. Force of Will can also be used more freely.",
+  "Transcendent Presence": "Once per encounter, roll WIS + Prowess against nearby enemies' WIS Save Values, frightening or shaking them, ending one ally Condition, and making Eye of the Storm persist."
+};
+const meritRules = {
+  "Ally": "Rating 1-3. You have a loyal NPC ally controlled by the GM. Once per session you may call on them for assistance; the rating determines whether the aid is a minor favor, capable backup, or major campaign-level support.",
+  "Alternate Identity": "Rating 1-2. You possess a convincing additional identity with documents, history, digital footprint, and social cover. Attempts to connect it to your real identity suffer Disadvantage.",
+  "Attractive": "Rating 1. Gain Advantage on Influence checks where physical appeal, style, charm, glamour, or presentation reasonably matters.",
+  "Base of Operations": "Rating 1-3. You have a secure place to operate. During a Breather there you may spend Recovery without limit and access stored equipment; higher ratings add security, facilities, and support advantages.",
+  "Cash Flow": "Rating 1-3. You have reliable income or assets. Gain Advantage when liquid money, bribes, lifestyle, or purchasing access matters within the rating's scope.",
+  "Civic Standing": "Rating 1-3. You hold a recognized position in society. Gain Advantage on Influence checks with institutions, officials, or communities that recognize your standing.",
+  "Connected": "Rating 1-3. Choose a social sphere. Gain Advantage seeking information, introductions, rumors, favors, or access within that sphere. May be taken multiple times.",
+  "Danger Aware": "Rating 1. Gain Advantage on Notice checks to detect danger, ambushes, surveillance, hidden enemies, suspicious behavior, or imminent threats.",
+  "Easy Company": "Rating 1. People tend to enjoy being around you. Gain Advantage on Influence checks to make a friendly impression, calm ordinary tension, or win casual goodwill.",
+  "Eidetic Memory": "Rating 1. You accurately recall anything you deliberately studied, read, witnessed, or memorized. Under pressure, gain Advantage on Intelligence checks to remember those details.",
+  "Fame": "Rating 1-3. You are publicly known. Gain Advantage where fame helps and suffer Disadvantage passing unnoticed among people likely to recognize you.",
+  "Fortunate Reputation": "Rating 1. Once per session, when your reputation for good fortune could influence a social scene, gain Advantage on an Influence check or grant an ally Advantage on a morale-related check.",
+  "Legal Authority": "Rating 1-3. You possess recognized legal authority. Gain Advantage with law enforcement, government agencies, and legal institutions at the appropriate level.",
+  "Local Support": "Rating 1-3. A community or local group supports you. Gain Advantage when seeking shelter, rumors, help, or protection from that community.",
+  "Media Favor": "Rating 1-2. Media channels tend to portray you positively. Once per session, gain Advantage on Influence checks tied to coverage; Rating 2 hinders attempts to frame or discredit you.",
+  "Mentor": "Rating 1-3. You have a teacher, senior hero, expert, guide, or advisor. Once per session you may consult them for knowledge, planning, or stronger arc-level support at higher ratings.",
+  "No Public Records": "Rating 1. Your civilian identity has no normal paper trail. Attempts to identify, locate, or research you through official channels suffer Disadvantage.",
+  "Patron": "Rating 1-3. A wealthy individual, agency, order, office, embassy, or similar patron supports you. Once per session you may call on them for resources, favors, or intervention.",
+  "Prepared Cache": "Rating 1. Once per session you may declare that you previously stored a plausible mundane item, disguise, tool, medical kit, document, or emergency supply nearby.",
+  "Public Trust": "Rating 1-3. You are known for doing the right thing. Gain Advantage on Influence checks with civilians, responders, officials, or communities that respect your reputation.",
+  "Restless Sleeper": "Rating 1. You sleep lightly and wake easily. You do not suffer Disadvantage on Notice checks for being asleep when a threat approaches within a reasonable distance.",
+  "Rugged": "Rating 1. Gain Advantage on Constitution checks against exposure, hunger, thirst, lack of sleep, long travel, or mundane fatigue.",
+  "Secret Identity": "Rating 1-2. Your heroic and civilian lives are separated. Attempts to connect them suffer Disadvantage unless the investigator has strong direct evidence.",
+  "Sidekick": "Rating 1-2. You have a junior heroic assistant or trainee controlled by the GM. Once per encounter they may take a limited action; Rating 2 allows one Tier 1 Power or trained Skill.",
+  "Stage Presence": "Rating 1. Gain Advantage on Influence checks involving speeches, interviews, rallies, ceremonies, public appearances, or dramatic entrances.",
+  "Strong Resolve": "Rating 1. Gain Advantage on saves against coercion, interrogation, humiliation, despair, and attempts to break your will through non-powered pressure.",
+  "Team Membership": "Rating 1-3. You belong to a recognized team or organization. Once per session you may call on them for support, with higher ratings allowing broader coordinated help.",
+  "Vehicle": "Rating 1-3. You possess a notable vehicle. When using it in pursuit, combat, or high-speed situations, gain Advantage on Vehicles checks; higher ratings add special defenses or iconic capabilities.",
+  "Wary": "Rating 1. Gain Advantage on Insight checks to detect lies, scams, manipulation, false friendliness, or suspicious motives.",
+  "Wealth": "Rating 1-3. You possess significant personal resources. Gain Advantage where financial access, purchasing power, or economic leverage matters within the rating's scope."
+};
+const flawRules = {
+  "Absent-Minded": "Rating 1. Under stress you forget names, appointments, clues, items, or obvious details. When invoked, roll INT against EV 15 or forget, misplace, or confuse the detail.",
+  "Action Addict": "Rating 1. Waiting, bureaucracy, planning, stakeouts, and inactivity make you restless. When patience is required, roll WIS against EV 15 or push for action or suffer Disadvantage on patience-based checks.",
+  "Addiction": "Rating 1-3. Define a substance, behavior, or power source. When stressed, injured, isolated, or tempted, roll CON or WIS against the rating DC or suffer relapse pressure, Disadvantage, or complications.",
+  "Alien Outsider": "Rating 1-2. You misunderstand local customs, law, humor, emotional expectations, or social norms. Suffer Disadvantage on social checks when cultural context matters unless guided.",
+  "Bad Reputation": "Rating 1-3. People distrust, fear, mock, or resent you. Suffer Disadvantage on Influence checks with people aware of the reputation unless you directly address it.",
+  "Berserk Trigger": "Rating 1-3. Define a rage trigger. When exposed, roll WIS against the rating DC or you must attack, pursue, threaten, or confront the source until you save or are steadied.",
+  "Bully": "Rating 1. You cannot stand perceived weakness. When confronted with it, roll WIS against EV 15 or insult, pressure, challenge, or provoke the target.",
+  "Code of Conduct": "Rating 1-3. Define a strict code. To violate it, roll WIS against the rating DC. On a failure you cannot bring yourself to violate it.",
+  "Combat Freeze": "Rating 2. When ambushed, surprised by violence, or entering sudden combat, roll WIS against EV 20 or become Dazed until the end of your first Turn.",
+  "Cowardice": "Rating 1-2. Direct danger shakes you. When exposed to overwhelming odds or lethal threat, roll WIS against the rating DC or retreat, seek cover, or suffer Disadvantage on attacks.",
+  "Debt": "Rating 1-3. You owe money, favors, property, secrets, or service. Once per session the GM may invoke it to impose Disadvantage or, at Rating 3, call in the debt as a scene.",
+  "Dependent": "Rating 1-3. Someone relies on you. Once per session the GM may place them in a situation requiring attention; Rating 3 can force WIS saves to prioritize anything else.",
+  "Destitute": "Rating 1-2. You lack stable money, housing, or basic resources. Suffer Disadvantage on checks requiring money, status, or stable access unless helped.",
+  "Enemy": "Rating 1-3. A specific enemy wants to harm, expose, defeat, corrupt, or destroy you. Once per session the GM may introduce them or their agents as a complication.",
+  "Emotional Trigger": "Rating 1-2. A specific subject, person, symbol, event, or memory destabilizes you. When confronted, roll WIS or become Shaken or act impulsively.",
+  "Famous Identity": "Rating 1-2. You are too recognizable. Suffer Disadvantage to pass unnoticed in public unless disguised or concealed; Rating 2 draws frequent press, fan, and enemy attention.",
+  "Fugitive": "Rating 2-3. Authorities seek you. Official channels, open travel, or public resources require a roll against EV 20 or 25 or draw attention/blockage.",
+  "Gear Dependent": "Rating 1-3. Your heroic capability depends on gear. When it is damaged, stolen, or unavailable, suffer Disadvantage on checks that rely on it; higher ratings are more severe.",
+  "Haunted": "Rating 1-3. Trauma, guilt, ghosts, visions, psychic scars, or memories follow you. When invoked, roll WIS or become Shaken, distracted, or suffer relevant Disadvantage.",
+  "Honest to a Fault": "Rating 1. You struggle to lie or mislead. Suffer Disadvantage on Influence checks involving direct lies or deliberate misdirection.",
+  "Hunted": "Rating 2-3. Someone is actively tracking you. Once per session the GM may introduce surveillance, an ambush, a trap, or a resource being cut off.",
+  "Infamy": "Rating 1-3. You are publicly associated with villainy, disaster, scandal, or fear. Suffer Disadvantage on public trust checks and attract hostile attention.",
+  "Marked by Power": "Rating 1-2. Your nature can be detected by certain groups, senses, technologies, rituals, or entities. Attempts to hide from those methods suffer Disadvantage.",
+  "Monstrous Appearance": "Rating 1-2. Your appearance frightens or alienates ordinary people. Suffer Disadvantage socially where fear/prejudice matters, but gain Advantage on relevant Intimidation.",
+  "Obligation": "Rating 1-3. You owe regular duty to a person, agency, family, faith, job, team, organization, or community. Ignoring it creates Disadvantage or can suspend related support.",
+  "Oath": "Rating 1-3. You are bound by a promise, vow, charge, pledge, or covenant. To violate it, roll WIS against the rating DC; violation can still create fallout.",
+  "Overconfident": "Rating 1. You underestimate danger. When warned or offered caution, roll WIS against EV 15 or choose the bold approach, exposing yourself or weakening your first defense.",
+  "Phobia": "Rating 1-3. Define a fear. When exposed, roll WIS against the rating DC or become Shaken or Frightened until removed or steadied.",
+  "Power Instability": "Rating 1-3. Your powers surge, misfire, or create collateral problems. When invoked, roll a relevant Attribute or suffer collateral damage, Overloaded, Shaken, or an unintended effect.",
+  "Public Identity": "Rating 2 fixed. Your civilian identity is known. Enemies, media, police, fans, civilians, and institutions can locate and pressure your ordinary life.",
+  "Reckless": "Rating 1. When a direct heroic risk presents itself, roll WIS against EV 15 to choose caution. On failure, you charge in or prioritize action over safety.",
+  "Responsibility to the Innocent": "Rating 1-3. You cannot ignore civilian danger. When civilians are endangered and another goal competes, roll WIS against the rating DC to prioritize the other goal.",
+  "Secret Weakness": "Rating 1-3. Define a vulnerability. When exposed, suffer Disadvantage on relevant saves and checks; higher ratings can suspend Merits or become campaign-relevant.",
+  "Social Outsider": "Rating 1. You lack normal cultural access. Suffer Disadvantage on etiquette, bureaucracy, formal social assumptions, or institutional navigation unless assisted.",
+  "Vulnerable Reputation": "Rating 1-2. Public trust in you is fragile. When framed, criticized, or scandalized, suffer Disadvantage on public Influence until actively repaired.",
+  "Weak Support System": "Rating 1. You lack reliable anchors. During Downtime recovery from trauma, scandal, or serious stress, suffer Disadvantage unless another hero or NPC helps."
+};
 const defaults = {
   rank: "Mid-Level",
   level: 1,
@@ -267,6 +440,22 @@ function addLine(field, value) {
   sheet[field] = current.join("\n");
 }
 
+function namedRule(name, rules) {
+  return rules[name] ? `${name}: ${rules[name]}` : name;
+}
+
+function ratedRule(name, rules) {
+  const base = name.replace(/\s+\d+$/, "");
+  return rules[base] ? `${name}: ${rules[base]}` : name;
+}
+
+function expandedRuleLines(value, rules) {
+  return lines(value).map(line => {
+    const clean = line.replace(/:.*$/, "").trim();
+    return rules[clean] ? `${clean}: ${rules[clean]}` : line;
+  });
+}
+
 function removeOriginLines() {
   const originMerits = Object.values(origins).map(origin => origin.merit);
   const originFlaws = Object.values(origins).map(origin => origin.flaw);
@@ -289,9 +478,9 @@ function fillOrigin() {
   ensureOrigin();
   const origin = origins[sheet.origin];
   removeOriginLines();
-  const traitLine = sheet.originTrait ? `Chosen ${origin.traitLabel}: ${sheet.originTrait}` : `Choose ${origin.traitLabel}.`;
+  const traitLine = sheet.originTrait ? `Chosen ${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : `Choose ${origin.traitLabel}.`;
   const skillLine = origin.skillPicks > 1 ? `Choose ${origin.skillPicks} Origin Skills.` : "Choose 1 Origin Skill.";
-  sheet.originTalent = `${origin.talent}\nBuilt-In Merit: ${origin.merit}\nBuilt-In Flaw: ${origin.flaw}\n${traitLine}\n${skillLine}\n${origin.note}`;
+  sheet.originTalent = `${origin.talent}\nBuilt-In Merit: ${ratedRule(origin.merit, meritRules)}\nBuilt-In Flaw: ${ratedRule(origin.flaw, flawRules)}\n${traitLine}\n${skillLine}\n${origin.note}`;
   addLine("merits", origin.merit);
   addLine("flaws", origin.flaw);
   [sheet.originSkill1, sheet.originSkill2].filter(Boolean).forEach(skillName => {
@@ -304,11 +493,12 @@ function fillClassFeatures() {
   const info = classes[sheet.className] || classes.Bruiser;
   const level = Number(sheet.level || 1);
   const features = [];
-  if (level >= 1) features.push(`Level 1: ${info.features[0]}`, `Level 1: ${info.features[1]}`);
-  if (level >= 3) features.push(`Level 3: ${info.features[2]}`);
-  if (level >= 5) features.push(`Level 5: ${info.features[3]}`);
-  if (level >= 7) features.push(`Level 7: ${info.features[4]}`);
-  if (level >= 10) features.push(`Level 10: ${info.features[5]}`);
+  const featureLine = (levelLabel, name) => `${levelLabel}: ${name} - ${classFeatureRules[name] || "See class feature text."}`;
+  if (level >= 1) features.push(featureLine("Level 1", info.features[0]), featureLine("Level 1", info.features[1]));
+  if (level >= 3) features.push(featureLine("Level 3", info.features[2]));
+  if (level >= 5) features.push(featureLine("Level 5", info.features[3]));
+  if (level >= 7) features.push(featureLine("Level 7", info.features[4]));
+  if (level >= 10) features.push(featureLine("Level 10", info.features[5]));
   sheet.classFeatures = features.join("\n");
 }
 
@@ -333,7 +523,7 @@ function initialize(reset = false) {
   ensureOrigin();
   ensureClassSaves(reset);
   fillOrigin();
-  if (reset || !sheet.classFeatures) fillClassFeatures();
+  if (reset || !sheet.classFeatures || !sheet.classFeatures.includes(" - ")) fillClassFeatures();
   if (reset || !sheet.minorTrigger) fillCalling();
   save();
 }
@@ -511,6 +701,7 @@ function renderAbilityScores() {
 function renderOrigin() {
   const origin = origins[sheet.origin] || origins.Enhanced;
   const secondary = origin.secondary[sheet.originPrimaryBonus] || origin.secondary[origin.primary[0]] || [];
+  const traitText = sheet.originTrait ? originTraitRules[sheet.originTrait] : "Choose a trait to see its rules text here.";
   return `
     <div class="form-grid three">
       ${select("origin", "Origin", Object.keys(origins))}
@@ -521,11 +712,13 @@ function renderOrigin() {
       ${origin.skillPicks > 1 ? select("originSkill2", "Origin Skill 2", origin.skills) : "<div></div>"}
     </div>
     <div class="rule-card"><h2>${html(origin.talent)}</h2><div class="pill-row"><span>Merit: ${html(origin.merit)}</span><span>Flaw: ${html(origin.flaw)}</span></div><p>${html(origin.note)}</p></div>
+    <div class="rule-card"><h2>${html(sheet.originTrait || origin.traitLabel)}</h2><p>${html(traitText)}</p></div>
   `;
 }
 
 function renderClass() {
   const info = classes[sheet.className] || classes.Bruiser;
+  const visibleFeatures = lines(sheet.classFeatures);
   return `
     <div class="form-grid two">
       ${select("className", "Class", Object.keys(classes))}
@@ -537,6 +730,8 @@ function renderClass() {
       <div><span>Saves</span><strong>${info.saves.map(save => save.toUpperCase()).join(", ")}</strong></div>
       <div><span>Recovery</span><strong>${signed(info.recovery)}</strong></div>
     </div>
+    <div class="rule-card"><h2>${html(sheet.className || "Class")}</h2><p>${html(classText[sheet.className] || "")}</p></div>
+    <div class="rule-card"><h2>Class Feature Rules</h2><ul>${visibleFeatures.map(feature => `<li>${html(feature)}</li>`).join("")}</ul></div>
     ${textarea("classFeatures", "Class Features", 8)}
   `;
 }
@@ -591,10 +786,16 @@ function renderSkills() {
 }
 
 function renderMeritsFlaws() {
+  const meritText = expandedRuleLines(sheet.merits, meritRules);
+  const flawText = expandedRuleLines(sheet.flaws, flawRules);
   return `
     <div class="form-grid two">
       <label>Merit Picker<select data-add-field="merits">${options(merits, "", "Choose Merit")}</select></label>
       <label>Flaw Picker<select data-add-field="flaws">${options(flaws, "", "Choose Flaw")}</select></label>
+    </div>
+    <div class="form-grid two">
+      <div class="rule-card"><h2>Selected Merit Rules</h2>${meritText.length ? `<ul>${meritText.map(line => `<li>${html(line)}</li>`).join("")}</ul>` : "<p>Choose Merits to see their full rules text.</p>"}</div>
+      <div class="rule-card"><h2>Selected Flaw Rules</h2>${flawText.length ? `<ul>${flawText.map(line => `<li>${html(line)}</li>`).join("")}</ul>` : "<p>Choose Flaws to see their full rules text.</p>"}</div>
     </div>
     <div class="form-grid two">${textarea("originTalent", "Origin Mechanics", 8)}${textarea("merits", "Merits", 8)}${textarea("flaws", "Flaws", 8)}</div>
   `;
@@ -722,12 +923,12 @@ function renderSheet() {
         const total = abilityMod(ability) + (sheet[`skill_${key}_trained`] ? values.pro : 0) + (sheet[`skill_${key}_expert`] ? values.pro : 0);
         return `<div><span>${name}</span><em>${ability.toUpperCase()}</em><strong>${signed(total)}</strong></div>`;
       }).join("")}</div></section>
-      <section class="sheet-row"><div class="sheet-section text-list"><h2>Origin</h2>${listBlock([origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${sheet.originTrait}` : "", sheet.originSkill1, sheet.originSkill2, origin.note])}</div><div class="sheet-section text-list"><h2>Concept</h2>${listBlock([sheet.concept, sheet.specialties, sheet.proficiencies])}</div></section>
+      <section class="sheet-row"><div class="sheet-section text-list"><h2>Origin</h2>${listBlock([origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note])}</div><div class="sheet-section text-list"><h2>Concept</h2>${listBlock([sheet.concept, sheet.specialties, sheet.proficiencies])}</div></section>
     </article>
     <article class="sheet-page">
       <header class="sheet-title"><p>Features and Powers</p><h1>${html(sheet.heroName || "Character")}</h1></header>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Class Features</h2>${listBlock(lines(sheet.classFeatures))}</div><div class="sheet-section text-list"><h2>Edge Triggers</h2>${listBlock([`Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`])}</div></section>
-      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...lines(sheet.startingTalent), ...lines(sheet.talents), ...lines(sheet.merits)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(lines(sheet.flaws))}</div></section>
+      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...lines(sheet.startingTalent), ...lines(sheet.talents), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
       <section class="sheet-section"><h2>Powers</h2><div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${html(power.notes || "")}</p></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Gear</h2>${listBlock([...lines(sheet.gear), ...lines(sheet.enhancements), ...lines(sheet.limitationsText), sheet.costume])}</div><div class="sheet-section text-list"><h2>Backstory / Notes</h2>${listBlock([sheet.backstory, sheet.sessionNotes])}</div></section>
     </article>
