@@ -41,6 +41,18 @@ const specialtyExamples = {
   Technology: ["Hacking", "Power Armor", "Security Systems", "Cybernetics", "Electronics Repair"],
   Vehicles: ["Motorcycles", "Jets", "Cars and Trucks", "Watercraft", "Helicopters"]
 };
+const sideRules = {
+  Heroic: {
+    summary: "Heroic characters protect, save, defend, inspire, and act for others. They are in this for the people who cannot protect themselves; when they show up, the goal is that things go better for someone other than themselves.",
+    callings: "Heroic characters choose from Callings marked Heroic in the Chapter 5 catalog. Those Callings emphasize protection, sacrifice, duty, compassion, justice, and the pressure that comes from genuinely caring about the outcome.",
+    reputation: "When a Heroic reputation exists, it tends to produce trust, relief, and the emotional weight of someone arriving who is on your side."
+  },
+  Unaligned: {
+    summary: "Unaligned characters operate according to their own logic: personal code, professional ethics, loyalty, survival, curiosity, self-interest, profit, or a private moral framework that does not map cleanly onto heroic idealism.",
+    callings: "Unaligned characters are not villains. They have access to the full Calling catalog, including Callings that reflect more personal, self-interested, morally complicated, or privately driven motivations.",
+    reputation: "An Unaligned reputation does not carry a clear moral promise in either direction. How the world reads it depends on the character's specific Merits, history, and who is doing the reading."
+  }
+};
 const originTraitRules = {
   "Environmental Adaptation": "Gain Advantage on saves against one chosen environment: cold, heat, low oxygen, pressure, radiation, or low gravity.",
   "Unusual Diet": "You can safely consume substances toxic to humans and go significantly longer without food, water, or sleep without mechanical penalty.",
@@ -960,11 +972,22 @@ function renderClass() {
 }
 
 function renderSide() {
+  const side = sideRules[sheet.side] || sideRules.Heroic;
   return `
     <div class="form-grid two">
       ${select("side", "Side", ["Heroic", "Unaligned"])}
     </div>
-    <div class="rule-card"><h2>${html(sheet.side || "Choose a Side")}</h2><p>Record whether this character is currently Heroic or Unaligned. This appears on the final character sheet identity block.</p></div>
+    <div class="rule-card">
+      <h2>Choose a Side</h2>
+      <p>Every hero in HEROIC 5e has a Side. A Side is not alignment and not a moral cage. It is a simple declaration of narrative position: the broad direction a character's actions tend to move in, and what that means for how the world reads them.</p>
+      <p>Side determines which Callings are available and sets the emotional register of the hero's public presence. Heroic and Unaligned are supported player character choices; Villainous is defined for GM use with NPCs and antagonists.</p>
+    </div>
+    <div class="rule-card">
+      <h2>${html(sheet.side || "Choose a Side")}</h2>
+      <p>${html(side.summary)}</p>
+      <p>${html(side.callings)}</p>
+      <p>${html(side.reputation)}</p>
+    </div>
   `;
 }
 
