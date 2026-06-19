@@ -51,6 +51,8 @@ const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = load(STORAGE_KEY, defaults);
 let accessibility = load(ACCESSIBILITY_KEY, { zoom: "normal", dyslexic: false });
+let sampleCharacters = [];
+let sampleStatus = "";
 
 function load(key, fallback) {
   try {
@@ -91,6 +93,16 @@ function characterId(name) {
 
 function cloneSheet(value) {
   return JSON.parse(JSON.stringify(value));
+}
+
+function initialsFor(name) {
+  return String(name || "?")
+    .split(/\s+/)
+    .map(part => part[0])
+    .filter(Boolean)
+    .slice(0, 3)
+    .join("")
+    .toUpperCase() || "?";
 }
 
 function mod(score) {
@@ -683,6 +695,7 @@ function makeCharacterRecord(name) {
     calling: sheet.calling || "",
     rank: sheet.rank || "",
     level: Number(sheet.level || 1),
+    portrait: sheet.portrait || "",
     updatedAt: now,
     createdAt: existing ? existing.createdAt : now,
     sheet: cloneSheet(sheet)
@@ -698,9 +711,23 @@ function saveRecordLocal(record) {
   saveLibrary(nextLibrary);
 }
 
-function openLibrary() {
+async function loadSamples() {
+  try {
+    const response = await fetch("/sample-characters/manifest.json", { cache: "no-store" });
+    if (!response.ok) throw new Error(`Could not load samples (${response.status})`);
+    const payload = await response.json();
+    sampleCharacters = Array.isArray(payload.samples) ? payload.samples : [];
+    sampleStatus = "";
+  } catch (error) {
+    sampleCharacters = [];
+    sampleStatus = error.message;
+  }
+}
+
+async function openLibrary() {
   const drawer = document.querySelector("[data-library-drawer]");
   drawer.hidden = false;
+  await loadSamples();
   renderLibrary();
 }
 
@@ -711,27 +738,34 @@ function closeLibrary() {
 function renderLibrary() {
   const library = loadLibrary().sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
   const list = document.querySelector("[data-library-list]");
-  document.querySelector("[data-library-count]").textContent = `${library.length} saved`;
+  document.querySelector("[data-library-count]").textContent = `${library.length} saved, ${sampleCharacters.length} samples`;
 
-  if (!library.length) {
+  if (!library.length && !sampleCharacters.length) {
     list.innerHTML = `<div class="library-empty">No saved characters yet.</div>`;
     return;
   }
 
-  list.innerHTML = library.map(character => libraryItem(character)).join("");
+  list.innerHTML = `
+    ${sampleCharacters.length ? `<h3>Sample Characters</h3>${sampleCharacters.map(character => libraryItem(character, "sample")).join("")}` : ""}
+    ${sampleStatus ? `<div class="library-empty">${html(sampleStatus)}</div>` : ""}
+    ${library.length ? `<h3>Your Saved Characters</h3>${library.map(character => libraryItem(character, "local")).join("")}` : ""}
+  `;
 }
 
-function libraryItem(character) {
+function libraryItem(character, source = "local") {
+  const portrait = character.portrait || character.sheet?.portrait || "";
+  const name = character.name || character.heroName || character.sheet?.heroName || "Unnamed Hero";
   return `
     <article class="library-item">
+      <div class="library-portrait" style="${portrait ? `background-image:url(${portrait})` : ""}">${portrait ? "" : initialsFor(name)}</div>
       <div>
-        <strong>${html(character.name)}</strong>
+        <strong>${html(name)}</strong>
         <span>${html([character.origin, character.className, character.calling].filter(Boolean).join(" - ") || "No build details")}</span>
         <small>Level ${html(character.level || 1)} ${html(character.rank || "")} - Saved ${html(new Date(character.updatedAt).toLocaleString())}</small>
       </div>
       <div class="library-item-actions">
-        <button type="button" data-action="load-character" data-character-id="${html(character.id)}">Load</button>
-        <button type="button" data-action="delete-character" data-character-id="${html(character.id)}">Delete</button>
+        <button type="button" data-action="${source === "sample" ? "load-sample" : "load-character"}" data-character-id="${html(character.id)}">Load</button>
+        ${source === "sample" ? "" : `<button type="button" data-action="delete-character" data-character-id="${html(character.id)}">Delete</button>`}
       </div>
     </article>
   `;
@@ -747,6 +781,26 @@ function loadCharacter(id) {
   renderBuilder();
   renderSheet();
   renderProgress();
+}
+
+async function loadSampleCharacter(id) {
+  const sample = sampleCharacters.find(character => character.id === id);
+  if (!sample) return;
+
+  try {
+    const response = await fetch(`/sample-characters/${encodeURIComponent(sample.file)}`, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Could not load sample (${response.status})`);
+    const payload = await response.json();
+    sheet = { ...defaults, ...(payload.sheet || payload) };
+    initialize(true);
+    closeLibrary();
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+  } catch (error) {
+    sampleStatus = error.message;
+    renderLibrary();
+  }
 }
 
 function deleteCharacter(id) {
@@ -848,6 +902,7 @@ app.addEventListener("click", event => {
   if (action === "open-library") openLibrary();
   if (action === "close-library") closeLibrary();
   if (action === "load-character") loadCharacter(button.dataset.characterId);
+  if (action === "load-sample") loadSampleCharacter(button.dataset.characterId);
   if (action === "delete-character") deleteCharacter(button.dataset.characterId);
   if (action === "import-json") document.querySelector("#importFile").click();
   if (action === "print") window.print();
