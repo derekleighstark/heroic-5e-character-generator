@@ -634,6 +634,10 @@ p {
   grid-template-columns: 74px minmax(0, 1fr) 48px 18px;
 }
 
+.skill-legend {
+  margin-bottom: 10px;
+}
+
 .skill-row:not(.trained) {
   color: var(--muted);
 }

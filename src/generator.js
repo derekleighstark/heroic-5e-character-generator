@@ -1047,7 +1047,14 @@ function renderSkills() {
       </section>
     </div>
     <div class="form-grid two">
-      <section><h2>Skill Totals</h2><div class="check-grid skill-total-grid">
+      <section>
+        <div class="rule-card skill-legend">
+          <h2>Skill Total Key</h2>
+          <p><strong>Source</strong> shows whether the Skill is Untrained, trained by Origin, or trained by one of the 4 additional picks.</p>
+          <p><strong>Right checkbox</strong> marks Expertise. Expertise is only available on trained Skills and uses double Prowess.</p>
+          <p><strong>Specialties</strong> are recorded as focused cards, such as Technology (Power Armor). They grant Advantage when the focus directly applies.</p>
+        </div>
+        <h2>Skill Totals</h2><div class="check-grid skill-total-grid">
         ${skills.map(([key, name, ability]) => {
           const trained = Boolean(sheet[`skill_${key}_trained`]);
           const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
@@ -1097,7 +1104,6 @@ function renderMeritsFlaws() {
       <div class="rule-card"><h2>Selected Merits</h2>${removableRuleCards("merits", meritRules, [origin.merit])}</div>
       <div class="rule-card"><h2>Selected Flaws</h2>${removableRuleCards("flaws", flawRules, [origin.flaw])}</div>
     </div>
-    <div class="form-grid two">${textarea("originTalent", "Origin Mechanics", 8)}${textarea("merits", "Merits", 8)}${textarea("flaws", "Flaws", 8)}</div>
   `;
 }
 
