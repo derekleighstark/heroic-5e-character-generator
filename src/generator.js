@@ -390,9 +390,9 @@ function renderProgress() {
   const value = completion();
   document.querySelector("[data-progress-text]").textContent = `${value}%`;
   document.querySelector("[data-progress-bar]").style.width = `${value}%`;
-  document.querySelector(".step-list").innerHTML = steps.map(([id, label, deck], index) => `
+  document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
     <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
-      <span>${index + 1}</span><strong>${label}</strong><small>${deck}</small>
+      <span>${index + 1}</span><strong>${label}</strong>
     </button>
   `).join("");
 }

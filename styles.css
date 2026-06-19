@@ -187,11 +187,11 @@ p {
   top: 74px;
   max-height: calc(100vh - 88px);
   overflow: auto;
-  padding: 12px;
+  padding: 10px;
 }
 
 .progress-card {
-  padding: 12px;
+  padding: 10px;
   background: var(--navy);
   color: #fff;
   border-left: 5px solid var(--gold);
@@ -207,12 +207,12 @@ p {
 
 .progress-card strong {
   display: block;
-  margin: 4px 0 8px;
-  font-size: 1.7rem;
+  margin: 2px 0 6px;
+  font-size: 1.45rem;
 }
 
 .progress-track {
-  height: 8px;
+  height: 7px;
   background: rgba(255, 255, 255, .24);
 }
 
@@ -224,16 +224,17 @@ p {
 
 .step-list {
   display: grid;
-  gap: 7px;
-  margin-top: 12px;
+  gap: 5px;
+  margin-top: 9px;
 }
 
 .step-list button {
   display: grid;
-  grid-template-columns: 28px 1fr;
-  gap: 2px 8px;
-  min-height: 56px;
-  padding: 8px;
+  grid-template-columns: 26px 1fr;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 6px 7px;
   background: #fff;
   border: 1px solid var(--line);
   color: var(--navy);
@@ -247,24 +248,19 @@ p {
 }
 
 .step-list span {
-  grid-row: span 2;
   display: grid;
   place-items: center;
-  width: 28px;
-  height: 28px;
+  width: 26px;
+  height: 24px;
   background: var(--navy);
   color: #fff;
   font-weight: 900;
 }
 
 .step-list strong {
-  font-size: .9rem;
+  font-size: .78rem;
+  line-height: 1.05;
   text-transform: uppercase;
-}
-
-.step-list small {
-  color: var(--muted);
-  font-size: .72rem;
 }
 
 .builder-panel {
