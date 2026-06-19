@@ -630,6 +630,25 @@ p {
   grid-template-columns: 18px 1fr 48px;
 }
 
+.skill-total-grid .check-row {
+  grid-template-columns: 74px minmax(0, 1fr) 48px 18px;
+}
+
+.skill-row:not(.trained) {
+  color: var(--muted);
+}
+
+.skill-source {
+  color: var(--muted);
+  font-size: .64rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.skill-row.trained .skill-source {
+  color: var(--red);
+}
+
 .check-row:nth-child(even) {
   background: #f7f2e6;
 }
@@ -648,6 +667,12 @@ p {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.skill-picker-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .export-card {

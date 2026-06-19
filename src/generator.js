@@ -22,6 +22,25 @@ const abilityArrays = {
   "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
   "World Class": [20, 18, 16, 15, 14, 12, 10, 8]
 };
+const specialtyExamples = {
+  Acrobatics: ["Aerial Maneuvers", "Parkour", "Tightrope and Balance", "Evasive Movement", "Controlled Falls"],
+  Athletics: ["Climbing", "Swimming", "Grappling", "Feats of Strength", "Endurance Running"],
+  Culture: ["Alien Civilizations", "Earth History", "Criminal Organizations", "Religious Traditions", "Political Institutions"],
+  Finesse: ["Lockpicking", "Pickpocketing", "Concealment", "Safecracking"],
+  Influence: ["Public Speaking", "Negotiation", "Media Relations", "Leadership", "Diplomacy"],
+  Insight: ["Detecting Lies", "Reading Crowds", "Emotional Assessment", "Psychological Profiling"],
+  Intimidation: ["Interrogation", "Fearsome Presence", "Written Threats", "Crowd Control"],
+  Investigation: ["Forensics", "Crime Scene Analysis", "Research", "Pattern Analysis", "Surveillance"],
+  Medicine: ["Trauma Surgery", "Poison and Toxicology", "Field Stabilization", "Diagnosis"],
+  Notice: ["Ambush Detection", "Surveillance", "Lip Reading", "Tracking by Sound"],
+  Occult: ["Demonology", "Prophecy", "Spirit Communication", "Ritual Magic", "Dimensional Lore"],
+  Science: ["Physics", "Chemistry", "Genetics", "Xenobiology", "Engineering Theory"],
+  Stealth: ["Urban Infiltration", "Wilderness Concealment", "Tailing Targets", "Silent Movement"],
+  Streetwise: ["Gang Culture", "Black Market Access", "Criminal Contacts", "Urban Navigation"],
+  Survival: ["Tracking", "Wilderness Navigation", "Harsh Environment Endurance", "Scavenging"],
+  Technology: ["Hacking", "Power Armor", "Security Systems", "Cybernetics", "Electronics Repair"],
+  Vehicles: ["Motorcycles", "Jets", "Cars and Trucks", "Watercraft", "Helicopters"]
+};
 const originTraitRules = {
   "Environmental Adaptation": "Gain Advantage on saves against one chosen environment: cold, heat, low oxygen, pressure, radiation, or low gravity.",
   "Unusual Diet": "You can safely consume substances toxic to humans and go significantly longer without food, water, or sleep without mechanical penalty.",
@@ -575,6 +594,96 @@ function removeOriginLines() {
   sheet.flaws = lines(sheet.flaws).filter(line => !originFlaws.includes(line)).join("\n");
 }
 
+function skillNameToKey(name) {
+  const skill = skills.find(([, skillName]) => skillName === name);
+  return skill ? skill[0] : "";
+}
+
+function selectedOriginSkills() {
+  return [sheet.originSkill1, sheet.originSkill2].filter(Boolean);
+}
+
+function additionalSkillFields() {
+  return ["skillPick1", "skillPick2", "skillPick3", "skillPick4"];
+}
+
+function additionalSkillPicks() {
+  return additionalSkillFields().map(field => sheet[field]).filter(Boolean);
+}
+
+function migrateAdditionalSkillPicks() {
+  if (additionalSkillPicks().length) return;
+  const originSet = new Set(selectedOriginSkills());
+  const previousTraining = skills
+    .filter(([key, name]) => sheet[`skill_${key}_trained`] && !originSet.has(name))
+    .map(([, name]) => name)
+    .slice(0, 4);
+
+  additionalSkillFields().forEach((field, index) => {
+    if (previousTraining[index]) sheet[field] = previousTraining[index];
+  });
+}
+
+function duplicateSpecialtyCredits() {
+  const originSet = new Set(selectedOriginSkills());
+  const trained = new Set(originSet);
+  let credits = 0;
+
+  additionalSkillPicks().forEach(name => {
+    if (trained.has(name) || originSet.has(name)) {
+      credits += 1;
+    } else {
+      trained.add(name);
+    }
+  });
+
+  return credits;
+}
+
+function syncSkillTraining() {
+  const trained = new Set(selectedOriginSkills());
+  additionalSkillPicks().forEach(name => {
+    if (!trained.has(name)) trained.add(name);
+  });
+
+  skills.forEach(([key, name]) => {
+    sheet[`skill_${key}_trained`] = trained.has(name);
+  });
+}
+
+function skillSelectOptions(currentValue) {
+  const allSkills = skills.map(([, name]) => name);
+  return options(allSkills, currentValue || "", "Choose Skill");
+}
+
+function trainedSkillNames() {
+  return skills.filter(([key]) => sheet[`skill_${key}_trained`]).map(([, name]) => name);
+}
+
+function specialtyExamplesFor(skillName) {
+  return specialtyExamples[skillName] || [];
+}
+
+function specialtyCards() {
+  const items = lines(sheet.specialties);
+  if (!items.length) return `<p class="empty">No Specialties selected.</p>`;
+  return `<div class="selection-card-grid">${items.map(item => `
+    <article class="selection-card">
+      <div>
+        <h3>${html(item)}</h3>
+        <p>When this narrow focus directly applies, roll with Advantage. If Advantage already applies and the Skill is trained, add Prowess as an additional bonus instead.</p>
+      </div>
+      <button type="button" data-action="remove-line" data-field="specialties" data-value="${html(item)}">Remove</button>
+    </article>
+  `).join("")}</div>`;
+}
+
+function skillBonus(key, ability, values) {
+  const trained = Boolean(sheet[`skill_${key}_trained`]);
+  const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+  return abilityMod(ability) + (trained ? values.pro * (expert ? 2 : 1) : 0);
+}
+
 function ensureOrigin() {
   if (!origins[sheet.origin]) sheet.origin = "Enhanced";
   const origin = origins[sheet.origin];
@@ -599,6 +708,8 @@ function fillOrigin() {
     const skill = skills.find(([, name]) => name === skillName);
     if (skill) sheet[`skill_${skill[0]}_trained`] = true;
   });
+  migrateAdditionalSkillPicks();
+  syncSkillTraining();
 }
 
 function fillClassFeatures() {
@@ -884,15 +995,62 @@ function renderHitPoints() {
 
 function renderSkills() {
   const values = calc();
+  syncSkillTraining();
+  const originSkills = selectedOriginSkills();
+  const originSet = new Set(originSkills);
+  const picks = additionalSkillFields();
+  const pickedCount = additionalSkillPicks().length;
+  const specialtyCreditCount = duplicateSpecialtyCredits();
+  const specialtyCount = lines(sheet.specialties).length;
+  const specialtySkill = sheet.specialtySkill || trainedSkillNames()[0] || skills[0][1];
+  const examples = specialtyExamplesFor(specialtySkill);
   return `
+    <div class="rule-card">
+      <h2>Skills & Specialties Rules</h2>
+      <p>Origin Skills are trained automatically. Choose 4 additional Skills from the full list. If an additional pick repeats a Skill already trained by Origin, record a narrow Specialty for that Skill instead.</p>
+      <p>Training adds Prowess. Expertise adds double Prowess instead of single Prowess. A Specialty grants Advantage when its narrow focus directly applies; if Advantage already applies, add Prowess as an additional bonus.</p>
+    </div>
     <div class="form-grid two">
-      <section><h2>Skills</h2><div class="check-grid">
+      <section class="rule-card">
+        <h2>Origin Skills</h2>
+        ${originSkills.length ? rulesList(originSkills.map(name => `${name} - trained from Origin`)) : `<p class="empty">Choose Origin Skills in Step 3.</p>`}
+      </section>
+      <section class="rule-card">
+        <h2>Additional Skills</h2>
+        <p>${pickedCount} of 4 selected. Duplicate trained picks create Specialty opportunities.</p>
+        <div class="skill-picker-grid">
+          ${picks.map((field, index) => `<label>Additional Skill ${index + 1}<select data-field="${field}">${skillSelectOptions(sheet[field])}</select></label>`).join("")}
+        </div>
+      </section>
+    </div>
+    <div class="form-grid two">
+      <section><h2>Skill Totals</h2><div class="check-grid skill-total-grid">
         ${skills.map(([key, name, ability]) => {
-          const total = abilityMod(ability) + (sheet[`skill_${key}_trained`] ? values.pro : 0) + (sheet[`skill_${key}_expert`] ? values.pro : 0);
-          return `<label class="check-row"><input type="checkbox" data-field="skill_${key}_trained" ${checked(sheet[`skill_${key}_trained`])}><span>${name} <small>${ability.toUpperCase()}</small></span><strong>${signed(total)}</strong><input type="checkbox" title="Expertise" data-field="skill_${key}_expert" ${checked(sheet[`skill_${key}_expert`])}></label>`;
+          const trained = Boolean(sheet[`skill_${key}_trained`]);
+          const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+          const source = originSet.has(name) ? "Origin" : additionalSkillPicks().includes(name) ? "Additional" : "Untrained";
+          const total = skillBonus(key, ability, values);
+          return `<label class="check-row skill-row ${trained ? "trained" : ""}"><span class="skill-source">${html(source)}</span><span>${name} <small>${ability.toUpperCase()}</small></span><strong>${signed(total)}</strong><input type="checkbox" title="Expertise" data-field="skill_${key}_expert" ${checked(expert)} ${trained ? "" : "disabled"}></label>`;
         }).join("")}
       </div></section>
-      <section>${textarea("specialties", "Specialties / Expertise", 8)}${textarea("proficiencies", "Languages", 6)}</section>
+      <section class="choice-preview-panel">
+        <div class="rule-card">
+          <h2>Specialty Builder</h2>
+          <p>${specialtyCreditCount} Specialty ${specialtyCreditCount === 1 ? "opportunity" : "opportunities"} from repeated Skill picks. ${specialtyCount} recorded.</p>
+          <label>Skill<select data-field="specialtySkill">${options(skills.map(([, name]) => name), specialtySkill, "Choose Skill")}</select></label>
+          <label>Focused Specialty<input type="text" data-field="specialtyFocus" value="${html(sheet.specialtyFocus || "")}" placeholder="${html(examples[0] || "Focused expertise")}"></label>
+          <button type="button" data-action="add-specialty">Add Specialty</button>
+        </div>
+        <div class="rule-card">
+          <h2>${html(specialtySkill)} Examples</h2>
+          ${rulesList(examples)}
+        </div>
+        <div class="rule-card">
+          <h2>Selected Specialties</h2>
+          ${specialtyCards()}
+        </div>
+        ${textarea("proficiencies", "Languages", 6)}
+      </section>
     </div>
   `;
 }
@@ -1056,7 +1214,7 @@ function renderSheetMarkup() {
       <section class="sheet-section"><h2>Abilities</h2><div class="sheet-abilities">${abilities.map(([key, short]) => `<div><span>${short}</span><strong>${abilityScore(key)}</strong><em>${signed(abilityMod(key))}</em></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat("Class EV", values.classEV)}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
       <section class="sheet-section"><h2>Skills</h2><div class="sheet-skills">${skills.map(([key, name, ability]) => {
-        const total = abilityMod(ability) + (sheet[`skill_${key}_trained`] ? values.pro : 0) + (sheet[`skill_${key}_expert`] ? values.pro : 0);
+        const total = skillBonus(key, ability, values);
         return `<div><span>${name}</span><em>${ability.toUpperCase()}</em><strong>${signed(total)}</strong></div>`;
       }).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Origin</h2>${listBlock([origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note])}</div><div class="sheet-section text-list"><h2>Concept</h2>${listBlock([sheet.concept, sheet.specialties, sheet.proficiencies])}</div></section>
@@ -1081,6 +1239,7 @@ function updateField(field, value) {
   sheet[field] = value;
   if (field === "rank") normalizeAbilityScores();
   if (["origin", "originPrimaryBonus", "originSecondaryBonus", "originTrait", "originSkill1", "originSkill2"].includes(field)) fillOrigin();
+  if (additionalSkillFields().includes(field)) syncSkillTraining();
   if (field === "className") {
     ensureClassSaves(true);
     fillClassFeatures();
@@ -1394,6 +1553,18 @@ app.addEventListener("click", event => {
     const value = sheet[button.dataset.source];
     if (value) {
       addLine(button.dataset.field, value);
+      save();
+      renderBuilder();
+      renderSheet();
+      renderProgress();
+    }
+  }
+  if (action === "add-specialty") {
+    const skillName = sheet.specialtySkill || trainedSkillNames()[0] || skills[0][1];
+    const focus = String(sheet.specialtyFocus || "").trim();
+    if (skillName && focus) {
+      addLine("specialties", `${skillName} (${focus})`);
+      sheet.specialtyFocus = "";
       save();
       renderBuilder();
       renderSheet();
