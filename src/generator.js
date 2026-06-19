@@ -892,7 +892,7 @@ function renderSkills() {
           return `<label class="check-row"><input type="checkbox" data-field="skill_${key}_trained" ${checked(sheet[`skill_${key}_trained`])}><span>${name} <small>${ability.toUpperCase()}</small></span><strong>${signed(total)}</strong><input type="checkbox" title="Expertise" data-field="skill_${key}_expert" ${checked(sheet[`skill_${key}_expert`])}></label>`;
         }).join("")}
       </div></section>
-      <section>${textarea("specialties", "Specialties / Expertise", 8)}${textarea("proficiencies", "Languages / Proficiencies", 6)}</section>
+      <section>${textarea("specialties", "Specialties / Expertise", 8)}${textarea("proficiencies", "Languages", 6)}</section>
     </div>
   `;
 }
