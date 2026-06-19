@@ -37,14 +37,21 @@ const defaults = {
 };
 
 const steps = [
-  ["concept", "Concept", "Identity, rank, and portrait"],
-  ["origin", "Origin", "Bonuses and built-in mechanics"],
-  ["class", "Class", "Class, calling, and Edge"],
-  ["abilities", "Abilities", "Scores, saves, and skills"],
-  ["powers", "Powers", "Sets, picks, and tier notes"],
-  ["features", "Features", "Talents, merits, and flaws"],
-  ["gear", "Gear", "Equipment and notes"],
-  ["review", "Review", "Export and print"]
+  ["concept", "Create the Concept", "Hero idea, campaign rank, and notes"],
+  ["abilities", "Assign Ability Scores", "Set the eight core ability scores"],
+  ["origin", "Choose an Origin", "Origin bonuses and built-in mechanics"],
+  ["class", "Choose a Class", "Class chassis and class features"],
+  ["side", "Choose a Side", "Heroic or unaligned"],
+  ["calling", "Choose a Calling", "Calling and Edge triggers"],
+  ["hitPoints", "Calculate Hit Points", "HP, Hit Die, Recovery, and Prowess"],
+  ["skills", "Skills & Specialties", "Trained skills, expertise, and specialties"],
+  ["meritsFlaws", "Merits & Flaws", "Advantages, complications, and origin traits"],
+  ["powers", "Powers & Limitations", "Power sets, picks, and limitations"],
+  ["talent", "Choose a Talent", "Starting and additional talents"],
+  ["defenses", "Active Defenses & Saves", "Defenses, saves, and attacks"],
+  ["edge", "Record Edge", "Starting Edge, cap, and triggers"],
+  ["gear", "Choose Gear", "Gear, enhancements, costume, and notes"],
+  ["identity", "Finalize Identity", "Name, identity, portrait, export, and print"]
 ];
 
 const app = document.querySelector("#app");
@@ -408,32 +415,40 @@ function renderBuilder() {
 
 function renderStep(id) {
   if (id === "concept") return renderConcept();
+  if (id === "abilities") return renderAbilityScores();
   if (id === "origin") return renderOrigin();
   if (id === "class") return renderClass();
-  if (id === "abilities") return renderAbilities();
+  if (id === "side") return renderSide();
+  if (id === "calling") return renderCalling();
+  if (id === "hitPoints") return renderHitPoints();
+  if (id === "skills") return renderSkills();
+  if (id === "meritsFlaws") return renderMeritsFlaws();
   if (id === "powers") return renderPowers();
-  if (id === "features") return renderFeatures();
+  if (id === "talent") return renderTalent();
+  if (id === "defenses") return renderDefenses();
+  if (id === "edge") return renderEdge();
   if (id === "gear") return renderGear();
-  return renderReview();
+  return renderIdentity();
 }
 
 function renderConcept() {
   return `
     <div class="form-grid three">
-      ${input("heroName", "Hero Name")}
-      ${input("realName", "Real Name")}
-      ${select("identity", "Identity", ["Secret", "Public", "Not Public"])}
       ${select("rank", "Campaign Rank", Object.keys(ranks))}
       ${input("level", "Level", "number", 'min="1" max="10"')}
-      ${select("side", "Side", ["Heroic", "Unaligned"])}
     </div>
-    <div class="builder-split">
-      <div>${textarea("concept", "Concept", 6)}${textarea("backstory", "Backstory", 8)}</div>
-      <div class="portrait-uploader">
-        <div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div>
-        <label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label>
-      </div>
+    <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
+  `;
+}
+
+function renderAbilityScores() {
+  return `
+    <div class="ability-builder">
+      ${abilities.map(([key, short, name]) => `
+        <div class="ability-card"><strong>${short}</strong><label>${name}<input type="number" min="1" max="30" data-field="${key}Score" value="${Number(sheet[`${key}Score`] || 10)}"></label><span>${abilityScore(key)}</span><em>${signed(abilityMod(key))}</em></div>
+      `).join("")}
     </div>
+    <div class="rule-card"><h2>Origin Bonuses Included</h2><p>Displayed totals include the selected Origin's +2 and +1 ability bonuses. Choose the Origin in Step 3 to change those bonuses.</p></div>
   `;
 }
 
@@ -455,11 +470,9 @@ function renderOrigin() {
 
 function renderClass() {
   const info = classes[sheet.className] || classes.Bruiser;
-  const triggers = callings[sheet.calling] || [];
   return `
-    <div class="form-grid three">
+    <div class="form-grid two">
       ${select("className", "Class", Object.keys(classes))}
-      ${select("calling", "Calling", Object.keys(callings))}
       ${select("powerAbility", "Power Ability", abilities.map(([key, short, name]) => [key, `${short} - ${name}`]))}
     </div>
     <div class="mechanic-grid">
@@ -467,6 +480,25 @@ function renderClass() {
       <div><span>Hit Die</span><strong>d${info.hitDie}</strong></div>
       <div><span>Saves</span><strong>${info.saves.map(save => save.toUpperCase()).join(", ")}</strong></div>
       <div><span>Recovery</span><strong>${signed(info.recovery)}</strong></div>
+    </div>
+    ${textarea("classFeatures", "Class Features", 8)}
+  `;
+}
+
+function renderSide() {
+  return `
+    <div class="form-grid two">
+      ${select("side", "Side", ["Heroic", "Unaligned"])}
+    </div>
+    <div class="rule-card"><h2>${html(sheet.side || "Choose a Side")}</h2><p>Record whether this character is currently Heroic or Unaligned. This appears on the final character sheet identity block.</p></div>
+  `;
+}
+
+function renderCalling() {
+  const triggers = callings[sheet.calling] || [];
+  return `
+    <div class="form-grid two">
+      ${select("calling", "Calling", Object.keys(callings))}
     </div>
     <div class="form-grid three">
       ${textarea("minorTrigger", "Minor Trigger - 1 Edge", 5)}
@@ -477,14 +509,19 @@ function renderClass() {
   `;
 }
 
-function renderAbilities() {
+function renderHitPoints() {
   const values = calc();
   return `
-    <div class="ability-builder">
-      ${abilities.map(([key, short, name]) => `
-        <div class="ability-card"><strong>${short}</strong><label>${name}<input type="number" min="1" max="30" data-field="${key}Score" value="${Number(sheet[`${key}Score`] || 10)}"></label><span>${abilityScore(key)}</span><em>${signed(abilityMod(key))}</em></div>
-      `).join("")}
+    <div class="mechanic-grid">
+      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Hit Die</span><strong>${values.hitDie}</strong></div><div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div>
     </div>
+    <label class="wide-check"><input type="checkbox" data-field="toughTalent" ${checked(sheet.toughTalent)}> Tough talent HP bonus</label>
+  `;
+}
+
+function renderSkills() {
+  const values = calc();
+  return `
     <div class="form-grid two">
       <section><h2>Skills</h2><div class="check-grid">
         ${skills.map(([key, name, ability]) => {
@@ -492,13 +529,18 @@ function renderAbilities() {
           return `<label class="check-row"><input type="checkbox" data-field="skill_${key}_trained" ${checked(sheet[`skill_${key}_trained`])}><span>${name} <small>${ability.toUpperCase()}</small></span><strong>${signed(total)}</strong><input type="checkbox" title="Expertise" data-field="skill_${key}_expert" ${checked(sheet[`skill_${key}_expert`])}></label>`;
         }).join("")}
       </div></section>
-      <section><h2>Saves</h2><div class="check-grid compact">
-        ${abilities.map(([key, short]) => {
-          const total = abilityMod(key) + (sheet[`save_${key}_trained`] ? values.pro : 0);
-          return `<label class="check-row"><input type="checkbox" data-field="save_${key}_trained" ${checked(sheet[`save_${key}_trained`])}><span>${short} Save</span><strong>${signed(total)}</strong></label>`;
-        }).join("")}
-      </div><label class="wide-check"><input type="checkbox" data-field="toughTalent" ${checked(sheet.toughTalent)}> Tough talent HP bonus</label></section>
+      <section>${textarea("specialties", "Specialties / Expertise", 8)}${textarea("proficiencies", "Languages / Proficiencies", 6)}</section>
     </div>
+  `;
+}
+
+function renderMeritsFlaws() {
+  return `
+    <div class="form-grid two">
+      <label>Merit Picker<select data-add-field="merits">${options(merits, "", "Choose Merit")}</select></label>
+      <label>Flaw Picker<select data-add-field="flaws">${options(flaws, "", "Choose Flaw")}</select></label>
+    </div>
+    <div class="form-grid two">${textarea("originTalent", "Origin Mechanics", 8)}${textarea("merits", "Merits", 8)}${textarea("flaws", "Flaws", 8)}</div>
   `;
 }
 
@@ -516,14 +558,40 @@ function renderPowers() {
   `;
 }
 
-function renderFeatures() {
+function renderTalent() {
   return `
-    <div class="form-grid three">
+    <div class="form-grid two">
       <label>Talent Picker<select data-add-field="talents">${options(talents, "", "Choose Talent")}</select></label>
-      <label>Merit Picker<select data-add-field="merits">${options(merits, "", "Choose Merit")}</select></label>
-      <label>Flaw Picker<select data-add-field="flaws">${options(flaws, "", "Choose Flaw")}</select></label>
     </div>
-    <div class="form-grid two">${textarea("originTalent", "Origin Mechanics", 8)}${textarea("classFeatures", "Class Features", 8)}${textarea("startingTalent", "Starting Talent", 6)}${textarea("talents", "Additional Talents", 6)}${textarea("merits", "Merits", 6)}${textarea("flaws", "Flaws", 6)}</div>
+    <div class="form-grid two">${textarea("startingTalent", "Starting Talent", 7)}${textarea("talents", "Additional Talents", 7)}</div>
+  `;
+}
+
+function renderDefenses() {
+  const values = calc();
+  return `
+    <div class="mechanic-grid">
+      <div><span>Parry / Block</span><strong>${values.parry}</strong></div><div><span>Dodge</span><strong>${values.dodge}</strong></div><div><span>Willpower</span><strong>${values.willpower}</strong></div><div><span>Social</span><strong>${values.socialDefense}</strong></div><div><span>Initiative</span><strong>${values.initiative}</strong></div><div><span>Class EV</span><strong>${values.classEV}</strong></div>
+    </div>
+    <div class="form-grid two">
+      <section><h2>Saves</h2><div class="check-grid compact">
+        ${abilities.map(([key, short]) => {
+          const total = abilityMod(key) + (sheet[`save_${key}_trained`] ? values.pro : 0);
+          return `<label class="check-row"><input type="checkbox" data-field="save_${key}_trained" ${checked(sheet[`save_${key}_trained`])}><span>${short} Save</span><strong>${signed(total)}</strong></label>`;
+        }).join("")}
+      </div></section>
+      <section><h2>Attacks</h2><div class="mechanic-grid"><div><span>Melee</span><strong>${values.meleeAttack}</strong></div><div><span>Ranged</span><strong>${values.rangedAttack}</strong></div><div><span>Mental</span><strong>${values.mentalAttack}</strong></div><div><span>Social</span><strong>${values.socialAttack}</strong></div></div></section>
+    </div>
+  `;
+}
+
+function renderEdge() {
+  const values = calc();
+  return `
+    <div class="mechanic-grid">
+      <div><span>Starting Edge</span><strong>${values.edgeStart}</strong></div><div><span>Edge Cap</span><strong>${values.edgeCap}</strong></div><div><span>Prowess</span><strong>${values.prowess}</strong></div>
+    </div>
+    <div class="form-grid three">${textarea("minorTrigger", "Minor - 1 Edge", 5)}${textarea("majorTrigger", "Major - 2 Edge", 5)}${textarea("definingTrigger", "Defining - 3 Edge", 5)}</div>
   `;
 }
 
@@ -535,13 +603,20 @@ function renderGear() {
       <label>Gadget<select data-add-field="gear">${options(gearCatalog.gadget, "", "Choose")}</select></label>
       <label>Vehicle<select data-add-field="gear">${options(gearCatalog.vehicle, "", "Choose")}</select></label>
     </div>
-    <div class="form-grid two">${textarea("gear", "Gear", 7)}${textarea("costume", "Costume / Symbol", 7)}${textarea("enhancements", "Enhancements", 6)}${textarea("limitationsText", "Limitations", 6)}${textarea("specialties", "Specialties / Expertise", 5)}${textarea("proficiencies", "Languages / Proficiencies", 5)}${textarea("sessionNotes", "Session Notes", 7)}</div>
+    <div class="form-grid two">${textarea("gear", "Gear", 7)}${textarea("enhancements", "Enhancements", 6)}${textarea("limitationsText", "Limitations", 6)}${textarea("sessionNotes", "Session Notes", 7)}</div>
   `;
 }
 
-function renderReview() {
+function renderIdentity() {
   const values = calc();
-  return `<div class="review-grid"><div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div><div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="print">Print / Save PDF</button></div></div>`;
+  return `
+    <div class="form-grid three">${input("heroName", "Hero Name")}${input("realName", "Real Name")}${select("identity", "Identity", ["Secret", "Public", "Not Public"])}</div>
+    <div class="builder-split">
+      <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
+      <div class="portrait-uploader"><div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label></div>
+    </div>
+    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="print">Print / Save PDF</button></div>
+  `;
 }
 
 function chosenPowers() {

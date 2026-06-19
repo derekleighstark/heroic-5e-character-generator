@@ -185,6 +185,8 @@ p {
 .step-rail {
   position: sticky;
   top: 74px;
+  max-height: calc(100vh - 88px);
+  overflow: auto;
   padding: 12px;
 }
 
