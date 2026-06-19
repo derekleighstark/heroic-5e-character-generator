@@ -512,6 +512,10 @@ function addLine(field, value) {
   sheet[field] = current.join("\n");
 }
 
+function removeLine(field, value) {
+  sheet[field] = lines(sheet[field]).filter(line => line !== value).join("\n");
+}
+
 function namedRule(name, rules) {
   return rules[name] ? `${name}: ${rules[name]}` : name;
 }
@@ -524,12 +528,43 @@ function ratedRule(name, rules) {
 function expandedRuleLines(value, rules) {
   return lines(value).map(line => {
     const clean = line.replace(/:.*$/, "").trim();
-    return rules[clean] ? `${clean}: ${rules[clean]}` : line;
+    const base = baseRuleName(clean);
+    return rules[base] ? `${clean}: ${rules[base]}` : line;
   });
 }
 
 function rulesList(items) {
   return items.length ? `<ul>${items.map(item => `<li>${html(item)}</li>`).join("")}</ul>` : `<p class="empty">-</p>`;
+}
+
+function baseRuleName(name) {
+  return String(name || "").replace(/\s+\d+$/, "").replace(/:.*$/, "").trim();
+}
+
+function choicePreview(name, rules, emptyText) {
+  if (!name) return `<p>${html(emptyText)}</p>`;
+  const base = baseRuleName(name);
+  return `<p><strong>${html(name)}</strong></p><p>${html(rules[base] || rules[name] || "No rules text has been added for this option yet.")}</p>`;
+}
+
+function removableRuleCards(field, rules, locked = []) {
+  const lockedSet = new Set(locked);
+  const items = lines(sheet[field]);
+  if (!items.length) return `<p class="empty">-</p>`;
+
+  return `<div class="selection-card-grid">${items.map(item => {
+    const base = baseRuleName(item);
+    const isLocked = lockedSet.has(item);
+    return `
+      <article class="selection-card">
+        <div>
+          <h3>${html(item)}</h3>
+          <p>${html(rules[base] || rules[item] || "No rules text has been added for this option yet.")}</p>
+        </div>
+        ${isLocked ? `<span class="lock-pill">Origin</span>` : `<button type="button" data-action="remove-line" data-field="${field}" data-value="${html(item)}">Remove</button>`}
+      </article>
+    `;
+  }).join("")}</div>`;
 }
 
 function removeOriginLines() {
@@ -866,16 +901,23 @@ function renderSkills() {
 }
 
 function renderMeritsFlaws() {
-  const meritText = expandedRuleLines(sheet.merits, meritRules);
-  const flawText = expandedRuleLines(sheet.flaws, flawRules);
+  const origin = origins[sheet.origin] || origins.Enhanced;
   return `
     <div class="form-grid two">
-      <label>Merit Picker<select data-add-field="merits">${options(merits, "", "Choose Merit")}</select></label>
-      <label>Flaw Picker<select data-add-field="flaws">${options(flaws, "", "Choose Flaw")}</select></label>
+      <section class="choice-preview-panel">
+        <label>Merit Picker<select data-field="meritPreview">${options(merits, sheet.meritPreview || "", "Choose Merit")}</select></label>
+        <div class="rule-card"><h2>Merit Preview</h2>${choicePreview(sheet.meritPreview, meritRules, "Choose a Merit to preview its rules text.")}</div>
+        <button type="button" data-action="add-preview" data-source="meritPreview" data-field="merits">Add Merit</button>
+      </section>
+      <section class="choice-preview-panel">
+        <label>Flaw Picker<select data-field="flawPreview">${options(flaws, sheet.flawPreview || "", "Choose Flaw")}</select></label>
+        <div class="rule-card"><h2>Flaw Preview</h2>${choicePreview(sheet.flawPreview, flawRules, "Choose a Flaw to preview its rules text.")}</div>
+        <button type="button" data-action="add-preview" data-source="flawPreview" data-field="flaws">Add Flaw</button>
+      </section>
     </div>
     <div class="form-grid two">
-      <div class="rule-card"><h2>Selected Merit Rules</h2>${meritText.length ? `<ul>${meritText.map(line => `<li>${html(line)}</li>`).join("")}</ul>` : "<p>Choose Merits to see their full rules text.</p>"}</div>
-      <div class="rule-card"><h2>Selected Flaw Rules</h2>${flawText.length ? `<ul>${flawText.map(line => `<li>${html(line)}</li>`).join("")}</ul>` : "<p>Choose Flaws to see their full rules text.</p>"}</div>
+      <div class="rule-card"><h2>Selected Merits</h2>${removableRuleCards("merits", meritRules, [origin.merit])}</div>
+      <div class="rule-card"><h2>Selected Flaws</h2>${removableRuleCards("flaws", flawRules, [origin.flaw])}</div>
     </div>
     <div class="form-grid two">${textarea("originTalent", "Origin Mechanics", 8)}${textarea("merits", "Merits", 8)}${textarea("flaws", "Flaws", 8)}</div>
   `;
@@ -896,12 +938,15 @@ function renderPowers() {
 }
 
 function renderTalent() {
-  const talentText = expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules);
   return `
     <div class="form-grid two">
-      <label>Talent Picker<select data-add-field="talents">${options(talents, "", "Choose Talent")}</select></label>
+      <section class="choice-preview-panel">
+        <label>Talent Picker<select data-field="talentPreview">${options(talents, sheet.talentPreview || "", "Choose Talent")}</select></label>
+        <div class="rule-card"><h2>Talent Preview</h2>${choicePreview(sheet.talentPreview, talentRules, "Choose a Talent to preview its rules text.")}</div>
+        <button type="button" data-action="add-preview" data-source="talentPreview" data-field="talents">Add Talent</button>
+      </section>
+      <div class="rule-card"><h2>Selected Talents</h2>${removableRuleCards("talents", talentRules)}</div>
     </div>
-    <div class="rule-card"><h2>Selected Talent Rules</h2>${talentText.length ? rulesList(talentText) : "<p>Choose Talents to see their full rules text.</p>"}</div>
     <div class="form-grid two">${textarea("startingTalent", "Starting Talent", 7)}${textarea("talents", "Additional Talents", 7)}</div>
   `;
 }
@@ -1336,6 +1381,23 @@ app.addEventListener("click", event => {
   if (action === "load-character") loadCharacter(button.dataset.characterId);
   if (action === "load-sample") loadSampleCharacter(button.dataset.characterId);
   if (action === "delete-character") deleteCharacter(button.dataset.characterId);
+  if (action === "add-preview") {
+    const value = sheet[button.dataset.source];
+    if (value) {
+      addLine(button.dataset.field, value);
+      save();
+      renderBuilder();
+      renderSheet();
+      renderProgress();
+    }
+  }
+  if (action === "remove-line") {
+    removeLine(button.dataset.field, button.dataset.value);
+    save();
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+  }
   if (action === "import-json") document.querySelector("#importFile").click();
   if (action === "print") window.print();
   if (action === "clear" && confirm("Clear this HEROIC 5e character?")) {

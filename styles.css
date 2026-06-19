@@ -387,6 +387,54 @@ p {
   line-height: 1.35;
 }
 
+.choice-preview-panel {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.choice-preview-panel > button,
+.selection-card button {
+  justify-self: start;
+}
+
+.selection-card-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.selection-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: start;
+  padding: 10px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--gold);
+}
+
+.selection-card h3 {
+  margin: 0 0 4px;
+  color: var(--navy);
+  font-size: .95rem;
+  text-transform: uppercase;
+}
+
+.selection-card p {
+  margin: 0;
+  line-height: 1.35;
+}
+
+.lock-pill {
+  padding: 4px 7px;
+  background: var(--navy);
+  color: #fff;
+  font-size: .65rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .mechanic-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
