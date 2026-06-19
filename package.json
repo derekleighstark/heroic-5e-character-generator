@@ -1,0 +1,19 @@
+{
+  "name": "heroic-5e-sheet-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local HEROIC 5e character sheet web app.",
+  "scripts": {
+    "build": "node scripts/build.js",
+    "dev": "node server.js",
+    "start": "node server.js",
+    "check": "node --check app.js && node --check server.js && node --check src/main.js && node --check src/generator.js && node --check netlify/functions/characters.mjs && node --check scripts/build.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^9.1.0",
+    "@netlify/identity": "^1.0.0"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.37.0"
+  }
+}
