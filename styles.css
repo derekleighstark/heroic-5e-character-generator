@@ -1085,7 +1085,7 @@ p {
 
 @page {
   size: letter;
-  margin: .25in;
+  margin: .2in;
 }
 
 @media print {
@@ -1123,7 +1123,7 @@ p {
   }
 
   .sheet-page {
-    width: 8in;
+    width: 8.1in;
     min-height: 10.5in;
     margin: 0 auto;
     padding: .14in;
@@ -1156,12 +1156,26 @@ p {
 
   .sheet-hero-grid,
   .sheet-row {
+    display: grid;
     gap: 6px;
     margin-bottom: 6px;
   }
 
+  .sheet-hero-grid {
+    grid-template-columns: 1.1fr .9fr 1fr;
+  }
+
+  .sheet-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .portrait-box {
     min-height: 2.15in;
+  }
+
+  .core-block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .big-stat,
@@ -1186,6 +1200,8 @@ p {
   }
 
   .sheet-abilities {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
     gap: 3px;
   }
 
@@ -1198,7 +1214,14 @@ p {
   }
 
   .sheet-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: 3px;
+  }
+
+  .sheet-skills {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .sheet-skills div {
@@ -1218,6 +1241,8 @@ p {
   }
 
   .sheet-powers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 4px;
   }
 
