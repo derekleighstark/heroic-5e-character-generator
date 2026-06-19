@@ -805,11 +805,12 @@ function renderApp() {
           <option value="xlarge" ${selected(accessibility.zoom, "xlarge")}>130%</option>
         </select></label>
         <label class="check-control"><input type="checkbox" data-access="dyslexic" ${checked(accessibility.dyslexic)}> Dyslexic Font</label>
+        <button type="button" data-action="new-character">New Character</button>
         <button type="button" data-action="save-character">Save Character</button>
         <button type="button" data-action="open-library">Load Character</button>
         <button type="button" data-action="export-json">Export JSON</button>
         <button type="button" data-action="import-json">Import JSON</button>
-        <button type="button" data-action="print">Print Sheet</button>
+        <button type="button" data-action="export-pdf">Export to PDF</button>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
     </header>
@@ -1194,7 +1195,7 @@ function renderIdentity() {
       <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
       <div class="portrait-uploader"><div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label></div>
     </div>
-    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="print">Print / Save PDF</button></div>
+    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-pdf">Export to PDF</button></div>
   `;
 }
 
@@ -1222,7 +1223,7 @@ function listBlock(items) {
 
 function renderCharacterSheet() {
   return `
-    <div class="sheet-actions"><strong>Character Sheet</strong><button type="button" data-action="clear">Clear</button></div>
+    <div class="sheet-actions"><strong>Character Sheet</strong><button type="button" data-action="export-pdf">Export to PDF</button></div>
     <div id="sheet">${renderSheetMarkup()}</div>
   `;
 }
@@ -1503,6 +1504,22 @@ function importJson(file) {
   reader.readAsText(file);
 }
 
+function newCharacter() {
+  if (!confirm("Start a new HEROIC 5e character? Current unsaved changes will be cleared.")) return;
+  sheet = { ...defaults };
+  activeStep = "concept";
+  initialize(true);
+  renderBuilder();
+  renderSheet();
+  renderProgress();
+}
+
+function exportPdf() {
+  activeStep = "characterSheet";
+  renderBuilder();
+  setTimeout(() => window.print(), 0);
+}
+
 app.addEventListener("input", event => {
   const el = event.target.closest("[data-field]");
   if (!el) return;
@@ -1572,6 +1589,7 @@ app.addEventListener("click", event => {
   if (action === "download-json") downloadJson();
   if (action === "copy-json") copyJson();
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
+  if (action === "new-character") newCharacter();
   if (action === "save-character") saveCharacterToLibrary();
   if (action === "open-library") openLibrary();
   if (action === "close-library") closeLibrary();
@@ -1608,18 +1626,7 @@ app.addEventListener("click", event => {
     renderProgress();
   }
   if (action === "import-json") document.querySelector("#importFile").click();
-  if (action === "print") {
-    activeStep = "characterSheet";
-    renderBuilder();
-    setTimeout(() => window.print(), 0);
-  }
-  if (action === "clear" && confirm("Clear this HEROIC 5e character?")) {
-    sheet = { ...defaults };
-    initialize(true);
-    renderBuilder();
-    renderSheet();
-    renderProgress();
-  }
+  if (action === "export-pdf") exportPdf();
 });
 
 initialize();
