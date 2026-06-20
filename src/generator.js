@@ -609,8 +609,16 @@ function selectedOriginSkills() {
   return [sheet.originSkill1, sheet.originSkill2].filter(Boolean);
 }
 
+function hasTalent(name) {
+  return [sheet.startingTalent, sheet.talents].some(value => lines(value).some(line => line.replace(/:.*$/, "").trim() === name));
+}
+
+function additionalSkillPickCount() {
+  return 4 + (hasTalent("Skilled") ? 2 : 0);
+}
+
 function additionalSkillFields() {
-  return ["skillPick1", "skillPick2", "skillPick3", "skillPick4"];
+  return Array.from({ length: additionalSkillPickCount() }, (_, index) => `skillPick${index + 1}`);
 }
 
 function additionalSkillPicks() {
@@ -623,7 +631,7 @@ function migrateAdditionalSkillPicks() {
   const previousTraining = skills
     .filter(([key, name]) => sheet[`skill_${key}_trained`] && !originSet.has(name))
     .map(([, name]) => name)
-    .slice(0, 4);
+    .slice(0, additionalSkillPickCount());
 
   additionalSkillFields().forEach((field, index) => {
     if (previousTraining[index]) sheet[field] = previousTraining[index];
@@ -1010,6 +1018,7 @@ function renderSkills() {
   const originSkills = selectedOriginSkills();
   const originSet = new Set(originSkills);
   const picks = additionalSkillFields();
+  const pickLimit = additionalSkillPickCount();
   const pickedCount = additionalSkillPicks().length;
   const specialtyCreditCount = duplicateSpecialtyCredits();
   const specialtyCount = lines(sheet.specialties).length;
@@ -1018,7 +1027,7 @@ function renderSkills() {
   return `
     <div class="rule-card">
       <h2>Skills & Specialties Rules</h2>
-      <p>Origin Skills are trained automatically. Choose 4 additional Skills from the full list. If an additional pick repeats a Skill already trained by Origin, record a narrow Specialty for that Skill instead.</p>
+      <p>Origin Skills are trained automatically. Choose ${pickLimit} additional Skills from the full list${hasTalent("Skilled") ? " including 2 bonus picks from Skilled" : ""}. If an additional pick repeats a Skill already trained by Origin, record a narrow Specialty for that Skill instead.</p>
       <p>Training adds Prowess. Expertise adds double Prowess instead of single Prowess. A Specialty grants Advantage when its narrow focus directly applies; if Advantage already applies, add Prowess as an additional bonus.</p>
     </div>
     <div class="form-grid two">
@@ -1028,7 +1037,7 @@ function renderSkills() {
       </section>
       <section class="rule-card">
         <h2>Additional Skills</h2>
-        <p>${pickedCount} of 4 selected. Duplicate trained picks create Specialty opportunities.</p>
+        <p>${pickedCount} of ${pickLimit} selected. Duplicate trained picks create Specialty opportunities.</p>
         <div class="skill-picker-grid">
           ${picks.map((field, index) => `<label>Additional Skill ${index + 1}<select data-field="${field}">${skillSelectOptions(sheet[field])}</select></label>`).join("")}
         </div>
@@ -1038,7 +1047,7 @@ function renderSkills() {
       <section>
         <div class="rule-card skill-legend">
           <h2>Skill Total Key</h2>
-          <p><strong>Source</strong> shows whether the Skill is Untrained, trained by Origin, or trained by one of the 4 additional picks.</p>
+          <p><strong>Source</strong> shows whether the Skill is Untrained, trained by Origin, or trained by one of the additional picks.</p>
           <p><strong>Right checkbox</strong> marks Expertise. Expertise is only available on trained Skills and uses double Prowess.</p>
           <p><strong>Specialties</strong> are recorded as focused cards, such as Technology (Power Armor). They grant Advantage when the focus directly applies.</p>
         </div>
