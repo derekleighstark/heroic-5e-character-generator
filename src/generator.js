@@ -11,8 +11,9 @@ const {
   merits,
   flaws,
   powerSets,
-  gearCatalog
-} = Function(`${rulesPrefix}; return { abilities, ranks, classes, skills, origins, callings, talents, merits, flaws, powerSets, gearCatalog };`)();
+  gearCatalog,
+  gearRules
+} = Function(`${rulesPrefix}; return { abilities, ranks, classes, skills, origins, callings, talents, merits, flaws, powerSets, gearCatalog, gearRules };`)();
 
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
@@ -589,6 +590,10 @@ function removeLine(field, value) {
 
 function namedRule(name, rules) {
   return rules[name] ? `${name}: ${rules[name]}` : name;
+}
+
+function gearLine(name) {
+  return gearRules[name] ? `${name}: ${gearRules[name]}` : name;
 }
 
 function ratedRule(name, rules) {
@@ -1253,11 +1258,15 @@ function renderEdge() {
 function renderGear() {
   return `
     <div class="form-grid four">
-      <label>Weapon Gear<select data-add-field="gear">${options(gearCatalog.weapon, "", "Choose")}</select></label>
-      <label>Armor<select data-add-field="gear">${options(gearCatalog.armor, "", "Choose")}</select></label>
-      <label>Gadget<select data-add-field="gear">${options(gearCatalog.gadget, "", "Choose")}</select></label>
-      <label>Vehicle<select data-add-field="gear">${options(gearCatalog.vehicle, "", "Choose")}</select></label>
+      <label>Standard Gear<select data-add-field="gear" data-add-rules="gear">${options(gearCatalog.standard, "", "Choose")}</select></label>
+      <label>Weapons & Properties<select data-add-field="gear" data-add-rules="gear">${options(gearCatalog.weapon, "", "Choose")}</select></label>
+      <label>Armor<select data-add-field="gear" data-add-rules="gear">${options(gearCatalog.armor, "", "Choose")}</select></label>
+      <label>Gadgets<select data-add-field="gear" data-add-rules="gear">${options(gearCatalog.gadget, "", "Choose")}</select></label>
+      <label>Vehicles<select data-add-field="gear" data-add-rules="gear">${options(gearCatalog.vehicle, "", "Choose")}</select></label>
+      <label>Vehicle Features<select data-add-field="enhancements" data-add-rules="gear">${options(gearCatalog.feature, "", "Choose")}</select></label>
+      <label>Invention & Repair<select data-add-field="enhancements" data-add-rules="gear">${options(gearCatalog.invention, "", "Choose")}</select></label>
     </div>
+    <div class="rule-card"><h2>Gear Rules</h2><p>Standard equipment covers reasonable carried items. Weapons use broad categories instead of exact weapon stat blocks. Armor adds a flat bonus after an Active Defense roll. Gadgets create specific fictional effects rather than replacing Power Sets. Vehicles use Speed Rating, Armor Rating, hits, and special features.</p></div>
     <div class="form-grid two">${textarea("gear", "Gear", 7)}${textarea("enhancements", "Enhancements", 6)}${textarea("limitationsText", "Limitations", 6)}${textarea("sessionNotes", "Session Notes", 7)}</div>
   `;
 }
@@ -1553,7 +1562,7 @@ function renderCompendiumSection(id) {
   if (id === "merits") return compendiumList(merits.map(name => compendiumCard(name, meritRules[name], "Merit")));
   if (id === "flaws") return compendiumList(flaws.map(name => compendiumCard(name, flawRules[name], "Flaw")));
   if (id === "powers") return compendiumList(powerSets.map(name => compendiumCard(name, "Power Set reference entry. Add At-Wills, passive benefits, Encounter powers, and tier notes as the full power rules are entered into the generator data.", "Power Set")));
-  if (id === "gear") return compendiumList(Object.entries(gearCatalog).flatMap(([type, items]) => items.map(name => compendiumCard(name, `Gear category: ${type}.`, "Gear"))));
+  if (id === "gear") return compendiumList(Object.entries(gearCatalog).flatMap(([type, items]) => items.map(name => compendiumCard(name, gearRules[name] || `Gear category: ${type}.`, type))));
   return `
     <div class="compendium-hero">
       <h2>HEROIC 5e Core Reference</h2>
@@ -1700,7 +1709,7 @@ app.addEventListener("change", event => {
   }
 
   if (add && add.value) {
-    addLine(add.dataset.addField, add.value);
+    addLine(add.dataset.addField, add.dataset.addRules === "gear" ? gearLine(add.value) : add.value);
     add.value = "";
     save();
     renderBuilder();
