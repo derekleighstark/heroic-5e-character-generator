@@ -340,6 +340,7 @@ let activeStep = "concept";
 let sheet = load(STORAGE_KEY, defaults);
 let sampleCharacters = [];
 let sampleStatus = "";
+let activeCompendiumSection = "overview";
 
 function load(key, fallback) {
   try {
@@ -802,6 +803,7 @@ function renderApp() {
       <div class="brand"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
       <div class="topbar-tools">
         <button type="button" data-action="new-character">New Character</button>
+        <button type="button" data-action="open-compendium">Compendium</button>
         <button type="button" data-action="save-character">Save Character</button>
         <button type="button" data-action="open-library">Load Character</button>
         <button type="button" data-action="export-json">Export JSON</button>
@@ -843,6 +845,19 @@ function renderApp() {
           <button type="button" data-action="close-library">Close</button>
         </header>
         <div class="library-list" data-library-list></div>
+      </div>
+    </section>
+    <section class="compendium-drawer" data-compendium-drawer hidden>
+      <div class="compendium-panel">
+        <header>
+          <div>
+            <strong>HEROIC 5e Compendium</strong>
+            <span>Core reference built from generator rules data</span>
+          </div>
+          <button type="button" data-action="close-compendium">Close</button>
+        </header>
+        <div class="compendium-tabs" data-compendium-tabs></div>
+        <div class="compendium-content" data-compendium-content></div>
       </div>
     </section>
   `;
@@ -1400,6 +1415,85 @@ function closeLibrary() {
   document.querySelector("[data-library-drawer]").hidden = true;
 }
 
+function compendiumSections() {
+  return [
+    ["overview", "Overview"],
+    ["origins", "Origins"],
+    ["classes", "Classes"],
+    ["skills", "Skills"],
+    ["callings", "Callings"],
+    ["talents", "Talents"],
+    ["merits", "Merits"],
+    ["flaws", "Flaws"],
+    ["powers", "Powers"],
+    ["gear", "Gear"]
+  ];
+}
+
+function openCompendium() {
+  document.querySelector("[data-compendium-drawer]").hidden = false;
+  renderCompendium();
+}
+
+function closeCompendium() {
+  document.querySelector("[data-compendium-drawer]").hidden = true;
+}
+
+function compendiumCard(title, body, meta = "") {
+  return `
+    <article class="compendium-card">
+      ${meta ? `<span>${html(meta)}</span>` : ""}
+      <h3>${html(title)}</h3>
+      <p>${html(body || "Reference text has not been added yet.")}</p>
+    </article>
+  `;
+}
+
+function compendiumList(items) {
+  return `<div class="compendium-grid">${items.join("")}</div>`;
+}
+
+function renderCompendium() {
+  document.querySelector("[data-compendium-tabs]").innerHTML = compendiumSections().map(([id, label]) => `
+    <button type="button" data-action="compendium-section" data-section="${id}" class="${id === activeCompendiumSection ? "active" : ""}">${label}</button>
+  `).join("");
+  document.querySelector("[data-compendium-content]").innerHTML = renderCompendiumSection(activeCompendiumSection);
+}
+
+function renderCompendiumSection(id) {
+  if (id === "origins") return compendiumList(Object.entries(origins).map(([name, origin]) => compendiumCard(name, [
+    `Primary bonuses: ${origin.primary.map(key => key.toUpperCase()).join(", ")}.`,
+    `Skills: ${origin.skills.join(", ")}. Choose ${origin.skillPicks}.`,
+    `Talent: ${origin.talent}. Merit: ${origin.merit}. Flaw: ${origin.flaw}.`,
+    `${origin.traitLabel}: ${origin.traits.join(", ")}.`,
+    origin.note
+  ].join(" "), "Origin")));
+  if (id === "classes") return compendiumList(Object.entries(classes).map(([name, info]) => compendiumCard(name, [
+    classText[name],
+    `Primary: ${info.primary.toUpperCase()}. Hit Die: d${info.hitDie}. Saves: ${info.saves.map(key => key.toUpperCase()).join(", ")}. Recovery: ${signed(info.recovery)}.`,
+    `Features: ${info.features.map(feature => `${feature} (${classFeatureRules[feature] || "See rules"})`).join(" ")}`
+  ].join(" "), "Class")));
+  if (id === "skills") return compendiumList(skills.map(([key, name, ability]) => compendiumCard(name, `Ability: ${ability.toUpperCase()}. Example Specialties: ${(specialtyExamples[name] || []).join(", ")}. Trained heroes add Prowess; Expertise uses double Prowess. Specialties grant Advantage when the narrow focus applies.`, "Skill")));
+  if (id === "callings") return compendiumList(Object.entries(callings).map(([name, triggers]) => compendiumCard(name, [`Minor: ${triggers[0]}`, `Major: ${triggers[1]}`, `Defining: ${triggers[2]}`].join(" "), "Calling")));
+  if (id === "talents") return compendiumList(talents.map(name => compendiumCard(name, talentRules[name], "Talent")));
+  if (id === "merits") return compendiumList(merits.map(name => compendiumCard(name, meritRules[name], "Merit")));
+  if (id === "flaws") return compendiumList(flaws.map(name => compendiumCard(name, flawRules[name], "Flaw")));
+  if (id === "powers") return compendiumList(powerSets.map(name => compendiumCard(name, "Power Set reference entry. Add At-Wills, passive benefits, Encounter powers, and tier notes as the full power rules are entered into the generator data.", "Power Set")));
+  if (id === "gear") return compendiumList(Object.entries(gearCatalog).flatMap(([type, items]) => items.map(name => compendiumCard(name, `Gear category: ${type}.`, "Gear"))));
+  return `
+    <div class="compendium-hero">
+      <h2>HEROIC 5e Core Reference</h2>
+      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. It is not a full replacement for the book yet; it grows as more full rule text is entered.</p>
+    </div>
+    <div class="compendium-grid">
+      ${compendiumCard("Character Creation", "Use the fifteen creation steps plus the final Character Sheet review to build a complete HEROIC 5e character.", "Core")}
+      ${compendiumCard("Sides", `${sideRules.Heroic.summary} ${sideRules.Unaligned.summary}`, "Narrative")}
+      ${compendiumCard("Ability Arrays", Object.entries(abilityArrays).map(([rank, array]) => `${rank}: ${array.join(", ")}`).join(" "), "Mechanics")}
+      ${compendiumCard("Skills and Specialties", "Origin Skills are automatic. Characters choose additional trained Skills, and repeated trained picks can become narrow Specialties.", "Mechanics")}
+    </div>
+  `;
+}
+
 function renderLibrary() {
   const library = loadLibrary().sort((a, b) => String(b.updatedAt).localeCompare(String(a.updatedAt)));
   const list = document.querySelector("[data-library-list]");
@@ -1573,6 +1667,12 @@ app.addEventListener("click", event => {
   if (action === "copy-json") copyJson();
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
+  if (action === "open-compendium") openCompendium();
+  if (action === "close-compendium") closeCompendium();
+  if (action === "compendium-section") {
+    activeCompendiumSection = button.dataset.section;
+    renderCompendium();
+  }
   if (action === "save-character") saveCharacterToLibrary();
   if (action === "open-library") openLibrary();
   if (action === "close-library") closeLibrary();
