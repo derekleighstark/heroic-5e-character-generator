@@ -9,6 +9,7 @@
   --red: #a63f34;
   --green: #276b56;
   --blue: #2c5f88;
+  --cream: #fff8e8;
   --shadow: 0 18px 46px rgba(16, 32, 51, .18);
 }
 
@@ -341,16 +342,33 @@ p {
 
 .rule-card,
 .export-card {
-  padding: 14px;
-  background: #fff;
+  position: relative;
+  padding: 16px;
+  background:
+    linear-gradient(135deg, rgba(228, 166, 23, .10), transparent 38%),
+    #fff;
   border: 1px solid var(--line);
-  border-left: 6px solid var(--green);
+  border-left: 7px solid var(--green);
+  box-shadow: 0 8px 22px rgba(16, 32, 51, .08);
+  overflow: hidden;
+}
+
+.rule-card::before,
+.export-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 58px;
+  height: 5px;
+  background: var(--gold);
 }
 
 .rule-card h2 {
-  margin-bottom: 8px;
+  margin-bottom: 9px;
   color: var(--navy);
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1;
   text-transform: uppercase;
 }
 
@@ -398,26 +416,43 @@ p {
 }
 
 .selection-card {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 10px;
   align-items: start;
-  padding: 10px;
-  background: var(--panel);
+  padding: 13px 14px;
+  background:
+    linear-gradient(135deg, var(--cream), #fff 52%),
+    #fff;
   border: 1px solid var(--line);
-  border-left: 4px solid var(--gold);
+  border-left: 5px solid var(--gold);
+  box-shadow: 0 6px 16px rgba(16, 32, 51, .07);
+  overflow: hidden;
+}
+
+.selection-card::after {
+  content: "";
+  position: absolute;
+  right: -22px;
+  bottom: -22px;
+  width: 70px;
+  height: 70px;
+  border: 1px solid rgba(16, 32, 51, .08);
+  transform: rotate(45deg);
 }
 
 .selection-card h3 {
-  margin: 0 0 4px;
+  margin: 0 0 6px;
   color: var(--navy);
-  font-size: .95rem;
+  font-size: .98rem;
+  line-height: 1.05;
   text-transform: uppercase;
 }
 
 .selection-card p {
   margin: 0;
-  line-height: 1.35;
+  line-height: 1.42;
 }
 
 .lock-pill {
@@ -841,36 +876,71 @@ p {
 .compendium-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 12px;
+  gap: 14px;
 }
 
 .compendium-card {
-  padding: 12px;
-  background: #fff;
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-height: 0;
+  padding: 14px 15px 16px;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, .94), #fff 34%),
+    #fff;
   border: 1px solid var(--line);
-  border-left: 5px solid var(--green);
+  border-top: 4px solid var(--gold);
+  border-left: 6px solid var(--green);
+  box-shadow: 0 8px 20px rgba(16, 32, 51, .08);
+  overflow: hidden;
+}
+
+.compendium-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px 8px auto auto;
+  width: 34px;
+  height: 34px;
+  border-top: 2px solid rgba(16, 32, 51, .14);
+  border-right: 2px solid rgba(16, 32, 51, .14);
+}
+
+.compendium-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 44%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--green), transparent);
 }
 
 .compendium-card span {
-  display: block;
-  margin-bottom: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  min-height: 19px;
+  padding: 2px 7px;
+  background: rgba(166, 63, 52, .10);
   color: var(--red);
-  font-size: .68rem;
+  font-size: .62rem;
   font-weight: 900;
-  letter-spacing: .06em;
+  letter-spacing: .08em;
   text-transform: uppercase;
 }
 
 .compendium-card h3 {
-  margin: 0 0 6px;
+  margin: 0;
   color: var(--navy);
-  font-size: 1.12rem;
+  font-size: 1.18rem;
+  line-height: 1;
   text-transform: uppercase;
 }
 
 .compendium-card p {
   margin: 0;
-  line-height: 1.35;
+  line-height: 1.43;
 }
 
 .library-list {
@@ -899,14 +969,29 @@ p {
 }
 
 .library-item {
+  position: relative;
   display: grid;
   grid-template-columns: 72px 1fr auto;
   gap: 12px;
   align-items: center;
-  padding: 12px;
-  background: #fff;
+  padding: 12px 14px;
+  background:
+    linear-gradient(90deg, rgba(39, 107, 86, .10), transparent 34%),
+    #fff;
   border: 1px solid var(--line);
   border-left: 6px solid var(--green);
+  box-shadow: 0 7px 18px rgba(16, 32, 51, .08);
+  overflow: hidden;
+}
+
+.library-item::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 68px;
+  height: 4px;
+  background: var(--gold);
 }
 
 .library-portrait {
@@ -1019,7 +1104,10 @@ p {
 .core-block,
 .sheet-section {
   border: 1px solid var(--line);
-  background: #fff;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, .62), #fff 44%),
+    #fff;
+  box-shadow: 0 4px 12px rgba(16, 32, 51, .06);
 }
 
 .identity-block {
@@ -1066,7 +1154,20 @@ p {
 }
 
 .sheet-section {
-  padding: 8px;
+  position: relative;
+  padding: 9px;
+  border-left: 5px solid var(--green);
+  overflow: hidden;
+}
+
+.sheet-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 48px;
+  height: 4px;
+  background: var(--gold);
 }
 
 .sheet-section h2 {
@@ -1085,8 +1186,10 @@ p {
   display: grid;
   place-items: center;
   min-height: 66px;
-  background: var(--panel);
+  background:
+    linear-gradient(180deg, #fff, var(--panel));
   border-left: 4px solid var(--gold);
+  box-shadow: inset 0 0 0 1px rgba(16, 32, 51, .04);
 }
 
 .sheet-abilities span,
@@ -1157,9 +1260,12 @@ p {
 
 .sheet-powers div {
   min-height: 72px;
-  padding: 7px;
-  background: var(--panel);
+  padding: 8px;
+  background:
+    linear-gradient(135deg, rgba(166, 63, 52, .08), var(--panel) 42%),
+    var(--panel);
   border-left: 5px solid var(--red);
+  box-shadow: inset 0 0 0 1px rgba(16, 32, 51, .05);
 }
 
 .sheet-powers strong {
