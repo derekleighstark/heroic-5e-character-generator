@@ -101,8 +101,14 @@ p {
 }
 
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 330px;
+}
+
+.brand-title {
   display: grid;
-  min-width: 210px;
 }
 
 .brand strong {
@@ -116,6 +122,17 @@ p {
   font-weight: 900;
   letter-spacing: .08em;
   text-transform: uppercase;
+}
+
+.brand-compendium {
+  min-height: 32px;
+  border: 1px solid rgba(228, 166, 23, .55);
+  background: transparent;
+  color: var(--gold);
+}
+
+.brand-compendium:hover {
+  background: rgba(228, 166, 23, .12);
 }
 
 .topbar-tools {
