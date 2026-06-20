@@ -1508,6 +1508,10 @@ function closeSheetPreview() {
   document.querySelector("[data-sheet-preview-drawer]").hidden = true;
 }
 
+function clearSheetPrintMode() {
+  document.body.classList.remove("sheet-print-mode");
+}
+
 function compendiumCard(title, body, meta = "") {
   return `
     <article class="compendium-card">
@@ -1670,8 +1674,11 @@ function newCharacter() {
 
 function exportPdf() {
   openSheetPreview();
+  document.body.classList.add("sheet-print-mode");
   setTimeout(() => window.print(), 0);
 }
+
+window.addEventListener("afterprint", clearSheetPrintMode);
 
 app.addEventListener("input", event => {
   const el = event.target.closest("[data-field]");

@@ -1294,6 +1294,20 @@ p {
     page-break-after: auto;
   }
 
+  body.sheet-print-mode .generator-shell,
+  body:has(.sheet-preview-drawer:not([hidden])) .generator-shell {
+    display: none;
+  }
+
+  body.sheet-print-mode .sheet-preview-drawer,
+  body:has(.sheet-preview-drawer:not([hidden])) .sheet-preview-drawer {
+    display: block;
+    position: static;
+    inset: auto;
+    padding: 0;
+    background: transparent;
+  }
+
   .sheet-title {
     margin: -.14in -.14in 7px;
     padding: .10in .14in .08in;
