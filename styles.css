@@ -111,6 +111,13 @@ p {
   display: grid;
 }
 
+.brand-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
 .brand strong {
   color: var(--gold);
   font-size: 1rem;
@@ -124,14 +131,14 @@ p {
   text-transform: uppercase;
 }
 
-.brand-compendium {
+.brand-reference {
   min-height: 32px;
   border: 1px solid rgba(228, 166, 23, .55);
   background: transparent;
   color: var(--gold);
 }
 
-.brand-compendium:hover {
+.brand-reference:hover {
   background: rgba(228, 166, 23, .12);
 }
 
@@ -674,7 +681,8 @@ p {
 
 .json-drawer,
 .library-drawer,
-.compendium-drawer {
+.compendium-drawer,
+.sheet-preview-drawer {
   position: fixed;
   inset: 0;
   z-index: 50;
@@ -686,13 +694,15 @@ p {
 
 .json-drawer[hidden],
 .library-drawer[hidden],
-.compendium-drawer[hidden] {
+.compendium-drawer[hidden],
+.sheet-preview-drawer[hidden] {
   display: none;
 }
 
 .json-panel,
 .library-panel,
-.compendium-panel {
+.compendium-panel,
+.sheet-preview-panel {
   display: grid;
   grid-template-rows: auto minmax(260px, 60vh) auto;
   width: min(880px, 96vw);
@@ -705,7 +715,8 @@ p {
 .json-panel header,
 .json-actions,
 .library-panel header,
-.compendium-panel header {
+.compendium-panel header,
+.sheet-preview-panel header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -724,7 +735,8 @@ p {
 
 .json-panel header strong,
 .library-panel header strong,
-.compendium-panel header strong {
+.compendium-panel header strong,
+.sheet-preview-panel header strong {
   display: block;
   color: var(--gold);
   font-size: 1rem;
@@ -734,7 +746,8 @@ p {
 
 .json-panel header span,
 .library-panel header span,
-.compendium-panel header span {
+.compendium-panel header span,
+.sheet-preview-panel header span {
   display: block;
   font-size: .78rem;
   font-weight: 900;
@@ -759,6 +772,22 @@ p {
 .compendium-panel {
   width: min(1180px, 96vw);
   grid-template-rows: auto auto minmax(360px, 72vh);
+}
+
+.sheet-preview-panel {
+  width: min(1120px, 96vw);
+  grid-template-rows: auto minmax(360px, 82vh);
+}
+
+.sheet-preview-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sheet-preview-content {
+  padding: 14px;
+  overflow: auto;
 }
 
 .compendium-tabs {
@@ -1221,17 +1250,26 @@ p {
   .json-drawer,
   .library-drawer,
   .compendium-drawer,
+  .sheet-preview-panel > header,
   .sheet-actions {
     display: none;
   }
 
   .generator-shell,
   .builder-panel,
+  .sheet-preview-drawer,
+  .sheet-preview-panel,
+  .sheet-preview-content,
   #sheet {
     display: block;
+    position: static;
     width: auto;
+    max-width: none;
+    max-height: none;
+    height: auto;
     padding: 0;
     margin: 0;
+    background: transparent;
     box-shadow: none;
     border: 0;
     overflow: visible;

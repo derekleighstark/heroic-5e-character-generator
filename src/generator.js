@@ -376,8 +376,7 @@ const steps = [
   ["defenses", "Active Defenses & Saves", "Defenses, saves, and attacks"],
   ["edge", "Record Edge", "Starting Edge, cap, and triggers"],
   ["gear", "Choose Gear", "Gear, enhancements, costume, and notes"],
-  ["identity", "Finalize Identity", "Name, identity, portrait, export, and print"],
-  ["characterSheet", "Character Sheet", "Review, print, and export the finished sheet"]
+  ["identity", "Finalize Identity", "Name, identity, portrait, and final notes"]
 ];
 
 const app = document.querySelector("#app");
@@ -847,7 +846,10 @@ function renderApp() {
     <header class="app-topbar">
       <div class="brand">
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
-        <button type="button" class="brand-compendium" data-action="open-compendium">Compendium</button>
+        <div class="brand-actions">
+          <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
+          <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
+        </div>
       </div>
       <div class="topbar-tools">
         <button type="button" data-action="new-character">New Character</button>
@@ -907,6 +909,21 @@ function renderApp() {
         <div class="compendium-content" data-compendium-content></div>
       </div>
     </section>
+    <section class="sheet-preview-drawer" data-sheet-preview-drawer hidden>
+      <div class="sheet-preview-panel">
+        <header>
+          <div>
+            <strong>Character Sheet Preview</strong>
+            <span>Live sheet view</span>
+          </div>
+          <div class="sheet-preview-actions">
+            <button type="button" data-action="export-pdf">Export to PDF</button>
+            <button type="button" data-action="close-sheet-preview">Close</button>
+          </div>
+        </header>
+        <div class="sheet-preview-content" data-sheet-preview-content></div>
+      </div>
+    </section>
   `;
   renderBuilder();
   renderProgress();
@@ -955,7 +972,7 @@ function renderStep(id) {
   if (id === "edge") return renderEdge();
   if (id === "gear") return renderGear();
   if (id === "identity") return renderIdentity();
-  return renderCharacterSheet();
+  return renderConcept();
 }
 
 function renderConcept() {
@@ -1253,7 +1270,6 @@ function renderIdentity() {
       <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
       <div class="portrait-uploader"><div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label></div>
     </div>
-    <div class="export-card"><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="import-json">Import JSON</button></div>
   `;
 }
 
@@ -1277,12 +1293,6 @@ function listBlock(items) {
   const clean = items.flatMap(item => lines(item)).filter(Boolean);
   if (!clean.length) return `<p class="empty">-</p>`;
   return `<ul>${clean.map(item => `<li>${html(item)}</li>`).join("")}</ul>`;
-}
-
-function renderCharacterSheet() {
-  return `
-    <div id="sheet">${renderSheetMarkup()}</div>
-  `;
 }
 
 function renderSheet() {
@@ -1487,6 +1497,17 @@ function closeCompendium() {
   document.querySelector("[data-compendium-drawer]").hidden = true;
 }
 
+function openSheetPreview() {
+  const drawer = document.querySelector("[data-sheet-preview-drawer]");
+  const content = document.querySelector("[data-sheet-preview-content]");
+  content.innerHTML = `<div id="sheet">${renderSheetMarkup()}</div>`;
+  drawer.hidden = false;
+}
+
+function closeSheetPreview() {
+  document.querySelector("[data-sheet-preview-drawer]").hidden = true;
+}
+
 function compendiumCard(title, body, meta = "") {
   return `
     <article class="compendium-card">
@@ -1648,8 +1669,7 @@ function newCharacter() {
 }
 
 function exportPdf() {
-  activeStep = "characterSheet";
-  renderBuilder();
+  openSheetPreview();
   setTimeout(() => window.print(), 0);
 }
 
@@ -1718,6 +1738,8 @@ app.addEventListener("click", event => {
   if (action === "new-character") newCharacter();
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
+  if (action === "open-sheet-preview") openSheetPreview();
+  if (action === "close-sheet-preview") closeSheetPreview();
   if (action === "compendium-section") {
     activeCompendiumSection = button.dataset.section;
     renderCompendium();
