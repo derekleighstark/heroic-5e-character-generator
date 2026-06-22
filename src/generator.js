@@ -34,10 +34,12 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
+const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
 const themes = [
   ["classic", "Heroic Classic"],
   ["four-color", "Four-Color"],
-  ["tactical", "Modern Tactical"]
+  ["tactical", "Modern Tactical"],
+  ["dark", "Dark Style"]
 ];
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
@@ -453,6 +455,7 @@ const app = document.querySelector("#app");
 let activeStep = "random";
 let sheet = { ...defaults };
 let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
+let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
 let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
 let sampleCharacters = [];
 let sampleStatus = "";
@@ -473,7 +476,14 @@ function applyTheme(theme) {
   localStorage.setItem(THEME_KEY, activeTheme);
 }
 
+function applyDyslexia(enabled) {
+  dyslexiaEnabled = Boolean(enabled);
+  document.documentElement.dataset.dyslexia = dyslexiaEnabled ? "true" : "false";
+  localStorage.setItem(DYSLEXIA_KEY, String(dyslexiaEnabled));
+}
+
 applyTheme(activeTheme);
+applyDyslexia(dyslexiaEnabled);
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
@@ -1161,7 +1171,14 @@ function renderApp() {
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
-        <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
+        <div class="display-controls">
+          <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
+          <label class="dyslexia-toggle" title="Use a dyslexia-friendly font throughout the app">
+            <input id="dyslexiaToggle" type="checkbox" ${dyslexiaEnabled ? "checked" : ""}>
+            <span class="toggle-track" aria-hidden="true"></span>
+            <strong>Dyslexia Font</strong>
+          </label>
+        </div>
         <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
       </div>
       <div class="topbar-tools">
@@ -2947,6 +2964,11 @@ app.addEventListener("change", event => {
 
   if (event.target.id === "themeSwitcher") {
     applyTheme(event.target.value);
+    return;
+  }
+
+  if (event.target.id === "dyslexiaToggle") {
+    applyDyslexia(event.target.checked);
     return;
   }
 

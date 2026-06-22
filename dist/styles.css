@@ -55,6 +55,26 @@
   --shadow: 0 10px 24px rgba(29, 52, 49, .15);
 }
 
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e8edf2;
+  --muted: #a4b0bd;
+  --paper: #151c25;
+  --panel: #202a36;
+  --line: #3d4b5a;
+  --navy: #0b1119;
+  --gold: #f0b429;
+  --red: #ef7166;
+  --green: #4da987;
+  --blue: #65a8d8;
+  --cream: #242c35;
+  --body-bg: #090d12;
+  --control-bg: #111821;
+  --topbar-ink: #f4f7fa;
+  --button-ink: #0b1119;
+  --shadow: 0 18px 46px rgba(0, 0, 0, .42);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -71,6 +91,16 @@ body {
   font-family: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
   line-height: 1.25;
+}
+
+:root[data-dyslexia="true"] body,
+:root[data-dyslexia="true"] button,
+:root[data-dyslexia="true"] input,
+:root[data-dyslexia="true"] select,
+:root[data-dyslexia="true"] textarea {
+  font-family: "OpenDyslexic", "OpenDyslexicAlta", Verdana, Tahoma, "Trebuchet MS", Arial, sans-serif;
+  letter-spacing: .02em;
+  line-height: 1.38;
 }
 
 button,
@@ -103,7 +133,7 @@ textarea {
   width: 100%;
   min-height: 36px;
   margin-top: 4px;
-  border: 1px solid #bfb59e;
+  border: 1px solid var(--line);
   border-bottom: 3px solid var(--navy);
   border-radius: 3px;
   background: var(--control-bg);
@@ -185,6 +215,13 @@ p {
   background: rgba(228, 166, 23, .12);
 }
 
+.display-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
 .theme-switcher {
   display: flex;
   align-items: center;
@@ -210,6 +247,70 @@ p {
   color: var(--topbar-ink);
   font-size: .72rem;
   font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dyslexia-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: var(--topbar-ink);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dyslexia-toggle input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.toggle-track {
+  position: relative;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 18px;
+  background: color-mix(in srgb, var(--topbar-ink) 22%, transparent);
+  border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+  border-radius: 12px;
+  transition: background .16s ease;
+}
+
+.toggle-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  background: var(--topbar-ink);
+  border-radius: 50%;
+  transition: transform .16s ease;
+}
+
+.dyslexia-toggle input:checked + .toggle-track {
+  background: var(--gold);
+}
+
+.dyslexia-toggle input:checked + .toggle-track::after {
+  background: var(--navy);
+  transform: translateX(16px);
+}
+
+.dyslexia-toggle input:focus-visible + .toggle-track {
+  outline: 2px solid var(--topbar-ink);
+  outline-offset: 2px;
+}
+
+.dyslexia-toggle strong {
+  color: var(--gold);
+  font-size: .64rem;
+  letter-spacing: .03em;
   text-transform: uppercase;
 }
 
@@ -263,6 +364,120 @@ p {
 :root[data-theme="tactical"] .side-picker,
 :root[data-theme="tactical"] .rule-card {
   background: var(--paper);
+}
+
+:root[data-theme="dark"] .topbar-tools {
+  background: #131c26;
+}
+
+:root[data-theme="dark"] .step-list button:not(.active),
+:root[data-theme="dark"] .side-detail-card,
+:root[data-theme="dark"] .big-stat,
+:root[data-theme="dark"] .compact-stat,
+:root[data-theme="dark"] .defense-stat,
+:root[data-theme="dark"] .power-set-builder,
+:root[data-theme="dark"] .origin-pool-option,
+:root[data-theme="dark"] .quick-dice button,
+:root[data-theme="dark"] .dice-action-card,
+:root[data-theme="dark"] .dice-history-item,
+:root[data-theme="dark"] .compendium-tabs button:not(.active),
+:root[data-theme="dark"] .gm-screen-tabs button:not(.active),
+:root[data-theme="dark"] .gm-rule,
+:root[data-theme="dark"] .gm-table,
+:root[data-theme="dark"] .compendium-power-set,
+:root[data-theme="dark"] .library-empty {
+  background: var(--control-bg);
+}
+
+:root[data-theme="dark"] .rule-card,
+:root[data-theme="dark"] .export-card,
+:root[data-theme="dark"] .selection-card,
+:root[data-theme="dark"] .power-choice-card,
+:root[data-theme="dark"] .library-item,
+:root[data-theme="dark"] .compendium-card,
+:root[data-theme="dark"] .sheet-section {
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--gold) 7%, transparent), transparent 42%),
+    var(--control-bg);
+}
+
+:root[data-theme="dark"] .power-set-overview,
+:root[data-theme="dark"] .dice-action-card,
+:root[data-theme="dark"] .compendium-power-overview {
+  background: linear-gradient(135deg, var(--cream), var(--control-bg) 58%);
+}
+
+:root[data-theme="dark"] .gm-table tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--panel) 72%, var(--control-bg));
+}
+
+:root[data-theme="dark"] label,
+:root[data-theme="dark"] .step-list button:not(.active),
+:root[data-theme="dark"] .step-art footer strong,
+:root[data-theme="dark"] .builder-header h1,
+:root[data-theme="dark"] .rule-card h2,
+:root[data-theme="dark"] .pill-row span,
+:root[data-theme="dark"] .selection-card h3,
+:root[data-theme="dark"] .gear-selection-grid h2,
+:root[data-theme="dark"] .big-stat strong,
+:root[data-theme="dark"] .ability-card-title span,
+:root[data-theme="dark"] .ability-card span,
+:root[data-theme="dark"] .ability-card em,
+:root[data-theme="dark"] .compact-stat-grid strong,
+:root[data-theme="dark"] .power-audit strong,
+:root[data-theme="dark"] .power-choice-card h4,
+:root[data-theme="dark"] .check-row strong,
+:root[data-theme="dark"] .dice-action-card,
+:root[data-theme="dark"] .dice-history-item strong,
+:root[data-theme="dark"] .gm-reference-section h2,
+:root[data-theme="dark"] .gm-rule h3,
+:root[data-theme="dark"] .gm-table td:first-child,
+:root[data-theme="dark"] .compendium-card h3,
+:root[data-theme="dark"] .compendium-section-title,
+:root[data-theme="dark"] .compendium-power-set > h3,
+:root[data-theme="dark"] .library-list h3,
+:root[data-theme="dark"] .library-portrait,
+:root[data-theme="dark"] .library-item strong,
+:root[data-theme="dark"] .identity-block strong,
+:root[data-theme="dark"] .sheet-section h2,
+:root[data-theme="dark"] .sheet-abilities strong,
+:root[data-theme="dark"] .sheet-skills strong,
+:root[data-theme="dark"] .sheet-powers strong {
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .theme-switcher,
+:root[data-theme="dark"] .dyslexia-toggle,
+:root[data-theme="dark"] .sheet-title,
+:root[data-theme="dark"] .sheet-title h1 {
+  color: var(--topbar-ink);
+}
+
+:root[data-theme="dark"] .compendium-hero h2 {
+  color: var(--gold);
+}
+
+:root[data-theme="dark"] .step-list button.active,
+:root[data-theme="dark"] .compendium-tabs button.active,
+:root[data-theme="dark"] .gm-screen-tabs button.active {
+  color: var(--button-ink);
+}
+
+:root[data-theme="dark"] .sheet-page,
+:root[data-theme="dark"] .step-art,
+:root[data-theme="dark"] .json-panel,
+:root[data-theme="dark"] .library-panel,
+:root[data-theme="dark"] .cloud-panel,
+:root[data-theme="dark"] .compendium-panel,
+:root[data-theme="dark"] .gm-screen-panel,
+:root[data-theme="dark"] .sheet-preview-panel,
+:root[data-theme="dark"] .dice-panel {
+  border-color: var(--line);
+}
+
+:root[data-theme="dark"] ::selection {
+  background: var(--gold);
+  color: var(--button-ink);
 }
 
 .topbar-tools {
@@ -2544,6 +2759,11 @@ p {
 
   .brand-actions {
     width: 100%;
+  }
+
+  .display-controls {
+    width: 100%;
+    flex-wrap: wrap;
   }
 
   .topbar-tools {
