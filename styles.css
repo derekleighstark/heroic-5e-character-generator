@@ -717,7 +717,8 @@ p {
 .json-drawer,
 .library-drawer,
 .compendium-drawer,
-.sheet-preview-drawer {
+.sheet-preview-drawer,
+.dice-drawer {
   position: fixed;
   inset: 0;
   z-index: 50;
@@ -730,14 +731,16 @@ p {
 .json-drawer[hidden],
 .library-drawer[hidden],
 .compendium-drawer[hidden],
-.sheet-preview-drawer[hidden] {
+.sheet-preview-drawer[hidden],
+.dice-drawer[hidden] {
   display: none;
 }
 
 .json-panel,
 .library-panel,
 .compendium-panel,
-.sheet-preview-panel {
+.sheet-preview-panel,
+.dice-panel {
   display: grid;
   grid-template-rows: auto minmax(260px, 60vh) auto;
   width: min(880px, 96vw);
@@ -751,7 +754,8 @@ p {
 .json-actions,
 .library-panel header,
 .compendium-panel header,
-.sheet-preview-panel header {
+.sheet-preview-panel header,
+.dice-panel > header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -771,7 +775,8 @@ p {
 .json-panel header strong,
 .library-panel header strong,
 .compendium-panel header strong,
-.sheet-preview-panel header strong {
+.sheet-preview-panel header strong,
+.dice-panel > header strong {
   display: block;
   color: var(--gold);
   font-size: 1rem;
@@ -782,7 +787,8 @@ p {
 .json-panel header span,
 .library-panel header span,
 .compendium-panel header span,
-.sheet-preview-panel header span {
+.sheet-preview-panel header span,
+.dice-panel > header span {
   display: block;
   font-size: .78rem;
   font-weight: 900;
@@ -823,6 +829,235 @@ p {
 .sheet-preview-content {
   padding: 14px;
   overflow: auto;
+}
+
+.dice-panel {
+  width: min(1220px, 97vw);
+  grid-template-rows: auto auto minmax(420px, 78vh);
+}
+
+.dice-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+}
+
+.dice-mode,
+.quick-dice {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dice-mode button,
+.quick-dice button {
+  min-height: 30px;
+  padding: 6px 9px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--navy);
+  font-size: .72rem;
+}
+
+.dice-mode button.active {
+  background: var(--gold);
+  border-color: #bd8500;
+}
+
+.quick-dice button {
+  min-width: 38px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.dice-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  min-height: 0;
+}
+
+.dice-content {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: 14px;
+  overflow: auto;
+}
+
+.dice-group h2,
+.dice-history-header h2 {
+  margin: 0 0 8px;
+  padding-bottom: 5px;
+  border-bottom: 3px solid var(--gold);
+  color: var(--navy);
+  font-size: .9rem;
+  text-transform: uppercase;
+}
+
+.dice-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 8px;
+}
+
+.dice-action-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  gap: 3px 8px;
+  align-items: center;
+  min-height: 62px;
+  padding: 9px 10px;
+  background: linear-gradient(135deg, var(--cream), #fff 58%);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+  color: var(--navy);
+  text-align: left;
+  text-transform: none;
+  box-shadow: 0 4px 11px rgba(16, 32, 51, .06);
+}
+
+.dice-action-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.dice-action-card span {
+  overflow: hidden;
+  font-size: .78rem;
+  font-weight: 900;
+  line-height: 1.05;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.dice-action-card small {
+  overflow: hidden;
+  color: var(--muted);
+  font-size: .61rem;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dice-action-card strong {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--red);
+  font-size: 1rem;
+  white-space: nowrap;
+}
+
+.dice-history-panel {
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 10px;
+  min-height: 0;
+  padding: 14px;
+  background: #f2ecdd;
+  border-left: 1px solid var(--line);
+}
+
+.dice-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.dice-history-header h2 {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.dice-history-header button {
+  min-height: 28px;
+  padding: 5px 8px;
+  font-size: .68rem;
+}
+
+.dice-latest {
+  display: grid;
+  place-items: center;
+  min-height: 142px;
+  padding: 12px;
+  background: var(--navy);
+  border: 4px solid var(--gold);
+  color: #fff;
+  text-align: center;
+}
+
+.dice-latest span {
+  color: var(--gold);
+  font-size: .75rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.dice-latest strong {
+  display: block;
+  font-size: 3.8rem;
+  line-height: .95;
+}
+
+.dice-latest small,
+.dice-latest p {
+  margin: 0;
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.dice-history {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-height: 0;
+  overflow: auto;
+}
+
+.dice-history-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  padding: 8px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+}
+
+.dice-history-item.latest {
+  border-left-color: var(--gold);
+}
+
+.dice-history-item strong,
+.dice-history-item small {
+  display: block;
+}
+
+.dice-history-item strong {
+  color: var(--navy);
+  font-size: .75rem;
+  text-transform: uppercase;
+}
+
+.dice-history-item small {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: .62rem;
+}
+
+.dice-history-item > span {
+  color: var(--red);
+  font-size: 1.35rem;
+  font-weight: 900;
 }
 
 .compendium-tabs {
@@ -1315,6 +1550,22 @@ p {
     padding: 8px;
   }
 
+  .dice-toolbar,
+  .dice-workspace {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .dice-history-panel {
+    max-height: 48vh;
+    border-top: 1px solid var(--line);
+    border-left: 0;
+  }
+
+  .dice-action-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .step-rail {
     position: static;
   }
@@ -1356,6 +1607,7 @@ p {
   .json-drawer,
   .library-drawer,
   .compendium-drawer,
+  .dice-drawer,
   .sheet-preview-panel > header,
   .sheet-actions {
     display: none;

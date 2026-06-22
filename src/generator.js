@@ -386,6 +386,8 @@ let sheet = load(STORAGE_KEY, defaults);
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
+let diceRollMode = "normal";
+let diceRollHistory = [];
 
 function load(key, fallback) {
   try {
@@ -854,6 +856,7 @@ function renderApp() {
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
+          <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
       </div>
       <div class="topbar-tools">
@@ -927,6 +930,35 @@ function renderApp() {
           </div>
         </header>
         <div class="sheet-preview-content" data-sheet-preview-content></div>
+      </div>
+    </section>
+    <section class="dice-drawer" data-dice-drawer hidden>
+      <div class="dice-panel">
+        <header>
+          <div>
+            <strong>Dice Roller</strong>
+            <span data-dice-character></span>
+          </div>
+          <button type="button" data-action="close-dice-roller">Close</button>
+        </header>
+        <div class="dice-toolbar">
+          <div class="dice-mode" aria-label="Roll mode">
+            <button type="button" data-action="dice-mode" data-mode="normal">Normal</button>
+            <button type="button" data-action="dice-mode" data-mode="advantage">Advantage</button>
+            <button type="button" data-action="dice-mode" data-mode="disadvantage">Disadvantage</button>
+          </div>
+          <div class="quick-dice" aria-label="Quick dice">
+            ${[4, 6, 8, 10, 12, 20, 100].map(sides => `<button type="button" data-action="roll-dice" data-roll-label="d${sides}" data-roll-dice="1d${sides}" data-roll-modifier="0">d${sides}</button>`).join("")}
+          </div>
+        </div>
+        <div class="dice-workspace">
+          <div class="dice-content" data-dice-content></div>
+          <aside class="dice-history-panel">
+            <div class="dice-history-header"><h2>Roll History</h2><button type="button" data-action="clear-dice-history">Clear</button></div>
+            <div class="dice-latest" data-dice-latest></div>
+            <div class="dice-history" data-dice-history></div>
+          </aside>
+        </div>
       </div>
     </section>
   `;
@@ -1517,6 +1549,134 @@ function closeSheetPreview() {
   document.querySelector("[data-sheet-preview-drawer]").hidden = true;
 }
 
+function rollActionCard(label, dice, modifier = 0, detail = "") {
+  return `
+    <button type="button" class="dice-action-card" data-action="roll-dice" data-roll-label="${html(label)}" data-roll-dice="${html(dice)}" data-roll-modifier="${Number(modifier || 0)}">
+      <span>${html(label)}</span>
+      ${detail ? `<small>${html(detail)}</small>` : ""}
+      <strong>${html(dice)}${Number(modifier || 0) ? ` ${signed(modifier)}` : ""}</strong>
+    </button>
+  `;
+}
+
+function diceActionGroup(title, actions) {
+  return `<section class="dice-group"><h2>${html(title)}</h2><div class="dice-action-grid">${actions.join("")}</div></section>`;
+}
+
+function diceRollerMarkup() {
+  const values = calc();
+  const abilityRolls = abilities.map(([key, , name]) => rollActionCard(name, "1d20", abilityMod(key), `Ability ${abilityScore(key)}`));
+  const skillRolls = skills.map(([key, name, ability]) => {
+    const trained = Boolean(sheet[`skill_${key}_trained`]);
+    const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+    const detail = expert ? `${ability.toUpperCase()} - Expertise` : trained ? `${ability.toUpperCase()} - Trained` : `${ability.toUpperCase()} - Untrained`;
+    return rollActionCard(name, "1d20", skillBonus(key, ability, values), detail);
+  });
+  const saveRolls = abilities.map(([key, short, name]) => {
+    const trained = Boolean(sheet[`save_${key}_trained`]);
+    const modifier = abilityMod(key) + (trained ? values.pro : 0);
+    return rollActionCard(`${name} Save`, "1d20", modifier, trained ? `${short} - Trained` : short);
+  });
+  const defenseRolls = [
+    ["Initiative", abilityMod("dex") + abilityMod("per")],
+    ["Parry / Block", abilityMod("fig") + abilityMod("per") + values.pro],
+    ["Dodge", abilityMod("dex") + abilityMod("per") + values.pro],
+    ["Willpower", abilityMod("wis") + abilityMod("per") + values.pro],
+    ["Social Defense", abilityMod("cha") + abilityMod("int") + values.pro]
+  ].map(([label, modifier]) => rollActionCard(label, "1d20", modifier, "Active Defense"));
+  const attackRolls = [
+    ["Melee Attack", abilityMod("fig") + values.pro, "FIG + Prowess"],
+    ["Ranged Attack", abilityMod("dex") + values.pro, "DEX + Prowess"],
+    ["Mental Attack", abilityMod("int") + values.pro, "INT + Prowess"],
+    ["Social Attack", abilityMod("cha") + values.pro, "CHA + Prowess"],
+    ["Power Attack", abilityMod(sheet.powerAbility || "str") + values.pro, `${String(sheet.powerAbility || "str").toUpperCase()} + Prowess`]
+  ].map(([label, modifier, detail]) => rollActionCard(label, "1d20", modifier, detail));
+  const powerNames = chosenPowers().map(power => power.name).filter(Boolean);
+  const powerRolls = [1, 2, 3, 4].map(count => rollActionCard(`${count} Power ${count === 1 ? "Die" : "Dice"}`, `${count}${values.powerDie}`, 0, powerNames.join(", ") || "Power damage / effect"));
+  const recoveryRolls = [
+    rollActionCard("Hit Die", `1${values.hitDie}`, 0, "Recovery roll"),
+    rollActionCard("Power Die", `1${values.powerDie}`, 0, "Single power die")
+  ];
+
+  return [
+    diceActionGroup("Abilities", abilityRolls),
+    diceActionGroup("Skills", skillRolls),
+    diceActionGroup("Saves", saveRolls),
+    diceActionGroup("Active Defenses", defenseRolls),
+    diceActionGroup("Attacks", attackRolls),
+    diceActionGroup("Powers & Damage", powerRolls),
+    diceActionGroup("Recovery & Utility", recoveryRolls)
+  ].join("");
+}
+
+function renderDiceHistory() {
+  const latest = document.querySelector("[data-dice-latest]");
+  const history = document.querySelector("[data-dice-history]");
+  if (!latest || !history) return;
+  const [current] = diceRollHistory;
+  latest.innerHTML = current ? `
+    <span>${html(current.label)}</span>
+    <strong>${current.total}</strong>
+    <small>${html(current.summary)}</small>
+  ` : `<p>Choose a roll to begin.</p>`;
+  history.innerHTML = diceRollHistory.length ? diceRollHistory.map((roll, index) => `
+    <article class="dice-history-item ${index === 0 ? "latest" : ""}">
+      <div><strong>${html(roll.label)}</strong><small>${html(roll.summary)}</small></div>
+      <span>${roll.total}</span>
+    </article>
+  `).join("") : `<p class="empty">No rolls yet.</p>`;
+}
+
+function renderDiceRoller() {
+  const content = document.querySelector("[data-dice-content]");
+  if (!content) return;
+  document.querySelector("[data-dice-character]").textContent = `${characterName()} - Level ${calc().level} ${sheet.rank}`;
+  content.innerHTML = diceRollerMarkup();
+  document.querySelectorAll("[data-action='dice-mode']").forEach(button => button.classList.toggle("active", button.dataset.mode === diceRollMode));
+  renderDiceHistory();
+}
+
+function openDiceRoller() {
+  document.querySelector("[data-dice-drawer]").hidden = false;
+  renderDiceRoller();
+}
+
+function closeDiceRoller() {
+  document.querySelector("[data-dice-drawer]").hidden = true;
+}
+
+function randomDie(sides) {
+  const values = new Uint32Array(1);
+  crypto.getRandomValues(values);
+  return (values[0] % sides) + 1;
+}
+
+function performDiceRoll(label, notation, modifier = 0) {
+  const match = /^(\d+)d(\d+)$/i.exec(String(notation || ""));
+  if (!match) return;
+  const count = Math.max(1, Math.min(20, Number(match[1])));
+  const sides = Math.max(2, Math.min(1000, Number(match[2])));
+  const numericModifier = Number(modifier || 0);
+  let dice = Array.from({ length: count }, () => randomDie(sides));
+  let kept = dice;
+  let modeLabel = "";
+
+  if (count === 1 && sides === 20 && diceRollMode !== "normal") {
+    dice = [dice[0], randomDie(20)];
+    kept = [diceRollMode === "advantage" ? Math.max(...dice) : Math.min(...dice)];
+    modeLabel = diceRollMode === "advantage" ? "Advantage" : "Disadvantage";
+  }
+
+  const subtotal = kept.reduce((total, value) => total + value, 0);
+  const total = subtotal + numericModifier;
+  const diceText = dice.length > 1 ? `[${dice.join(", ")}]${kept.length === 1 ? ` keep ${kept[0]}` : ""}` : `${dice[0]}`;
+  const modifierText = numericModifier ? ` ${signed(numericModifier)}` : "";
+  const summary = `${notation}: ${diceText}${modifierText}${modeLabel ? ` (${modeLabel})` : ""}`;
+  diceRollHistory.unshift({ label, total, summary });
+  diceRollHistory = diceRollHistory.slice(0, 30);
+  renderDiceHistory();
+}
+
 function clearSheetPrintMode() {
   document.body.classList.remove("sheet-print-mode");
 }
@@ -1618,6 +1778,7 @@ function loadCharacter(id) {
   const record = library.find(character => character.id === id);
   if (!record) return;
   sheet = { ...defaults, ...record.sheet };
+  diceRollHistory = [];
   initialize(true);
   closeLibrary();
   renderBuilder();
@@ -1634,6 +1795,7 @@ async function loadSampleCharacter(id) {
     if (!response.ok) throw new Error(`Could not load sample (${response.status})`);
     const payload = await response.json();
     sheet = { ...defaults, ...(payload.sheet || payload) };
+    diceRollHistory = [];
     initialize(true);
     closeLibrary();
     renderBuilder();
@@ -1660,6 +1822,7 @@ function importJson(file) {
       const payload = JSON.parse(reader.result);
       const imported = payload.sheet && typeof payload.sheet === "object" ? payload.sheet : payload;
       sheet = { ...defaults, ...imported };
+      diceRollHistory = [];
       initialize(true);
       renderBuilder();
       renderSheet();
@@ -1674,6 +1837,7 @@ function importJson(file) {
 function newCharacter() {
   if (!confirm("Start a new HEROIC 5e character? Current unsaved changes will be cleared.")) return;
   sheet = { ...defaults };
+  diceRollHistory = [];
   activeStep = "concept";
   initialize(true);
   renderBuilder();
@@ -1756,6 +1920,17 @@ app.addEventListener("click", event => {
   if (action === "close-compendium") closeCompendium();
   if (action === "open-sheet-preview") openSheetPreview();
   if (action === "close-sheet-preview") closeSheetPreview();
+  if (action === "open-dice-roller") openDiceRoller();
+  if (action === "close-dice-roller") closeDiceRoller();
+  if (action === "dice-mode") {
+    diceRollMode = button.dataset.mode;
+    renderDiceRoller();
+  }
+  if (action === "roll-dice") performDiceRoll(button.dataset.rollLabel, button.dataset.rollDice, button.dataset.rollModifier);
+  if (action === "clear-dice-history") {
+    diceRollHistory = [];
+    renderDiceHistory();
+  }
   if (action === "compendium-section") {
     activeCompendiumSection = button.dataset.section;
     renderCompendium();
