@@ -385,7 +385,7 @@ p {
 
 .builder-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(230px, 22vw, 320px);
+  grid-template-columns: minmax(0, 1fr) clamp(345px, 33vw, 480px);
   gap: 18px;
   align-items: start;
 }
