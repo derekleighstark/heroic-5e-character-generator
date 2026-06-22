@@ -1149,46 +1149,28 @@ function currentStepIndex() {
   return steps.findIndex(([id]) => id === activeStep);
 }
 
-function completion() {
-  const tests = [
-    Boolean(sheet.heroName),
-    Boolean(sheet.origin && sheet.originTrait && sheet.originPrimaryBonus && sheet.originSecondaryBonus),
-    Boolean(sheet.className && sheet.calling),
-    abilities.every(([key]) => Number(sheet[`${key}Score`] || 0) > 0),
-    chosenPowers().length > 0,
-    Boolean(sheet.startingTalent || sheet.talents),
-    Boolean(sheet.gear || sheet.costume),
-    Boolean(sheet.concept || sheet.backstory)
-  ];
-  return Math.round((tests.filter(Boolean).length / tests.length) * 100);
-}
-
 function renderApp() {
   app.innerHTML = `
     <header class="app-topbar">
-      <div class="brand">
+      <div class="topbar-primary">
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
-          <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
         </div>
+        <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
+        <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
       </div>
       <div class="topbar-tools">
-        <button type="button" data-action="new-character">New Character</button>
-        <button type="button" data-action="save-character">Save Character</button>
-        <button type="button" data-action="open-library">Load Character</button>
-        <button type="button" data-action="open-cloud">Cloud Characters</button>
-        <button type="button" data-action="export-json">Export JSON</button>
-        <button type="button" data-action="import-json">Import JSON</button>
-        <button type="button" data-action="export-pdf">Export to PDF</button>
+        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New</button><button type="button" data-action="save-character">Save Local</button><button type="button" data-action="open-library">Load Local</button></div>
+        <div class="topbar-group"><span>Cloud</span><button type="button" data-action="save-cloud-character" data-cloud-save>Save Cloud</button><button type="button" data-action="open-cloud" data-cloud-open>Cloud Library</button></div>
+        <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
     </header>
     <main class="generator-shell">
       <aside class="step-rail">
-        <div class="progress-card"><span>Completion</span><strong data-progress-text></strong><div class="progress-track"><i data-progress-bar></i></div></div>
         <nav class="step-list"></nav>
       </aside>
       <section class="builder-panel"></section>
@@ -1293,9 +1275,6 @@ function renderApp() {
 }
 
 function renderProgress() {
-  const value = completion();
-  document.querySelector("[data-progress-text]").textContent = `${value}%`;
-  document.querySelector("[data-progress-bar]").style.width = `${value}%`;
   document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
     <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
       <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
@@ -1984,17 +1963,32 @@ function closeLibrary() {
 }
 
 async function initializeCloud() {
+  updateCloudControls();
   if (!cloudConfigured()) return;
   try {
     cloudSession = await getCloudSession();
+    updateCloudControls();
     await watchCloudSession(session => {
       cloudSession = session;
+      updateCloudControls();
       const drawer = document.querySelector("[data-cloud-drawer]");
       if (drawer && !drawer.hidden) renderCloud();
     });
   } catch (error) {
     cloudStatus = `Cloud connection failed: ${error.message}`;
+    updateCloudControls();
   }
+}
+
+function updateCloudControls() {
+  const state = document.querySelector("[data-cloud-state]");
+  const saveButton = document.querySelector("[data-cloud-save]");
+  const openButton = document.querySelector("[data-cloud-open]");
+  const configured = cloudConfigured();
+  const signedIn = Boolean(cloudSession?.user);
+  if (state) state.textContent = signedIn ? cloudSession.user.email : configured ? "Cloud Ready" : "Local Only";
+  if (saveButton) saveButton.textContent = signedIn ? activeCloudCharacterId ? "Update Cloud" : "Save Cloud" : "Cloud Sign In";
+  if (openButton) openButton.textContent = signedIn ? "Cloud Library" : "Cloud Login";
 }
 
 async function openCloud() {
@@ -2004,6 +1998,7 @@ async function openCloud() {
   if (cloudConfigured() && !cloudSession) {
     try {
       cloudSession = await getCloudSession();
+      updateCloudControls();
     } catch (error) {
       cloudStatus = error.message;
     }
@@ -2100,7 +2095,12 @@ async function sendMagicLink() {
 }
 
 async function saveCurrentToCloud() {
-  if (!cloudSession?.user) return;
+  if (!cloudSession?.user) {
+    await openCloud();
+    cloudStatus = "Sign in to save this character across devices.";
+    await renderCloud();
+    return;
+  }
   const name = prompt("Save cloud character as:", characterName());
   if (!name?.trim()) return;
   cloudStatus = "Saving character and portrait...";
@@ -2108,6 +2108,7 @@ async function saveCurrentToCloud() {
   try {
     const record = await saveCloudCharacter({ id: activeCloudCharacterId, name: name.trim(), sheet: cloneSheet(sheet) });
     activeCloudCharacterId = record.id;
+    updateCloudControls();
     cloudStatus = `${name.trim()} saved to the cloud.`;
   } catch (error) {
     cloudStatus = error.message;
@@ -2122,6 +2123,7 @@ async function loadCharacterFromCloud(id) {
     const record = await loadCloudCharacter(id);
     sheet = { ...defaults, ...record.sheet };
     activeCloudCharacterId = record.id;
+    updateCloudControls();
     diceRollHistory = [];
     initialize(true);
     closeCloud();
@@ -2142,6 +2144,7 @@ async function removeCharacterFromCloud(id) {
   try {
     await deleteCloudCharacter(id, record.portrait_path);
     if (activeCloudCharacterId === id) activeCloudCharacterId = null;
+    updateCloudControls();
     cloudStatus = `${record.name} deleted.`;
   } catch (error) {
     cloudStatus = error.message;
@@ -2478,6 +2481,7 @@ function loadCharacter(id) {
   if (!record) return;
   sheet = { ...defaults, ...record.sheet };
   activeCloudCharacterId = null;
+  updateCloudControls();
   diceRollHistory = [];
   initialize(true);
   closeLibrary();
@@ -2496,6 +2500,7 @@ async function loadSampleCharacter(id) {
     const payload = await response.json();
     sheet = { ...defaults, ...(payload.sheet || payload) };
     activeCloudCharacterId = null;
+    updateCloudControls();
     diceRollHistory = [];
     initialize(true);
     closeLibrary();
@@ -2524,6 +2529,7 @@ function importJson(file) {
       const imported = payload.sheet && typeof payload.sheet === "object" ? payload.sheet : payload;
       sheet = { ...defaults, ...imported };
       activeCloudCharacterId = null;
+      updateCloudControls();
       diceRollHistory = [];
       initialize(true);
       renderBuilder();
@@ -2682,6 +2688,7 @@ function randomCharacter() {
     portrait: ""
   };
   activeCloudCharacterId = null;
+  updateCloudControls();
 
   const abilityValues = shuffleItems(rankAbilityArray(rank));
   abilities.forEach(([key], index) => {
@@ -2729,6 +2736,7 @@ function newCharacter() {
   if (!confirm("Start a new HEROIC 5e character? Current unsaved changes will be cleared.")) return;
   sheet = { ...defaults };
   activeCloudCharacterId = null;
+  updateCloudControls();
   diceRollHistory = [];
   activeStep = "random";
   initialize(true);
@@ -2866,6 +2874,7 @@ app.addEventListener("click", async event => {
       cloudSession = null;
       activeCloudCharacterId = null;
       cloudStatus = "Signed out.";
+      updateCloudControls();
     } catch (error) {
       cloudStatus = error.message;
     }

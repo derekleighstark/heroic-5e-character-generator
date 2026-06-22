@@ -134,24 +134,24 @@ p {
   position: sticky;
   top: 0;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 10px 18px;
+  display: grid;
+  padding: 0;
   background: var(--navy);
   color: var(--topbar-ink);
   border-bottom: 5px solid var(--gold);
 }
 
-.brand {
-  display: flex;
+.topbar-primary {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
-  gap: 12px;
-  min-width: 330px;
+  gap: 14px;
+  padding: 9px 16px 8px;
 }
 
 .brand-title {
   display: grid;
+  min-width: 170px;
 }
 
 .brand-actions {
@@ -161,13 +161,13 @@ p {
   flex-wrap: wrap;
 }
 
-.brand strong {
+.brand-title strong {
   color: var(--gold);
   font-size: 1rem;
   letter-spacing: .1em;
 }
 
-.brand span {
+.brand-title span {
   font-size: .78rem;
   font-weight: 900;
   letter-spacing: .08em;
@@ -268,10 +268,46 @@ p {
 .topbar-tools {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 1;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 7px 16px;
+  background: color-mix(in srgb, var(--navy) 78%, #fff 22%);
+  border-top: 1px solid color-mix(in srgb, var(--gold) 28%, transparent);
+}
+
+.topbar-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   flex-wrap: wrap;
+}
+
+.topbar-group > span {
+  margin-right: 2px;
+  color: var(--gold);
+  font-size: .65rem;
+  font-weight: 900;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.topbar-group button {
+  min-height: 30px;
+  padding: 6px 9px;
+  font-size: .7rem;
+}
+
+.cloud-account-state {
+  max-width: 210px;
+  overflow: hidden;
+  padding: 5px 8px;
+  background: color-mix(in srgb, var(--green) 55%, var(--navy));
+  border-left: 3px solid var(--gold);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .wide-check input,
@@ -299,48 +335,16 @@ p {
 
 .step-rail {
   position: sticky;
-  top: 74px;
-  max-height: calc(100vh - 88px);
+  top: 108px;
+  max-height: calc(100vh - 122px);
   overflow: auto;
   padding: 10px;
-}
-
-.progress-card {
-  padding: 10px;
-  background: var(--navy);
-  color: #fff;
-  border-left: 5px solid var(--gold);
-}
-
-.progress-card span {
-  display: block;
-  color: var(--gold);
-  font-size: .75rem;
-  font-weight: 900;
-  text-transform: uppercase;
-}
-
-.progress-card strong {
-  display: block;
-  margin: 2px 0 6px;
-  font-size: 1.45rem;
-}
-
-.progress-track {
-  height: 7px;
-  background: rgba(255, 255, 255, .24);
-}
-
-.progress-track i {
-  display: block;
-  height: 100%;
-  background: var(--gold);
 }
 
 .step-list {
   display: grid;
   gap: 5px;
-  margin-top: 9px;
+  margin-top: 0;
 }
 
 .step-list button {
@@ -2331,13 +2335,33 @@ p {
     display: grid;
   }
 
-  .brand {
-    min-width: 0;
-    flex-wrap: wrap;
+  .topbar-primary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 10px;
   }
 
   .brand-actions {
     width: 100%;
+  }
+
+  .topbar-tools {
+    display: grid;
+    gap: 7px;
+    padding: 8px 10px 10px;
+  }
+
+  .topbar-group {
+    display: grid;
+    grid-template-columns: 62px repeat(3, minmax(0, 1fr));
+  }
+
+  .topbar-group button {
+    width: 100%;
+  }
+
+  .cloud-account-state {
+    max-width: 100%;
   }
 
   .theme-switcher select {
