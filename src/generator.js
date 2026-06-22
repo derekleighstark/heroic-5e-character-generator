@@ -2118,8 +2118,8 @@ async function sendMagicLink() {
   cloudStatus = "Sending sign-in link...";
   await renderCloud();
   try {
-    await sendCloudMagicLink(email);
-    cloudStatus = `Magic link sent to ${email}. Open it on this device to finish signing in.`;
+    const redirectTo = await sendCloudMagicLink(email);
+    cloudStatus = `Magic link sent to ${email}. It will return to ${redirectTo}`;
   } catch (error) {
     cloudStatus = error.message;
   }

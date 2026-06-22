@@ -67,10 +67,14 @@ export async function watchCloudSession(callback) {
 export async function sendCloudMagicLink(email) {
   const client = await getClient();
   if (!client) throw new Error("Cloud saving is not configured.");
+  const configuredOrigin = String(config.siteUrl || "").trim().replace(/\/$/, "");
+  const redirectOrigin = configuredOrigin || window.location.origin;
+  const redirectTo = `${redirectOrigin}/`;
   requireResult(await client.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: `${window.location.origin}/` }
+    options: { emailRedirectTo: redirectTo }
   }));
+  return redirectTo;
 }
 
 export async function cloudSignOut() {

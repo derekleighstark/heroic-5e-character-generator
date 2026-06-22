@@ -9,7 +9,8 @@ const dirs = ["src", "sample-characters"];
 function browserConfig() {
   return `window.__HEROIC_CLOUD_CONFIG__ = Object.freeze(${JSON.stringify({
     url: process.env.SUPABASE_URL || "",
-    publishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || ""
+    publishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || "",
+    siteUrl: process.env.SITE_URL || process.env.URL || ""
   })});\n`;
 }
 
