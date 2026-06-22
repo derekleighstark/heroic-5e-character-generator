@@ -3,8 +3,15 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
-const files = ["index.html", "styles.css", "app.js"];
+const files = ["index.html", "styles.css", "app.js", "cloud-config.js"];
 const dirs = ["src", "sample-characters"];
+
+function browserConfig() {
+  return `window.__HEROIC_CLOUD_CONFIG__ = Object.freeze(${JSON.stringify({
+    url: process.env.SUPABASE_URL || "",
+    publishableKey: process.env.SUPABASE_PUBLISHABLE_KEY || ""
+  })});\n`;
+}
 
 function copyFile(from, to) {
   fs.mkdirSync(path.dirname(to), { recursive: true });
@@ -29,5 +36,6 @@ fs.mkdirSync(dist, { recursive: true });
 
 for (const file of files) copyFile(path.join(root, file), path.join(dist, file));
 for (const dir of dirs) copyDir(path.join(root, dir), path.join(dist, dir));
+fs.writeFileSync(path.join(dist, "cloud-config.js"), browserConfig(), "utf8");
 
 console.log(`Built HEROIC 5e app to ${dist}`);
