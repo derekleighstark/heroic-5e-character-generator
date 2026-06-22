@@ -1,1 +1,1 @@
-import "./generator.js";
+import "./generator.js?v=20260622-cloud1";

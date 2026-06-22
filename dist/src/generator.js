@@ -1,4 +1,16 @@
 import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
+import {
+  cloudConfigured,
+  cloudPortraitUrl,
+  cloudSignOut,
+  deleteCloudCharacter,
+  getCloudSession,
+  listCloudCharacters,
+  loadCloudCharacter,
+  saveCloudCharacter,
+  sendCloudMagicLink,
+  watchCloudSession
+} from "./cloud.js";
 
 const rulesSource = await fetch("/app.js").then(response => response.text());
 const rulesPrefix = rulesSource.slice(0, rulesSource.indexOf("const STORAGE_KEY"));
@@ -22,7 +34,6 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
-const RANDOM_ORIGINS_KEY = "heroic5e_random_origin_pool";
 const themes = [
   ["classic", "Heroic Classic"],
   ["four-color", "Four-Color"],
@@ -379,6 +390,7 @@ const defaults = {
 };
 
 const steps = [
+  ["random", "Random Character", "Optional guided random character generation"],
   ["concept", "Create the Concept", "Hero idea, campaign rank, and notes"],
   ["abilities", "Assign Ability Scores", "Set the eight core ability scores"],
   ["origin", "Choose an Origin", "Origin bonuses and built-in mechanics"],
@@ -397,6 +409,7 @@ const steps = [
 ];
 
 const stepArtwork = {
+  random: ["Infinite Possibilities", "A roster of heroes waiting to be discovered"],
   concept: ["Hero Concept", "Portrait, silhouette, or team introduction"],
   abilities: ["Raw Potential", "A hero demonstrating exceptional ability"],
   origin: ["Origin Story", "Transformation, legacy, or first awakening"],
@@ -437,15 +450,19 @@ const originBackgrounds = {
 };
 
 const app = document.querySelector("#app");
-let activeStep = "concept";
+let activeStep = "random";
 let sheet = { ...defaults };
 let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
-let randomOriginPool = loadRandomOriginPool();
+let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
 let diceRollMode = "normal";
 let diceRollHistory = [];
+let cloudSession = null;
+let cloudCharacters = [];
+let cloudStatus = "";
+let activeCloudCharacterId = null;
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
 
@@ -453,20 +470,6 @@ function applyTheme(theme) {
   activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
   document.documentElement.dataset.theme = activeTheme;
   localStorage.setItem(THEME_KEY, activeTheme);
-}
-
-function loadRandomOriginPool() {
-  try {
-    const stored = JSON.parse(localStorage.getItem(RANDOM_ORIGINS_KEY) || "null");
-    const valid = Array.isArray(stored) ? stored.filter(name => origins[name]) : Object.keys(origins);
-    return new Set(valid);
-  } catch {
-    return new Set(Object.keys(origins));
-  }
-}
-
-function saveRandomOriginPool() {
-  localStorage.setItem(RANDOM_ORIGINS_KEY, JSON.stringify([...randomOriginPool]));
 }
 
 applyTheme(activeTheme);
@@ -1176,6 +1179,7 @@ function renderApp() {
         <button type="button" data-action="new-character">New Character</button>
         <button type="button" data-action="save-character">Save Character</button>
         <button type="button" data-action="open-library">Load Character</button>
+        <button type="button" data-action="open-cloud">Cloud Characters</button>
         <button type="button" data-action="export-json">Export JSON</button>
         <button type="button" data-action="import-json">Import JSON</button>
         <button type="button" data-action="export-pdf">Export to PDF</button>
@@ -1215,6 +1219,15 @@ function renderApp() {
           <button type="button" data-action="close-library">Close</button>
         </header>
         <div class="library-list" data-library-list></div>
+      </div>
+    </section>
+    <section class="cloud-drawer" data-cloud-drawer hidden>
+      <div class="cloud-panel">
+        <header>
+          <div><strong>Cloud Characters</strong><span data-cloud-account></span></div>
+          <button type="button" data-action="close-cloud">Close</button>
+        </header>
+        <div class="cloud-content" data-cloud-content></div>
       </div>
     </section>
     <section class="compendium-drawer" data-compendium-drawer hidden>
@@ -1285,18 +1298,20 @@ function renderProgress() {
   document.querySelector("[data-progress-bar]").style.width = `${value}%`;
   document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
     <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
-      <span>${index + 1}</span><strong>${label}</strong>
+      <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
     </button>
   `).join("");
 }
 
 function renderBuilder() {
   const index = currentStepIndex();
-  const [, label] = steps[index] || steps[0];
+  const [id, label] = steps[index] || steps[0];
   const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
+  const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
+  const artNumber = id === "random" ? 0 : index;
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
-      <div><p>Step ${index + 1} of ${steps.length}</p><h1>${label}</h1></div>
+      <div><p>${stepLabel}</p><h1>${label}</h1></div>
       <div class="builder-nav">
         <button type="button" data-action="back" ${index === 0 ? "disabled" : ""}>Back</button>
         <button type="button" data-action="next" ${index === steps.length - 1 ? "disabled" : ""}>Next</button>
@@ -1306,7 +1321,7 @@ function renderBuilder() {
       <section class="builder-step-content">${renderStep(activeStep)}</section>
       <aside class="step-art" data-art-step="${activeStep}">
         <div class="step-art-canvas" role="img" aria-label="Artwork placeholder for ${html(artTitle)}">
-          <span>${String(index + 1).padStart(2, "0")}</span>
+          <span>${String(artNumber).padStart(2, "0")}</span>
           <i></i>
         </div>
         <footer><span>Artwork Placeholder</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
@@ -1317,6 +1332,7 @@ function renderBuilder() {
 }
 
 function renderStep(id) {
+  if (id === "random") return renderRandomCharacter();
   if (id === "concept") return renderConcept();
   if (id === "abilities") return renderAbilityScores();
   if (id === "origin") return renderOrigin();
@@ -1336,20 +1352,31 @@ function renderStep(id) {
 }
 
 function renderConcept() {
-  const originNames = Object.keys(origins);
   return `
     <div class="form-grid three">
       ${select("rank", "Campaign Rank", Object.keys(ranks))}
       ${input("level", "Level", "number", 'min="1" max="10"')}
-      <div class="random-concept-action"><button type="button" class="random-character-button" data-action="random-character">Random Character</button></div>
     </div>
-    <section class="randomizer-options">
-      <header><div><span>Randomizer Origin Pool</span><strong data-random-origin-count>${randomOriginPool.size} of ${originNames.length} enabled</strong></div><div><button type="button" data-action="random-origins-all">Select All</button><button type="button" data-action="random-origins-clear">Clear</button></div></header>
-      <div class="origin-pool-grid">
-        ${originNames.map(name => `<label class="random-origin-option"><input class="random-origin-checkbox" type="checkbox" data-random-origin="${html(name)}" ${checked(randomOriginPool.has(name))}><span>${html(name)}</span></label>`).join("")}
-      </div>
-    </section>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
+  `;
+}
+
+function renderRandomCharacter() {
+  const randomSelect = (field, label, items, blankLabel) => `<label>${label}<select data-random-character-field="${field}">${options(items, randomCharacterOptions[field], blankLabel)}</select></label>`;
+  return `
+    <div class="rule-card random-generator-intro">
+      <h2>Guided Random Creation</h2>
+      <p>Lock any choices that matter to the campaign. Leave a category set to Random and the generator will choose it, then complete all remaining character mechanics and identity details automatically.</p>
+    </div>
+    <div class="form-grid three random-generator-grid">
+      ${select("rank", "Campaign Rank", Object.keys(ranks))}
+      ${input("level", "Starting Level", "number", 'min="1" max="10"')}
+      ${randomSelect("origin", "Origin", Object.keys(origins), "Random Origin")}
+      ${randomSelect("className", "Class", Object.keys(classes), "Random Class")}
+      ${randomSelect("side", "Side", ["Heroic", "Unaligned", "Villainous"], "Random PC Side")}
+      ${randomSelect("calling", "Calling", Object.keys(callings), "Random Calling")}
+    </div>
+    <div class="random-generator-action"><button type="button" class="random-character-button" data-action="random-character">Generate Complete Character</button></div>
   `;
 }
 
@@ -1956,6 +1983,172 @@ function closeLibrary() {
   document.querySelector("[data-library-drawer]").hidden = true;
 }
 
+async function initializeCloud() {
+  if (!cloudConfigured()) return;
+  try {
+    cloudSession = await getCloudSession();
+    await watchCloudSession(session => {
+      cloudSession = session;
+      const drawer = document.querySelector("[data-cloud-drawer]");
+      if (drawer && !drawer.hidden) renderCloud();
+    });
+  } catch (error) {
+    cloudStatus = `Cloud connection failed: ${error.message}`;
+  }
+}
+
+async function openCloud() {
+  const drawer = document.querySelector("[data-cloud-drawer]");
+  drawer.hidden = false;
+  cloudStatus = "";
+  if (cloudConfigured() && !cloudSession) {
+    try {
+      cloudSession = await getCloudSession();
+    } catch (error) {
+      cloudStatus = error.message;
+    }
+  }
+  await renderCloud();
+}
+
+function closeCloud() {
+  document.querySelector("[data-cloud-drawer]").hidden = true;
+}
+
+async function cloudCharacterItem(record) {
+  const data = record.character_data || {};
+  const portrait = record.portrait_path ? await cloudPortraitUrl(record.portrait_path).catch(() => "") : "";
+  const name = record.name || data.heroName || data.realName || "Unnamed Hero";
+  return `
+    <article class="library-item cloud-character-item">
+      <div class="library-portrait" style="${portrait ? `background-image:url(${portrait})` : ""}">${portrait ? "" : initialsFor(name)}</div>
+      <div>
+        <strong>${html(name)}</strong>
+        <span>${html([data.origin, data.className, data.calling].filter(Boolean).join(" - ") || "No build details")}</span>
+        <small>Level ${html(data.level || 1)} ${html(data.rank || "")} - Synced ${html(new Date(record.updated_at).toLocaleString())}</small>
+      </div>
+      <div class="library-item-actions">
+        <button type="button" data-action="load-cloud-character" data-character-id="${html(record.id)}">Load</button>
+        <button type="button" data-action="delete-cloud-character" data-character-id="${html(record.id)}">Delete</button>
+      </div>
+    </article>
+  `;
+}
+
+async function renderCloud() {
+  const content = document.querySelector("[data-cloud-content]");
+  const account = document.querySelector("[data-cloud-account]");
+  if (!content || !account) return;
+
+  if (!cloudConfigured()) {
+    account.textContent = "Not configured";
+    content.innerHTML = `<div class="library-empty">Cloud saving has not been configured for this deployment.</div>`;
+    return;
+  }
+
+  if (!cloudSession?.user) {
+    account.textContent = "Sign in to sync across devices";
+    content.innerHTML = `
+      <div class="cloud-login">
+        <h2>Email Sign In</h2>
+        <p>Enter your email and Supabase will send a secure magic link. Local saves remain available without an account.</p>
+        <label>Email Address<input id="cloudEmail" type="email" autocomplete="email" placeholder="hero@example.com"></label>
+        <button type="button" data-action="send-cloud-link">Send Magic Link</button>
+        ${cloudStatus ? `<p class="cloud-status">${html(cloudStatus)}</p>` : ""}
+      </div>
+    `;
+    return;
+  }
+
+  account.textContent = cloudSession.user.email || "Signed in";
+  content.innerHTML = `
+    <div class="cloud-account-bar">
+      <div><strong>Private Cloud Library</strong><span>${html(cloudSession.user.email || "Signed in")}</span></div>
+      <div><button type="button" data-action="save-cloud-character">Save Current</button><button type="button" data-action="refresh-cloud">Refresh</button><button type="button" data-action="cloud-sign-out">Sign Out</button></div>
+    </div>
+    ${cloudStatus ? `<p class="cloud-status">${html(cloudStatus)}</p>` : ""}
+    <div class="cloud-character-list"><div class="library-empty">Loading cloud characters...</div></div>
+  `;
+
+  try {
+    cloudCharacters = await listCloudCharacters();
+    const list = content.querySelector(".cloud-character-list");
+    list.innerHTML = cloudCharacters.length
+      ? (await Promise.all(cloudCharacters.map(cloudCharacterItem))).join("")
+      : `<div class="library-empty">No cloud characters yet. Save the current character to add one.</div>`;
+  } catch (error) {
+    content.querySelector(".cloud-character-list").innerHTML = `<div class="library-empty">${html(error.message)}</div>`;
+  }
+}
+
+async function sendMagicLink() {
+  const email = String(document.querySelector("#cloudEmail")?.value || "").trim();
+  if (!email || !email.includes("@")) {
+    cloudStatus = "Enter a valid email address.";
+    await renderCloud();
+    return;
+  }
+  cloudStatus = "Sending sign-in link...";
+  await renderCloud();
+  try {
+    await sendCloudMagicLink(email);
+    cloudStatus = `Magic link sent to ${email}. Open it on this device to finish signing in.`;
+  } catch (error) {
+    cloudStatus = error.message;
+  }
+  await renderCloud();
+}
+
+async function saveCurrentToCloud() {
+  if (!cloudSession?.user) return;
+  const name = prompt("Save cloud character as:", characterName());
+  if (!name?.trim()) return;
+  cloudStatus = "Saving character and portrait...";
+  await renderCloud();
+  try {
+    const record = await saveCloudCharacter({ id: activeCloudCharacterId, name: name.trim(), sheet: cloneSheet(sheet) });
+    activeCloudCharacterId = record.id;
+    cloudStatus = `${name.trim()} saved to the cloud.`;
+  } catch (error) {
+    cloudStatus = error.message;
+  }
+  await renderCloud();
+}
+
+async function loadCharacterFromCloud(id) {
+  cloudStatus = "Loading character...";
+  await renderCloud();
+  try {
+    const record = await loadCloudCharacter(id);
+    sheet = { ...defaults, ...record.sheet };
+    activeCloudCharacterId = record.id;
+    diceRollHistory = [];
+    initialize(true);
+    closeCloud();
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+  } catch (error) {
+    cloudStatus = error.message;
+    await renderCloud();
+  }
+}
+
+async function removeCharacterFromCloud(id) {
+  const record = cloudCharacters.find(character => character.id === id);
+  if (!record || !confirm(`Delete cloud character "${record.name}"? This cannot be undone.`)) return;
+  cloudStatus = "Deleting character...";
+  await renderCloud();
+  try {
+    await deleteCloudCharacter(id, record.portrait_path);
+    if (activeCloudCharacterId === id) activeCloudCharacterId = null;
+    cloudStatus = `${record.name} deleted.`;
+  } catch (error) {
+    cloudStatus = error.message;
+  }
+  await renderCloud();
+}
+
 function compendiumSections() {
   return [
     ["glossary", "Glossary"],
@@ -2284,6 +2477,7 @@ function loadCharacter(id) {
   const record = library.find(character => character.id === id);
   if (!record) return;
   sheet = { ...defaults, ...record.sheet };
+  activeCloudCharacterId = null;
   diceRollHistory = [];
   initialize(true);
   closeLibrary();
@@ -2301,6 +2495,7 @@ async function loadSampleCharacter(id) {
     if (!response.ok) throw new Error(`Could not load sample (${response.status})`);
     const payload = await response.json();
     sheet = { ...defaults, ...(payload.sheet || payload) };
+    activeCloudCharacterId = null;
     diceRollHistory = [];
     initialize(true);
     closeLibrary();
@@ -2328,6 +2523,7 @@ function importJson(file) {
       const payload = JSON.parse(reader.result);
       const imported = payload.sheet && typeof payload.sheet === "object" ? payload.sheet : payload;
       sheet = { ...defaults, ...imported };
+      activeCloudCharacterId = null;
       diceRollHistory = [];
       initialize(true);
       renderBuilder();
@@ -2452,18 +2648,13 @@ function randomizeSkills() {
 }
 
 function randomCharacter() {
-  const allowedOrigins = [...randomOriginPool].filter(name => origins[name]);
-  if (!allowedOrigins.length) {
-    alert("Select at least one Origin in the Randomizer Origin Pool.");
-    return;
-  }
-  if (!confirm("Generate a random character from the selected Rank, Level, and Origin pool? Current unsaved changes will be replaced.")) return;
+  if (!confirm("Generate a complete character from the selected Step 0 options? Current unsaved changes will be replaced.")) return;
 
   const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
-  const originName = randomItem(allowedOrigins);
-  const className = randomItem(Object.keys(classes));
-  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
-  const calling = randomItem(Object.keys(callings));
+  const originName = origins[randomCharacterOptions.origin] ? randomCharacterOptions.origin : randomItem(Object.keys(origins));
+  const className = classes[randomCharacterOptions.className] ? randomCharacterOptions.className : randomItem(Object.keys(classes));
+  const side = ["Heroic", "Unaligned", "Villainous"].includes(randomCharacterOptions.side) ? randomCharacterOptions.side : (Math.random() < .75 ? "Heroic" : "Unaligned");
+  const calling = callings[randomCharacterOptions.calling] ? randomCharacterOptions.calling : randomItem(Object.keys(callings));
   const origin = origins[originName];
   const originPrimaryBonus = randomItem(origin.primary);
   const originSecondaryBonus = randomItem(origin.secondary[originPrimaryBonus]);
@@ -2490,6 +2681,7 @@ function randomCharacter() {
     identity,
     portrait: ""
   };
+  activeCloudCharacterId = null;
 
   const abilityValues = shuffleItems(rankAbilityArray(rank));
   abilities.forEach(([key], index) => {
@@ -2536,8 +2728,9 @@ function randomCharacter() {
 function newCharacter() {
   if (!confirm("Start a new HEROIC 5e character? Current unsaved changes will be cleared.")) return;
   sheet = { ...defaults };
+  activeCloudCharacterId = null;
   diceRollHistory = [];
-  activeStep = "concept";
+  activeStep = "random";
   initialize(true);
   renderBuilder();
   renderSheet();
@@ -2561,13 +2754,9 @@ app.addEventListener("input", event => {
 });
 
 app.addEventListener("change", event => {
-  const randomOrigin = event.target.closest("[data-random-origin]");
-  if (randomOrigin) {
-    if (randomOrigin.checked) randomOriginPool.add(randomOrigin.dataset.randomOrigin);
-    else randomOriginPool.delete(randomOrigin.dataset.randomOrigin);
-    saveRandomOriginPool();
-    const count = document.querySelector("[data-random-origin-count]");
-    if (count) count.textContent = `${randomOriginPool.size} of ${Object.keys(origins).length} enabled`;
+  const randomChoice = event.target.closest("[data-random-character-field]");
+  if (randomChoice) {
+    randomCharacterOptions[randomChoice.dataset.randomCharacterField] = randomChoice.value;
     return;
   }
 
@@ -2626,7 +2815,7 @@ app.addEventListener("change", event => {
   }
 });
 
-app.addEventListener("click", event => {
+app.addEventListener("click", async event => {
   const button = event.target.closest("[data-action]");
   if (!button) return;
   const action = button.dataset.action;
@@ -2641,16 +2830,6 @@ app.addEventListener("click", event => {
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
   if (action === "random-character") randomCharacter();
-  if (action === "random-origins-all") {
-    randomOriginPool = new Set(Object.keys(origins));
-    saveRandomOriginPool();
-    renderBuilder();
-  }
-  if (action === "random-origins-clear") {
-    randomOriginPool = new Set();
-    saveRandomOriginPool();
-    renderBuilder();
-  }
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-sheet-preview") openSheetPreview();
@@ -2673,9 +2852,30 @@ app.addEventListener("click", event => {
   if (action === "save-character") saveCharacterToLibrary();
   if (action === "open-library") openLibrary();
   if (action === "close-library") closeLibrary();
+  if (action === "open-cloud") await openCloud();
+  if (action === "close-cloud") closeCloud();
+  if (action === "send-cloud-link") await sendMagicLink();
+  if (action === "save-cloud-character") await saveCurrentToCloud();
+  if (action === "refresh-cloud") {
+    cloudStatus = "";
+    await renderCloud();
+  }
+  if (action === "cloud-sign-out") {
+    try {
+      await cloudSignOut();
+      cloudSession = null;
+      activeCloudCharacterId = null;
+      cloudStatus = "Signed out.";
+    } catch (error) {
+      cloudStatus = error.message;
+    }
+    await renderCloud();
+  }
   if (action === "load-character") loadCharacter(button.dataset.characterId);
   if (action === "load-sample") loadSampleCharacter(button.dataset.characterId);
   if (action === "delete-character") deleteCharacter(button.dataset.characterId);
+  if (action === "load-cloud-character") await loadCharacterFromCloud(button.dataset.characterId);
+  if (action === "delete-cloud-character") await removeCharacterFromCloud(button.dataset.characterId);
   if (action === "add-preview") {
     const value = sheet[button.dataset.source];
     if (value) {
@@ -2717,3 +2917,4 @@ app.addEventListener("click", event => {
 
 initialize();
 renderApp();
+initializeCloud();
