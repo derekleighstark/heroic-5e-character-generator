@@ -1346,7 +1346,7 @@ function renderConcept() {
     <section class="randomizer-options">
       <header><div><span>Randomizer Origin Pool</span><strong data-random-origin-count>${randomOriginPool.size} of ${originNames.length} enabled</strong></div><div><button type="button" data-action="random-origins-all">Select All</button><button type="button" data-action="random-origins-clear">Clear</button></div></header>
       <div class="origin-pool-grid">
-        ${originNames.map(name => `<label><input type="checkbox" data-random-origin="${html(name)}" ${checked(randomOriginPool.has(name))}><span>${html(name)}</span></label>`).join("")}
+        ${originNames.map(name => `<label class="random-origin-option"><input class="random-origin-checkbox" type="checkbox" data-random-origin="${html(name)}" ${checked(randomOriginPool.has(name))}><span>${html(name)}</span></label>`).join("")}
       </div>
     </section>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
