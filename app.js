@@ -10,9 +10,9 @@ const abilities = [
 ];
 
 const ranks = {
-  "Street Level": { powerDie: "d8", maxPowerSets: 3, maxTier: "Tier 1", startingPicks: 8, powerSlots: 8, maxLimitations: 2, edgeStart: 3 },
-  "Mid-Level": { powerDie: "d10", maxPowerSets: 5, maxTier: "Tier 2", startingPicks: 10, powerSlots: 10, maxLimitations: 4, edgeStart: 2 },
-  "World Class": { powerDie: "d12", maxPowerSets: 7, maxTier: "Tier 3", startingPicks: 12, powerSlots: 12, maxLimitations: 6, edgeStart: 1 }
+  "Street Level": { powerDie: "d8", hpMultiplier: 1, maxPowerSets: 3, maxTier: "Tier 1", startingPicks: 8, powerSlots: 8, maxLimitations: 2, edgeStart: 3 },
+  "Mid-Level": { powerDie: "d10", hpMultiplier: 2, maxPowerSets: 5, maxTier: "Tier 2", startingPicks: 10, powerSlots: 10, maxLimitations: 4, edgeStart: 2 },
+  "World Class": { powerDie: "d12", hpMultiplier: 3, maxPowerSets: 7, maxTier: "Tier 3", startingPicks: 12, powerSlots: 12, maxLimitations: 6, edgeStart: 1 }
 };
 
 const classes = {
@@ -375,7 +375,7 @@ function calc() {
   const classInfo = classes[sheet.className] || classes.Bruiser;
   const pro = prowess(level);
   const hitDie = classInfo.hitDie;
-  const hp = hitDie + abilityScore("con") + ((level - 1) * (medianHitDie(hitDie) + abilityMod("con"))) + (sheet.toughTalent ? level * 2 : 0);
+  const hp = abilityScore("con") + (hitDie * rank.hpMultiplier) + ((level - 1) * (medianHitDie(hitDie) + abilityMod("con"))) + (sheet.toughTalent ? level * 2 : 0);
   const totalPicks = rank.startingPicks + Math.max(0, level - 1) + Number(sheet.limitations || 0) + Number(sheet.bonusPicks || 0);
 
   return {

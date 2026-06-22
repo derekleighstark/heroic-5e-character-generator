@@ -382,11 +382,23 @@ p {
 :root[data-theme="dark"] .dice-history-item,
 :root[data-theme="dark"] .compendium-tabs button:not(.active),
 :root[data-theme="dark"] .gm-screen-tabs button:not(.active),
+:root[data-theme="dark"] .npc-tabs button:not(.active),
+:root[data-theme="dark"] .dice-mode button:not(.active),
 :root[data-theme="dark"] .gm-rule,
 :root[data-theme="dark"] .gm-table,
+:root[data-theme="dark"] .npc-stat-block,
+:root[data-theme="dark"] .npc-reference-card,
+:root[data-theme="dark"] .npc-saved-card,
 :root[data-theme="dark"] .compendium-power-set,
 :root[data-theme="dark"] .library-empty {
   background: var(--control-bg);
+}
+
+:root[data-theme="dark"] .compendium-tabs button:not(.active),
+:root[data-theme="dark"] .gm-screen-tabs button:not(.active),
+:root[data-theme="dark"] .npc-tabs button:not(.active),
+:root[data-theme="dark"] .dice-mode button:not(.active) {
+  color: var(--ink);
 }
 
 :root[data-theme="dark"] .rule-card,
@@ -405,6 +417,20 @@ p {
 :root[data-theme="dark"] .dice-action-card,
 :root[data-theme="dark"] .compendium-power-overview {
   background: linear-gradient(135deg, var(--cream), var(--control-bg) 58%);
+}
+
+:root[data-theme="dark"] .npc-stat-strip strong,
+:root[data-theme="dark"] .npc-defense-grid span,
+:root[data-theme="dark"] .npc-reference-stats span,
+:root[data-theme="dark"] .npc-feature-callout {
+  background: var(--control-bg);
+}
+
+:root[data-theme="dark"] .npc-stat-strip,
+:root[data-theme="dark"] .npc-reference-stats,
+:root[data-theme="dark"] .npc-reference-card[open] > summary,
+:root[data-theme="dark"] .npc-boss-row {
+  background: var(--cream);
 }
 
 :root[data-theme="dark"] .gm-table tbody tr:nth-child(even) {
@@ -426,7 +452,11 @@ p {
 :root[data-theme="dark"] .compact-stat-grid strong,
 :root[data-theme="dark"] .power-audit strong,
 :root[data-theme="dark"] .power-choice-card h4,
+:root[data-theme="dark"] .power-builder-heading,
+:root[data-theme="dark"] .power-choice-section > summary,
 :root[data-theme="dark"] .check-row strong,
+:root[data-theme="dark"] .dice-group h2,
+:root[data-theme="dark"] .dice-history-header h2,
 :root[data-theme="dark"] .dice-action-card,
 :root[data-theme="dark"] .dice-history-item strong,
 :root[data-theme="dark"] .gm-reference-section h2,
@@ -435,6 +465,12 @@ p {
 :root[data-theme="dark"] .compendium-card h3,
 :root[data-theme="dark"] .compendium-section-title,
 :root[data-theme="dark"] .compendium-power-set > h3,
+:root[data-theme="dark"] .npc-edit-column > h3,
+:root[data-theme="dark"] .npc-ability-editor label span,
+:root[data-theme="dark"] .npc-stat-block > section h3,
+:root[data-theme="dark"] .npc-reference-body > section h3,
+:root[data-theme="dark"] .npc-reference-card > summary strong,
+:root[data-theme="dark"] .npc-saved-card h3,
 :root[data-theme="dark"] .library-list h3,
 :root[data-theme="dark"] .library-portrait,
 :root[data-theme="dark"] .library-item strong,
@@ -457,9 +493,19 @@ p {
   color: var(--gold);
 }
 
+:root[data-theme="dark"] .power-choice-card.unavailable {
+  background: color-mix(in srgb, var(--panel) 74%, var(--control-bg));
+}
+
+:root[data-theme="dark"] .power-tags span {
+  background: color-mix(in srgb, var(--blue) 16%, transparent);
+  color: var(--muted);
+}
+
 :root[data-theme="dark"] .step-list button.active,
 :root[data-theme="dark"] .compendium-tabs button.active,
-:root[data-theme="dark"] .gm-screen-tabs button.active {
+:root[data-theme="dark"] .gm-screen-tabs button.active,
+:root[data-theme="dark"] .npc-tabs button.active {
   color: var(--button-ink);
 }
 
@@ -470,6 +516,7 @@ p {
 :root[data-theme="dark"] .cloud-panel,
 :root[data-theme="dark"] .compendium-panel,
 :root[data-theme="dark"] .gm-screen-panel,
+:root[data-theme="dark"] .npc-panel,
 :root[data-theme="dark"] .sheet-preview-panel,
 :root[data-theme="dark"] .dice-panel {
   border-color: var(--line);
@@ -939,6 +986,68 @@ p {
 .selection-card p {
   margin: 0;
   line-height: 1.42;
+}
+
+.selection-card-actions {
+  display: grid;
+  justify-items: end;
+  gap: 7px;
+  min-width: 82px;
+}
+
+.rating-picker,
+.card-rating {
+  display: grid;
+  gap: 3px;
+}
+
+.rating-picker {
+  width: min(180px, 100%);
+}
+
+.rating-picker select,
+.card-rating select {
+  min-height: 32px;
+  margin: 0;
+  padding-block: 4px;
+}
+
+.card-rating {
+  color: var(--muted);
+  font-size: .62rem;
+  text-align: right;
+}
+
+.rating-fixed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: min(180px, 100%);
+  min-height: 36px;
+  padding: 7px 9px;
+  background: var(--panel);
+  border-left: 4px solid var(--gold);
+}
+
+.rating-fixed span {
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.rating-fixed strong {
+  color: var(--red);
+  font-size: 1rem;
+}
+
+.merit-budget-grid {
+  margin-bottom: 14px;
+}
+
+.origin-talent-card {
+  margin-bottom: 14px;
 }
 
 .lock-pill {
@@ -1550,6 +1659,7 @@ p {
 .cloud-drawer,
 .compendium-drawer,
 .gm-screen-drawer,
+.npc-drawer,
 .sheet-preview-drawer,
 .dice-drawer {
   position: fixed;
@@ -1566,6 +1676,7 @@ p {
 .cloud-drawer[hidden],
 .compendium-drawer[hidden],
 .gm-screen-drawer[hidden],
+.npc-drawer[hidden],
 .sheet-preview-drawer[hidden],
 .dice-drawer[hidden] {
   display: none;
@@ -1576,6 +1687,7 @@ p {
 .cloud-panel,
 .compendium-panel,
 .gm-screen-panel,
+.npc-panel,
 .sheet-preview-panel,
 .dice-panel {
   display: grid;
@@ -1593,6 +1705,7 @@ p {
 .cloud-panel header,
 .compendium-panel header,
 .gm-screen-panel > header,
+.npc-panel > header,
 .sheet-preview-panel header,
 .dice-panel > header {
   display: flex;
@@ -1616,6 +1729,7 @@ p {
 .cloud-panel header strong,
 .compendium-panel header strong,
 .gm-screen-panel > header strong,
+.npc-panel > header strong,
 .sheet-preview-panel header strong,
 .dice-panel > header strong {
   display: block;
@@ -1630,6 +1744,7 @@ p {
 .cloud-panel header span,
 .compendium-panel header span,
 .gm-screen-panel > header span,
+.npc-panel > header span,
 .sheet-preview-panel header span,
 .dice-panel > header span {
   display: block;
@@ -1742,6 +1857,22 @@ p {
   max-height: none;
   border-width: 0 0 0 1px;
   box-shadow: -16px 0 42px rgba(16, 32, 51, .28);
+  animation: gm-screen-slide-in .22s ease-out;
+}
+
+.npc-drawer {
+  place-items: stretch end;
+  padding: 0;
+  background: rgba(16, 32, 51, .72);
+}
+
+.npc-panel {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  width: min(1280px, 96vw);
+  height: 100vh;
+  max-height: none;
+  border-width: 0 0 0 1px;
+  box-shadow: -16px 0 42px rgba(16, 32, 51, .3);
   animation: gm-screen-slide-in .22s ease-out;
 }
 
@@ -1864,22 +1995,23 @@ p {
 }
 
 .dice-action-card span {
-  overflow: hidden;
+  overflow: visible;
   font-size: .78rem;
   font-weight: 900;
-  line-height: 1.05;
-  text-overflow: ellipsis;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
   text-transform: uppercase;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .dice-action-card small {
-  overflow: hidden;
+  overflow: visible;
   color: var(--muted);
   font-size: .61rem;
   font-weight: 800;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .dice-action-card strong {
@@ -2028,6 +2160,31 @@ p {
   scrollbar-width: thin;
 }
 
+.npc-tabs {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  overflow-x: auto;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  scrollbar-width: thin;
+}
+
+.npc-tabs button {
+  flex: 0 0 auto;
+  min-height: 32px;
+  padding: 6px 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  color: var(--navy);
+  font-size: .72rem;
+}
+
+.npc-tabs button.active {
+  background: var(--gold);
+  border-color: #bd8500;
+}
+
 .gm-screen-tabs button {
   flex: 0 0 auto;
   min-height: 32px;
@@ -2049,6 +2206,424 @@ p {
   background:
     linear-gradient(90deg, transparent 0 97%, color-mix(in srgb, var(--line) 35%, transparent) 97% 97.3%, transparent 97.3%),
     var(--paper);
+}
+
+.npc-content {
+  padding: 14px;
+  overflow: auto;
+  background:
+    linear-gradient(90deg, transparent 0 97%, color-mix(in srgb, var(--line) 35%, transparent) 97% 97.3%, transparent 97.3%),
+    var(--paper);
+}
+
+.npc-builder-hero,
+.npc-catalog-hero {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 16px 18px;
+  background: var(--navy);
+  color: #fff;
+  border-left: 6px solid var(--gold);
+}
+
+.npc-builder-hero span,
+.npc-catalog-hero span,
+.npc-saved-card > div > span {
+  color: var(--gold);
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.npc-builder-hero h2,
+.npc-catalog-hero h2 {
+  margin: 2px 0 4px;
+  color: #fff;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+
+.npc-builder-hero p,
+.npc-catalog-hero p {
+  max-width: 78ch;
+  margin: 0;
+  color: color-mix(in srgb, #fff 76%, var(--gold));
+  font-size: .78rem;
+  line-height: 1.35;
+}
+
+.npc-builder-actions,
+.npc-saved-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.npc-build-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
+  gap: 14px;
+  align-items: start;
+}
+
+.npc-edit-column,
+.npc-output-column {
+  min-width: 0;
+}
+
+.npc-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.npc-form-grid.two {
+  margin-top: 12px;
+}
+
+.npc-edit-column > h3 {
+  margin: 14px 0 7px;
+  color: var(--navy);
+  font-size: .84rem;
+  text-transform: uppercase;
+}
+
+.npc-ability-editor {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 7px;
+}
+
+.npc-ability-editor label {
+  display: grid;
+  grid-template-columns: 1fr 58px;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 8px;
+  background: var(--panel);
+  border-left: 4px solid var(--gold);
+}
+
+.npc-ability-editor label span {
+  overflow: hidden;
+  color: var(--navy);
+  font-size: .68rem;
+  font-weight: 900;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.npc-ability-editor input {
+  min-width: 0;
+  padding: 6px;
+}
+
+.npc-boss-row {
+  display: grid;
+  grid-template-columns: minmax(230px, .7fr) 1fr;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--red);
+}
+
+.npc-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.npc-check input {
+  width: 22px;
+  height: 22px;
+}
+
+.npc-boss-row p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .72rem;
+  line-height: 1.35;
+}
+
+.npc-calculated-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.npc-calculated-grid .gm-rule {
+  margin: 0;
+}
+
+.npc-stat-block {
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 7px solid var(--gold);
+  box-shadow: var(--shadow);
+}
+
+.npc-stat-block > header {
+  padding: 14px 16px 12px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.npc-stat-block > header span {
+  color: var(--gold);
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.npc-stat-block > header h2 {
+  margin: 2px 0 4px;
+  color: #fff;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+
+.npc-stat-block > header p {
+  margin: 0;
+  font-size: .76rem;
+  line-height: 1.35;
+}
+
+.npc-stat-strip,
+.npc-reference-stats {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 8px 10px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--line);
+}
+
+.npc-stat-strip strong,
+.npc-reference-stats span {
+  padding: 5px 7px;
+  background: #fff;
+  border-left: 3px solid var(--green);
+  color: var(--navy);
+  font-size: .72rem;
+}
+
+.npc-reference-stats small {
+  display: block;
+  color: var(--muted);
+  font-size: .52rem;
+  text-transform: uppercase;
+}
+
+.npc-defense-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.npc-defense-grid span {
+  padding: 8px;
+  background: #fff;
+  color: var(--navy);
+  font-size: 1.05rem;
+  font-weight: 900;
+}
+
+.npc-defense-grid small {
+  display: block;
+  color: var(--muted);
+  font-size: .54rem;
+  text-transform: uppercase;
+}
+
+.npc-modifier-strip {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.npc-modifier-strip span {
+  padding: 7px 3px;
+  background: var(--panel);
+  color: var(--navy);
+  font-size: .82rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.npc-modifier-strip small {
+  display: block;
+  color: var(--muted);
+  font-size: .5rem;
+}
+
+.npc-stat-block > section,
+.npc-reference-body > section {
+  padding: 9px 12px;
+  border-top: 1px solid var(--line);
+}
+
+.npc-stat-block > section h3,
+.npc-reference-body > section h3 {
+  margin: 0 0 4px;
+  color: var(--navy);
+  font-size: .72rem;
+  text-transform: uppercase;
+}
+
+.npc-stat-block > section p,
+.npc-reference-body > section p {
+  margin: 0;
+  font-size: .76rem;
+  line-height: 1.4;
+}
+
+.npc-feature-callout {
+  padding: 9px 12px;
+  background: color-mix(in srgb, var(--red) 10%, #fff);
+  border-bottom: 1px solid var(--line);
+}
+
+.npc-feature-callout strong {
+  color: var(--red);
+  text-transform: uppercase;
+}
+
+.npc-feature-callout p {
+  margin: 3px 0 0;
+  font-size: .73rem;
+  line-height: 1.35;
+}
+
+.npc-library-toolbar {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) repeat(2, minmax(150px, .28fr));
+  gap: 9px;
+  margin-bottom: 8px;
+}
+
+.npc-result-count {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: .68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.npc-reference-list {
+  display: grid;
+  gap: 9px;
+}
+
+.npc-reference-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--green);
+}
+
+.npc-reference-card > summary {
+  display: grid;
+  grid-template-columns: minmax(130px, .3fr) minmax(220px, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 11px 13px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.npc-reference-card > summary::-webkit-details-marker {
+  display: none;
+}
+
+.npc-reference-card > summary span {
+  color: var(--red);
+  font-size: .6rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.npc-reference-card > summary strong {
+  color: var(--navy);
+  font-size: .88rem;
+  text-transform: uppercase;
+}
+
+.npc-reference-card > summary em {
+  color: var(--muted);
+  font-size: .66rem;
+  font-style: normal;
+  font-weight: 900;
+  text-align: right;
+}
+
+.npc-reference-card[open] > summary {
+  background: var(--cream);
+  border-bottom: 3px solid var(--gold);
+}
+
+.npc-reference-body {
+  padding: 10px;
+}
+
+.npc-reference-body > .npc-modifier-strip {
+  margin-bottom: 8px;
+  border: 1px solid var(--line);
+}
+
+.npc-defense-line {
+  margin: 0 0 8px;
+  padding: 7px 9px;
+  background: var(--panel);
+  font-size: .74rem;
+}
+
+.npc-reference-body > button {
+  margin: 10px 0 2px;
+}
+
+.npc-saved-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--green);
+}
+
+.npc-saved-card h3 {
+  margin: 2px 0 3px;
+  color: var(--navy);
+  font-size: .92rem;
+  text-transform: uppercase;
+}
+
+.npc-saved-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: .74rem;
+}
+
+.npc-rule-steps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
 }
 
 .gm-reference-section + .gm-reference-section {
@@ -2729,6 +3304,14 @@ p {
   .generator-shell {
     grid-template-columns: 230px minmax(0, 1fr);
   }
+
+  .npc-build-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .npc-output-column {
+    max-width: 760px;
+  }
 }
 
 @media (max-width: 820px) {
@@ -2840,7 +3423,8 @@ p {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .gm-screen-panel {
+  .gm-screen-panel,
+  .npc-panel {
     width: 100vw;
   }
 
@@ -2854,8 +3438,36 @@ p {
   }
 
   .gm-rule-grid,
-  .gm-two-column {
+  .gm-two-column,
+  .npc-rule-steps,
+  .npc-form-grid,
+  .npc-library-toolbar,
+  .npc-boss-row {
     grid-template-columns: 1fr;
+  }
+
+  .npc-builder-hero,
+  .npc-catalog-hero,
+  .npc-saved-card {
+    display: grid;
+    align-items: start;
+  }
+
+  .npc-builder-actions,
+  .npc-saved-actions {
+    justify-content: start;
+  }
+
+  .npc-ability-editor {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .npc-reference-card > summary {
+    grid-template-columns: 1fr;
+  }
+
+  .npc-reference-card > summary em {
+    text-align: left;
   }
 
   .power-audit,
@@ -2889,6 +3501,27 @@ p {
 }
 
 @media print {
+  :root,
+  :root[data-theme] {
+    color-scheme: light;
+    --ink: #171717;
+    --muted: #65717d;
+    --paper: #fff;
+    --panel: #f7f2e6;
+    --line: #d8cfb8;
+    --navy: #102033;
+    --gold: #e4a617;
+    --red: #a63f34;
+    --green: #276b56;
+    --blue: #2c5f88;
+    --cream: #fff8e8;
+    --body-bg: #fff;
+    --control-bg: #fff;
+    --topbar-ink: #fff;
+    --button-ink: #111;
+    --shadow: none;
+  }
+
   html,
   body {
     width: auto;
@@ -2901,6 +3534,35 @@ p {
     -webkit-print-color-adjust: exact;
   }
 
+  :root[data-dyslexia] body,
+  :root[data-dyslexia] button,
+  :root[data-dyslexia] input,
+  :root[data-dyslexia] select,
+  :root[data-dyslexia] textarea {
+    font-family: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0;
+    line-height: 1.25;
+  }
+
+  :root[data-theme] .sheet-page {
+    background: #fff;
+    border-left-color: var(--gold);
+  }
+
+  :root[data-theme] .sheet-section {
+    background:
+      linear-gradient(180deg, rgba(255, 248, 232, .62), #fff 44%),
+      #fff;
+  }
+
+  :root[data-theme] .identity-block strong,
+  :root[data-theme] .sheet-section h2,
+  :root[data-theme] .sheet-abilities strong,
+  :root[data-theme] .sheet-skills strong,
+  :root[data-theme] .sheet-powers strong {
+    color: var(--navy);
+  }
+
   .app-topbar,
   .step-rail,
   .builder-header,
@@ -2909,6 +3571,7 @@ p {
   .cloud-drawer,
   .compendium-drawer,
   .gm-screen-drawer,
+  .npc-drawer,
   .dice-drawer,
   .step-art,
   .sheet-preview-panel > header,

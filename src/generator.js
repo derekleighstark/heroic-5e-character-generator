@@ -1,4 +1,5 @@
 import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
+import { npcArchetypes, npcCreatures, npcDayPlayers } from "./npc-data.js";
 import {
   cloudConfigured,
   cloudPortraitUrl,
@@ -35,6 +36,8 @@ const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
 const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
+const NPC_DRAFT_KEY = "heroic5e_npc_draft";
+const NPC_LIBRARY_KEY = "heroic5e_npc_library";
 const themes = [
   ["classic", "Heroic Classic"],
   ["four-color", "Four-Color"],
@@ -428,6 +431,38 @@ const stepArtwork = {
   gear: ["Tools of the Trade", "Costume, weapon, vehicle, or iconic equipment"],
   identity: ["Behind the Mask", "Final character portrait or civilian identity"]
 };
+const npcTierRules = {
+  "Day Player": { bonus: 1, die: "d6", dieMax: 6, multiplier: 1, summary: "Human-scale supporting cast" },
+  "Low Power": { bonus: 2, die: "d8", dieMax: 8, multiplier: 1, summary: "Street-level superhuman threat" },
+  "Medium Power": { bonus: 3, die: "d10", dieMax: 10, multiplier: 2, summary: "City-scale or Mid-Level threat" },
+  "High Power": { bonus: 4, die: "d12", dieMax: 12, multiplier: 3, summary: "World-scale threat" },
+  "Cosmic Power": { bonus: 6, die: "d12+d6", dieMax: 18, multiplier: 4, summary: "Campaign-defining, reality-adjacent threat" }
+};
+const npcDefaults = {
+  name: "",
+  concept: "",
+  powerTier: "Medium Power",
+  conScore: 14,
+  speed: "30 ft",
+  primaryAbility: "fig",
+  effectAbility: "str",
+  bonusHp: 0,
+  boss: false,
+  str: 2,
+  dex: 2,
+  con: 2,
+  fig: 3,
+  int: 1,
+  wis: 1,
+  cha: 1,
+  per: 2,
+  classAbilities: "",
+  powers: "",
+  skills: "",
+  merits: "",
+  flaws: "",
+  notes: ""
+};
 
 const randomNames = {
   first: ["Alex", "Avery", "Cameron", "Casey", "Dante", "Devon", "Elena", "Elliot", "Harper", "Imani", "Jordan", "Kai", "Leah", "Malcolm", "Maya", "Morgan", "Nadia", "Noah", "Priya", "Quinn", "Rafael", "Reese", "Rowan", "Samira", "Theo", "Valerie"],
@@ -461,6 +496,11 @@ let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
 let activeGmSection = "core";
+let activeNpcSection = "build";
+let npcSearch = "";
+let npcSideFilter = "All";
+let npcRankFilter = "All";
+let npcDraft = loadNpcDraft();
 let diceRollMode = "normal";
 let diceRollHistory = [];
 let cloudSession = null;
@@ -822,13 +862,21 @@ function calc() {
   const conMod = abilityMod("con");
   const primaryPowerSet = selectedPowerSets()[0];
   const primaryPowerAbility = primaryPowerSet ? powerSetAbility(primaryPowerSet) : (sheet.powerAbility || "str");
-  const hp = classInfo.hitDie + abilityScore("con") + ((level - 1) * (hitAverage(classInfo.hitDie) + conMod)) + (sheet.toughTalent ? level * 2 : 0);
+  const hpRankMultiplier = Number(rank.hpMultiplier || 1);
+  const startingHp = abilityScore("con") + (classInfo.hitDie * hpRankMultiplier);
+  const hpPerLaterLevel = hitAverage(classInfo.hitDie) + conMod;
+  const toughBonus = (sheet.toughTalent || hasTalent("Tough")) ? level * 2 : 0;
+  const hp = startingHp + ((level - 1) * hpPerLaterLevel) + toughBonus;
   const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
   return {
     level,
     pro,
     prowess: signed(pro),
     hp,
+    startingHp,
+    hpRankMultiplier,
+    hpPerLaterLevel,
+    toughBonus,
     hitDie: `d${classInfo.hitDie}`,
     powerDie: rank.powerDie,
     classEV: 10 + abilityMod(classInfo.primary) + pro,
@@ -944,6 +992,47 @@ function baseRuleName(name) {
   return String(name || "").replace(/\s+\d+$/, "").replace(/:.*$/, "").trim();
 }
 
+function ruleRatings(name, rules) {
+  const base = baseRuleName(name);
+  const text = String(rules[base] || rules[name] || "");
+  const range = text.match(/\bRating\s+1-(\d+)\b/i);
+  const fixed = text.match(/\bRating\s+(\d+)\b/i);
+  const maximum = range ? Number(range[1]) : fixed ? Number(fixed[1]) : 0;
+  return maximum > 0 ? Array.from({ length: maximum }, (_, index) => index + 1) : [];
+}
+
+function ruleLineRating(value) {
+  return Number((String(value || "").match(/\s+(\d+)$/) || [])[1] || 1);
+}
+
+function ratedRuleLine(name, rules, requestedRating = 1) {
+  const base = baseRuleName(name);
+  const ratings = ruleRatings(base, rules);
+  if (!ratings.length) return base;
+  const rating = ratings.includes(Number(requestedRating)) ? Number(requestedRating) : ratings[0];
+  return `${base} ${rating}`;
+}
+
+function setRatedLine(field, value, rules) {
+  const base = baseRuleName(value);
+  const current = lines(sheet[field]).filter(item => baseRuleName(item) !== base);
+  current.push(value);
+  sheet[field] = current.join("\n");
+}
+
+function ratedBudget(field, locked = []) {
+  const lockedSet = new Set(locked);
+  return lines(sheet[field]).filter(item => !lockedSet.has(item)).reduce((total, item) => total + ruleLineRating(item), 0);
+}
+
+function ratingControl(name, rules, field, label = "Rating") {
+  const ratings = ruleRatings(name, rules);
+  if (!ratings.length) return "";
+  const current = ratings.includes(Number(sheet[field])) ? Number(sheet[field]) : ratings[0];
+  if (ratings.length === 1) return `<div class="rating-fixed"><span>${html(label)}</span><strong>${ratings[0]}</strong></div>`;
+  return `<label class="rating-picker">${html(label)}<select data-field="${field}">${ratings.map(rating => `<option value="${rating}" ${selected(current, rating)}>${rating}</option>`).join("")}</select></label>`;
+}
+
 function choicePreview(name, rules, emptyText) {
   if (!name) return `<p>${html(emptyText)}</p>`;
   const base = baseRuleName(name);
@@ -958,13 +1047,18 @@ function removableRuleCards(field, rules, locked = []) {
   return `<div class="selection-card-grid">${items.map(item => {
     const base = baseRuleName(item);
     const isLocked = lockedSet.has(item);
+    const ratings = ruleRatings(base, rules);
+    const currentRating = ruleLineRating(item);
     return `
       <article class="selection-card">
         <div>
           <h3>${html(item)}</h3>
           <p>${html(rules[base] || rules[item] || "No rules text has been added for this option yet.")}</p>
         </div>
-        ${isLocked ? `<span class="lock-pill">Origin</span>` : `<button type="button" data-action="remove-line" data-field="${field}" data-value="${html(item)}">Remove</button>`}
+        <div class="selection-card-actions">
+          ${isLocked ? `<span class="lock-pill">Origin</span>` : ratings.length > 1 ? `<label class="card-rating">Rating<select data-rated-choice data-rated-field="${field}" data-value="${html(item)}">${ratings.map(rating => `<option value="${rating}" ${selected(currentRating, rating)}>${rating}</option>`).join("")}</select></label>` : ""}
+          ${isLocked ? "" : `<button type="button" data-action="remove-line" data-field="${field}" data-value="${html(item)}">Remove</button>`}
+        </div>
       </article>
     `;
   }).join("")}</div>`;
@@ -1168,6 +1262,7 @@ function renderApp() {
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
+          <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
@@ -1255,6 +1350,19 @@ function renderApp() {
         </header>
         <div class="gm-screen-tabs" data-gm-screen-tabs></div>
         <div class="gm-screen-content" data-gm-screen-content></div>
+      </div>
+    </section>
+    <section class="npc-drawer" data-npc-drawer hidden>
+      <div class="npc-panel" role="dialog" aria-modal="true" aria-label="HEROIC 5e NPC Builder">
+        <header>
+          <div>
+            <strong>HEROIC 5e NPC Builder</strong>
+            <span>Chapter Seventeen - NPCs and Opponents</span>
+          </div>
+          <button type="button" data-action="close-npc-builder">Close</button>
+        </header>
+        <div class="npc-tabs" data-npc-tabs></div>
+        <div class="npc-content" data-npc-content></div>
       </div>
     </section>
     <section class="sheet-preview-drawer" data-sheet-preview-drawer hidden>
@@ -1493,8 +1601,9 @@ function renderHitPoints() {
   const values = calc();
   return `
     <div class="mechanic-grid">
-      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Hit Die</span><strong>${values.hitDie}</strong></div><div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div>
+      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Starting HP</span><strong>${values.startingHp}</strong></div><div><span>Hit Die</span><strong>${values.hitDie}</strong></div><div><span>Campaign Rank Modifier</span><strong>x${values.hpRankMultiplier}</strong></div><div><span>Later Level Gain</span><strong>${signed(values.hpPerLaterLevel)}</strong></div><div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div><div><span>Tough Bonus</span><strong>${signed(values.toughBonus)}</strong></div>
     </div>
+    <div class="rule-card"><h2>Campaign Rank HP</h2><p>Starting HP = Constitution score + maximum Hit Die x Campaign Rank. Street Level uses x1, Mid-Level x2, and World Class x3. After Level 1, each level adds the Hit Die median + CON modifier.</p></div>
     <label class="wide-check"><input type="checkbox" data-field="toughTalent" ${checked(sheet.toughTalent)}> Tough talent HP bonus</label>
   `;
 }
@@ -1571,17 +1680,27 @@ function renderSkills() {
 
 function renderMeritsFlaws() {
   const origin = origins[sheet.origin] || origins.Enhanced;
+  const meritBudget = ratedBudget("merits", [origin.merit]);
+  const flawBudget = ratedBudget("flaws", [origin.flaw]);
   return `
+    <div class="mechanic-grid merit-budget-grid">
+      <div><span>Standard Merit Budget</span><strong>${meritBudget}/3</strong></div>
+      <div><span>Standard Flaw Budget</span><strong>${flawBudget}/3</strong></div>
+      <div><span>Origin Merit</span><strong>Free</strong></div>
+      <div><span>Origin Flaw</span><strong>Free</strong></div>
+    </div>
     <div class="form-grid two">
       <section class="choice-preview-panel">
         <label>Merit Picker<select data-field="meritPreview">${options(merits, sheet.meritPreview || "", "Choose Merit")}</select></label>
         <div class="rule-card"><h2>Merit Preview</h2>${choicePreview(sheet.meritPreview, meritRules, "Choose a Merit to preview its rules text.")}</div>
-        <button type="button" data-action="add-preview" data-source="meritPreview" data-field="merits">Add Merit</button>
+        ${ratingControl(sheet.meritPreview, meritRules, "meritRating")}
+        <button type="button" data-action="add-preview" data-source="meritPreview" data-rating-field="meritRating" data-field="merits">Add Merit</button>
       </section>
       <section class="choice-preview-panel">
         <label>Flaw Picker<select data-field="flawPreview">${options(flaws, sheet.flawPreview || "", "Choose Flaw")}</select></label>
         <div class="rule-card"><h2>Flaw Preview</h2>${choicePreview(sheet.flawPreview, flawRules, "Choose a Flaw to preview its rules text.")}</div>
-        <button type="button" data-action="add-preview" data-source="flawPreview" data-field="flaws">Add Flaw</button>
+        ${ratingControl(sheet.flawPreview, flawRules, "flawRating")}
+        <button type="button" data-action="add-preview" data-source="flawPreview" data-rating-field="flawRating" data-field="flaws">Add Flaw</button>
       </section>
     </div>
     <div class="form-grid two">
@@ -1701,16 +1820,28 @@ function renderPowers() {
 }
 
 function renderTalent() {
+  const origin = origins[sheet.origin] || origins.Enhanced;
+  const targetField = sheet.startingTalent ? "talents" : "startingTalent";
+  const buttonLabel = sheet.startingTalent ? "Add Additional Talent" : "Choose Starting Talent";
   return `
+    <div class="rule-card origin-talent-card">
+      <h2>Origin Talent</h2>
+      <div class="selection-card-grid">
+        <article class="selection-card">
+          <div><h3>${html(origin.talent)}</h3><p>${html(origin.note)}</p></div>
+          <span class="lock-pill">${html(sheet.origin || "Origin")}</span>
+        </article>
+      </div>
+    </div>
     <div class="form-grid two">
       <section class="choice-preview-panel">
         <label>Talent Picker<select data-field="talentPreview">${options(talents, sheet.talentPreview || "", "Choose Talent")}</select></label>
         <div class="rule-card"><h2>Talent Preview</h2>${choicePreview(sheet.talentPreview, talentRules, "Choose a Talent to preview its rules text.")}</div>
-        <button type="button" data-action="add-preview" data-source="talentPreview" data-field="talents">Add Talent</button>
+        <button type="button" data-action="add-preview" data-source="talentPreview" data-field="${targetField}">${buttonLabel}</button>
       </section>
-      <div class="rule-card"><h2>Selected Talents</h2>${removableRuleCards("talents", talentRules)}</div>
+      <div class="rule-card"><h2>Starting Talent</h2>${removableRuleCards("startingTalent", talentRules)}</div>
     </div>
-    <div class="form-grid two">${textarea("startingTalent", "Starting Talent", 7)}${textarea("talents", "Additional Talents", 7)}</div>
+    <div class="rule-card"><h2>Additional Talents</h2>${removableRuleCards("talents", talentRules)}</div>
   `;
 }
 
@@ -2346,6 +2477,353 @@ function closeGmScreen() {
   document.querySelector("[data-gm-screen-drawer]").hidden = true;
 }
 
+function loadNpcDraft() {
+  try {
+    return { ...npcDefaults, ...JSON.parse(localStorage.getItem(NPC_DRAFT_KEY) || "{}") };
+  } catch {
+    return { ...npcDefaults };
+  }
+}
+
+function saveNpcDraft() {
+  localStorage.setItem(NPC_DRAFT_KEY, JSON.stringify(npcDraft));
+}
+
+function loadNpcLibrary() {
+  try {
+    const library = JSON.parse(localStorage.getItem(NPC_LIBRARY_KEY) || "[]");
+    return Array.isArray(library) ? library : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveNpcLibrary(library) {
+  localStorage.setItem(NPC_LIBRARY_KEY, JSON.stringify(library));
+}
+
+function npcSections() {
+  return [
+    ["build", "Build NPC"],
+    ["archetypes", `Archetypes (${npcArchetypes.length})`],
+    ["day-players", `Day Players (${npcDayPlayers.length})`],
+    ["creatures", `Creatures (${npcCreatures.length})`],
+    ["saved", `Saved (${loadNpcLibrary().length})`],
+    ["rules", "Chapter Rules"]
+  ];
+}
+
+function npcCalc(npc = npcDraft) {
+  const tier = npcTierRules[npc.powerTier] || npcTierRules["Medium Power"];
+  const value = key => Number(npc[key] || 0);
+  const baseHp = (Math.max(1, Number(npc.conScore || 10)) + tier.dieMax) * tier.multiplier;
+  return {
+    tier,
+    parry: 10 + value("fig") + value("per") + tier.bonus,
+    dodge: 10 + value("dex") + value("per") + tier.bonus,
+    willpower: 10 + value("wis") + value("per") + tier.bonus,
+    social: 10 + value("cha") + value("int") + tier.bonus,
+    attack: 10 + value(npc.primaryAbility) + tier.bonus,
+    effect: 10 + value(npc.effectAbility) + tier.bonus,
+    baseHp,
+    hp: baseHp + Math.max(0, Number(npc.bonusHp || 0))
+  };
+}
+
+function npcField(field, label, type = "text", attrs = "") {
+  const value = type === "checkbox" ? "" : html(npcDraft[field] ?? "");
+  if (type === "checkbox") {
+    return `<label class="npc-check"><input type="checkbox" data-npc-field="${field}" ${npcDraft[field] ? "checked" : ""}><span>${html(label)}</span></label>`;
+  }
+  return `<label>${html(label)}<input type="${type}" data-npc-field="${field}" value="${value}" ${attrs}></label>`;
+}
+
+function npcSelect(field, label, entries) {
+  return `<label>${html(label)}<select data-npc-field="${field}">${options(entries, npcDraft[field], "")}</select></label>`;
+}
+
+function npcTextarea(field, label, rows = 4) {
+  return `<label>${html(label)}<textarea data-npc-field="${field}" rows="${rows}">${html(npcDraft[field] || "")}</textarea></label>`;
+}
+
+function npcAbilityEditor() {
+  return `<div class="npc-ability-editor">${abilities.map(([key, , name]) => `
+    <label><span>${html(name)}</span><input type="number" min="-5" max="10" step="1" data-npc-field="${key}" value="${Number(npcDraft[key] || 0)}"></label>
+  `).join("")}</div>`;
+}
+
+function npcStatBlockText(npc = npcDraft) {
+  const calc = npcCalc(npc);
+  const modifierLine = abilities.map(([key]) => `${key.toUpperCase()} ${Number(npc[key] || 0) >= 0 ? "+" : ""}${Number(npc[key] || 0)}`).join(", ");
+  return [
+    npc.name || "Unnamed NPC",
+    npc.concept || "",
+    `Power Tier: ${npc.powerTier} | HP: ${calc.hp}${Number(npc.bonusHp || 0) ? ` (${calc.baseHp} base + ${Number(npc.bonusHp)} Bonus HP)` : ""} | Speed: ${npc.speed || "30 ft"} | Tier Bonus: +${calc.tier.bonus}`,
+    `Modifiers: ${modifierLine}`,
+    `Active Defense: Parry/Block ${calc.parry}, Dodge ${calc.dodge}, Willpower ${calc.willpower}, Social ${calc.social} | Attack Value: ${calc.attack} | Effect Value: ${calc.effect}`,
+    npc.boss ? "Boss: Resolve once per encounter; maximum two simultaneous conditions." : "",
+    npc.classAbilities ? `Class Abilities: ${npc.classAbilities}` : "",
+    npc.powers ? `Powers and Features:\n${npc.powers}` : "",
+    npc.skills ? `Skills: ${npc.skills}` : "",
+    npc.merits ? `Merits: ${npc.merits}` : "",
+    npc.flaws ? `Flaws: ${npc.flaws}` : "",
+    npc.notes ? `Notes: ${npc.notes}` : ""
+  ].filter(Boolean).join("\n\n");
+}
+
+function renderNpcBuild() {
+  const calc = npcCalc();
+  const abilityOptions = abilities.map(([key, abbreviation, name]) => [key, `${abbreviation} - ${name}`]);
+  return `
+    <div class="npc-builder-hero">
+      <div><span>Custom NPC</span><h2>${html(npcDraft.name || "Unnamed NPC")}</h2><p>${html(npcDraft.concept || calc.tier.summary)}</p></div>
+      <div class="npc-builder-actions">
+        <button type="button" data-action="new-npc">New NPC</button>
+        <button type="button" data-action="save-npc">Save NPC</button>
+        <button type="button" data-action="copy-npc">Copy Stat Block</button>
+      </div>
+    </div>
+    <div class="npc-build-grid">
+      <section class="npc-edit-column">
+        <div class="npc-form-grid">
+          ${npcField("name", "Name")}
+          ${npcSelect("powerTier", "Power Tier", Object.keys(npcTierRules))}
+          ${npcField("concept", "Concept / Role")}
+          ${npcField("speed", "Speed")}
+          ${npcField("conScore", "Constitution Score", "number", 'min="1" max="40"')}
+          ${npcField("bonusHp", "Bonus HP", "number", 'min="0" max="999"')}
+          ${npcSelect("primaryAbility", "Primary Combat Modifier", abilityOptions)}
+          ${npcSelect("effectAbility", "Effect Governing Modifier", abilityOptions)}
+        </div>
+        <h3>Eight Modifiers</h3>
+        ${npcAbilityEditor()}
+        <div class="npc-boss-row">
+          ${npcField("boss", "Designate as this encounter's Boss", "checkbox")}
+          <p>Only one NPC per encounter can be the Boss. Resolve ignores one condition or failed save; Condition Cap limits the Boss to two conditions.</p>
+        </div>
+        <div class="npc-form-grid two">
+          ${npcTextarea("classAbilities", "Class Abilities (1-2 recommended)", 4)}
+          ${npcTextarea("skills", "Trained Skills", 4)}
+          ${npcTextarea("powers", "Powers & Features (3-5 recommended)", 8)}
+          ${npcTextarea("merits", "Merits", 4)}
+          ${npcTextarea("flaws", "Flaws", 4)}
+          ${npcTextarea("notes", "Operational Notes", 8)}
+        </div>
+      </section>
+      <aside class="npc-output-column">
+        <div class="npc-calculated-grid">
+          ${gmRule("Hit Points", `${calc.hp}${Number(npcDraft.bonusHp || 0) ? ` total (${calc.baseHp} base)` : ""}`, `(${npcDraft.conScore} + ${calc.tier.dieMax}) x ${calc.tier.multiplier}`)}
+          ${gmRule("Attack Value", String(calc.attack), `10 + ${String(npcDraft.primaryAbility).toUpperCase()} + ${calc.tier.bonus}`)}
+          ${gmRule("Effect Value", String(calc.effect), `10 + ${String(npcDraft.effectAbility).toUpperCase()} + ${calc.tier.bonus}`)}
+          ${gmRule("Power Die", calc.tier.die, calc.tier.summary)}
+        </div>
+        <article class="npc-stat-block">
+          <header><span>${html(npcDraft.powerTier)}</span><h2>${html(npcDraft.name || "Unnamed NPC")}</h2><p>${html(npcDraft.concept || "Add a one-sentence concept and encounter role.")}</p></header>
+          <div class="npc-stat-strip"><strong>HP ${calc.hp}</strong><strong>Speed ${html(npcDraft.speed || "30 ft")}</strong><strong>Tier +${calc.tier.bonus}</strong></div>
+          <div class="npc-defense-grid">
+            <span><small>Parry / Block</small>${calc.parry}</span><span><small>Dodge</small>${calc.dodge}</span>
+            <span><small>Willpower</small>${calc.willpower}</span><span><small>Social</small>${calc.social}</span>
+            <span><small>Attack</small>${calc.attack}</span><span><small>Effect</small>${calc.effect}</span>
+          </div>
+          <div class="npc-modifier-strip">${abilities.map(([key]) => `<span><small>${key.toUpperCase()}</small>${Number(npcDraft[key] || 0) >= 0 ? "+" : ""}${Number(npcDraft[key] || 0)}</span>`).join("")}</div>
+          ${npcDraft.boss ? `<div class="npc-feature-callout"><strong>Boss</strong><p><b>Resolve:</b> Once per encounter, ignore a condition or failed save. <b>Condition Cap:</b> Maximum two conditions.</p></div>` : ""}
+          ${[
+            ["Class Abilities", npcDraft.classAbilities],
+            ["Powers & Features", npcDraft.powers],
+            ["Skills", npcDraft.skills],
+            ["Merits", npcDraft.merits],
+            ["Flaws", npcDraft.flaws],
+            ["Notes", npcDraft.notes]
+          ].filter(([, value]) => value).map(([title, value]) => `<section><h3>${title}</h3><p>${html(value).replace(/\n/g, "<br>")}</p></section>`).join("")}
+        </article>
+      </aside>
+    </div>
+  `;
+}
+
+function npcAbilityStrip(entry) {
+  return `<div class="npc-modifier-strip">${abilities.map(([key]) => {
+    const value = Number(entry.abilities?.[key] || 0);
+    return `<span><small>${key.toUpperCase()}</small>${value >= 0 ? "+" : ""}${value}</span>`;
+  }).join("")}</div>`;
+}
+
+function npcReferenceCard(entry, canUse = true) {
+  const detailRows = [
+    ["Powers & Features", entry.powerSets || entry.attacks],
+    ["Damage", entry.damage],
+    ["Equipment", entry.equipment],
+    ["Special", entry.special],
+    ["Skills", entry.skills],
+    ["Talents", entry.talents],
+    ["Merits", entry.merits],
+    ["Flaws", entry.flaws],
+    ["Notes", entry.notes]
+  ].filter(([, value]) => value);
+  return `
+    <details class="npc-reference-card">
+      <summary>
+        <span>${html(entry.category)}</span>
+        <strong>${html(entry.name)}</strong>
+        <em>${html([entry.powerTier, entry.minionTier, entry.side].filter(Boolean).join(" - "))}</em>
+      </summary>
+      <div class="npc-reference-body">
+        <div class="npc-reference-stats">
+          ${entry.hp ? `<span><small>HP</small>${html(entry.hp)}</span>` : ""}
+          ${entry.speed ? `<span><small>Speed</small>${html(entry.speed)}</span>` : ""}
+          <span><small>Tier Bonus</small>${html(entry.tierBonus)}</span>
+          ${entry.attackValue ? `<span><small>Attack</small>${html(entry.attackValue)}</span>` : ""}
+          ${entry.effectValue ? `<span><small>Effect</small>${html(entry.effectValue)}</span>` : ""}
+        </div>
+        ${entry.defenses ? `<p class="npc-defense-line"><strong>Active Defense:</strong> ${html(entry.defenses)}</p>` : ""}
+        ${npcAbilityStrip(entry)}
+        ${detailRows.map(([title, value]) => `<section><h3>${html(title)}</h3><p>${html(value).replace(/\n/g, "<br>")}</p></section>`).join("")}
+        ${canUse ? `<button type="button" data-action="use-npc-template" data-npc-id="${html(entry.id)}">Use as Custom NPC</button>` : ""}
+      </div>
+    </details>
+  `;
+}
+
+function npcCatalogToolbar(kind) {
+  const showRank = kind === "archetypes";
+  return `
+    <div class="npc-library-toolbar">
+      <label>Search<input type="search" data-npc-search value="${html(npcSearch)}" placeholder="Name, powers, skills, notes"></label>
+      ${showRank ? `<label>Side<select data-npc-filter="side">${options(["All", "Heroic", "Villainous"], npcSideFilter, "")}</select></label>` : ""}
+      ${showRank ? `<label>Power Tier<select data-npc-filter="rank">${options(["All", "Low", "Medium", "High"], npcRankFilter, "")}</select></label>` : ""}
+    </div>
+  `;
+}
+
+function renderNpcCatalog(kind) {
+  const source = kind === "archetypes" ? npcArchetypes : kind === "day-players" ? npcDayPlayers : npcCreatures;
+  const query = npcSearch.trim().toLowerCase();
+  const filtered = source.filter(entry => {
+    if (kind === "archetypes" && npcSideFilter !== "All" && entry.side !== npcSideFilter) return false;
+    if (kind === "archetypes" && npcRankFilter !== "All" && entry.rank !== npcRankFilter) return false;
+    if (!query) return true;
+    return [entry.name, entry.category, entry.powerTier, entry.powerSets, entry.attacks, entry.skills, entry.notes, entry.examples]
+      .filter(Boolean).join(" ").toLowerCase().includes(query);
+  });
+  const title = kind === "archetypes" ? "Superhuman Archetypes" : kind === "day-players" ? "Day Players" : "Animals & Creatures";
+  const intro = kind === "archetypes"
+    ? "Complete Low, Medium, and High Power profiles for heroic allies, rivals, and villainous opponents."
+    : kind === "day-players"
+      ? "Minions and supporting cast who give the superhero world its human texture."
+      : "Ready-to-use natural and oversized threats, from predators and swarms to giant creatures.";
+  return `
+    <div class="npc-catalog-hero"><span>Chapter Seventeen</span><h2>${title}</h2><p>${intro}</p></div>
+    ${npcCatalogToolbar(kind)}
+    <div class="npc-result-count">${filtered.length} of ${source.length} profiles</div>
+    <div class="npc-reference-list">${filtered.length ? filtered.map(entry => npcReferenceCard(entry)).join("") : `<div class="library-empty">No NPC profiles match these filters.</div>`}</div>
+  `;
+}
+
+function renderSavedNpcs() {
+  const library = loadNpcLibrary();
+  return `
+    <div class="npc-catalog-hero"><span>Local NPC Library</span><h2>Saved NPCs</h2><p>Custom NPCs are stored in this browser and remain separate from player characters.</p></div>
+    <div class="npc-reference-list">${library.length ? library.map(record => `
+      <article class="npc-saved-card">
+        <div><span>${html(record.npc.powerTier)}</span><h3>${html(record.npc.name || "Unnamed NPC")}</h3><p>${html(record.npc.concept || "Custom NPC")}</p></div>
+        <div class="npc-saved-actions">
+          <button type="button" data-action="load-saved-npc" data-npc-id="${html(record.id)}">Load</button>
+          <button type="button" data-action="copy-saved-npc" data-npc-id="${html(record.id)}">Copy</button>
+          <button type="button" data-action="delete-saved-npc" data-npc-id="${html(record.id)}">Delete</button>
+        </div>
+      </article>
+    `).join("") : `<div class="library-empty">No custom NPCs saved yet.</div>`}</div>
+  `;
+}
+
+function renderNpcRules() {
+  const tierRows = Object.entries(npcTierRules).map(([name, tier]) => [name, `+${tier.bonus}`, tier.die, `(CON score + ${tier.dieMax}) x ${tier.multiplier}`, tier.summary]);
+  const steps = [
+    ["1. Establish the Concept", "One sentence: what is the NPC, what do they want, and what makes them a threat or asset?"],
+    ["2. Assign Power Tier", "Choose Day Player, Low, Medium, High, or Cosmic. Record Tier Bonus and Power Die."],
+    ["3. Assign Modifiers", "Distribute the eight modifiers by concept. Below Cosmic, no modifier should normally exceed +6."],
+    ["4. Calculate Static Values", "Defense, Attack, and Effect Values use Tier Bonus. NPCs do not roll; players roll against these values."],
+    ["5. Set Hit Points", "Use the tier formula with the maximum Hit Die value. Add explicit Bonus HP when the story or encounter role demands it."],
+    ["6. Add Class Abilities", "Optional. Choose one or two obvious passive or once-per-encounter features; three is the absolute ceiling."],
+    ["7. Define Powers", "Three to five entries is enough for most NPCs. If it is not on the stat block, it does not exist at the table."],
+    ["8. Write Notes", "Record tactical priority, losing behavior, personality, and a story hook."]
+  ];
+  return [
+    gmSection("NPC Principle", "Player characters grow through levels. NPCs exist at a Power Tier and provide static numbers.", `<div class="gm-rule-grid">${gmRule("Players Roll", "NPCs do not roll attacks or defenses. The GM reads a static value and the player rolls against it.")}${gmRule("Tier Bonus", "Replaces Prowess in NPC formulas. It is not Prowess and is always visible on the stat block.")}${gmRule("Stat Block Is Truth", "List only powers and features that will matter in play. Unlisted abilities are not available.")}${gmRule("Tier Is Description", "Power Tier describes what the NPC is, not which campaign they are allowed to appear in.")}</div>`),
+    gmSection("Power Tiers", "Cosmic Power is a campaign event, not merely High Power with larger numbers.", gmTable(["Power Tier", "Tier Bonus", "Power Die", "HP Formula", "Best Fit"], tierRows, "gm-table-dense")),
+    gmSection("Static Formulas", "Perception joins physical and mental defenses because noticing the threat is part of surviving it.", `<div class="gm-rule-grid">${gmRule("Parry / Block", "10 + FIG + PER + Tier Bonus")}${gmRule("Dodge", "10 + DEX + PER + Tier Bonus")}${gmRule("Willpower", "10 + WIS + PER + Tier Bonus")}${gmRule("Social", "10 + CHA + INT + Tier Bonus")}${gmRule("Attack Value", "10 + primary combat modifier + Tier Bonus")}${gmRule("Effect Value", "10 + governing modifier + Tier Bonus")}</div>`),
+    gmSection("Build a Custom NPC", "The Notes field is operational information, not flavor text.", `<div class="npc-rule-steps">${steps.map(([title, body]) => gmRule(title, body, "Build Step")).join("")}</div>`),
+    gmSection("Encounter Roles", "Different roles carry different mechanical weight.", `<div class="gm-rule-grid">${gmRule("Thug", "Minion. One damaging hit defeats it.")}${gmRule("Goon", "Minion. Two damaging hits defeat it.")}${gmRule("Lieutenant", "Minion. Three damaging hits defeat it; it is not automatically a Boss.")}${gmRule("Named NPC", "Uses HP, full stat block, defined powers, Merits, Flaws, and Notes.")}${gmRule("Boss Resolve", "Once per encounter, ignore one condition or failed save. It cannot prevent damage or negate the same effect type consecutively.")}${gmRule("Boss Condition Cap", "A Boss can have at most two conditions. When a third applies, the GM ends one existing condition.")}</div>`),
+    gmSection("Minion Rules", "Minions create pressure through numbers and positioning.", `<div class="gm-rule-grid">${gmRule("Hits, Not HP", "Any damaging attack or Power deals one hit, whether it deals one point or fifty.")}${gmRule("Area Effects", "Deal one hit to every Minion in the area, regardless of damage.")}${gmRule("Conditions", "Apply normally. A Dazed Thug still cannot take Reactions.")}${gmRule("Initiative", "Minions act as groups on a shared initiative count per Minion type.")}</div>`),
+    gmSection("Cross-Tier Deployment", "Use mismatched tiers deliberately to tell the story.", `<div class="gm-two-column">${gmRule("Punching Up", "A higher-tier threat creates escalation and may need to be fled, bargained with, or defeated through cleverness instead of direct combat.")}${gmRule("Punching Down", "Lower-tier named NPCs remain important as contacts, loved ones, informants, former villains, and people worth protecting.")}</div>`)
+  ].join("");
+}
+
+function renderNpcBuilder() {
+  const tabs = document.querySelector("[data-npc-tabs]");
+  const content = document.querySelector("[data-npc-content]");
+  if (!tabs || !content) return;
+  tabs.innerHTML = npcSections().map(([id, label]) => `<button type="button" data-action="npc-section" data-section="${id}" class="${id === activeNpcSection ? "active" : ""}">${label}</button>`).join("");
+  if (activeNpcSection === "build") content.innerHTML = renderNpcBuild();
+  else if (activeNpcSection === "archetypes" || activeNpcSection === "day-players" || activeNpcSection === "creatures") content.innerHTML = renderNpcCatalog(activeNpcSection);
+  else if (activeNpcSection === "saved") content.innerHTML = renderSavedNpcs();
+  else content.innerHTML = renderNpcRules();
+}
+
+function openNpcBuilder() {
+  document.querySelector("[data-npc-drawer]").hidden = false;
+  renderNpcBuilder();
+}
+
+function closeNpcBuilder() {
+  document.querySelector("[data-npc-drawer]").hidden = true;
+}
+
+function npcEntryById(id) {
+  return [...npcArchetypes, ...npcDayPlayers, ...npcCreatures].find(entry => entry.id === id);
+}
+
+function useNpcTemplate(id) {
+  const entry = npcEntryById(id);
+  if (!entry) return;
+  npcDraft = {
+    ...npcDefaults,
+    name: entry.name,
+    concept: `${entry.side} ${entry.category}`,
+    powerTier: npcTierRules[entry.powerTier] ? entry.powerTier : "Day Player",
+    conScore: 10 + (Number(entry.abilities?.con || 0) * 2),
+    speed: entry.speed || "30 ft",
+    ...entry.abilities,
+    powers: entry.powerSets || entry.attacks || entry.damage || "",
+    skills: entry.skills || "",
+    merits: entry.merits || "",
+    flaws: entry.flaws || "",
+    notes: entry.notes || "",
+    bonusHp: 0,
+    boss: false
+  };
+  saveNpcDraft();
+  activeNpcSection = "build";
+  renderNpcBuilder();
+}
+
+function saveCurrentNpc() {
+  const library = loadNpcLibrary();
+  const id = npcDraft.id || `npc-${Date.now()}`;
+  const record = { id, updatedAt: new Date().toISOString(), npc: { ...npcDraft, id } };
+  const index = library.findIndex(item => item.id === id);
+  if (index >= 0) library[index] = record;
+  else library.unshift(record);
+  npcDraft.id = id;
+  saveNpcDraft();
+  saveNpcLibrary(library);
+  renderNpcBuilder();
+}
+
+async function copyNpcText(npc) {
+  await navigator.clipboard.writeText(npcStatBlockText(npc));
+}
+
 function compendiumSections() {
   return [
     ["glossary", "Glossary"],
@@ -2358,7 +2836,8 @@ function compendiumSections() {
     ["merits", "Merits"],
     ["flaws", "Flaws"],
     ["powers", "Powers"],
-    ["gear", "Gear"]
+    ["gear", "Gear"],
+    ["npcs", "NPCs"]
   ];
 }
 
@@ -2619,6 +3098,7 @@ function renderCompendiumSection(id) {
   if (id === "flaws") return compendiumList(flaws.map(name => compendiumCard(name, flawRules[name], "Flaw")));
   if (id === "powers") return renderPowerCompendium();
   if (id === "gear") return compendiumList(Object.entries(gearCatalog).flatMap(([type, items]) => items.map(name => compendiumCard(name, gearRules[name] || `Gear category: ${type}.`, type))));
+  if (id === "npcs") return renderNpcRules();
   return `
     <div class="compendium-hero">
       <h2>HEROIC 5e Core Reference</h2>
@@ -2891,8 +3371,10 @@ function randomCharacter() {
 
   ensurePowerState();
   randomizeSkills();
-  addLine("merits", randomItem(merits));
-  addLine("flaws", randomItem(flaws));
+  const randomMerit = randomItem(merits);
+  const randomFlaw = randomItem(flaws);
+  addLine("merits", ratedRuleLine(randomMerit, meritRules, 1));
+  addLine("flaws", ratedRuleLine(randomFlaw, flawRules, 1));
   sheet.toughTalent = sheet.startingTalent === "Tough";
   fillClassFeatures();
   fillCalling();
@@ -2948,6 +3430,12 @@ function exportPdf() {
 window.addEventListener("afterprint", clearSheetPrintMode);
 
 app.addEventListener("input", event => {
+  const npcFieldElement = event.target.closest("[data-npc-field]");
+  if (npcFieldElement) {
+    npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
+    saveNpcDraft();
+    return;
+  }
   const el = event.target.closest("[data-field]");
   if (!el) return;
   updateField(el.dataset.field, fieldValue(el));
@@ -2956,9 +3444,50 @@ app.addEventListener("input", event => {
 });
 
 app.addEventListener("change", event => {
+  const npcFieldElement = event.target.closest("[data-npc-field]");
+  if (npcFieldElement) {
+    npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
+    saveNpcDraft();
+    renderNpcBuilder();
+    return;
+  }
+
+  if (event.target.matches("[data-npc-search]")) {
+    npcSearch = event.target.value;
+    renderNpcBuilder();
+    return;
+  }
+
+  if (event.target.matches("[data-npc-filter='side']")) {
+    npcSideFilter = event.target.value || "All";
+    renderNpcBuilder();
+    return;
+  }
+
+  if (event.target.matches("[data-npc-filter='rank']")) {
+    npcRankFilter = event.target.value || "All";
+    renderNpcBuilder();
+    return;
+  }
+
   const randomChoice = event.target.closest("[data-random-character-field]");
   if (randomChoice) {
     randomCharacterOptions[randomChoice.dataset.randomCharacterField] = randomChoice.value;
+    return;
+  }
+
+  const ratedChoice = event.target.closest("[data-rated-choice]");
+  if (ratedChoice) {
+    const field = ratedChoice.dataset.ratedField;
+    const previous = ratedChoice.dataset.value;
+    const rules = field === "merits" ? meritRules : flawRules;
+    const replacement = ratedRuleLine(previous, rules, ratedChoice.value);
+    sheet[field] = lines(sheet[field]).filter(item => item !== previous).join("\n");
+    setRatedLine(field, replacement, rules);
+    save();
+    renderBuilder();
+    renderSheet();
+    renderProgress();
     return;
   }
 
@@ -3041,6 +3570,41 @@ app.addEventListener("click", async event => {
   if (action === "close-compendium") closeCompendium();
   if (action === "open-gm-screen") openGmScreen();
   if (action === "close-gm-screen") closeGmScreen();
+  if (action === "open-npc-builder") openNpcBuilder();
+  if (action === "close-npc-builder") closeNpcBuilder();
+  if (action === "npc-section") {
+    activeNpcSection = button.dataset.section;
+    renderNpcBuilder();
+  }
+  if (action === "new-npc") {
+    npcDraft = { ...npcDefaults };
+    saveNpcDraft();
+    renderNpcBuilder();
+  }
+  if (action === "save-npc") saveCurrentNpc();
+  if (action === "copy-npc") await copyNpcText(npcDraft);
+  if (action === "use-npc-template") useNpcTemplate(button.dataset.npcId);
+  if (action === "load-saved-npc") {
+    const record = loadNpcLibrary().find(item => item.id === button.dataset.npcId);
+    if (record) {
+      npcDraft = { ...npcDefaults, ...record.npc };
+      saveNpcDraft();
+      activeNpcSection = "build";
+      renderNpcBuilder();
+    }
+  }
+  if (action === "copy-saved-npc") {
+    const record = loadNpcLibrary().find(item => item.id === button.dataset.npcId);
+    if (record) await copyNpcText(record.npc);
+  }
+  if (action === "delete-saved-npc") {
+    const library = loadNpcLibrary();
+    const record = library.find(item => item.id === button.dataset.npcId);
+    if (record && confirm(`Delete NPC "${record.npc.name || "Unnamed NPC"}"?`)) {
+      saveNpcLibrary(library.filter(item => item.id !== record.id));
+      renderNpcBuilder();
+    }
+  }
   if (action === "gm-screen-section") {
     activeGmSection = button.dataset.section;
     renderGmScreen();
@@ -3091,9 +3655,15 @@ app.addEventListener("click", async event => {
   if (action === "load-cloud-character") await loadCharacterFromCloud(button.dataset.characterId);
   if (action === "delete-cloud-character") await removeCharacterFromCloud(button.dataset.characterId);
   if (action === "add-preview") {
-    const value = sheet[button.dataset.source];
+    let value = sheet[button.dataset.source];
     if (value) {
-      addLine(button.dataset.field, value);
+      if (["merits", "flaws"].includes(button.dataset.field)) {
+        const rules = button.dataset.field === "merits" ? meritRules : flawRules;
+        value = ratedRuleLine(value, rules, sheet[button.dataset.ratingField]);
+        setRatedLine(button.dataset.field, value, rules);
+      } else {
+        addLine(button.dataset.field, value);
+      }
       save();
       renderBuilder();
       renderSheet();
