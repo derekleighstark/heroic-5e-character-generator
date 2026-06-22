@@ -391,6 +391,81 @@ p {
   align-items: end;
 }
 
+.randomizer-options {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--green);
+}
+
+.randomizer-options > header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.randomizer-options > header > div:first-child {
+  display: grid;
+  gap: 2px;
+}
+
+.randomizer-options > header span {
+  color: var(--navy);
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.randomizer-options > header strong {
+  color: var(--muted);
+  font-size: .72rem;
+}
+
+.randomizer-options > header > div:last-child {
+  display: flex;
+  gap: 6px;
+}
+
+.randomizer-options > header button {
+  min-height: 28px;
+  padding: 5px 8px;
+  font-size: .68rem;
+}
+
+.origin-pool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 6px;
+}
+
+.origin-pool-grid label {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  min-width: 0;
+  padding: 7px 8px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.origin-pool-grid input {
+  flex: 0 0 auto;
+  width: 16px;
+  min-height: 16px;
+  margin: 0;
+  accent-color: var(--green);
+}
+
+.origin-pool-grid span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .random-character-button:hover {
   background: var(--green);
   color: #fff;
@@ -2257,6 +2332,10 @@ p {
 
   .theme-switcher select {
     min-width: 118px;
+  }
+
+  .randomizer-options > header {
+    display: grid;
   }
 
   .step-art {

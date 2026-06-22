@@ -22,6 +22,7 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
+const RANDOM_ORIGINS_KEY = "heroic5e_random_origin_pool";
 const themes = [
   ["classic", "Heroic Classic"],
   ["four-color", "Four-Color"],
@@ -439,6 +440,7 @@ const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
 let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
+let randomOriginPool = loadRandomOriginPool();
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -451,6 +453,20 @@ function applyTheme(theme) {
   activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
   document.documentElement.dataset.theme = activeTheme;
   localStorage.setItem(THEME_KEY, activeTheme);
+}
+
+function loadRandomOriginPool() {
+  try {
+    const stored = JSON.parse(localStorage.getItem(RANDOM_ORIGINS_KEY) || "null");
+    const valid = Array.isArray(stored) ? stored.filter(name => origins[name]) : Object.keys(origins);
+    return new Set(valid);
+  } catch {
+    return new Set(Object.keys(origins));
+  }
+}
+
+function saveRandomOriginPool() {
+  localStorage.setItem(RANDOM_ORIGINS_KEY, JSON.stringify([...randomOriginPool]));
 }
 
 applyTheme(activeTheme);
@@ -1320,12 +1336,19 @@ function renderStep(id) {
 }
 
 function renderConcept() {
+  const originNames = Object.keys(origins);
   return `
     <div class="form-grid three">
       ${select("rank", "Campaign Rank", Object.keys(ranks))}
       ${input("level", "Level", "number", 'min="1" max="10"')}
       <div class="random-concept-action"><button type="button" class="random-character-button" data-action="random-character">Random Character</button></div>
     </div>
+    <section class="randomizer-options">
+      <header><div><span>Randomizer Origin Pool</span><strong data-random-origin-count>${randomOriginPool.size} of ${originNames.length} enabled</strong></div><div><button type="button" data-action="random-origins-all">Select All</button><button type="button" data-action="random-origins-clear">Clear</button></div></header>
+      <div class="origin-pool-grid">
+        ${originNames.map(name => `<label><input type="checkbox" data-random-origin="${html(name)}" ${checked(randomOriginPool.has(name))}><span>${html(name)}</span></label>`).join("")}
+      </div>
+    </section>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
   `;
 }
@@ -2429,10 +2452,15 @@ function randomizeSkills() {
 }
 
 function randomCharacter() {
-  if (!confirm("Generate a completely random character? Current unsaved changes will be replaced.")) return;
+  const allowedOrigins = [...randomOriginPool].filter(name => origins[name]);
+  if (!allowedOrigins.length) {
+    alert("Select at least one Origin in the Randomizer Origin Pool.");
+    return;
+  }
+  if (!confirm("Generate a random character from the selected Rank, Level, and Origin pool? Current unsaved changes will be replaced.")) return;
 
   const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
-  const originName = randomItem(Object.keys(origins));
+  const originName = randomItem(allowedOrigins);
   const className = randomItem(Object.keys(classes));
   const side = Math.random() < .75 ? "Heroic" : "Unaligned";
   const calling = randomItem(Object.keys(callings));
@@ -2533,6 +2561,16 @@ app.addEventListener("input", event => {
 });
 
 app.addEventListener("change", event => {
+  const randomOrigin = event.target.closest("[data-random-origin]");
+  if (randomOrigin) {
+    if (randomOrigin.checked) randomOriginPool.add(randomOrigin.dataset.randomOrigin);
+    else randomOriginPool.delete(randomOrigin.dataset.randomOrigin);
+    saveRandomOriginPool();
+    const count = document.querySelector("[data-random-origin-count]");
+    if (count) count.textContent = `${randomOriginPool.size} of ${Object.keys(origins).length} enabled`;
+    return;
+  }
+
   if (event.target.id === "themeSwitcher") {
     applyTheme(event.target.value);
     return;
@@ -2603,6 +2641,16 @@ app.addEventListener("click", event => {
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
   if (action === "random-character") randomCharacter();
+  if (action === "random-origins-all") {
+    randomOriginPool = new Set(Object.keys(origins));
+    saveRandomOriginPool();
+    renderBuilder();
+  }
+  if (action === "random-origins-clear") {
+    randomOriginPool = new Set();
+    saveRandomOriginPool();
+    renderBuilder();
+  }
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-sheet-preview") openSheetPreview();
