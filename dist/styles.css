@@ -378,6 +378,20 @@ p {
   text-transform: uppercase;
 }
 
+.random-character-button {
+  width: 100%;
+  min-height: 42px;
+  margin-top: 10px;
+  background: var(--navy);
+  border: 2px solid var(--gold);
+  color: var(--gold);
+}
+
+.random-character-button:hover {
+  background: var(--green);
+  color: #fff;
+}
+
 .builder-panel {
   min-height: calc(100vh - 104px);
   padding: 18px;

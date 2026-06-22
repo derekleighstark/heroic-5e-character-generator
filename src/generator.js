@@ -413,6 +413,28 @@ const stepArtwork = {
   identity: ["Behind the Mask", "Final character portrait or civilian identity"]
 };
 
+const randomNames = {
+  first: ["Alex", "Avery", "Cameron", "Casey", "Dante", "Devon", "Elena", "Elliot", "Harper", "Imani", "Jordan", "Kai", "Leah", "Malcolm", "Maya", "Morgan", "Nadia", "Noah", "Priya", "Quinn", "Rafael", "Reese", "Rowan", "Samira", "Theo", "Valerie"],
+  last: ["Archer", "Bennett", "Brooks", "Chen", "Cross", "Diaz", "Frost", "Grant", "Hayes", "Holloway", "Kade", "Khan", "Marsh", "Mercer", "Okafor", "Park", "Price", "Reyes", "Rhodes", "Shaw", "Singh", "Stone", "Torres", "Vale", "Walker", "Ward"],
+  heroPrefix: ["Aegis", "Arc", "Ash", "Bright", "Cipher", "Crimson", "Echo", "Ember", "Flux", "Ghost", "Iron", "Jade", "Night", "Nova", "Quantum", "Rift", "Silver", "Solar", "Storm", "Titan", "Vector", "Vigil"],
+  heroSuffix: ["Beacon", "Bolt", "Crown", "Dynamo", "Edge", "Guardian", "Knight", "Lance", "Pulse", "Sentinel", "Shadow", "Spark", "Star", "Vanguard", "Warden"]
+};
+
+const randomLanguages = ["English", "Arabic", "ASL", "French", "Hindi", "Japanese", "Mandarin", "Portuguese", "Russian", "Spanish", "Swahili"];
+const randomColors = ["black", "white", "crimson", "cobalt", "emerald", "silver", "gold", "violet", "charcoal", "teal"];
+const originBackgrounds = {
+  Alien: "arrived from a distant civilization carrying knowledge that was never meant for Earth",
+  Artificial: "awakened as a constructed intelligence and chose a purpose beyond the one originally assigned",
+  Cosmic: "survived contact with a force from beyond the known universe and returned permanently changed",
+  Enhanced: "was transformed by an experiment, accident, or deliberate enhancement program",
+  Gearbound: "built a breakthrough system and became the only person capable of keeping it operational",
+  Legacy: "inherited a famous symbol, unfinished mission, and the expectations attached to both",
+  Monster: "emerged from an inhuman transformation and now struggles to decide what kind of person remains",
+  Mystic: "crossed the threshold into a hidden world of rituals, spirits, and dangerous bargains",
+  Trained: "spent years preparing for threats most people never believed were real",
+  Transcendent: "passed beyond ordinary human limits and returned with an altered view of life and mortality"
+};
+
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
@@ -1148,6 +1170,7 @@ function renderApp() {
       <aside class="step-rail">
         <div class="progress-card"><span>Completion</span><strong data-progress-text></strong><div class="progress-track"><i data-progress-bar></i></div></div>
         <nav class="step-list"></nav>
+        <button type="button" class="random-character-button" data-action="random-character">Random Character</button>
       </aside>
       <section class="builder-panel"></section>
     </main>
@@ -2294,6 +2317,194 @@ function importJson(file) {
   reader.readAsText(file);
 }
 
+function shuffleItems(items) {
+  const result = [...items];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
+  }
+  return result;
+}
+
+function randomItem(items) {
+  return items[Math.floor(Math.random() * items.length)];
+}
+
+function randomBetween(minimum, maximum) {
+  return minimum + Math.floor(Math.random() * (maximum - minimum + 1));
+}
+
+function randomPowerChoice(predicate) {
+  const selected = selectedPowerChoiceIds();
+  return shuffleItems(powerChoiceCatalog()).find(choice => !selected.has(choice.choiceId) && predicate(choice) && powerChoiceAvailable(choice));
+}
+
+function addRandomPowerChoice(predicate) {
+  const choice = randomPowerChoice(predicate);
+  if (choice) sheet.powerPurchases.push(choice.choiceId);
+  return choice;
+}
+
+function randomizePowers() {
+  ensurePowerState();
+  sheet.powerPurchases = [];
+  sheet.powerSetAbilities = {};
+  for (let slot = 1; slot <= 12; slot += 1) {
+    sheet[`powerSet${slot}`] = "";
+    sheet[`powerSet${slot}Notes`] = "";
+  }
+
+  const maxSets = Math.min(2, calc().maxPowerSets);
+  const chosenSets = shuffleItems(powerSetRules).slice(0, randomBetween(1, maxSets));
+  chosenSets.forEach((powerSet, index) => {
+    sheet[`powerSet${index + 1}`] = powerSet.name;
+    sheet.powerSetAbilities[powerSet.id] = randomItem(powerSet.abilityOptions.length ? powerSet.abilityOptions : ["str"]);
+  });
+  sheet.powerAbility = sheet.powerSetAbilities[chosenSets[0].id];
+
+  chosenSets.forEach(powerSet => {
+    const core = powerSet.coreTrack.find(choice => choice.level === 1);
+    const catalogChoice = core && powerChoiceMap().get(powerChoiceId(powerSet.id, "core", core.id));
+    if (catalogChoice && powerChoiceAvailable(catalogChoice)) sheet.powerPurchases.push(catalogChoice.choiceId);
+  });
+
+  while (selectedPowerChoices().filter(choice => choice.type === "At-Will").length < 2) {
+    if (!addRandomPowerChoice(choice => choice.type === "At-Will")) break;
+  }
+  if (!selectedPowerChoices().some(choice => choice.type === "Encounter")) {
+    addRandomPowerChoice(choice => choice.type === "Encounter");
+  }
+
+  const limitationTarget = Math.random() < .45 ? randomBetween(1, Math.min(2, calc().maxLimitations)) : 0;
+  const selectedSetIds = new Set(chosenSets.map(powerSet => powerSet.id));
+  while (selectedPowerLimitations().length < limitationTarget) {
+    if (!addRandomPowerChoice(choice => choice.group === "limitation" && (choice.setId === "general-limitation" || selectedSetIds.has(choice.setId)))) break;
+  }
+
+  if (Math.random() < .35) {
+    const enhancementSet = randomItem(chosenSets);
+    const enhancementPair = shuffleItems(powerChoiceCatalog()).filter(choice => choice.group === "enhancement" && choice.setId === enhancementSet.id && powerChoiceAvailable(choice)).slice(0, 2);
+    if (enhancementPair.length === 2) {
+      const before = [...sheet.powerPurchases];
+      sheet.powerPurchases.push(...enhancementPair.map(choice => choice.choiceId));
+      if (powerBudget().startingRemaining < 0) sheet.powerPurchases = before;
+    }
+  }
+
+  let attempts = 0;
+  while (attempts < 120) {
+    attempts += 1;
+    const budget = powerBudget();
+    if (budget.startingRemaining <= 0 && budget.advancementRemaining <= 0) break;
+    const candidate = randomPowerChoice(choice => !["limitation", "enhancement"].includes(choice.group));
+    if (!candidate) break;
+    sheet.powerPurchases.push(candidate.choiceId);
+    if (powerBudget().startingRemaining < 0) sheet.powerPurchases.pop();
+  }
+
+  sheet.limitations = selectedPowerLimitations().length;
+  sheet.limitationsText = selectedPowerLimitations().map(choice => `${choice.name}: ${choice.text}`).join("\n");
+}
+
+function randomizeSkills() {
+  const origin = origins[sheet.origin];
+  const originSkills = shuffleItems(origin.skills).slice(0, origin.skillPicks);
+  sheet.originSkill1 = originSkills[0] || "";
+  sheet.originSkill2 = originSkills[1] || "";
+  fillOrigin();
+
+  const additionalCount = additionalSkillPickCount();
+  const additional = shuffleItems(skills.map(([, name]) => name).filter(name => !originSkills.includes(name))).slice(0, additionalCount);
+  const needsSpecialty = ["Cosmic", "Monster", "Transcendent"].includes(sheet.origin) || sheet.startingTalent === "Specialist" || Math.random() < .3;
+  if (needsSpecialty && originSkills.length && additional.length) {
+    additional[0] = originSkills[0];
+    const focus = randomItem(specialtyExamplesFor(originSkills[0]));
+    if (focus) sheet.specialties = `${originSkills[0]} (${focus})`;
+  }
+
+  Array.from({ length: 6 }, (_, index) => `skillPick${index + 1}`).forEach((field, index) => {
+    sheet[field] = additional[index] || "";
+  });
+  syncSkillTraining();
+}
+
+function randomCharacter() {
+  if (!confirm("Generate a completely random character? Current unsaved changes will be replaced.")) return;
+
+  const rank = randomItem(Object.keys(ranks));
+  const originName = randomItem(Object.keys(origins));
+  const className = randomItem(Object.keys(classes));
+  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
+  const calling = randomItem(Object.keys(callings));
+  const origin = origins[originName];
+  const originPrimaryBonus = randomItem(origin.primary);
+  const originSecondaryBonus = randomItem(origin.secondary[originPrimaryBonus]);
+  const realName = `${randomItem(randomNames.first)} ${randomItem(randomNames.last)}`;
+  let heroName = `${randomItem(randomNames.heroPrefix)} ${randomItem(randomNames.heroSuffix)}`;
+  if (Math.random() < .35) heroName = randomItem(randomNames.heroPrefix);
+  const identity = randomItem(["Secret", "Public", "Not Public"]);
+  const level = randomBetween(1, 10);
+
+  sheet = {
+    ...defaults,
+    rank,
+    level,
+    origin: originName,
+    className,
+    side,
+    calling,
+    originPrimaryBonus,
+    originSecondaryBonus,
+    originTrait: randomItem(origin.traits),
+    startingTalent: randomItem(talents),
+    heroName,
+    realName,
+    identity,
+    portrait: ""
+  };
+
+  const abilityValues = shuffleItems(rankAbilityArray(rank));
+  abilities.forEach(([key], index) => {
+    sheet[`${key}Score`] = abilityValues[index];
+  });
+
+  ensurePowerState();
+  randomizeSkills();
+  addLine("merits", randomItem(merits));
+  addLine("flaws", randomItem(flaws));
+  sheet.toughTalent = sheet.startingTalent === "Tough";
+  fillClassFeatures();
+  fillCalling();
+  ensureClassSaves(true);
+  randomizePowers();
+
+  const gearChoices = [
+    randomItem(gearCatalog.standard),
+    randomItem(gearCatalog.weapon),
+    randomItem(gearCatalog.armor),
+    randomItem(gearCatalog.gadget)
+  ];
+  if (Math.random() < .55) gearChoices.push(randomItem(gearCatalog.vehicle));
+  sheet.gear = gearChoices.map(gearLine).join("\n");
+  sheet.enhancements = /Vehicle/.test(sheet.gear) || gearChoices.some(name => gearCatalog.vehicle.includes(name)) ? gearLine(randomItem(gearCatalog.feature)) : "";
+
+  const languageCount = sheet.startingTalent === "Linguist" ? 4 : randomBetween(1, 3);
+  sheet.proficiencies = shuffleItems(randomLanguages).slice(0, languageCount).join("\n");
+  const colors = shuffleItems(randomColors).slice(0, 2);
+  const powerNames = selectedPowerSetNames();
+  sheet.concept = `${side} ${className} with ${powerNames.join(" and ")} powers, driven by the ${calling} Calling.`;
+  sheet.backstory = `Before becoming ${heroName}, ${realName} ${originBackgrounds[originName]}. A defining crisis forced them into the open, where their talent for ${className.toLowerCase()} tactics and commitment to the ${calling.toLowerCase()} path became impossible to ignore.`;
+  sheet.costume = `${colors[0]} and ${colors[1]} field costume with a distinctive ${randomItem(["chevron", "circle", "starburst", "shield", "split-mask", "vertical-stripe"])} symbol, reinforced gloves, and concealed communications gear.`;
+  sheet.sessionNotes = `Public reputation: ${side}. Primary motivation: ${calling}. The character is ready for the player to refine names, relationships, and campaign-specific details.`;
+
+  activeStep = "identity";
+  diceRollHistory = [];
+  initialize(true);
+  renderBuilder();
+  renderSheet();
+  renderProgress();
+}
+
 function newCharacter() {
   if (!confirm("Start a new HEROIC 5e character? Current unsaved changes will be cleared.")) return;
   sheet = { ...defaults };
@@ -2391,6 +2602,7 @@ app.addEventListener("click", event => {
   if (action === "copy-json") copyJson();
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
+  if (action === "random-character") randomCharacter();
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-sheet-preview") openSheetPreview();
