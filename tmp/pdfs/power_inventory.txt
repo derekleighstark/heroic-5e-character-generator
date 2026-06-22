@@ -1,0 +1,2250 @@
+PAGE 4
+Table of Contents
+Introduction..................................................................................................................................1
+Glossary.......................................................................................................................................5
+Chapter One · The Basics.........................................................................................................11
+Chapter Two · Character Creation............................................................................................27
+Chapter Three · Origins.............................................................................................................43
+Chapter Four · Sides.................................................................................................................63
+Chapter Five · Callings..............................................................................................................68
+Chapter Six · Character Classes..............................................................................................88
+Chapter Seven · Talents..........................................................................................................109
+Chapter Eight · Skills...............................................................................................................119
+Chapter Nine · Merits & Flaws................................................................................................129
+Chapter Ten · Powers..............................................................................................................147
+Chapter Eleven · Power Sets..................................................................................................161
+Chapter Twelve · General Utility Powers.............................................................................309
+Chapter Thirteen · Equipment & Gear.................................................................................320
+Chapter Fourteen · Playing the Game.................................................................................338
+Chapter Fifteen · Combat......................................................................................................365
+Chapter Sixteen · GM’s Section...........................................................................................386
+Chapter Seventeen · NPC and Opponents............................................................................399
+---
+PAGE 13
+Power Stunt — An Response — A scene-level competency outside of
+improvised use of one of the measure of how an NPC, attacks and saves.
+hero's existing Power Sets. crowd, or faction currently
+regards a hero or team. Slowed — A condition
+Power Stunt: Emulation — representing impaired
+A high-risk Power Stunt Round — A complete cycle movement.
+allowing a hero to reach for of all characters' Turns in
+an unpurchased ability within initiative order. Social Active Defense —
+an owned Power Set. One of the four Active
+Defense types, used against
+Prone — A condition manipulation, intimidation,
+representing a character on and social pressure.
+S
+the ground.
+Specialty — Focused
+Save — A roll made when a
+Prowess (PRO) — The flat expertise within a broader
+hero resists something
+bonus representing overall Skill.
+dangerous that bypasses
+---
+PAGE 28
+Power Dice
+All Power rolls use a Power Die whose size is determined by Campaign Rank. This applies to every
+Power, regardless of Tier. Tier determines what a power does — its effects, scope, and narrative scale.
+Campaign Rank determines how hard it hits.
+Campaign Rank Power Die
+Street Level d8
+Mid-Level d10
+World Class d12
+Starting Power Picks & Maximum Power Sets
+Heroes at higher Campaign Ranks begin with more Power Picks and access to more Power Sets,
+reflecting that World Class heroes are already established figures with broader capability at Level 1.
+Every hero should begin with at least one Core Track purchase, at least two At-Will Powers, and at least
+one Encounter Power — that is the baseline for feeling like a hero from the first session. → Chapter 10:
+Powers
+Campaign Rank Max Power Sets Max Power Tier Starting Power Max Limitations
+Picks
+Street Level 3 Tier 1 8 2
+Mid-Level 5 Tier 2 10 4
+World Class 7 Tier 3 12 6
+Note on Tier Access During Play
+---
+PAGE 41
+Step 10
+Choose Powers and Limitations
+This is the step that makes the hero superhuman.
+Powers are organized into Power Sets, each representing a family of related abilities. A hero selects
+powers by spending Power Picks, drawn from the budget established by Campaign Rank and expanded
+with each level gained through play.
+The number of Starting Power Picks, the maximum number of Power Sets a hero can draw from, the
+highest Power Tier available at character creation, and the maximum number of Limitations a hero can
+take are all determined by Campaign Rank.
+Campaign Rank Max Power Sets Max Power Tier Starting Power Max Limitations
+Picks
+Street Level 3 Tier 1 8 2
+Mid-Level 5 Tier 2 10 4
+World Class 7 Tier 3 12 6
+Minimum Baseline
+Every hero should begin with at least one Core Track purchase, at least two At-Will Powers, and at least
+one Encounter Power. That is the baseline for feeling like a hero from the first session. Remaining
+Starting Power Picks are spent as the player chooses within the limits above.
+Power Pick Costs
+Purchase Cost
+---
+PAGE 42
+Purchase Cost
+2 Enhancements 1 Pick
+Limitations
+Limitations are meaningful restrictions attached to specific Powers or Power Sets. Each Limitation grants
+1 additional Power Pick in exchange for a real constraint on how a power functions. They are not general
+life complications — those belong in Merits and Flaws. A Limitation must directly affect the use of a
+specific Power or Power Set. The number of Limitations a hero can take is capped by Campaign Rank, as
+shown in the table above.
+The full Powers chapter is Chapter 10. Power Sets are in Chapter 11. → Chapter 10: Powers
+Crashpoint — Step 10
+She is Mid-Level, so she has 10 Starting Power Picks, a maximum of 5 Power Sets, a maximum Power
+Tier of Tier 2, and can take up to 4 Limitations. She chooses Gravity Control as her Power Set and
+spends:
+● Gravity Control Core Track 1 — 1 Pick
+● Gravity Strike At-Will — 1 Pick
+● Crushing Field At-Will — 1 Pick
+● Gravity Pulse Encounter (Tier 2) — 2 Picks
+● Density Anchor Utility — 1 Pick
+● 2 Enhancements — 1 Pick
+That is 7 Picks spent, leaving 3 remaining. She takes the Limitation Uncontrolled : her gravity powers
+---
+PAGE 112
+Power Picks and Advancement
+Power growth is based on total character level, not individual class level. A multiclassed hero gains Power
+Picks on the same schedule as any other hero. Power Picks may be spent on any Power Set the hero
+qualifies for, regardless of which class those levels belong to.
+All other advancement — Talents, ASI Picks, Skill Picks — follows the standard Advancement Table
+based on total character level.
+Beyond Level 10
+Level 10 is the ceiling. It does not have to be the end.
+For campaigns that continue past Level 10 — heroes who have reached their peak and keep showing up
+anyway — HEROIC 5e provides a framework for continued growth that respects the ceiling while
+rewarding the players who earned it.
+Legacy Advances
+After reaching Level 10, a hero earns one Legacy Advance every ten sessions of play. A Legacy Advance
+represents the kind of growth that comes not from raw power climbing but from experience, reflection, and
+time — the things that happen to a hero after they have become who they are.
+At each Legacy Advance, choose one of the following:
+Legacy Advance Options
+● Deepen. Gain one Power Pick. This pick may be spent on Refinements or Branch Powers within
+Power Sets the hero already possesses. It may not be used to purchase a new Power Set or a
+new Core Track entry.
+---
+PAGE 151
+10
+Chapter Ten · Powers
+Powers
+The superhero engine. The framework behind every Power Set: how they are structured, how the
+economy works, how they advance, and what the rules mean.
+This Chapter
+● Design Principles
+● Attributes & Powers
+● Power Sets & Core Tracks
+● Branch Powers
+● Power Entry Format
+● Power Types
+● Attack Roll vs. Effect Value
+● Campaign Rank & Powers
+● Power Pick Economy
+● Power Dice
+● Enhancements
+● Limitations
+● Power Stunts
+● Power Stunt: Emulation
+---
+PAGE 152
+This chapter covers everything about the Powers system: structure, Power Picks, Power types, the attack
+and Effect Value distinction, Enhancements, Limitations, Power Stunts, and advancement. The Power
+Sets themselves are in Chapter 11. Read this framework first — once the language is clear, every Power
+Set entry is fast to read and easy to use at the table.
+Design Principles
+The Powers system follows these principles without exception.
+● Powers are superhero-native. Built for comic-book action, not fantasy spellcasting repainted in
+capes. A fire controller does not prepare fire spells and manage spell slots. They control fire. A
+telepath is not expending mental energy on every surface read. They are psychic. Powers
+express who the hero is.
+● Heroes feel complete at Level 1. Campaign Rank defines power scale. A World Class hero
+beginning play at Level 1 already feels World Class. Level measures experience and refinement.
+Campaign Rank measures the scale of fiction the heroes belong to.
+● No Power Points. HEROIC 5e does not use resource pools to fuel Powers. At-Will Powers are
+always available. Encounter Powers refresh each encounter. Daily Powers are available once per
+day safely. The Edge economy handles dramatic pushes beyond that baseline.
+● Clear mechanics. Powers use attack rolls, saves, action types, Advantage, Disadvantage,
+Prowess, durations, and conditions. Every power entry states exactly what it does. No power
+relies on vague language that requires interpretation at the table.
+● Concept chooses expression. The same Power Set can look completely different depending on
+---
+PAGE 153
+Attribute What It Represents in Powers
+Fighting Combat mastery, martial timing, and weaponized
+technique
+Intelligence Technology, calculation, engineering, tactical
+control, and super-science
+Wisdom Discipline, perception, instinct, mystic focus, and
+spiritual control
+Charisma Willpower, presence, divine force, cosmic identity,
+and emotional projection
+Perception Awareness, targeting, danger sense, sensory
+precision, and predictive response
+Once chosen, a Power Set's Governing Ability should remain fixed. Changing it requires GM approval
+and a story reason strong enough to justify the hero's relationship with their own power fundamentally
+shifting.
+Power Sets and Core Tracks
+A Power Set is the family of related abilities a hero can access: Energy Generation, Super Strength,
+Telepathy, Shadow Control, and so on. Every significant Power Set has a Core Track — the spine of the
+Power Set that defines the hero's scale, access, and identity within that set.
+Core Track steps are purchased in order. You cannot take Core Track 2 without Core Track 1.
+Step Role
+---
+PAGE 154
+who reaches Core Track 4 in one of these sets has added +4 to that Ability Score through their powers
+alone.
+The eight Enhancement Power Sets are: Super Strength (STR), Super Durability (CON), Super Agility
+(DEX), Martial Mastery (FIG), Super Senses (PER), Precognition (WIS), Super Genius (INT), and
+Super Presence (CHA).
+Branch Powers
+Branch Powers are the specific things a hero can do with a Power Set — attacks, defenses, Reactions,
+battlefield control effects, movement options, Sustained effects, transformations, and dramatic scene
+powers. Every Branch Power has all of the following elements stated explicitly in its entry. No power relies
+on implication or assumed defaults.
+● Name. What the power is called on the character sheet.
+● Tier and Type. The Tier (1, 2, 3, or Apex) and the Type (At-Will, Encounter, Daily, Utility, Passive,
+or Sustained).
+● Action cost. Action, Bonus Action, Reaction, Movement, No Action, or Passive.
+● Prerequisite. Usually a Core Track step. Some powers require other powers first.
+● Range or Area. Stated in range bands with foot equivalents in parentheses.
+● Roll or Save. Whether the power uses an attack roll, a save, both, or neither.
+● Damage or Effect. The exact mechanical result. Never vague.
+● Duration. When the effect ends. Every power that applies a condition states the duration
+explicitly. The default condition duration is until the end of the attacker's next Turn unless the
+---
+PAGE 156
+Governing Ability Attack Roll Effect Value
+Strength 1d20 + STR + PRO 10 + STR + PRO
+Dexterity 1d20 + DEX + PRO 10 + DEX + PRO
+Constitution 1d20 + CON + PRO 10 + CON + PRO
+Fighting 1d20 + FIG + PRO 10 + FIG + PRO
+Intelligence 1d20 + INT + PRO 10 + INT + PRO
+Wisdom 1d20 + WIS + PRO 10 + WIS + PRO
+Charisma 1d20 + CHA + PRO 10 + CHA + PRO
+Perception 1d20 + PER + PRO 10 + PER + PRO
+Effect Values for Class Features
+Every Class Feature that generates a resisted effect is tied to that Class's primary attribute, always. A
+multiclassed character may have multiple Effect Values in play — one per class in their build. The source
+of the effect determines which applies. Every Class Feature that generates a resisted effect must declare
+its Governing Ability explicitly in the feature header.
+Campaign Rank and Powers
+Campaign Rank determines the maximum number of Power Sets the hero can have, the maximum Tier of
+powers they can access, and the number of Starting Power Picks at character creation.
+Campaign Rank Max Power Sets Max Tier Starting Power Picks
+Street Level 3 Tier 1 8
+Mid-Level 5 Tier 2 10
+---
+PAGE 158
+Level Type Rule
+Odd levels (3, 5, 7, 9) Refinement picks. Spend only within Power Sets
+the hero already has access to — Branch Powers,
+Utilities, Enhancements. May bank until the next
+even level if no valid purchase exists.
+Advancement Cost
+All Picks Cost 1 Pick at Advancement
+All Power Pick purchases at advancement cost 1 Pick for 1 Power, regardless of Tier. A Tier 3 power
+costs 1 advancement Pick. This is the built-in reward for growth through play — the economy that made a
+Tier 3 power expensive at character creation reflects how powerful that level is before a hero has grown
+into it.
+Power Dice
+Powers use Power Dice for damage, healing, and certain effects. The die type is determined by
+Campaign Rank — not by the Tier of the power. A Street Level hero who accesses a Tier 2 power through
+play still uses d8 Power Dice, not d10.
+Campaign Rank Power Die
+Street Level d8
+Mid-Level d10
+World Class d12
+The individual power entry specifies how many Power Dice are rolled. These numbers are set in the
+---
+PAGE 161
+● Power Stunts work within the thematic space of an existing Power Set only. A Fire Control hero
+can attempt to create a controlled fire vortex as a Power Stunt. They cannot attempt to generate
+electricity — that is not within Fire Control's thematic space.
+● If a Power Stunt fires successfully and the hero wants that capability permanently, they purchase
+it with a Power Pick during advancement.
+Common Power Stunt applications include: extending a power's normal use in an unusual direction,
+producing a one-time variant effect, solving an environmental problem through creative power use,
+creating a rescue opportunity through unconventional application, combining two owned Power Sets in a
+dramatic moment, or reducing collateral damage through unusual power expression.
+Power Stunt: Emulation
+Emulation is a specific subset of the Power Stunt rules — its most demanding expression, not a separate
+system. Emulation allows a hero to reach beyond what they have purchased and produce the full effect of
+a specific unpurchased Branch Power within an owned Power Set. Where a standard Power Stunt
+produces an improvised reduced-scale effect, Emulation forces the hero's powers to do something their
+body is not yet built for — at full effect, at full cost.
+Emulation is not improvisation. It is not a shortcut. It exists for the moment when the situation demands
+something the hero cannot yet do and the player is willing to pay the real price.
+Stat Value
+Edge Cost 2 Edge
+Action Cost Full Turn (Action + Bonus Action)
+---
+PAGE 164
+Reading Power Set Entries
+Each Power Set entry in Chapter 11 follows a consistent format. Every entry opens with a description of
+what the Power Set represents in superhero fiction and what kinds of heroes use it. The following
+sections appear in every entry:
+● Suggested Attributes. Which Attributes most commonly govern this Power Set and what each
+choice represents. Some Power Sets have a fixed Governing Ability. Most offer two or three
+options.
+● Associated Conditions. The conditions this Power Set most commonly inflicts, exploits, or
+resists — indicating its tactical role in combat.
+● Default Damage Track. For Power Sets with a repeated attack pattern, the baseline formula for
+unarmed strikes or attacks from this Power Set.
+● Core Track. The four Core Track steps in order, each a passive benefit defining scale and
+unlocking higher-Tier power access.
+● Combat Powers. All At-Will, Encounter, Daily, and Reaction powers that affect combat.
+● Set-Specific Utility Powers. All noncombat, movement, sensory, survival, and support powers
+tied to this Power Set.
+● Enhancements. Common Enhancements appropriate to this Power Set with their specific
+effects.
+● Limitations. Common Limitations players often pair with this Power Set and what each restricts.
+A Note on Scale
+---
+PAGE 165
+11
+Chapter Eleven · Power Sets
+Power Sets
+Every Power Set entry covers: Governing Ability, Core Track, Combat Powers, Utility Powers,
+Enhancements, and Limitations.
+The Power Sets
+● Animal Powers
+● Armor Systems
+● Cold Control
+● Cosmic Power
+● Earth Control
+● Elasticity
+● Electricity Control
+● Energy Generation
+● Gadgetry
+● Illusion
+● Fire Control
+● Flight
+● Light Control
+● Machine Interface
+---
+PAGE 166
+This chapter presents all thirty Power Sets available in HEROIC 5e. Each entry follows the standard
+format established in Chapter 10: Governing Ability, Associated Conditions, Default Damage Track, Core
+Track, Combat Powers, Set-Specific Utility Powers, Enhancements, and Limitations. Read Chapter 10's
+framework section before using these entries — it explains the language, the Power Pick economy, and
+what every mechanical term means.
+How to Read a Power Entry
+Each power entry shows: Name · Tier and Type (e.g. Tier 1 At-Will) · Action Cost. Prerequisite is shown
+in italics. Range, attack, effects, and condition durations follow. The default condition duration is until the
+end of the attacker's next Turn unless stated otherwise.
+Power type is colour-coded: At-Will · Encounter · Daily · Utility · Reaction · Sustained
+Power Set Index
+Animal PowersSTR / DEX / CON
+Armor SystemsINT / STR
+Cold ControlCON / WIS / INT
+Cosmic PowerCHA / WIS
+ElasticityCON (fixed)
+Electricity ControlCON / INT / CHA
+Energy GenerationSTR / INT / WIS / CHA
+GadgetryINT (fixed)
+IllusionWIS / CHA
+---
+PAGE 195
+● Living Conductor: Use Lightning Ride without touching the electrical system directly — transmit
+through air across up to Close range (25 ft) to the nearest conductive surface.
+Limitations
+● Grounded: Insulating materials, rubber, specific force fields, or deliberate electrical shielding can
+block your powers. A prepared opponent with insulating gear reduces Power Effect Value by 3
+and has Advantage on saves against your electrical effects. +1 Power Pick.
+● Obvious Manifestation: Powers crackle visibly. Static electricity follows you; hair stands on end
+when you concentrate. Stealth while using Electricity Control is impossible. +1 Power Pick.
+● Voltage Dependency: Powers require a minimum charge state. Without electrical access during
+Downtime, the next session begins with Power Effect Value −2 and attacks deal 1 fewer Power
+Die. +1 Power Pick.
+Energy Generation
+Power Set
+Energy Generation
+Governing AbilityChoose STR , INT , WIS , or CHA at character creation
+Energy TypeChoose one at character creation: fire, cold, lightning, radiant, sonic, force, necrotic, or
+GM-approved type
+Associated ConditionsBlinded (bright energy types), Dazed, Prone (force), Burning (fire-type)
+Tactical RoleMost versatile offensive Power Set; reliable at-range output; team's offensive core
+Energy Generation is the Power Set of pure projected force. Not a specific element in the environment but
+---
+PAGE 256
+● Gear Incompatibility: Equipment does not change size with you unless specifically designed to
+do so. Powers derived from gear-based Power Sets are unavailable while outside base size
+unless the gear is built to scale. +1 Power Pick.
+Sorcery
+Power Set
+Sorcery
+Governing AbilityChoose WIS or CHA at character creation
+Associated ConditionsDazed, Restrained (mystical binding), Banished, Shaken (eldritch pressure)
+Default DamagePower Dice × Core Track level + Governing Ability modifier
+Tactical RoleMost versatile Power Set in the game; breadth over depth; Counterspell, Ritual Magic, and
+Dispel Magic extend reach beyond any specialised set
+Sorcery is the Power Set of magic: the deliberate manipulation of mystical forces, dimensional energies,
+ancient traditions, and the fundamental laws governing supernatural reality. Sorcerers trade depth for
+breadth — no other Power Set can simultaneously attack, defend, open dimensional portals, create
+barriers, counter another practitioner's magic, and reshape the conditions of an encounter as completely
+as a sorcerer can.
+WIS — disciplined scholar and practitioner; earns power through mastery of ancient knowledge and
+patient attunement. CHA — natural sorcerer; magic flows from force of personality, mystical bloodline, or
+a cosmic gift that requires will rather than study.
+Core Track
+---
+PAGE 278
+Super Speed is the Power Set of blistering velocity and superhuman reaction time. A speedster does not
+simply cross the battlefield faster than anyone else — they cross it multiple times in the space of a single
+heartbeat, create afterimages, vibrate through solid matter, and experience combat as a series of
+moments they have already processed before anyone else has finished reacting to the first one. Super
+Speed heroes are defined by their relationship to time as much as to space.
+Core Track
+Super Speed 1
+Tier 1 Passive
+Gain 1 Speed Action per Turn in addition to normal Action, Bonus Action, and Reactions. Base movement
+speed +15 ft. Advantage on Initiative rolls. Tier 1 access.
+Super Speed 2
+Tier 2 Passive
+Gain 2 Speed Actions per Turn. Base movement speed +30 ft (replaces Tier 1 bonus). Can run across
+liquids and up vertical surfaces as part of any movement using a Speed Action. Tier 2 access.
+Super Speed 3
+Tier 3 Passive
+Gain 3 Speed Actions per Turn. Base movement speed +60 ft (replaces Tier 2 bonus). Can move through
+solid barriers up to 5 ft thick by vibrating molecules — if you end movement inside solid matter, expelled
+to nearest open space and take 2 Power Dice force damage. Tier 3 access.
+Super Speed 4
+---
+PAGE 309
+Over one scene of sustained effort, suppress a major weather event: reduce a hurricane to tropical storm
+intensity, stop a tornado, clear a blizzard from a populated area, or prevent flooding by redirecting rainfall.
+Does not eliminate the weather system, only reduces it to a manageable level within range. The power
+that makes a weather controller an essential disaster response resource.
+Enhancements
+● Chain Lightning: When Lightning Strike achieves a Strong Success, the lightning arcs to a
+second target within Close range (25 ft) of the original for 1 Power Die lightning damage with no
+additional attack roll required.
+● Persistent Storm Surge: Storm Surge's effects persist until the start of your Turn after next
+rather than your next Turn — two full rounds of battlefield effect.
+● Tailwind: You and allies of your choice within Short range (25–50 ft) gain +10 ft of movement
+speed as you generate favorable winds around them. Passive benefit active whenever you are
+conscious and not Stunned or Incapacitated.
+● Eye of Calm: Designate a Close range (25-ft radius) area around yourself as the eye of your
+storm. Within this area your allies are unaffected by weather effects you generate — no
+Disadvantage from wind, no difficult terrain from ice, no obscurement from fog. Enemies entering
+the eye are immediately subjected to full weather effects when they cross the boundary.
+Limitations
+● Emotional Weather: Powers respond to your emotional state in ways you cannot always control.
+When Frightened or Shaken, GM may introduce uncontrolled weather effects in your vicinity —
+---
+PAGE 310
+● Thematic Unity: All powers should feel like expressions of one central idea.
+● Governing Ability: Every Power Set must have one primary governing Ability Score (STR, DEX,
+CON, FIG, INT, WIS, CHA, or PER). This determines the set’s Effect Value.
+● Power Die: Always use the campaign’s Power Die (d8 Street Level, d10 Mid-Level, d12 World
+Class).
+● Balance Target: New sets should feel roughly comparable in strength and versatility to published
+sets such as Gravity Control, Energy Generation, or Super Strength.
+● Playability: Powers must be fast and intuitive to resolve at the table.
+Step-by-Step Creation Process
+1. Define the Core Concept Write a single clear sentence that captures the essence of the
+Power Set.
+2. Choose the Governing Ability Select the Ability Score that best represents the set’s primary
+expression.
+3. Build the Core Track (usually 3–4 purchases) These represent increasing mastery and unlock
+better powers.
+4. Design At-Will Powers (2–4 options) Reliable abilities you can use every round.
+5. Design Encounter Powers (2–4 options) Stronger, limited-use abilities with significant impact.
+6. Design Daily / Apex Powers (1–2 options) Game-changing, high-cost abilities.
+7. Design Utility Powers (2–4 options) Non-combat, exploration, or situational tools.
+8. Create Enhancements (4–6 pairs) Improvements that can be added to existing powers (2
+---
+PAGE 312
+Utility Powers
+● Matter Conversion: You can safely absorb and dissipate non-harmful matter (walls, debris, etc.)
+over 1 minute, clearing paths or creating simple tools.
+● Power Leech: After 1 minute of physical contact with a willing or helpless target, absorb one of
+their temporary conditions or ongoing effects (GM discretion).
+● Adaptive Resilience: During a Breather, change which damage types you can absorb.
+Enhancements (2 for 1 Power Pick)
+● Rapid Conversion: When you use Absorb & Redirect, you may do so without spending your
+Reaction again this turn.
+● Sustained Charge: Stored energy lasts until the end of the encounter.
+● Feedback Loop: When you gain temporary HP from absorption, one ally within Close range
+gains half that amount.
+● Kinetic Rebound: When you absorb a melee attack, the attacker takes damage equal to your
+CON modifier.
+● Energy Battery: You may store up to 3 absorbed hits.
+● Metabolic Absorption: You can absorb and convert certain toxins, poisons, or diseases into
+healing.
+Limitations (+1 Power Pick each)
+● Overload Risk: The GM may call for a Burnout Check when you store large amounts of energy.
+● Selective Only: You can only absorb two damage types at a time.
+---
+PAGE 313
+12
+Chapter Twelve · General Utility Powers
+General Utility Powers
+Standalone powers for customizing your hero beyond your primary Power Sets. Minor superhuman
+capabilities, biological traits, sensory enhancements, and niche abilities — each costing 1 Power Pick.
+General Utility Powers are standalone powers that let you customize your hero beyond your primary
+Power Sets. They represent minor superhuman capabilities, biological traits, sensory enhancements, and
+niche abilities that fit a hero's concept without requiring full Power Set investment. Each General Utility
+Power costs 1 Power Pick and is available according to your Campaign Rank and Tier limits.
+How General Utilities Interact with Power Sets
+General Utility Powers do not replace Power Sets. If a dedicated Power Set already covers a capability as
+a Core Track benefit, taking the General Utility version provides a lighter expression of that capability —
+not an equivalent one. Where a General Utility overlaps with a Power Set, the entry notes it explicitly.
+A hero who takes a General Utility version of an ability and later invests in the corresponding Power Set
+should use the Power Set's superior version. The General Utility does not provide additional benefit on
+top of the Power Set.
+The passive HP recovery stacking rule from Playing the Game applies throughout: passive per-Turn HP
+recovery from multiple sources uses the highest value only and does not stack.
+Quick Reference
+Power Tier Summary
+---
+PAGE 322
+This does not add damage dice — the damage comes from the attack itself. The venom only delivers the
+condition.
+Tier 3 General Utilities Available at World Class Campaign Rank only 1 Power Pick each
+Astral Projection
+Once per day as an Action, project your consciousness out of your body. Your projected form may travel
+up to Medium range (50–120 ft) from your body. Your body remains Unconscious and is vulnerable while
+you are projected. Your projected form can observe, speak, and use non-physical powers but cannot
+interact with physical objects or make physical attacks.
+The projection lasts for up to one scene or until you choose to return. If your body is killed while you are
+projected, you return to your body immediately and must make a save.
+A lighter version of the capability. The Sorcery Power Set's Astral Projection covers greater range and
+more detailed rules for extended astral travel.
+Power Mimicry
+Once per encounter as an Action, copy one Tier 1 Power you have directly observed being used within
+Close range (25 ft) during this encounter. You may use the copied power once before the end of the
+scene using your own Governing Ability and Prowess. You cannot copy Core Track steps, Apex powers,
+powers above Tier 1, or powers from Power Sets that require biological or technological components you
+do not possess.
+The copied power uses your Power Effect Value and attack bonus.
+Power Mimicry Upgrade
+---
+PAGE 323
+Chapter 12 — General Utility Powers
+36 powers across 3 tiers
+→ Chapter 15: Combat
+319
+---
+PAGE 327
+Improvised Weapons
+Anything that is not a weapon but used as one — a fire extinguisher, a chair, a section of pipe, a car door.
+Improvised weapons deal 1 Power Die of damage and have no special properties unless the fiction
+supports one. The Improvised Fighter Talent significantly improves this option.
+Armor and Protection
+Most heroes do not wear traditional armor. Their protection comes from Powers, Class features, and
+Active Defense rolls. For heroes who do wear armor, it provides a flat bonus to one specific Active
+Defense roll result rather than replacing the Active Defense system.
+How Armor Works
+Armor applies after the Active Defense roll is made. If a hero rolls their Parry/Block defense and their
+armor provides a +2 bonus, that bonus is added to their rolled total before comparing to the attacker's roll.
+Light Armor
+Reinforced clothing, tactical vests, thin ballistic weave.
+Bonus: +2 to Parry/Block or Dodge (choose when acquired)
+Does not restrict movement or impose penalties. Concealable under loose clothing with a successful
+Stealth check.
+Heavy Armor
+Full tactical gear, ballistic plate carriers, medieval-style armor, dense environmental suits.
+Bonus: +4 to Parry/Block or Dodge (choose when acquired)
+Imposes Disadvantage on Acrobatics and Stealth checks. Not Concealable.
+---
+PAGE 331
+The chase ends when the pursuer achieves Close range and can make a direct intervention, when the
+quarry reaches their escape point, when a vehicle is disabled, or when the fiction makes continuing the
+chase impossible.
+Invention and Crafting
+Some heroes do not just use gear. They build it. HEROIC 5e uses two modes of invention: Downtime
+Invention for planned creation with proper resources and time, and Kitbashing for improvised field
+assembly when there is no time and no guarantee of safety.
+Both modes use the Technology Skill and the standard difficulty scale. Both use Degrees of Success to
+determine the quality of the result. Neither produces permanent Power Set effects without the appropriate
+Power Set and Origin to support it.
+Who Can Invent
+● Any hero with Technology trained can attempt Downtime Invention.
+● Kitbashing requires Technology trained and is significantly harder without a relevant Specialty
+such as Electronics, Power Armor, or Security Systems.
+● A hero's Origin and Power Sets determine what they can build. A Super-Science hero can invent
+devices that replicate effects from their existing Power Sets up to their current Tier. A Gearbound
+hero can upgrade and modify their existing gear. A hero without a relevant Origin or Power Set
+can build mundane technological devices but cannot build devices that replicate Power effects.
+Downtime Invention
+During Downtime, a hero with Technology trained may attempt to build a device. The process has four
+---
+PAGE 334
+surveillance effect from her existing Power Set at her current Tier. Materials are available through her
+Patron Merit.
+She rolls Technology with Expertise: 1d20 + INT +4 + double Prowess (+6) = 1d20 + 10. She rolls 14.
+Total: 24. The DC was 15 for a straightforward At-Will device. Strong Success by a margin of 9.
+The drone works as intended with Prowess uses, and Ghostwork chooses the additional benefit: the
+drone is small enough to be Concealable in a coat pocket.
+Example — Kitbashing
+Crashpoint (Guardian, Technology untrained) is trapped in a power substation with a villain controlling
+the electrical systems. She cannot build anything sophisticated — the GM rules Kitbashing is not
+available to her here, as she lacks Technology training entirely.
+Later, Ghostwork arrives. She assesses the materials (moderate quality), the complexity (simple: she
+wants to short-circuit the villain's control interface, an At-Will equivalent effect), and the time pressure
+(high: the villain is active). The GM sets DC 20.
+Ghostwork rolls Technology with Expertise: 1d20 + 10. She rolls 11. Total: 21. Normal Success. The
+improvised short-circuit works once. The villain's control interface goes dark for one round. The heroes
+use the opening.
+Gear and Origins
+Different Origins interact with gear in different ways.
+Gearbound
+A Gearbound hero derives their primary powers from equipment. Their gear is their Power Set. The Gear
+---
+PAGE 347
+Bonus Actions
+You only have a Bonus Action when a rule, Power, Talent, or Class feature gives you something to do
+with it. You cannot spend a Bonus Action on nothing.
+Reactions
+A Reaction is a response to a specific trigger. You normally have 1 Reaction per round. A Reaction resets
+at the start of your Turn. A Reaction interrupts the triggering event unless the specific rule says otherwise.
+Secondary Attacks
+Unless a rule explicitly states otherwise, all secondary attacks and granted actions are made at
+Disadvantage. This includes bonus attacks, Reaction attacks, granted attacks, follow-up attacks, chain
+attacks, assist attacks, and extra attacks created by Team Combos.
+The Ready Action
+When you take the Ready action, choose an action and describe a trigger in one sentence. The trigger
+must be a specific observable event, such as "when an enemy moves within Close range of me" or "when
+an ally is hit by an attack." Broad triggers like "when anything happens" are not valid.
+When the trigger occurs before the start of your next Turn, you may fire your readied action as a
+Reaction. If the trigger does not occur, the readied action is lost. A readied Encounter Power expends the
+resource whether or not the trigger fires. Daily Powers cannot be readied. At-Will Powers may be readied
+freely.
+Speed Actions
+Speed Actions are a specialized action type granted exclusively by the Super Speed Power Set, in
+---
+PAGE 356
+Edge Use Cost Effect
+ft + 5 ft per Prowess), or Shake
+It Off (end Shaken immediately).
+Dramatic Rebound 1 Edge At the start of your Turn, end
+one of the following conditions:
+Shaken, Slowed, Frightened, or
+Dazed.
+Resist Defeat 1 Edge When you would be reduced to
+0 HP, drop to 1 HP instead.
+Once per encounter.
+Power Stunt 1 Edge Attempt an improvised use of
+one of your Power Sets. The
+GM assigns the action type, roll,
+effect, and any risk.
+Add Power 1 Edge After hitting with a Power or
+successfully using a Power that
+rolls damage, healing,
+protection, or movement, add 1
+Power Die to the result.
+Reduce Collateral Damage 1 Edge When your action would cause
+---
+PAGE 365
+Levels 4–6 +3
+Levels 7–9 +4
+Level 10 +5
+The Advancement Table
+Level What You Gain
+1 Origin, Class Features, Starting Powers, Starting
+Skills, Starting Merits and Flaws, Edge
+2 Power Pick (Expansion), Skill Pick or Specialty
+3 Talent, ASI Pick, Power Pick (Refinement)
+4 Power Pick (Expansion)
+5 Major Class Feature, Skill Pick or Specialty,
+Power Pick (Refinement) · Tier 2 unlocks for
+Street Level; Tier 3 unlocks for Mid-Level
+6 Power Pick (Expansion), ASI Pick
+7 Major Class Feature, Power Pick (Refinement)
+8 Power Pick (Expansion), Skill Pick or Specialty
+9 Talent, ASI Pick, Power Pick (Refinement)
+10 Class Capstone, Power Pick (Expansion)
+Expansion picks (even levels): may be spent
+freely on any valid Power Pick purchase.
+---
+PAGE 367
+Campaign Rank Tier Access Unlocked Starting Level
+Power Die size remains tied to
+Campaign Rank regardless of
+which Tier is accessed. A Street
+Level hero who accesses Tier 2
+powers at Level 5 still uses d8
+Power Dice.
+Respec
+At Levels 3, 6, and 9, a hero may choose to Respec — an optional decision made at the same time as the
+level-up. The player announces their intention, establishes the story justification, and presents their rebuilt
+sheet at the start of the following session.
+What a Respec Can Change
+Origin, Class, and Ability Scores do not change through a Respec. These are identity. Everything
+else is eligible:
+● Powers — any Power Pick purchases, including Core Track steps, Branch Powers, Utility
+Powers, and Enhancements. Power Sets themselves may be dropped or added within Campaign
+Rank limits.
+● Limitations — may be added, removed, or swapped, subject to Campaign Rank caps.
+● Skills and Specialties — any Skill training or Specialties gained at character creation or through
+advancement picks.
+---
+PAGE 372
+Actions in Combat
+On your Turn you may take one Action, one Bonus Action, move, and use your free object interaction, in
+any order.
+Action Effect
+Attack Make one attack against a target using a weapon
+or basic Power expression. Roll attack, defender
+rolls Active Defense, compare results.
+Use a Power Activate a Power from one of your Power Sets.
+The Power entry specifies its action cost, range,
+roll, and effect.
+Dash Move an additional Zone this Turn (2 Zones total).
+Disengage Move without triggering Opportunity Attacks for
+the rest of this Turn.
+Dodge Until start of your next Turn, attacks against you
+have Disadvantage if you can see the attacker,
+and you gain Advantage on DEX saves.
+Help First use: your ally's next Skill check before start
+of your next Turn gains Advantage. Second use:
+set up a Team Combo — you describe how you
+are creating an opening, but no benefit applies
+---
+PAGE 386
+Size Token Footprint Melee Reach Notes
+Titanic Special — GM Long range (120–300 +6 to all Active Defense
+determines ft) rolls; +5 Size Bonus
+Dice; scene-scale
+combat rules may apply
+Size Bonus Dice are
+flat d8 regardless of
+Campaign Rank — they
+represent physical
+scale, not heroic power
+level. The Size Control
+Power Set entry in
+Chapter 11 contains the
+full progression and
+mechanics for heroes
+who change size.
+Grid and VTT Combat
+The Zone system is the recommended default. This section is for groups using physical battle maps,
+miniatures, or virtual tabletops who want tactical precision. All rules in this chapter apply exactly as written
+— this section provides grid-specific additions and conversions only.
+---
+PAGE 393
+Every compelling villain has a line they will not cross, and that line reveals character. The line creates the
+moment when the heroes can predict the villain's behavior and use it against them.
+4. What is their relationship to the heroes?
+Do they know them? Respect them? Feel contempt? Want something from them specifically? A villain
+who has no opinion about the heroes has not noticed the most interesting thing in their world.
+5. What happens when they lose?
+Not defeat in the final sense — setback. When the heroes disrupt a plan, how does the villain respond?
+Do they adapt? Escalate? Retreat and regroup? This question is your session-to-session campaign
+engine.
+Using the Full Build
+Once you have answered those questions, build the villain as a full character using the same rules
+players use. Choose an Origin that fits their background. Choose a Class that reflects how they act under
+pressure: a villain who controls through information and manipulation is a Mastermind. One who
+overwhelms through sheer force is a Bruiser. One who makes everyone around them feel something is a
+Beacon. Choose Power Sets based on their concept, not based on what would be mechanically
+challenging to fight.
+Apply Boss Rules from Chapter 15: Resolve (once per encounter, ignore a condition) and Condition Cap
+(maximum two simultaneous conditions). Give them a Flaw — not a mechanical limitation from the Power
+Sets chapter, but a Merits and Flaws chapter Flaw that creates story. The heroes who discover and
+exploit that Flaw have earned their victory.
+---
+PAGE 408
+Minions do not have Power Tiers in the traditional sense — their danger comes from numbers and
+positioning, not raw mechanical power. However, the GM should assign Attack Values and damage
+expressions appropriate to the campaign's scale. Thugs in a Street Level campaign hit differently than
+Thugs in a World Class campaign. A one-line note on the encounter prep sheet is enough: "Syndicate
+Thugs: Attack Value 12, 1d6+1 [4] bludgeoning."
+Named NPCs
+Named NPCs are specific individuals with identities, histories, and roles in the story that extend beyond a
+single encounter. They have full stat blocks, defined Power Sets, and Merits and Flaws that make them
+feel like people rather than obstacles. They have HP. They can return. They carry Flaws the heroes can
+discover and exploit.
+Named NPCs can be any Power Tier. A Low Power Named NPC might be a recurring street-level contact
+who occasionally needs rescuing — or who occasionally pulls the heroes out of trouble. A Cosmic Power
+Named NPC is a campaign-defining figure whose presence reshapes the story.
+Boss
+Any Named NPC can be designated as the Boss of a specific encounter. This is a per-encounter
+designation, not a permanent trait. The same villain is a Boss in the climactic confrontation at the end of
+Act Two and a standard Named NPC in the brief appearance where they escape mid-session.
+Designating a Boss adds two mechanical layers on top of their normal statistics:
+Resolve — Once per encounter, when a Boss would be affected by a condition or fail a save, they may
+ignore that condition or save failure entirely. Resolve does not prevent damage. Resolve cannot be used
+---
+PAGE 411
+● Attack Value is the NPC's static attack number. When this NPC attacks a hero, the hero rolls
+their Active Defense and must beat the NPC's Attack Value. Formula: 10 + primary combat
+modifier + Prowess equivalent.
+● Damage is listed as dice + modifier with the median value in brackets. A GM who wants speed
+uses the median. A GM who wants drama rolls the dice.
+● HP reflects the NPC's total hit points at their Campaign Rank.
+● Prowess for these is based not on level, but on Campaign Rank: +2 at Street Level, +3 at
+Mid-Level, +4 at World Class.
+● Power Sets list the NPC's superhuman capabilities. Key powers are listed under each Power
+Set. GMs do not need to track every power an NPC possesses, only the ones likely to come up in
+play.
+● Skills note training. A trained Skill adds Prowess to relevant checks and the NPC gains
+Advantage where noted.
+● Merits and Flaws are listed where they directly affect how the NPC functions at the table. A GM
+running a Crimelord with a Loved One Flaw has a built-in dramatic lever. Use it.
+● Notes tell you how to run this NPC: their tactical priorities, their behavior when losing, their
+personality, and what makes them feel like a person rather than a stat block.
+Adjusting Archetypes
+Every archetype entry is a starting point. Change the name. Change the Side. Swap Fire Control for Cold
+Control and the Elemental Master becomes a different villain with the same mechanical skeleton.
+---
+PAGE 412
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 14 (+2) 10 (+0) 10 (+0) 14 (+2) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 18 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 13, Dodge 15, Willpower 13, Social 14 | Attack Value: 14
+Power Sets: Energy Generation 1 (DEX governs, radiant or force)
+- Energy Bolt (At-Will): Attack +4 vs Dodge, 1d8+2 [6] damage, Short range
+- Energy Shield (Encounter Reaction): Reduce incoming damage by 1d8+2 [6]
+Skills: Acrobatics (trained), Notice (trained) Talents: Alert Merits: None | Flaws: Enemy (Rating 2),
+Obligation (Rating 2)
+Notes: Mobile and dangerous at range. Will prioritize maintaining distance. Breaks to cover when
+threatened at Close range.
+Medium Power Blaster
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 16 (+3) 12 (+1) 12 (+1) 14 (+2) 14 (+2) 14 (+2) 14 (+2)
+Power Tier: Medium Power | HP: 44 | Speed: 35 ft | Tier Bonus: +3
+Active Defense: Parry/Block 16, Dodge 18, Willpower 17, Social 17 | Attack Value: 16
+Power Sets: Energy Generation 2 (DEX governs)
+---
+PAGE 413
+High Power Blaster
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 20 14 14 18 16 18 18
+STR DEX CON FIG INT WIS CHA PER
++1 +5 +2 +2 +4 +3 +4 +4
+Power Tier: High Power | HP: 78 | Speed: 40 ft | Tier Bonus: +4
+Active Defense: Parry/Block 20, Dodge 23, Willpower 21, Social 22 | Attack Value: 19
+Power Sets: Energy Generation 3 (DEX governs), Super Senses 2 (Combat Sense)
+- Energy Bolt (At-Will): Attack +9 vs Dodge, 3d12+5 [24] damage, Short range
+- Energy Burst (Encounter): Attack +9 vs Dodge area, 3d12+5 [24] damage, Short area
+- Nova Flare (Daily): Attack +9, 6d12 [39] maximum damage, Medium area
+- Energy Shield (Encounter Reaction): Reduce incoming damage by 3d12+5 [24]
+- Energy Flight: Flying speed Short per Turn
+- Combat Sense: Cannot be surprised. Add PER to first Active Defense roll per encounter.
+Skills: Acrobatics (trained, Advantage), Athletics (trained), Notice (trained, Advantage), Influence
+(trained) Talents: Alert, Natural Born Leader, Marksman Merits: Fame (Rating 1) | Flaws: Relationship
+(Rating 2), Secret (Rating 2), Obligation (Rating 1)
+Notes: A force of nature at range. Uses Combat Sense to never be caught off guard. Will sacrifice tactical
+---
+PAGE 414
+Power Tier: Low Power | HP: 24 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 14, Dodge 13, Willpower 13, Social 12 | Attack Value: 14
+Power Sets: Super Durability 1 (CON governs), Regeneration 1
+- Flat damage reduction equal to Tier Bonus (2) against all damage
+- Temporary HP equal to CON (+3) at start of each encounter
+- Passive healing: Tier Bonus (2) HP at start of each Turn
+Skills: Athletics (trained) Talents: Durable (Advantage on CON saves against physical effects) Merits:
+None | Flaws: Debt (Rating 2), Loved One (Rating 1)
+Notes: Straightforward. Gets in close, hits hard, absorbs punishment. Not subtle. Not fast. Very difficult to
+drop at Low Power.
+Medium Power Brick
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+18 (+4) 12 (+1) 20 (+5) 14 (+2) 12 (+1) 12 (+1) 14 (+2) 12 (+1)
+Power Tier: Medium Power | HP: 60 | Speed: 30 ft | Tier Bonus: +3
+Active Defense: Parry/Block 16, Dodge 15, Willpower 15, Social 16 | Attack Value: 17
+Power Sets: Super Durability 2 (CON governs), Super Strength 2 (STR governs), Regeneration 2
+- Flat damage reduction Tier Bonus + CON (8) against all damage
+- Resistance: Fire and Heat
+---
+PAGE 415
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+24 (+7) 12 (+1) 22 (+6) 18 (+4) 14 (+2) 16 (+3) 14 (+2) 14 (+2)
+Power Tier: High Power | HP: 102 | Speed: 30 ft | Tier Bonus: +4
+Active Defense: Parry/Block 20, Dodge 17, Willpower 19, Social 18 | Attack Value: 21
+Power Sets: Super Durability 3 (CON governs), Super Strength 3 (STR governs), Regeneration 3
+- Flat damage reduction Tier Bonus + CON (10) against all damage
+- Resistance: Fire, Cold, Lightning, Radiant, Poison
+- Passive healing: 1d12+CON [12] HP per Turn
+- Life Support: Immune to environmental hazards, does not need to breathe
+- Devastating Force (Daily): 7d12 [45] maximum damage, Short area shockwave
+- Mighty Blow (At-Will): Attack +11 vs Parry/Block, 3d12+7 [26] bludgeoning
+- Once per day: Reduction to 0 HP triggers drop to 1 HP instead
+Skills: Athletics (trained, Advantage), Acrobatics (trained), Vehicles (trained) Talents: Power Striker,
+Alert, Never Surrender (Resolve applies twice per encounter) Merits: Reputation (Rating 2) | Flaws:
+Relationship (Rating 2)
+Notes: One of the most durable beings at High Power. The healing rate alone makes sustained combat
+exceptionally difficult. Must be overwhelmed fast or not at all.
+Elemental Master
+Controls a specific element or energy type. Ranges from minor environmental manipulation at Low Power
+---
+PAGE 416
+- Elemental Resistance: Immune to own element
+- Energy Flight (Utility): Flying speed Close per Turn
+Skills: Notice (trained), Acrobatics (trained) Talents: Alert Merits: None | Flaws: Relationship (Rating 2),
+Action-Oriented (compelled to engage, Rating 1)
+Notes: Just discovering the scope of their power. Enthusiastic. Sometimes reckless. Will attempt creative
+applications of their element that may or may not work.
+Medium Power Elemental Master
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 14 (+2) 16 (+3) 12 (+1) 14 (+2) 14 (+2) 16 (+3) 14 (+2)
+Power Tier: Medium Power | HP: 52 | Speed: 35 ft | Tier Bonus: +3
+Active Defense: Parry/Block 16, Dodge 17, Willpower 17, Social 18 | Attack Value: 15
+Power Sets: Choose one Energy or Elemental Power Set at Core Track 2 (INT or WIS governs)
+- At-Will elemental attack: Attack +6 vs Dodge, 2d10+3 [14] damage, Short range
+- Encounter area effect: Attack +6 vs Dodge, 3d10+3 [19] damage, Short area
+- Immunity to own element
+- Resistance to one additional related element
+- Energy Flight: Flying speed Short per Turn
+Skills: Notice (trained), Acrobatics (trained), Science (trained) Talents: Alert, Team Player, Innovative
+---
+PAGE 417
+Power Sets: Choose one Energy or Elemental Power Set at Core Track 3, partial Body Transformation
+- At-Will elemental attack: Attack +8 vs Dodge, 3d12+4 [23] damage, Short range
+- Encounter area effect: Attack +8 vs Dodge, 3d12+4 [23] damage, Medium area
+- Daily: 6d12 [39] maximum damage, Medium area, plus environmental effect
+- Immunity to own element; Resistance to related elements
+- Body Transformation: Resistance to physical damage while in elemental form
+- Energy Detection within Short range
+- Energy Flight: Flying speed Medium per Turn
+Skills: Notice (trained, Advantage), Acrobatics (trained), Athletics (trained), Science (trained) Talents:
+Alert, Innovative, Advantage on Active Defense while airborne Merits: None | Flaws: Susceptible to
+opposite element (Vulnerability, Rating 2)
+Notes: A genuine force of nature. Their elemental form makes them resistant to physical attacks. The
+Vulnerability to their opposite element is the classic counter.
+Gadgeteer
+Preparation, tools, and the right device for every situation. Intelligence-primary heroes who prove that
+genius is as valid a superpower as any mutation.
+Low Power Gadgeteer
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+---
+PAGE 418
+Medium Power Gadgeteer
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 14 (+2) 14 (+2) 12 (+1) 20 (+5) 12 (+1) 12 (+1) 14 (+2)
+Power Tier: Medium Power | HP: 48 | Speed: 30 ft | Tier Bonus: +3
+Active Defense: Parry/Block 16, Dodge 17, Willpower 16, Social 19 | Attack Value: 18
+Power Sets: Gadgetry 2 (INT governs), Armor Systems 1 (light)
+- Gadget Strike (At-Will): Attack +8 vs Dodge, 2d10+5 [16] damage, Short range
+- Restraint Device (Encounter): Restrained on failed STR Effect Value 18
+- Explosive Charge (Encounter): Attack +8, 3d10+5 [21] damage, Short area
+- Flashbang (Encounter): Blinded and Dazed on failed CON Effect Value 18
+- Drone Scout (Utility): Scout Short range area
+- Armor: +2 Active Defense, Resistance to one damage type
+- Grapnel Line (Utility)
+Skills: Technology (trained, Advantage), Acrobatics (trained), Notice (trained) Talents: Alert, Cash Flow,
+Innovative Merits: Cash Flow (Rating 2) | Flaws: Enemy (Rating 2), Attitude (Rating 1)
+Notes: Prepared for almost anything. Will have studied known opponents before deployment. Always has
+at least one device the heroes did not expect.
+High Power Gadgeteer
+---
+PAGE 419
+- Scene Solution (Utility): Auto-succeed one technical challenge per scene
+Skills: Technology (trained, Advantage), Acrobatics (trained), Notice (trained), Influence (trained),
+Science (trained) Talents: Alert, Natural Born Leader, Innovative, Pack Rat Merits: Cash Flow (Rating 3),
+Resources (Rating 3) | Flaws: Loved One (Rating 2), Rogues Gallery (Rating 2)
+Notes: The most prepared hero in any room. Has contingencies for contingencies. Their weakness is
+being caught without preparation time, which smart opponents will try to arrange.
+Mage
+Practitioners of the mystic arts. Ranges from dabbling students to supreme sorcerers.
+Low Power Mage
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 10 (+0) 10 (+0) 14 (+2) 14 (+2) 10 (+0) 10 (+0)
+Power Tier: Low Power | HP: 18 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 12, Dodge 13, Willpower 14, Social 14 | Attack Value: 14
+Power Sets: Sorcery 1 (WIS governs)
+- Eldritch Bolt (At-Will): Attack +4 vs Willpower, 1d8+2 [6] psychic, Short range
+- Mystic Binding (Encounter): Restrained on failed STR Effect Value 14
+- Mystic Senses (Utility): Detect magical effects Close range
+- Personal Force Field (Encounter Reaction): Reduce damage by 1d8+2 [6]
+---
+PAGE 420
+Power Tier: Medium Power | HP: 48 | Speed: 30 ft | Tier Bonus: +3
+Active Defense: Parry/Block 15, Dodge 17, Willpower 18, Social 17 | Attack Value: 16
+Power Sets: Sorcery 2 (WIS governs)
+- Eldritch Bolt (At-Will): Attack +6 vs Willpower, 2d10+3 [14] psychic, Short range
+- Mystic Binding (Encounter): Restrained on failed STR Effect Value 16
+- Counterspell (Encounter Reaction): Counter one power, roll +6 vs source DC
+- Dimensional Shunt (Encounter): Banished on failed WIS Effect Value 16
+- Astral Projection (Utility)
+- Portal Step (Utility): Teleport up to Medium range
+- Levitation: Flying speed Close per Turn
+Skills: Occult (trained, Advantage), Notice (trained), Insight (trained) Talents: Lucky, Alert, Iron-Willed
+Merits: None | Flaws: Enemy (Rating 3), Secret (Rating 2)
+Notes: Counterspell makes them dangerous to any powered opponent. Dimensional Shunt can remove a
+major threat from the immediate fight. Fragile if enemies close to melee range.
+High Power Mage
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 14 (+2) 16 (+3) 12 (+1) 22 (+6) 20 (+5) 16 (+3) 14 (+2)
+Power Tier: High Power | HP: 84 | Speed: 30 ft | Tier Bonus: +4
+---
+PAGE 421
+Notes: One of the most versatile High Power heroes. Ritual Magic means they can theoretically do
+anything given time. The Mystical Debt Flaw fires regularly as the GM introduces obligations from the
+forces they draw on.
+Martial Artist
+Unarmed combat mastery. May or may not have powers. Holds their own through technique, timing, and
+exploitation of openings.
+Low Power Martial Artist
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 12 (+1) 14 (+2) 10 (+0) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 20 | Speed: 35 ft | Tier Bonus: +2
+Active Defense: Parry/Block 15, Dodge 14, Willpower 13, Social 12 | Attack Value: 14
+Power Sets: Martial Mastery 1 (FIG governs)
+- Brutal Strike (At-Will): Attack +4 vs Parry/Block, 1d8+2 [6] bludgeoning/slashing
+- Control Hold (Encounter): Grappled on failed STR Effect Value 14
+- Combat Awareness (Utility): Cannot be surprised, Advantage on Initiative
+- Controlled Fall (Utility): Ignore first 30 feet of falling damage
+Skills: Acrobatics (trained, Advantage), Athletics (trained) Talents: Durable, Alert Merits: None | Flaws:
+Action Addict (compelled to engage, Rating 1), Naive (Rating 1)
+---
+PAGE 422
+Power Sets: Martial Mastery 2 (FIG governs)
+- Brutal Strike (At-Will): Attack +8 vs Parry/Block, 2d10+5 [16] damage
+- Disabling Strike (Encounter): Slowed and loses Bonus Action on failed CON Effect Value 18
+- Control Hold (Encounter): Grappled on failed STR Effect Value 18
+- Counter (Encounter Reaction): Strike at Advantage when attacked and missed
+- Kinetic Wall-Step (Utility)
+- Pressure Point Mastery (Utility)
+Skills: Acrobatics (trained, Advantage), Athletics (trained, Advantage) Talents: High Pain Threshold
+(Advantage on CON saves vs pain), Master of Combat Merits: None | Flaws: Enemy (Rating 3), Loved
+One (Rating 2), Code of Conduct (Rating 2)
+Notes: Extremely dangerous in melee. Counter Reaction means attacking them in melee is risky. The
+Code of Conduct Flaw means they will follow their personal ethics even at tactical cost.
+High Power Martial Artist
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+20 (+5) 20 (+5) 20 (+5) 24 (+7) 16 (+3) 22 (+6) 16 (+3) 18 (+4)
+Power Tier: High Power | HP: 96 | Speed: 45 ft | Tier Bonus: +4
+Active Defense: Parry/Block 25, Dodge 23, Willpower 24, Social 20 | Attack Value: 21
+Power Sets: Martial Mastery 4 Apex (FIG governs), Super Senses 2
+---
+PAGE 423
+Night Stalker
+Nocturnal, shadow-based, stealth and fear as primary tools. The hero who is the thing criminals are afraid
+of.
+Low Power Night Stalker
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 14 (+2) 12 (+1) 12 (+1) 14 (+2) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 20 | Speed: 35 ft | Tier Bonus: +2
+Active Defense: Parry/Block 14, Dodge 15, Willpower 13, Social 14 | Attack Value: 13
+Power Sets: Martial Mastery 1 (FIG governs), General Utilities (Low-Light Vision, Adhesive Grip)
+- Brutal Strike (At-Will): Attack +3 vs Parry/Block, 1d8+1 [5] damage
+- Stealth movement at full speed in darkness
+Skills: Acrobatics (trained), Stealth (trained, Advantage in darkness), Notice (trained) Talents:
+Double-Jointed (Advantage on escape checks), Alert Merits: None | Flaws: Obligation (Rating 2), Secret
+Identity (Rating 2)
+Notes: At their best when they control the environment. Will use darkness, high ground, and psychology
+before combat. Fear as a tool before a fist.
+Medium Power Night Stalker
+Ability Scores
+---
+PAGE 424
+- Dim Light Step (Utility): Teleport Close range between shadows as Bonus Action
+- Light armor: +1 Active Defense
+- Tracking: Advantage on checks to track by scent or visual evidence
+Skills: Acrobatics (trained, Advantage), Stealth (trained, Advantage), Notice (trained), Investigation
+(trained), Streetwise (trained) Talents: Alert, No Public Record, Wary Merits: Local Support (Rating 1 in
+home territory) | Flaws: Bad Reputation (Rating 3 with law enforcement), Loner (Rating 1)
+Notes: Genuinely dangerous and genuinely scary. Bad Reputation with law enforcement means they
+navigate a complicated relationship with official authority. Will not work well with heroes who rely on law
+enforcement cooperation.
+High Power Night Stalker
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+14 (+2) 20 (+5) 18 (+4) 18 (+4) 20 (+5) 18 (+4) 20 (+5) 18 (+4)
+Power Tier: High Power | HP: 90 | Speed: 45 ft | Tier Bonus: +4
+Active Defense: Parry/Block 22, Dodge 23, Willpower 22, Social 24 | Attack Value: 18
+Power Sets: Martial Mastery 3 (FIG governs), Shadow Control 2, Super Senses 2
+- Full combat suite with Counter, Disabling Strike, Finishing Technique
+- Shadow Control: Darkness Field, Shadow Bind, Fear Shape
+- Full sensory suite: Echolocation Short range, Thermal Vision, Tracking
+---
+PAGE 425
+Low Power Paragon
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+16 (+3) 12 (+1) 14 (+2) 10 (+0) 10 (+0) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 22 | Speed: 35 ft | Tier Bonus: +2
+Active Defense: Parry/Block 13, Dodge 14, Willpower 13, Social 12 | Attack Value: 15
+Power Sets: Super Strength 1, Energy Generation 1 (STR governs for melee, DEX for ranged), Flight
+Utility
+- Mighty Blow (At-Will): Attack +5 vs Parry/Block, 1d8+3 [7] bludgeoning
+- Energy Bolt (At-Will): Attack +3 vs Dodge, 1d8+1 [5] radiant, Short range
+- Energy Flight: Flying speed Close per Turn
+Skills: Athletics (trained), Acrobatics (trained) Talents: High Pain Threshold, Power Striker Merits: None
+| Flaws: Alien or unusual origin (Rating 1), Naive (Rating 1), Young (Rating 1)
+Notes: Still learning the scope of their abilities. Good at most things, exceptional at none yet. Has
+enormous potential.
+Medium Power Paragon
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+---
+PAGE 426
+Notes: A genuine all-rounder. Can fly, hit hard, take punishment, and project energy. Not the best at any
+one thing but effective at all of them.
+High Power Paragon
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+24 (+7) 20 (+5) 22 (+6) 18 (+4) 14 (+2) 16 (+3) 16 (+3) 16 (+3)
+Power Tier: High Power | HP: 102 | Speed: 50 ft | Tier Bonus: +4
+Active Defense: Parry/Block 21, Dodge 22, Willpower 20, Social 19 | Attack Value: 21
+Power Sets: Super Strength 4 Apex, Energy Generation 3, Regeneration 3, Flight 3
+- Apex Super Strength: 4d12+7 [33] natural weapons
+- Devastating Force (Daily): 7d12 [45] maximum damage
+- Energy Bolt (At-Will): 3d12+5 [24] radiant, Short range
+- Nova Flare (Daily): 6d12 [39] maximum damage, Medium area
+- Regeneration: 1d12+6 [12] HP per Turn
+- Flight: Long range per Turn in combat, continental out of combat
+- Resistance: Fire, Cold, Lightning, Radiant, Poison
+- Life Support: Does not need to breathe, immune to environmental extremes
+Skills: Athletics (trained, Advantage), Acrobatics (trained), Influence (trained), Notice (trained) Talents:
+Durable, Public Trust, Natural Born Leader, Power Striker Merits: Fame (Rating 3), Public Trust (Rating
+---
+PAGE 427
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10/14 10/14 10/12 10 (+0) 14 (+2) 10 (+0) 10 (+0) 10 (+0)
+(+0/+2) (+0/+2) (+0/+1)
+Unarmored/armored scores and modifiers shown where different.
+Power Tier: Low Power | HP: 18 (unarmored) / 20 (armored) | Speed: 30 ft / 35 ft armored | Tier Bonus:
++2
+Active Defense: Parry/Block 12/14 (armored), Dodge 12/14 (armored), Willpower 12, Social 14 | Attack
+Value: 14
+Power Sets: Armor Systems 1 (INT governs)
+- Blasters (At-Will): Attack +4 vs Dodge, 1d8+2 [6] energy, Short range
+- Missile Salvo (Encounter): Attack +4, 1d8+2 [6] damage, three targets
+- Armor: +2 Active Defense, Resistance to one damage type
+- Armor Flight: Flying speed Close per Turn
+Skills: Technology (trained, Advantage), Vehicles (trained) Talents: Gadgeteer, Cash Flow Merits: Cash
+Flow (Rating 1) | Flaws: Normal Human without suit (Rating 3), Relationship (Rating 1)
+Notes: The Normal Human Flaw is the defining vulnerability. Getting them out of the suit changes the
+entire tactical situation.
+Medium Power Powered Armor
+Ability Scores
+---
+PAGE 428
+- Sensor Suite: Echolocation and Thermal Vision Short range
+- Armor Flight: Flying speed Short per Turn, regional out of combat
+Skills: Technology (trained, Advantage), Vehicles (trained), Science (trained) Talents: Gadgeteer, Cash
+Flow, Innovative Merits: Cash Flow (Rating 2) | Flaws: Normal Human without suit (Rating 3), Enemy
+(Rating 2)
+Notes: Significantly more dangerous than Low Power. The Omnibeam punishes grouped opponents.
+System Disruption is devastating against technologically equipped enemies.
+High Power Powered Armor
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12/22 12/16 14/22 14 (+2) 20 (+5) 16 (+3) 16 (+3) 14 (+2)
+(+1/+6) (+1/+3) (+2/+6)
+Unarmored/armored scores and modifiers shown where different.
+Power Tier: High Power | HP: 78 (unarmored) / 102 (armored) | Speed: 35 ft / 50 ft armored | Tier
+Bonus: +4
+Active Defense: Parry/Block 18/22 (armored), Dodge 17/19 (armored), Willpower 19, Social 22 | Attack
+Value: 19
+Power Sets: Armor Systems 3, Machine Interface 2 (INT governs)
+- Full Armor Systems combat suite
+---
+PAGE 429
+Speedster
+Superhuman velocity and reflexes. Changes the shape of any engagement through speed.
+Low Power Speedster
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 12 (+1) 10 (+0) 10 (+0) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 20 | Speed: 45 ft | Tier Bonus: +2
+Active Defense: Parry/Block 13, Dodge 14, Willpower 13, Social 12 | Attack Value: 13
+Power Sets: Super Speed 1 (DEX governs)
+- 1 Speed Action per Turn
+- Speed Strike (Speed Action): Attack +3 vs Parry/Block at Disadvantage, 1d8+1 [5] damage
+- Afterimage (Encounter Bonus Action): First attack against you this round has Disadvantage
+Skills: Acrobatics (trained), Athletics (trained) Talents: Alert, Good Reflexes (Advantage on Initiative)
+Merits: None | Flaws: Action Addict (Rating 1), Loved One (Rating 1), Young (Rating 1)
+Notes: Fast Initiative means they almost always act first. Limited power at Low Power but the action
+economy advantage of Speed Actions is already meaningful.
+Medium Power Speedster
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+---
+PAGE 430
+Skills: Acrobatics (trained, Advantage), Athletics (trained), Notice (trained) Talents: Alert, Good Reflexes
+(Advantage on Initiative), Team Player Merits: None | Flaws: Enemy (Rating 2), Relationship (Rating 2)
+Notes: Two Speed Actions per Turn creates genuine action economy pressure. Rapid Interpose makes
+them an unexpected defensive hero. Will rarely stand still.
+High Power Speedster
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 20 (+5) 22 (+6) 14 (+2) 14 (+2) 16 (+3) 16 (+3) 14 (+2)
+Power Tier: High Power | HP: 102 | Speed: 90 ft | Tier Bonus: +4
+Active Defense: Parry/Block 18, Dodge 21, Willpower 19, Social 19 | Attack Value: 19
+Power Sets: Super Speed 4 Apex (DEX governs)
+- 4 Speed Actions per Turn
+- Blitz (Daily): Move Long range, every creature in path takes 3d12+5 [24] damage
+- Impossible Reaction (Encounter): Act before declared action resolves
+- Vibration Phase (Utility Tier 3): Pass through solid matter
+- Mass Evacuation (Daily Utility): Move many civilians to safety instantly
+- Once per encounter: Act first regardless of Initiative
+Skills: Acrobatics (trained, Advantage), Athletics (trained, Advantage), Medicine (trained), Notice
+(trained) Talents: Alert, Good Reflexes (Advantage on Initiative, +4 bonus), Power Striker Merits: Fame
+---
+PAGE 431
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 10 (+0) 10 (+0) 12 (+1) 14 (+2) 14 (+2) 12 (+1)
+Power Tier: Low Power | HP: 18 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 13, Dodge 14, Willpower 15, Social 15 | Attack Value: 14
+Power Sets: Telepathy 1 (WIS governs), Telekinesis 1
+- Mental Probe (At-Will): Attack +4 vs Willpower, 1d8+2 [6] psychic, Short range
+- Psychic Assault (Encounter): Dazed on failed WIS Effect Value 14
+- Surface Read (Utility): Read surface thoughts Close range
+- Telekinetic Shove (At-Will): Attack +4 vs Dodge, 1d8+2 [6] force, Short range
+Skills: Insight (trained, Advantage), Notice (trained) Talents: Iron-Willed (Advantage on WIS saves), Fast
+Learner Merits: None | Flaws: Secret (Rating 2), Attitude (Rating 1), Young (Rating 1)
+Notes: Effective at information gathering and light mental disruption. The combination of psychic attack
+and telekinetic shove gives them options at multiple Active Defense targets.
+Medium Power Telepath
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 14 (+2) 12 (+1) 12 (+1) 14 (+2) 16 (+3) 12 (+1) 14 (+2)
+Power Tier: Medium Power | HP: 44 | Speed: 30 ft | Tier Bonus: +3
+---
+PAGE 432
+Notes: Psychic Domination once per target per encounter prevents the exploit of continuous
+reapplication. Mind Shield makes them valuable as a team support hero.
+High Power Telepath
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 14 (+2) 14 (+2) 14 (+2) 18 (+4) 22 (+6) 22 (+6) 14 (+2)
+Power Tier: High Power | HP: 78 | Speed: 30 ft | Tier Bonus: +4
+Active Defense: Parry/Block 18, Dodge 18, Willpower 22, Social 24 | Attack Value: 20
+Power Sets: Telepathy 3 (WIS governs), Telekinesis 2
+- Mental Probe (At-Will): Attack +10 vs Willpower, 3d12+6 [25] psychic, Short range
+- Psychic Domination (Encounter): Full control on failed WIS Effect Value 20, once per target
+- Mindwipe (Daily): Stunned and Power Disrupted on failed WIS Effect Value 20
+- Mind Shield (Sustained): Advantage on psychic saves, can protect two targets simultaneously
+- Mass Suggestion (Utility): Influence all creatures Medium range once per scene
+- Telepathic Link (Utility): Silent communication with all allies
+- Telekinetic Maelstrom (Daily): 6d12 [39] maximum force damage, Medium area
+- Astral Detection: Perceive astral and psychic entities
+Skills: Insight (trained, Advantage), Medicine (trained), Influence (trained), Notice (trained) Talents:
+Iron-Willed, Innovative, Natural Born Leader Merits: Fame (Rating 1), Public Trust (Rating 1) | Flaws:
+---
+PAGE 433
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10/16 10/12 10/16 10/12 12 (+1) 10 (+0) 10 (+0) 14 (+2)
+(+0/+3) (+0/+1) (+0/+3) (+0/+1)
+Base/transformed scores and modifiers shown where different.
+Power Tier: Low Power | HP: 18 (base) / 24 (transformed) | Speed: 30 ft / 35 ft transformed | Tier
+Bonus: +2
+Active Defense: Parry/Block 14/15 (transformed), Dodge 14/15 (transformed), Willpower 14, Social 13 |
+Attack Value: 15
+Power Sets: Shapechanging 1 or Size Control 1 (CON governs)
+- Adaptive Strike (At-Will, in transformed form): Attack +4 vs Parry/Block, 1d8+1 [5] damage, type
+by form
+- Crushing Mass (Encounter): Knocked Prone on failed STR Effect Value 15
+- Perfect Disguise (Utility): Appear as any similar-size humanoid
+Skills: Acrobatics (trained), Stealth (trained, Advantage in appropriate form) Talents: Ambidextrous,
+Durable, Power Striker in primary form Merits: None | Flaws: Action Addict (Rating 1), Relationship
+(Rating 1)
+Notes: Limited at Low Power to one primary form or one size shift. Most useful for infiltration and access
+at this tier.
+Medium Power Transformation
+---
+PAGE 434
+- Biological Sampling (Utility): Better mimicry after contact
+Skills: Acrobatics (trained, Advantage), Athletics (trained), Influence (trained) Talents: Double-Jointed,
+Likeable Merits: None | Flaws: Secret Origin (Rating 2)
+Notes: Versatile mid-level hero. Regeneration combined with Shapechanging makes them hard to keep
+down. Biological Sampling means their mimicry improves rapidly during any extended encounter.
+High Power Transformation
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+16 (+3) 14 (+2) 18 (+4) 16 (+3) 14 (+2) 16 (+3) 14 (+2) 16 (+3)
+Power Tier: High Power | HP: 90 | Speed: 40 ft | Tier Bonus: +4
+Active Defense: Parry/Block 20, Dodge 19, Willpower 20, Social 18 | Attack Value: 17
+Power Sets: Elasticity 3 or Shapechanging 3 (CON governs) — two separate builds, same stat block
+Elasticity Build:
+- Elastic Strike (At-Will): Attack +7 vs Parry/Block, 3d12+4 [23] bludgeoning, Short range
+- Constricting Wrap (Encounter): Restrained on failed CON Effect Value 17
+- Elastic Cage (Encounter): Restrained up to CON mod targets
+- Impact Slam (Daily): 6d12 [39] maximum damage, Medium line
+- Immunity to bludgeoning, Resistance to piercing and slashing
+- Impact Absorption (Utility): No falling damage, catch falling allies
+---
+PAGE 435
+VILLAINOUS ARCHETYPES
+Crimelord
+Puppet masters of criminal enterprise. Dangerous through organization and resources more than
+personal power.
+Low Power Crimelord
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 10 (+0) 12 (+1) 12 (+1) 14 (+2) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 20 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 14, Dodge 13, Willpower 13, Social 14 | Attack Value: 13
+Power Sets: None (mundane weapons and resources)
+- Sidearm: Attack +3 vs Dodge, 1d8 [4] piercing, Short range
+Skills: Intimidation (trained), Streetwise (trained) Talents: None beyond criminal competence Merits:
+Cash Flow (Rating 1), Allies (Rating 1, bodyguard Thug) | Flaws: Obligation (Rating 4, criminal
+organization)
+Notes: Their personal combat capability is minimal. Their organizational threat is significant. Defeating
+them in combat does not defeat their organization. Response from criminal community: Favorable.
+Response from law enforcement: Hostile.
+Medium Power Crimelord
+---
+PAGE 436
+- Energy weapon: Attack +5 vs Dodge, 2d8+3 [12] energy, Short range
+- Light armor: +1 Active Defense, Resistance to one damage type
+Skills: Influence (trained), Intimidation (trained), Streetwise (trained) Talents: Cash Flow, Charm, Natural
+Born Leader Merits: Cash Flow (Rating 2), Base of Operations (Rating 3), Allies (Rating 1, bodyguard
+Goon) | Flaws: Bad Reputation with law enforcement (Rating 2), Obligation (Rating 4), Bully (Rating 2)
+Notes: Their CHA of +4 makes social confrontations genuinely dangerous. They are more dangerous as
+a social adversary than a physical one. Has allies in law enforcement, business, and criminal underworld.
+High Power Crimelord
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+18 (+4) 16 (+3) 18 (+4) 16 (+3) 18 (+4) 14 (+2) 20 (+5) 16 (+3)
+Power Tier: High Power | HP: 90 | Speed: 35 ft | Tier Bonus: +4
+Active Defense: Parry/Block 20, Dodge 20, Willpower 19, Social 23 | Attack Value: 17
+Power Sets: Armor Systems 1 (enhanced personal protection), Martial Mastery 1
+- Powered claws: Attack +7 vs Parry/Block, 2d12+4 [17] slashing, Close range
+- Energy weapon: Attack +8 vs Dodge, 3d12+4 [23] energy, Short range
+- Ensnarement: Restrained on failed STR Effect Value 18
+- Light armor: +2 Active Defense
+Skills: Influence (trained, Advantage), Intimidation (trained), Streetwise (trained), Notice (trained)
+---
+PAGE 437
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 10 (+0) 10 (+0) 14 (+2) 14 (+2) 10 (+0) 10 (+0)
+Power Tier: Low Power | HP: 18 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 12, Dodge 13, Willpower 14, Social 14 | Attack Value: 14
+Power Sets: Sorcery 1 (WIS governs, dark tradition)
+- Eldritch Bolt (At-Will): Attack +4 vs Willpower, 1d8+2 [6] necrotic or psychic, Short range
+- Mystic Binding (Encounter): Restrained on failed STR Effect Value 14
+- Compel via dark magic (Encounter): Charmed on failed WIS Effect Value 14
+Skills: Occult (trained, Advantage in dark traditions), Intimidation (trained) Talents: Alert, Iron-Willed
+Merits: None | Flaws: Obligation (Rating 4, dark patron or order)
+Notes: More dangerous than their stats suggest because they will do things heroic mages will not. Will
+sacrifice bystanders if it produces tactical advantage.
+Medium Power Dark Sorcerer
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 14 (+2) 14 (+2) 10 (+0) 16 (+3) 16 (+3) 12 (+1) 14 (+2)
+Power Tier: Medium Power | HP: 48 | Speed: 30 ft | Tier Bonus: +3
+Active Defense: Parry/Block 15, Dodge 17, Willpower 18, Social 17 | Attack Value: 16
+---
+PAGE 438
+High Power Dark Sorcerer
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 14 (+2) 16 (+3) 12 (+1) 22 (+6) 20 (+5) 16 (+3) 14 (+2)
+Power Tier: High Power | HP: 84 | Speed: 30 ft | Tier Bonus: +4
+Active Defense: Parry/Block 17, Dodge 18, Willpower 21, Social 23 | Attack Value: 19
+Power Sets: Sorcery 3 (WIS governs, dark tradition)
+- Full dark sorcery suite
+- Eldritch Storm (Daily): 6d12 [39] necrotic maximum damage, Medium area
+- Counterspell auto-succeeds once per day (Daily Apex)
+- Necromancy applications via Ritual Magic
+- Image Generation and Shapechanging via spells
+- Levitation: Flying speed Short per Turn
+- Followers: Cultist Thugs and Adept Goons available
+Skills: Occult (trained, Advantage), Influence (criminal, trained), Stealth (trained) Talents: Wary, No
+Public Records, Low Level Followers (cultists) Merits: Infamy (Rating 3), Base of Operations (Rating 2,
+hidden) | Flaws: Enemy (Rating 3, heroic magical community), Repellent Presence (Rating 2), Zealot
+(ancient entity, Rating 2)
+Notes: Has access to magic that heroic sorcerers refuse to use. Necromancy and mind control without
+---
+PAGE 439
+Active Defense: Parry/Block 13, Dodge 12, Willpower 12, Social 12 | Attack Value: 13
+Power Sets: Basic elemental or physical power (Earth, Strength)
+- Attack +3 vs Parry/Block or Dodge, 1d8+1 [5] damage
+- Environmental damage: All attacks in enclosed spaces create collateral damage
+Skills: Athletics (trained) Talents: Durable, Innovative (in finding things to destroy) Merits: None | Flaws:
+Action Addict (compelled to destroy, Rating 2), Loner (Rating 1)
+Notes: Simple threat. Will destroy everything in reach. Not subtle. The environment around them
+degrades rapidly.
+Medium Power Demolisher
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+20 (+5) 12 (+1) 18 (+4) 16 (+3) 10 (+0) 12 (+1) 12 (+1) 12 (+1)
+Power Tier: Medium Power | HP: 56 | Speed: 35 ft | Tier Bonus: +3
+Active Defense: Parry/Block 17, Dodge 15, Willpower 15, Social 14 | Attack Value: 18
+Power Sets: Super Strength 2, Super Durability 1, Regeneration 1
+- Mighty Blow (At-Will): Attack +8 vs Parry/Block, 2d10+5 [16] bludgeoning
+- Groundbreaker (Encounter): Area attack, Prone on failed STR Effect Value 18
+- Flat damage reduction 3
+- Regeneration: 3 HP per Turn
+---
+PAGE 440
+Power Tier: High Power | HP: 90 | Speed: 40 ft | Tier Bonus: +4
+Active Defense: Parry/Block 18, Dodge 20, Willpower 18, Social 20 | Attack Value: 17
+Power Sets: Armor Systems 2, Energy Generation 2 (multiple weapon types)
+- Repulsor Blast (At-Will): Attack +8 vs Dodge, 3d12+4 [23] energy, Short range
+- Fire Grenades (Daily): Attack +8 vs Dodge, 6d12 [39] fire maximum damage, Close area
+- Sonic/Energy alternating (Encounter): Area effects, Dazed on failed STR Effect Value 17
+- Knockout Gas (Encounter): Poisoned and Slowed on failed CON Effect Value 17
+- Acid (Encounter): 3d12+4 [23] acid damage, lingering 1d6 [3] per Turn until cleaned
+- Flight: Flying speed Short per Turn
+Skills: Athletics (trained), Vehicles (trained), Science — Chemistry (trained) Talents: Ambidextrous,
+Durable, No Public Records Merits: None | Flaws: Enemy (Rating 2), Split Personality (Rating 4,
+alternate persona has different priorities)
+Notes: The Split Personality Flaw at Rating 4 is significant: when triggered, the alternate persona may
+have entirely different goals, potentially creating a mid-combat shift in behavior that confuses both heroes
+and allies.
+Mastermind
+The villain who is always two steps ahead. Plans within plans. Defeat means falling back to the next
+contingency.
+Low Power Mastermind
+Ability Scores
+---
+PAGE 441
+Notes: Will never be in direct danger if they can avoid it. The encounter with a Mastermind at Low Power
+should be about their plan, not about fighting them personally.
+Medium Power Mastermind
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 12 (+1) 12 (+1) 12 (+1) 20 (+5) 16 (+3) 16 (+3) 18 (+4)
+Power Tier: Medium Power | HP: 44 | Speed: 30 ft | Tier Bonus: +3
+Active Defense: Parry/Block 18, Dodge 18, Willpower 20, Social 21 | Attack Value: 18
+Power Sets: Gadgetry 2, Super Genius 1 (INT governs)
+- Calculated Strike (At-Will): Attack +8 vs lowest Active Defense, 2d10+5 [16] damage
+- Exploit Weakness (Encounter Bonus Action): Ally gains Advantage and +INT mod damage
+- Stun Device (Encounter): Dazed on failed CON Effect Value 18
+- Scene Analysis: Ask GM one question per scene about the situation
+Skills: Technology (trained, Advantage), Insight (trained), Influence (trained), Science (trained), Notice
+(trained) Talents: Gadgeteer, Cash Flow, Innovative Merits: Cash Flow (Rating 2), Base of Operations
+(Rating 3) | Flaws: Enemy (Rating 2, heroes who have foiled previous plans)
+Notes: Exploit Weakness as a Bonus Action makes them a dangerous support threat. Will always have a
+contingency running. If this encounter is going badly for them it means their actual plan is happening
+somewhere else.
+---
+PAGE 442
+Power Sets: Super Genius 3 (INT governs), Armor Systems 2 (Battlesuit)
+- Calculated Collapse (Daily): 5d12 [32] psychic damage, Stunned and Power Disrupted on failed
+WIS Effect Value 19
+- Tactical Breakdown (Encounter): All allies move and gain Advantage
+- Battlesuit combat suite: Full Armor Systems 2 powers
+- System Disruption (Encounter): Overloaded and Power Disrupted on failed INT Effect Value 19
+- Overdrive Apex (Daily): Auto-succeed all INT checks, Power Effect Value +3
+- 10 languages. Leadership in any situation.
+Skills: Technology (trained, Advantage), Insight (trained, Advantage), Science (trained, Advantage),
+Influence (trained, Advantage) Talents: Cash Flow (Rating 3), Gadgeteer, Natural Born Leader, Wary
+Merits: Cash Flow (Rating 3), Resources (Rating 3), Fame (Infamy Rating 2) | Flaws: Public Identity
+(Rating 2), Relationship (Rating 2), Rogues Gallery (heroic community, Rating 3)
+Notes: The WIS and CHA of +5 make both Willpower 22 and Social Defense 24 without the suit. Inside
+the suit Parry/Block and Dodge reach 24. This is genuinely difficult to hit through any Active Defense. The
+Rogues Gallery Flaw means the heroes have faced them before. Plan accordingly.
+Evil Martial Artist
+All the skill of the heroic counterpart without the ethical restraints.
+Low Power Evil Martial Artist
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+---
+PAGE 443
+Medium Power Evil Martial Artist
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+14 (+2) 16 (+3) 10 (+0) 20 (+5) 12 (+1) 16 (+3) 12 (+1) 14 (+2)
+Power Tier: Medium Power | HP: 40 | Speed: 40 ft | Tier Bonus: +3
+Active Defense: Parry/Block 20, Dodge 18, Willpower 18, Social 15 | Attack Value: 18
+Power Sets: Martial Mastery 2 (FIG governs)
+- Full mid-level combat suite
+- Disabling Strike (Encounter): Slowed and loses Bonus Action on failed CON Effect Value 18
+- Flurry (Encounter): Two attacks at Disadvantage, Dazed if both hit
+- Counter (Encounter Reaction): Strike at Advantage on miss
+Skills: Acrobatics (trained, Advantage), Athletics (trained) Talents: Power Striker, Master of Combat
+Merits: None | Flaws: Bully (Rating 2), Enemy (Rating 3, heroes who have opposed their order), Loner
+(Rating 1)
+Notes: Will target the most capable martial combatant on the heroes' team first, viewing them as the only
+worthy opponent.
+High Power Evil Martial Artist
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+---
+PAGE 444
+Skills: Acrobatics (trained, Advantage), Athletics (trained, Advantage), Stealth (trained, Advantage)
+Talents: Good Reflexes, Master of Combat, Power Striker Merits: Reputation (Infamy Rating 2) | Flaws:
+Bad Reputation (Rating 2), Rival (greatest martial artist alive, Rating 2), Loner (Rating 1)
+Notes: Functionally identical stats to the High Power Martial Artist hero archetype. The difference is
+purpose and ethics, not capability. A mirror match between these two is one of the most dramatic
+encounters possible.
+Social Manipulator
+Charm, deception, and cultivated trust as primary weapons. Physical capability is real but secondary. By
+the time opponents realize the threat, the manipulation is already complete.
+Low Power Social Manipulator
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 (+0) 12 (+1) 10 (+0) 10 (+0) 12 (+1) 10 (+0) 16 (+3) 12 (+1)
+Power Tier: Low Power | HP: 18 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 13, Dodge 14, Willpower 13, Social 16 | Attack Value: 15
+Power Sets: Shapechanging 1 (human forms only, CHA governs disguise)
+- Perfect Disguise (Utility): Appear as any similar-size humanoid, Advantage on deception checks
+Skills: Stealth (trained), Finesse (trained), Influence (trained, Advantage), Insight (trained) Talents: Extra
+Identity, Appeal (Advantage on first CHA check in any social encounter) Merits: None | Flaws: Secret
+---
+PAGE 445
+Active Defense: Parry/Block 20, Dodge 20, Willpower 19, Social 19 | Attack Value: 18
+Power Sets: Martial Mastery 2 (FIG governs combat), Super Presence 1 (CHA governs social)
+- Full martial combat suite at Medium Power
+- Commanding Word (At-Will): Attack +8 vs Social Defense, 2d10+5 [16] psychic, Short range
+- Unnerving Gaze (Encounter Bonus Action): Frightened on failed WIS Effect Value 18
+- Passive aura: Enemies within Close range have Disadvantage on first attack each Turn
+Skills: Acrobatics (trained, Advantage), Athletics (trained), Stealth (trained), Finesse (trained), Insight
+(trained, Advantage), Influence (trained, Advantage) Talents: Appeal (Level 2), Lucky Merits: None |
+Flaws: Action Addict (Rating 1), Enemy (Rating 3, unwanted obsessive pursuing them), Loner (Rating 1)
+Notes: Dangerous in both social and combat contexts. The Unnerving Gaze as a Bonus Action means
+they can apply fear pressure while still acting normally.
+High Power Social Manipulator
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 20 (+5) 16 (+3) 20 (+5) 16 (+3) 16 (+3) 24 (+7) 18 (+4)
+Power Tier: High Power | HP: 84 | Speed: 45 ft | Tier Bonus: +4
+Active Defense: Parry/Block 23, Dodge 23, Willpower 21, Social 24 | Attack Value: 21
+Power Sets: Martial Mastery 3 (FIG governs combat), Telepathy 2 (WIS governs mental), Super
+Presence 2 (CHA governs presence)
+---
+PAGE 446
+Notes: Social Defense 24 means social confrontation is almost impossible without exceptional CHA.
+Psychic Domination combined with Super Presence creates a villain who can shift the allegiances of
+entire organizations. The Split Personality Flaw at Rating 3 means their alternate persona may have
+conflicting loyalties.
+Mercenary
+Soldiers of fortune. Loyalty to the contract. Extremely capable, completely flexible in allegiance.
+Low Power Mercenary
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 (+1) 14 (+2) 12 (+1) 12 (+1) 10 (+0) 10 (+0) 10 (+0) 12 (+1)
+Power Tier: Low Power | HP: 20 | Speed: 30 ft | Tier Bonus: +2
+Active Defense: Parry/Block 14, Dodge 15, Willpower 13, Social 12 | Attack Value: 14
+Power Sets: None (professional equipment)
+- Assault rifle: Attack +4 vs Dodge, 1d10+2 [7] piercing, Medium range
+- Sidearm: Attack +4 vs Dodge, 1d8+2 [6] piercing, Short range
+- Tactical armor: Flat damage reduction 2
+Skills: Athletics (trained), Notice (trained), Stealth (trained) Talents: Alert, Good Reflexes Merits: No
+Public Record | Flaws: Loved One (Rating 1), Normal Human (Rating 3)
+Notes: Professional. Assesses tactical situations accurately. Will disengage when the contract becomes
+---
+PAGE 447
+Power Sets: None (exceptional equipment), Regeneration 1 (experimental treatment)
+- Assault rifle and swords: Attack +7 vs Dodge or Parry/Block, 2d8+4 [13] damage, type by weapon
+- Tactical armor: Flat damage reduction 3
+- Regeneration: Tier Bonus (3) HP per Turn
+Skills: Acrobatics (trained), Athletics (trained), Stealth (trained), Notice (trained) Talents: Ambidextrous,
+Durable, High Pain Threshold Merits: None | Flaws: Action Addict (Rating 1), Bad Reputation (Rating 3),
+Enemy (Rating 2)
+Notes: The Regeneration makes them very hard to put down. Will take increasingly desperate contracts
+as their reputation for difficulty accumulates.
+High Power Mercenary
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+18 (+4) 20 (+5) 18 (+4) 20 (+5) 16 (+3) 18 (+4) 18 (+4) 16 (+3)
+Power Tier: High Power | HP: 90 | Speed: 40 ft | Tier Bonus: +4
+Active Defense: Parry/Block 22, Dodge 22, Willpower 21, Social 21 | Attack Value: 19
+Power Sets: Regeneration 3, Armor Systems 1, Super Senses 2 (Enhanced hearing, sight, smell),
+Martial Mastery 2
+- Regeneration: 1d12+CON [10] HP per Turn
+- Powered claws: Attack +9 vs Parry/Block, 3d12+5 [24] slashing
+---
+PAGE 458
+Score bonuses +2 STR, +1 CON
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll from that use;
+ignore Disadvantage from stress or unstable
+conditions on that use; or gain temporary HP
+equal to PRO.
+Power Sets
+● Super Strength 1 (STR governs) — Lifting, throwing, and melee at superhuman scale.
+● Super Durability 1 (CON governs) — Flat damage reduction 2 vs all incoming damage. Gain
+temp HP = CON mod (3) at start of each encounter.
+Powers
+Mighty Blow (At-Will · Action): Attack 1d20+3 vs Parry/Block. 1d8+1 [5] bludgeoning. Close range. Hurl
+(At-Will · Action): Throw object or grabbed target. Attack 1d20+2 vs Dodge. 1d8+0 [4] bludgeoning. Short
+range. Brace (Encounter · Reaction): When hit, reduce incoming damage by 1d8+3 [7].
+Class Features *(Level 1 only)
+● Stand Between: When an ally within Close range is hit, use your Reaction to become the target
+instead.
+---
+PAGE 460
+Score bonuses +2 CHA, +1 CON
+Built-in Merit Cosmic Signature 1
+Built-in Flaw Too Bright to Hide 1
+Origin Talent Stellar Endurance: Choose one at creation —
+Vacuum-Touched (hold breath 10×PRO min,
+Advantage vs vacuum/pressure/radiation);
+Energy-Born (once/encounter, reduce incoming
+damage of one chosen energy type by PRO +
+CON mod); or Universal Perspective
+(once/encounter, Advantage on one
+WIS/Science/Occult/Notice check involving
+cosmic phenomena).
+Power Sets
+● Energy Generation 1 (DEX governs) — Project beams or bursts. Choose energy type at
+creation: fire, lightning, force, radiant, or sonic (cosmetic, same mechanics).
+Powers
+Energy Bolt (At-Will · Action): Attack 1d20+5 vs Dodge. 1d8+3 [7]. Short range. Energy Shield
+(Encounter · Reaction): Reduce incoming damage by 1d8+3 [7]. Energy Burst (Encounter · Action):
+Attack 1d20+5 vs Dodge, all targets in Close area. 1d8+3 [7].
+Class Features *(Level 1 only)
+---
+PAGE 462
+Score bonuses +2 DEX, +1 CON
+Origin Skill Athletics
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Super Speed 1 (DEX governs) — Base speed 50 ft. 1 Speed Action per Turn: move up to Speed,
+Speed Strike, or Rapid Rescue.
+Powers
+Speed Strike (Speed Action): Attack 1d20+6 vs Parry/Block at Disadvantage. 1d8+4 [8]. Rapid Strike
+(At-Will · Action): Attack 1d20+6 vs Parry/Block. 1d8+4 [8]. Afterimage (Encounter · Bonus Action): Next
+attack against you this round is at Disadvantage. Rapid Rescue (Speed Action · Utility): Move a willing
+creature up to Close range to safety.
+Class Features *(Level 1 only)
+● Fluid Motion: Standing from Prone costs no movement. Difficult terrain costs no extra
+movement. Advantage on escaping grapples.
+---
+PAGE 464
+Score bonuses +2 WIS, +1 INT
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Telepathy 1 (WIS governs) — Surface reading at Close range. Mental attacks target Willpower.
+Telepathic communication with willing targets at Short range.
+● Telekinesis 1 (WIS governs) — Move objects at Close range. Telekinetic strikes as ranged
+attacks (DEX+PRO to hit).
+Powers
+Mental Probe (At-Will · Action): Attack 1d20+5 (INT+PRO) vs Willpower. 1d8+3 [7] psychic. Short range.
+Telekinetic Shove (At-Will · Action): Attack 1d20+2 (DEX+PRO) vs Dodge. 1d8+0 [4] force. Short range.
+Psychic Assault (Encounter · Action): WIS Effect Value 16 vs Willpower. On failure: Dazed until end of
+your next Turn. Surface Read (Utility): Read surface thoughts of one willing or unaware target within
+Close range.
+---
+PAGE 466
+Effect Value (FIG): 10 + +4 + PRO = 16
+Precise Form: Parry/Block roll = FIG mod (+4) × 2 + PRO = 1d20+10.
+Origin — Trained
+Score bonuses +2 FIG, +1 DEX
+Origin Skill Acrobatics + Stealth *(two picks)
+Built-in Merit Prepared Foundation 1
+Built-in Flaw Only Human 1
+Origin Talent Trained to Survive: Once per encounter, when
+you fail a skill check using a trained Skill, reroll
+and use the second result.
+Power Sets
+● Martial Mastery 1 (FIG governs) — Expert unarmed and armed combat. Access Tier 1 combat
+techniques.
+Powers
+Precision Strike (At-Will · Action): Attack 1d20+6 vs Parry/Block. 1d8+4 [8]. Close range. Control Hold
+(Encounter · Action): FIG Effect Value 16 vs STR. On failure: Grappled until target succeeds STR save at
+start of each Turn. Counter (Reaction): When an attack against you misses, immediately make one
+Precision Strike at Advantage. Combat Read (Utility · Bonus Action): Study one target. Know their HP
+status (above/below half) and their next Action type for this round.
+Class Features *(Level 1 only)
+---
+PAGE 468
+Effect Value (INT): 10 + +4 + PRO = 16
+Origin — Gearbound
+Score bonuses +2 INT, +1 PER
+Origin Skill Technology
+Built-in Merit Gear Access 1
+Built-in Flaw Gear Dependency 1
+Origin Talent Field Systems: Once/encounter, when your gear
+would fail or be disabled, make a
+Technology/Science/Vehicles check. On success
+choose one: Keep It Running (gear functions
+through encounter); Emergency Bypass (ignore
+Disadvantage from damage for one turn); Reroute
+Power (regain one spent Encounter Power, gain 1
+Burnout); or Controlled Failure (gear fails safely,
+no collateral damage).
+Power Sets
+● Gadgetry 1 (INT governs) — Compact kit of devices. Produce any mundane small tool as a free
+action. Prepare INT mod + PRO (6) single-use gadgets per Breather.
+Powers
+Gadget Strike (At-Will · Action): Attack 1d20+4 vs Dodge. 1d8+2 [6]. Short range. Flashbang (Encounter
+---
+PAGE 470
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+2 1d20+3 1d20+7 1d20+7 1d20+3
+Effect Value (WIS): 10 + +4 + PRO = 16
+Eldritch Bolt uses INT+PRO to hit vs Willpower.
+Origin — Mystic
+Score bonuses +2 WIS, +1 CHA
+Origin Skill Occult
+Built-in Merit Mystic Attunement 1
+Built-in Flaw Supernatural Burden 1
+Origin Talent Ward the Soul: Once/encounter, when you or an
+ally within 30 ft makes a save against fear, charm,
+possession, curse, psychic intrusion, or mystical
+manipulation, add PRO (+2) to that roll. Must be
+conscious and able to express your practice in
+some form.
+Power Sets
+● Sorcery 1 (WIS governs) — Command of fundamental magical forces. Attacks target Willpower.
+Detect magical effects at Close range passively.
+Powers
+Eldritch Bolt (At-Will · Action): Attack 1d20+1 (INT+PRO) vs Willpower. 1d8−1 [3] psychic. Short range.
+---
+PAGE 472
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+2 1d20+4 1d20+7 1d20+5 1d20+4
+Effect Value (WIS): 10 + +4 + PRO = 16
+Origin — Enhanced
+Score bonuses +2 WIS, +1 INT
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Elemental Control 1 (WIS governs) — Choose element at creation: fire, ice, lightning, shadow,
+earth, or wind (cosmetic, same mechanics). Control at Close range, create zones, barriers, and
+restraints.
+Powers
+Elemental Strike (At-Will · Action): Attack 1d20+3 vs Dodge. 1d8+1 [5]. Short range. Damage type
+matches element. Barrier (Encounter · Action): Solid elemental wall at Close range. Blocks movement
+---
+PAGE 474
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+4 1d20+5 1d20+3 1d20+1 1d20+5
+Effect Value (CON): 10 + +4 + PRO = 16
+Origin — Monster
+Score bonuses +2 CON, +1 STR
+Origin Skill Intimidation + one Specialty
+Built-in Merit Inhuman Body 1
+Built-in Flaw Feared 1
+Origin Talent Apex Predator: Once/encounter, when you move
+toward a target aggressively to close distance,
+make that movement without provoking
+Reactions. If you reach the target and attack on
+the same turn, gain Advantage on that attack.
+Power Sets
+● Shapechanging 1 (CON governs) — Alter appearance within your size category. Mimic any
+humanoid (1 min observation). Take animal forms of roughly your own size — gain natural
+movement modes and one natural weapon.
+Powers
+Adaptive Strike (At-Will · Action): Attack 1d20+3 vs Parry/Block. 1d8+1 [5]. Choose damage type by
+form: slashing, piercing, or bludgeoning. Crushing Mass (Encounter · Action): Attack 1d20+3 vs
+---
+PAGE 476
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+4 1d20+5 1d20+3 1d20+1 1d20+5
+Effect Value (STR): 10 + +3 + PRO = 15
+Energy powers use DEX Effect Value = 14 (DEX mod +2 + PRO +2 = 14).
+Origin — Alien
+Score bonuses +2 CON, +1 STR
+Origin Skill Notice
+Built-in Merit Strange Biology 1
+Built-in Flaw Alien Outsider 1
+Origin Talent Not From Here: Once/encounter, when you fail
+an Insight, Science, Perception, or Survival check,
+draw on alien perspective inaccessible to humans.
+Reroll and use the second result.
+Power Sets
+● Super Strength 1 (STR governs) — Superhuman lifting and melee capacity.
+● Energy Generation 1 (DEX governs) — Focused ranged energy projection. Choose energy type
+at creation.
+● Flight 1 (Utility Core Power) — Flying speed Close (25 ft) per Turn. Can hover.
+Powers
+---
+PAGE 478
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+20 / +5 14 / +2 17 / +3 15 / +2 8 / -1 13 / +1 12 / +1 10 / +0
+Origin (Enhanced) applies +2 STR, +1 CON before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+4 1d20+4 1d20+3 1d20+2 1d20+4
+Effect Value (CON): 10 + +3 + PRO = 15
+Origin — Enhanced
+Score bonuses +2 STR, +1 CON
+Origin Skill Athletics
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Super Strength 2 (STR governs) — City-block lifting scale.
+---
+PAGE 480
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 / +0 20 / +5 13 / +1 8 / -1 14 / +2 12 / +1 15 / +2 17 / +3
+Origin (Cosmic) applies +2 DEX, +1 PER before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+4 1d20+10 1d20+6 1d20+6 1d20+10
+Effect Value (DEX): 10 + +5 + PRO = 17
+Origin — Cosmic
+Score bonuses +2 DEX, +1 PER
+Origin Skill Notice
+Built-in Merit Cosmic Signature 1
+Built-in Flaw Too Bright to Hide 1
+Origin Talent Stellar Endurance: Choose one at creation —
+Vacuum-Touched, Energy-Born, or Universal
+Perspective (see Street Level Blaster for full
+descriptions).
+Power Sets
+● Energy Generation 2 (DEX governs) — Beams extend to Medium range. Burst attacks expand
+---
+PAGE 482
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+14 / +2 20 / +5 17 / +3 15 / +2 8 / -1 13 / +1 10 / +0 12 / +1
+Origin (Enhanced) applies +2 DEX, +1 CON before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+5 1d20+8 1d20+4 1d20+1 1d20+8
+Effect Value (DEX): 10 + +5 + PRO = 17
+Origin — Enhanced
+Score bonuses +2 DEX, +1 CON
+Origin Skill Athletics
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Super Speed 2 (DEX governs) — Base speed 65 ft. 2 Speed Actions per Turn. Wall-running and
+---
+PAGE 484
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 / +0 12 / +1 13 / +1 8 / -1 17 / +3 20 / +5 15 / +2 14 / +2
+Origin (Enhanced) applies +2 WIS, +1 INT before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+3 1d20+5 1d20+9 1d20+7 1d20+5
+Effect Value (WIS): 10 + +5 + PRO = 17
+Mental attacks roll 1d20+5 (INT mod +3 + PRO +2) to hit vs Willpower.
+Origin — Enhanced
+Score bonuses +2 WIS, +1 INT
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+---
+PAGE 486
+Class: Striker | Origin: Trained | Hit Die: d8 | Power Die: d10 | Speed: 40 ft HP: 42 (d8 max + CON
+score 13)x2) | PRO: +2 | Starting Edge: 2 | Save Training: FIG, DEX
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+15 / +2 14 / +2 13 / +1 20 / +5 10 / +0 17 / +3 8 / -1 12 / +1
+Origin (Trained) applies +2 FIG, +1 WIS before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+13 *(FIG 1d20+5 1d20+56 1d20+1 1d20+5
+mod ×2 + PRO —
+Precise Form)
+Effect Value (FIG): 10 + +5 + PRO = 17
+Precise Form: Parry/Block roll = FIG mod (+5) × 2 + PRO = 1d20+12.
+Origin — Trained
+Score bonuses +2 FIG, +1 WIS
+Origin Skill Acrobatics + Stealth
+Built-in Merit Prepared Foundation 1
+Built-in Flaw Only Human 1
+Origin Talent Trained to Survive: Once per encounter, when
+---
+PAGE 488
+The suit goes on and the gap closes fast. System Disruption devastates any armored or powered-suit
+enemy. Read the Field tells you something useful before Round 1 begins.
+Class: Strategist | Origin: Gearbound | Hit Die: d8 | Power Die: d10 | Speed: 35 ft HP: 44 (d8 max
++ CON score 14)x2) | PRO: +2 | Starting Edge: 2 | Save Training: INT, PER
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 / +1 15 / +2 14 / +2 8 / -1 20 / +5 13 / +1 10 / +0 17 / +3
+Origin (Gearbound) applies +2 INT, +1 PER before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+4 1d20+7 1d20+6 1d20+7 1d20+7
+Effect Value (INT): 10 + +5 + PRO = 17
+Armored: add +2 to all Active Defense rolls.
+Origin — Gearbound
+Score bonuses +2 INT, +1 PER
+Origin Skill Technology
+Built-in Merit Gear Access 1
+Built-in Flaw Gear Dependency 1
+Origin Talent Field Systems: Once/encounter, when your gear
+---
+PAGE 490
+The Mystic — Mid-Level
+The world is older and stranger than anyone admits. You know because you work there.
+Dimensional Step for positioning without line of sight. Ward shapes the battlefield. Curse every turn as a
+free Bonus Action adds consistent pressure at zero Action cost.
+Class: Warden | Origin: Mystic | Hit Die: d8 | Power Die: d10 | Speed: 30 ft HP: 44 (d8 max +
+CON score 14)x2) | PRO: +2 | Starting Edge: 2 | Save Training: WIS, CON
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 / +0 12 / +1 14 / +2 8 / -1 15 / +2 20 / +5 17 / +3 13 / +1
+Origin (Mystic) applies +2 WIS, +1 CHA before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+2 1d20+4 1d20+8 1d20+7 1d20+4
+Effect Value (WIS): 10 + +5 + PRO = 17
+Eldritch Bolt uses INT+PRO to hit vs Willpower.
+Origin — Mystic
+Score bonuses +2 WIS, +1 CHA
+Origin Skill Occult
+Built-in Merit Mystic Attunement 1
+---
+PAGE 492
+The Controller — Mid-Level
+You do not fight the battle. You decide what battle everyone else has to fight.
+Zone of Control sustained reshapes every fight. Drop it where the fight needs to not happen — enemies
+take damage entering and move through at half speed — then let your allies dictate everything outside it.
+Class: Warden | Origin: Enhanced | Hit Die: d8 | Power Die: d10 | Speed: 35 ft HP: 50 (d8 max +
+CON score 17)x2) | PRO: +2 | Starting Edge: 2 | Save Training: WIS, CON
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+12 / +1 14 / +2 17 / +3 8 / -1 15 / +2 20 / +5 10 / +0 13 / +1
+Origin (Enhanced) applies +2 WIS, +1 CON before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+2 1d20+5 1d20+8 1d20+4 1d20+5
+Effect Value (WIS): 10 + +5 + PRO = 17
+Origin — Enhanced
+Score bonuses +2 WIS, +1 CON
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+---
+PAGE 494
+The Shapeshifter — Mid-Level
+You are whatever this situation needs you to be.
+Monstrous Form as a free Bonus Action upgrades your round every round. Regeneration keeps you in
+fights that should have ended. Choose adaptations based on what the fight needs right now.
+Class: Vanguard | Origin: Monster | Hit Die: d8 | Power Die: d10 | Speed: 35 ft HP: 56 (d8 max +
+CON score 20)x2) | PRO: +2 | Starting Edge: 2 | Save Training: DEX, PER
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+17 / +3 15 / +2 20 / +5 14 / +2 10 / +0 12 / +1 8 / -1 13 / +1
+Origin (Monster) applies +2 CON, +1 STR before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+5 1d20+5 1d20+4 1d20+1 1d20+5
+Effect Value (CON): 10 + +5 + PRO = 17
+In Large form: add +2 to Parry/Block and Dodge rolls.
+Origin — Monster
+Score bonuses +2 CON, +1 STR
+Origin Skill Intimidation + one Specialty
+Built-in Merit Inhuman Body 1
+---
+PAGE 497
+Score bonuses +2 STR, +1 CON
+Origin Talent Not From Here: Once/encounter, when you fail
+an Insight, Science, Perception, or Survival check,
+draw on alien perspective inaccessible to humans.
+Reroll and use the second result.
+Power Sets
+● Super Strength 2 (STR governs) — City-block scale force.
+● Energy Generation 2 (DEX governs) — Extended range, improved burst capability.
+● Regeneration 1 (CON governs) — Recover PRO (2) HP at start of each Turn.
+● Flight 2 (Utility Core Power) — Flying speed Short (50 ft) per Turn. City-scale out of combat.
+Powers
+Mighty Blow (At-Will · Action): Attack 1d20+4 vs Parry/Block. 2d10+5 [16] bludgeoning. Energy Bolt
+(At-Will · Action): Attack 1d20+4 vs Dodge. 2d10+2 [13]. Short range. Ground Strike (Encounter ·
+Action): STR Effect Value 17 vs DEX, Close area. Prone and Dazed. Energy Burst (Encounter · Action):
+Attack 1d20+4 vs Dodge, Short area. 3d10+2 [18]. Energy Shield (Encounter · Reaction): Reduce
+incoming damage by 2d10+2 [13].
+Class Features *(Level 1 only)
+● Stand Between: When an ally within Close range is hit, use your Reaction to become the target
+instead.
+● Endure: Once/encounter, when reduced to 0 HP, drop to 1 HP instead (free action).
+---
+PAGE 499
+Score bonuses +2 CON, +1 STR
+Origin Skill Notice
+Built-in Merit Cosmic Signature 1
+Built-in Flaw Too Bright to Hide 1
+Origin Talent Stellar Endurance: Choose one at creation —
+Vacuum-Touched, Energy-Born, or Universal
+Perspective (see Street Level Blaster for full
+descriptions).
+Power Sets
+● Super Strength 3 (STR governs) — Continental lifting scale. Attacks reach Devastating Force
+tier.
+● Super Durability 3 (CON governs) — Damage reduction PRO + CON mod (8). Resistance: Fire,
+Cold, Lightning, Poison, Radiant.
+● Regeneration 3 (CON governs) — 1d12 + CON mod [10] HP at start of each Turn. Life Support:
+immune to environmental hazards.
+Powers
+Mighty Blow (At-Will · Action): Attack 1d20+5 vs Parry/Block. 3d12+6 [25] bludgeoning. Hurl (At-Will ·
+Action): Attack 1d20+4 vs Dodge. 3d12+4 [23]. Medium range. Brace (Encounter · Reaction): Reduce
+incoming damage by 3d12+6 [25]. Body Check (Encounter · Action): STR Effect Value 18 vs STR.
+Failure: Prone, Stunned until end of next Turn, pushed 30 ft. Devastating Force (Daily · Action): Short
+---
+PAGE 501
+Effect Value (DEX): 10 + +6 + PRO = 18
+Combat Sense: add PER mod (+4) to your first Active Defense roll each encounter.
+Origin — Cosmic
+Score bonuses +2 DEX, +1 PER
+Origin Skill Notice
+Built-in Merit Cosmic Signature 1
+Built-in Flaw Too Bright to Hide 1
+Origin Talent Stellar Endurance: Choose one at creation —
+Vacuum-Touched, Energy-Born, or Universal
+Perspective.
+Power Sets
+● Energy Generation 3 (DEX governs) — Planetary-range projection. Concentrated attacks can
+level structures.
+● Super Senses 1 (PER governs) — Combat Sense: cannot be surprised, add PER mod to first
+Active Defense roll per encounter.
+Powers
+Energy Bolt (At-Will · Action): Attack 1d20+8 vs Dodge. 3d12+6 [25]. Focused Beam (At-Will · Action):
+Attack 1d20+8 vs Dodge. 3d12+6 [25]. Long range. Penetrates all cover. Energy Burst (Encounter ·
+Action): Attack 1d20+8 vs Dodge, Medium area. 3d12+6 [25]. Energy Shield (Encounter · Reaction):
+Reduce incoming damage by 3d12+6 [25]. Nova Flare (Daily · Action): Attack 1d20+8, Short area. 6d12
+---
+PAGE 503
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+6 1d20+9 1d20+5 1d20+1 1d20+9
+Effect Value (DEX): 10 + +6 + PRO = 18
+Once per encounter: act first regardless of Initiative order.
+Origin — Enhanced
+Score bonuses +2 DEX, +1 CON
+Origin Skill Athletics
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Super Speed 4 Apex (DEX governs) — Base speed 100 ft. 4 Speed Actions per Turn. Vibration
+phasing available. Act first regardless of Initiative once per encounter.
+● Regeneration 1 (CON governs) — Recover PRO (2) HP at start of each Turn.
+Powers
+Speed Strike (Speed Action): Attack 1d20+8 vs Parry/Block at Disadvantage. 3d12+6 [25]. Rapid Strike
+---
+PAGE 505
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+10 / +0 12 / +1 14 / +2 8 / -1 19 / +4 22 / +6 16 / +3 15 / +2
+Origin (Enhanced) applies +2 WIS, +1 INT before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+3 1d20+5 1d20+10 1d20+9 1d20+5
+Effect Value (WIS): 10 + +6 + PRO = 18
+Precognition adds WIS mod (+6) to Initiative. Mental attacks roll 1d20+6 (INT mod +4 + PRO +2) to hit.
+Origin — Enhanced
+Score bonuses +2 WIS, +1 INT
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+---
+PAGE 507
+Parry/Block +14 plus Counter makes you the most punishing melee target at World Class. Perfect Form
+once per day produces an almost untouchable combatant for the fight's critical window.
+Class: Striker | Origin: Trained | Hit Die: d8 | Power Die: d12 | Speed: 45 ft HP: 66 (d8 max + CON
+score 14)x3) | PRO: +2 | Starting Edge: 1 | Save Training: FIG, DEX
+Ability Scores
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+16 / +3 15 / +2 14 / +2 22 / +6 10 / +0 19 / +4 8 / -1 12 / +1
+Origin (Trained) applies +2 FIG, +1 WIS before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+15 *(FIG 1d20+5 1d20+7 1d20+1 1d20+5
+mod ×2 + PRO —
+Precise Form)
+Effect Value (FIG): 10 + +6 + PRO = 18
+Precise Form: Parry/Block roll = FIG mod (+6) × 2 + PRO = 1d20+14.
+Origin — Trained
+Score bonuses +2 FIG, +1 WIS
+Origin Skill Acrobatics + Stealth
+Built-in Merit Prepared Foundation 1
+---
+PAGE 510
+Score bonuses +2 INT, +1 PER
+Technology/Science/Vehicles check. On success:
+Keep It Running, Emergency Bypass, Reroute
+Power (gain 1 Burnout), or Controlled Failure.
+Power Sets
+● Gadgetry 3 (INT governs) — Super-science territory. Once/scene, declare a device was
+previously prepared for the current situation.
+● Armor Systems 2 (INT governs) — Full combat armor. +4 all Active Defense. Resistance to two
+damage types. Sensors: Echolocation and Thermal Vision at Short range. Armored flight.
+Powers
+Gadget Strike (At-Will · Action): Attack 1d20+5 vs Dodge. 3d12+3 [22]. Explosive Charge (Encounter ·
+Action): Attack 1d20+5 vs Dodge, Short area. 3d12+3 [22]. System Disruption (Encounter · Action): INT
+Effect Value 18 vs INT. Overloaded and Power Disrupted. Nano-Swarm (Encounter · Action): INT EV 18
+vs CON, Medium area. Weakened (−3 all attacks and saves) until end of next Turn. Impossible Device
+(Daily): Declare a device solves one major scene problem. Requires GM agreement it is plausible given
+preparation time. Drone Scout (Utility): Multiple drones simultaneously scout Short range. Armor Flight
+(Utility): Flying speed Short per Turn. Continental travel out of combat. Remote Operation (Utility):
+Operate armored suit at distance.
+Class Features *(Level 1 only)
+● Read the Field: At the start of combat, identify one enemy weakness without a check.
+---
+PAGE 512
+Score bonuses +2 WIS, +1 CHA
+Origin Skill Occult
+Built-in Merit Mystic Attunement 1
+Built-in Flaw Supernatural Burden 1
+Origin Talent Ward the Soul: Once/encounter, when you or an
+ally within 30 ft makes a save against fear, charm,
+possession, curse, psychic intrusion, or mystical
+manipulation, add PRO (+2) to that roll.
+Power Sets
+● Sorcery 3 (WIS governs) — Reality-bending magic. Dimensional travel. Unmake magical
+constructs.
+● Spirit Touch 2 (WIS governs) — Command spirits, commune across dimensional barriers, call on
+ancient forces.
+Powers
+Eldritch Bolt (At-Will · Action): Attack 1d20+1 (INT+PRO) vs Willpower. 3d12−1 [18] psychic. Curse
+(At-Will · Bonus Action): WIS Effect Value 18 vs Willpower. Disadvantage on all rolls until end of next
+Turn. Mystic Binding (Encounter · Action): WIS EV 18 vs STR. Restrained and Blinded. Dimensional
+Exile (Daily · Action): WIS EV 18 vs Willpower. Failure: target removed from this dimension until start of
+your next Turn (three rounds in combat). Counterspell (Encounter · Reaction): When any Power
+activates within Short range: WIS EV 18 vs activating Effect Value. On success: negate the power before
+---
+PAGE 514
+Origin — Enhanced
+Score bonuses +2 WIS, +1 CON
+Origin Skill Science
+Built-in Merit Altered Physiology 1
+Built-in Flaw Marked by Change 1
+Origin Talent Adaptive Biology: Once per encounter when you
+use an At-Will Power, choose one: add PRO to
+one damage/healing/protection roll; ignore
+Disadvantage from stress or unstable conditions;
+or gain temporary HP equal to PRO.
+Power Sets
+● Elemental Control 3 (WIS governs) — Long range. Mass elemental phenomena. Immunity to
+chosen element + resistance to all related. Body transformation into elemental form.
+Powers
+Elemental Strike (At-Will · Action): Attack 1d20+4 vs Dodge. 3d12+2 [21]. Medium range. Elemental
+Burst (Encounter · Action): Attack 1d20+4 vs Dodge, Medium area. 3d12+2 [21]. World-Shaping (Daily ·
+Action): Reshape terrain of current combat area. WIS EV 18 vs DEX for any creature caught or Prone and
+Stunned. Zone of Control (Encounter · Sustained): As Mid-Level but Medium range and 3d12+2 [21]
+damage. Mass Restrain (Encounter · Action): WIS EV 18 vs STR, Short area. All failures: Restrained.
+Elemental Form (Daily · Bonus Action): For 1 minute: immune to physical damage. Deal 1d12+6 [12]
+---
+PAGE 516
+Effect Value (CON): 10 + +6 + PRO = 18
+Regeneration: recover PRO + CON mod (8) HP at start of each Turn. In Huge form: add +2 to Parry/Block
+and Dodge.
+Origin — Monster
+Score bonuses +2 CON, +1 STR
+Origin Skill Intimidation + one Specialty
+Built-in Merit Inhuman Body 1
+Built-in Flaw Feared 1
+Origin Talent Apex Predator: Once/encounter, when you move
+toward a target aggressively to close distance,
+make that movement without provoking
+Reactions. If you reach the target and attack on
+the same turn, gain Advantage on that attack.
+Power Sets
+● Shapechanging 4 Apex (CON governs) — Microscopic to Huge scale. Sustained partial
+transformations. Perfect Form once/day: instant transformation, three simultaneous partial
+changes, biologically perfect mimicry.
+● Regeneration 2 (CON governs) — Recover PRO + CON mod (8) HP at start of each Turn.
+Powers
+Adaptive Strike (At-Will · Action): Attack 1d20+4 vs Parry/Block. 3d12+2 [21]. Monstrous Form
+---
+PAGE 518
+Strength Dexterity Constitution Fighting Intelligence Wisdom Charisma Perception
+(STR) (DEX) (CON) (FIG) (INT) (WIS) (CHA) (PER)
+22 / +6 16 / +3 19 / +4 15 / +2 8 / -1 12 / +1 10 / +0 14 / +2
+Origin (Alien) applies +2 STR, +1 CON before the above scores.
+Active Defense *(roll 1d20 + bonus shown; bonus = modifier + PRO)
+Parry/Block (FIG) Dodge (DEX) Willpower (WIS) Social (CHA) Initiative
+1d20+6 1d20+7 1d20+5 1d20+1 1d20+7
+Effect Value (STR): 10 + +6 + PRO = 18
+Energy powers use DEX Effect Value = 15 (DEX mod +3 + PRO +2 = 15). Regeneration: PRO + CON
+mod (6) HP per Turn.
+Origin — Alien
+Score bonuses +2 STR, +1 CON
+Origin Skill Notice
+Built-in Merit Strange Biology 1
+Built-in Flaw Alien Outsider 1
+Origin Talent Not From Here: Once/encounter, when you fail
+an Insight, Science, Perception, or Survival check,
+draw on alien perspective inaccessible to humans.
+Reroll and use the second result.
+Power Sets
+---

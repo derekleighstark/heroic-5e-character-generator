@@ -1,0 +1,18 @@
+{
+  "type": "HEROIC 5e Character Generator",
+  "version": 2,
+  "exportedAt": "2026-06-19T00:00:00.000Z",
+  "sheet": {
+    "heroName": "Example Hero",
+    "realName": "",
+    "identity": "",
+    "side": "Heroic",
+    "rank": "Street Level",
+    "level": 1,
+    "origin": "Enhanced",
+    "className": "Bruiser",
+    "calling": "Protector",
+    "concept": "",
+    "backstory": ""
+  }
+}

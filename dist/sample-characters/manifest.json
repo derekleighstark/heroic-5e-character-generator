@@ -1,0 +1,42 @@
+{
+  "samples": [
+    {
+      "id": "motor-city-sentinel-jake-fulton-import",
+      "name": "The Motor City Sentinel",
+      "realName": "Jake Fulton",
+      "portrait": "/sample-characters/portraits/portrait-motor-city-sentinel.png",
+      "file": "motor-city-sentinel-jake-fulton-import.json",
+      "origin": "Enhanced",
+      "className": "Striker",
+      "calling": "",
+      "rank": "Street Level",
+      "level": 1,
+      "concept": "A Detroit mechanic and body-shop owner transformed by the Pulse into a powered-suit hero, using armor, gadgets, and machine interface abilities to protect the city."
+    },
+    {
+      "id": "wraith-eddie-swazey-import",
+      "name": "Wraith",
+      "realName": "Eddie Swazey",
+      "file": "wraith-eddie-swazey-import.json",
+      "origin": "Enhanced",
+      "className": "Warden",
+      "calling": "Boy Scout",
+      "rank": "Street Level",
+      "level": 1,
+      "concept": "A ghostly enhanced hero who phases between the living world and Limbo/Purgatory, slipping through walls, avoiding harm, and speaking with spirits of the dead."
+    },
+    {
+      "id": "threshold-derek-briggs-import",
+      "name": "Threshold",
+      "realName": "Derek Briggs",
+      "portrait": "/sample-characters/portraits/portrait-threshold.png",
+      "file": "threshold-derek-briggs-import.json",
+      "origin": "Enhanced",
+      "className": "Sentinel",
+      "calling": "Defender",
+      "rank": "Street Level",
+      "level": 1,
+      "concept": "A former security guard transformed by \"the Pulse,\" who uses his powers to spot trouble and stand between danger and civilians."
+    }
+  ]
+}

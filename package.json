@@ -7,6 +7,6 @@
     "build": "node scripts/build.js",
     "dev": "node server.js",
     "start": "node server.js",
-    "check": "node --check app.js && node --check server.js && node --check src/main.js && node --check src/generator.js && node --check scripts/build.js"
+    "check": "node --check app.js && node --check server.js && node --check src/main.js && node --check src/generator.js && node --check src/power-data.js && node --check scripts/build.js && node --check scripts/audit-power-data.js && node scripts/audit-power-data.js"
   }
 }

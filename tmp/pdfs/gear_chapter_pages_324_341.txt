@@ -1,0 +1,602 @@
+
+--- PAGE 324 ---
+13
+Chapter Thirteen · Equipment & Gear
+Equipment & Gear
+Weapons, armor, gadgets, vehicles, invention, and crafting. Equipment rules should never slow the table
+down — they should create interesting decisions, dramatic moments, and occasionally spectacular
+failures.
+Heroes punch through walls, fire energy blasts, fly at supersonic speeds, and reshape the battlefield with
+their minds. Equipment exists alongside all of that. It does not replace it.
+Gear is the physical layer of a hero's life: the tools they carry, the vehicles they drive, the weapons they
+use when powers are not enough or not appropriate, and for some heroes, the devices they build that
+make them who they are. A billionaire in a powered suit is defined as much by their engineering genius as
+by what the suit can do. A street-level detective's lockpicks and scanner are as important to them as any
+power. A legacy hero's inherited equipment carries the weight of history.
+This chapter covers everything a hero might own, use, build, or lose. For groups who want detailed
+resource tracking, the Resources and Wealth section at the end of this chapter provides an optional
+system for handling money, purchasing power, and the practical economics of heroic life. Groups who
+prefer narrative resource handling use the Cash Flow, Wealth, and Patron Merits from Chapter 9 and do
+not need anything from that section.
+The Role of Gear
+What Gear Is — and Is Not
+Gear is not a Power Set. A hero who builds a sonic cannon from spare parts is using Technology,
+invention, and engineering genius. The sonic cannon is the result of those things expressed as
+equipment.
+Gear is not a Talent. Talents represent trained edges and signature techniques. A hero with the
+Marksman Talent shoots better. The gun they are shooting is gear.
+Gear is not a Merit. Cash Flow covers financial resources. The Vehicle Merit covers owning a significant
+vehicle. The Base of Operations Merit covers having a headquarters. Those Merits establish that things
+exist. This chapter covers how those things work mechanically.
+Gear provides three things: access to situations the hero could not otherwise reach, utility solutions to
+problems that powers and skills alone cannot address, and capability expressions that fit the hero's
+concept without requiring a full Power Set purchase.
+The line between gear and Powers matters when it comes to the Gear Dependent Flaw. A hero whose
+sonic cannon is a convenience carries it because it helps. A hero whose sonic cannon is the source of
+their primary offensive capability needs the Gear Dependent Flaw to reflect what happens when it is taken
+320
+
+--- PAGE 325 ---
+away. If losing a piece of equipment would significantly reduce the hero's effectiveness in their core role, it
+should carry the Gear Dependent Flaw at the appropriate Rating.
+Standard Equipment
+Standard equipment is anything a hero might reasonably carry without special access, wealth, or a Merit
+to justify it. The GM should not require a roll or a resource check for a hero to have a flashlight, a first aid
+kit, a charged phone, or appropriate clothing for their concept.
+The Rule of Thumb
+If a reasonable person in the hero's position would have it, they have it. A street-level detective has a
+notebook, a camera, and a burner phone. A corporate hero has a tailored suit and an expense account.
+An alien hero has whatever their Origin package specifies.
+When a hero wants something that is not obvious from their concept, the GM applies one of three rulings:
+they simply have it because it makes sense, they can get it with a Prepared Cache Merit use, or they
+need to seek it out through play, a Merit, or a Resource check if using the optional rules.
+Standard equipment never produces Power-level effects. A hero cannot assert they have a portable EMP
+device that shuts down all electronics in a building just because they have a Technology Specialty. That is
+invention territory, not standard equipment.
+Weapons and Combat Equipment
+Most heroes in HEROIC 5e do not rely on weapons as their primary combat expression. Powers, Class
+features, and martial training carry the offensive load. When a hero does use a weapon, it fits into one of
+four categories.
+Unarmed
+Punches, kicks, grapples, headbutts, and anything the hero does with their body.
+Attack: STR or FIG
+Damage: 1 Power Die (no modifiers unless a Class feature or Power increases it)
+The Martial Artist Talent improves unarmed damage dice and opens additional options.
+Light Weapons
+Knives, batons, collapsible weapons, small firearms, and anything that can be concealed or used quickly.
+Attack: DEX or FIG
+Damage: 1 Power Die
+May carry the Concealable or Thrown property.
+321
+
+--- PAGE 326 ---
+Heavy Weapons
+Swords, axes, rifles, shotguns, heavy clubs, and anything that requires both hands or significant physical
+commitment.
+Attack (melee): STR or FIG
+Attack (ranged): DEX
+Damage: 1 Power Die + relevant Attribute modifier
+Not Concealable.
+Ranged Weapons
+Bows, crossbows, thrown weapons, firearms of all types, and any weapon that attacks at a distance.
+Attack: DEX — defends against Dodge rather than Parry/Block
+Range: Short without penalty. Attacking at Medium range imposes Disadvantage unless the hero has the
+Marksman or Sharpshooter Talent.
+Special Properties
+Property Effect
+Reach The weapon can attack targets in an adjacent
+Zone without moving into it. Useful for controlling
+space and making Opportunity Attacks across
+Zone boundaries.
+Thrown Can be used as a ranged attack using STR for the
+attack roll. After being thrown it must be retrieved
+or replaced. Range: Close to Short without
+penalty.
+Concealable Can be hidden on the hero's person without a
+visible bulge. Notice or Investigation checks to
+detect it suffer Disadvantage.
+Armor-Piercing Ignores the flat bonus provided by armor. Does
+not ignore Resistance from Powers or Class
+features.
+Nonlethal Designed to incapacitate rather than kill. A target
+reduced to 0 HP by a Nonlethal weapon falls
+Unconscious and makes Grit Saves.
+322
+
+--- PAGE 327 ---
+Improvised Weapons
+Anything that is not a weapon but used as one — a fire extinguisher, a chair, a section of pipe, a car door.
+Improvised weapons deal 1 Power Die of damage and have no special properties unless the fiction
+supports one. The Improvised Fighter Talent significantly improves this option.
+Armor and Protection
+Most heroes do not wear traditional armor. Their protection comes from Powers, Class features, and
+Active Defense rolls. For heroes who do wear armor, it provides a flat bonus to one specific Active
+Defense roll result rather than replacing the Active Defense system.
+How Armor Works
+Armor applies after the Active Defense roll is made. If a hero rolls their Parry/Block defense and their
+armor provides a +2 bonus, that bonus is added to their rolled total before comparing to the attacker's roll.
+Light Armor
+Reinforced clothing, tactical vests, thin ballistic weave.
+Bonus: +2 to Parry/Block or Dodge (choose when acquired)
+Does not restrict movement or impose penalties. Concealable under loose clothing with a successful
+Stealth check.
+Heavy Armor
+Full tactical gear, ballistic plate carriers, medieval-style armor, dense environmental suits.
+Bonus: +4 to Parry/Block or Dodge (choose when acquired)
+Imposes Disadvantage on Acrobatics and Stealth checks. Not Concealable.
+Powered Armor (as Gear)
+A commercially available exoskeleton or military powered suit has the following profile:
+● +3 to Parry/Block and Dodge simultaneously
+● Built-in strength enhancement: +2 to STR-based checks while wearing
+● Specific built-in features defined at acquisition with GM approval (integrated communications,
+environmental sealing, enhanced sensors, etc.)
+Powered Armor vs. the Armor Systems Power Set
+A hero whose powered armor is their primary Power Set expression is using the Armor Systems Power
+Set from Chapter 11. That armor is a Power Set, not equipment, and does not use the rules in this
+section.
+323
+
+--- PAGE 328 ---
+The distinction: if the armor could theoretically be removed and given to another character who would
+benefit from it equally, it is gear. If the armor is an expression of the hero's unique genius, cannot be
+easily replicated, and losing it would remove their primary powers, it is a Power Set with the Gear
+Dependent Flaw.
+Gadgets and Specialist Equipment
+Gadgets are single-use or limited-use items that produce specific effects — smoke grenades, sensor
+drones, medical injectors, grappling lines, signal jammers, and specialized restraints that populate a
+hero's utility belt.
+Gadgets never directly replicate Power Set effects. A smoke grenade does not replicate the Concealment
+power. It creates smoke, which is an environmental effect the GM adjudicates based on the fiction. A
+specialized restraint does not replicate Telekinetic Bind. It physically restrains a target, which requires the
+target to be cooperative or already subdued.
+Using Gadgets
+● Simple gadgets activate with a Free Object Interaction or Bonus Action.
+● Complex gadgets require an Action and sometimes a Technology or relevant Skill check. The
+GM sets the DC using the standard difficulty scale based on the complexity of the task and the
+pressure of the situation.
+● Gadgets used in combat that require targeting use the same attack and defense resolution as
+Powers: roll an attack, the defender rolls Active Defense, compare results, apply Degrees of
+Success.
+Acquiring Gadgets
+● Standard gadgets: available through Cash Flow, standard equipment assertion, or the Prepared
+Cache Merit.
+● Restricted or military-grade gadgets: require Legal Authority, Connected, Patron, or Gear
+Access at an appropriate Rating.
+● Custom or unique gadgets: require the Invention rules below.
+The Prepared Cache Merit and Gadgets
+A hero with Prepared Cache 1 can declare they previously stored one gadget in a plausible nearby
+location once per session. This covers the classic superhero moment of "I stashed an EMP device here
+last week just in case." The GM may reject items that are implausible given the hero's concept or the
+location.
+Vehicles
+Vehicles are significant equipment. A hero who owns a notable vehicle should have the Vehicle Merit at
+the appropriate Rating. A hero who drives a car they borrowed or commandeered does not need the Merit
+for that one scene.
+Vehicle Ratings
+All vehicles have three ratings that govern their mechanical expression in play.
+324
+
+--- PAGE 329 ---
+Speed Rating
+How fast the vehicle moves. Expressed in Zones per Turn for combat and chase scenes.
+Speed Rating Category Combat Speed
+Rating 1 Standard road vehicle 1–2 Zones per Turn
+Rating 2 High-performance vehicle or 2–3 Zones per Turn
+light aircraft
+Rating 3 Jet aircraft, speedboat at full 3–4 Zones per Turn
+throttle
+Rating 4 Supersonic aircraft or spacecraft Effectively unlimited within
+atmosphere
+Armor Rating
+How much punishment the vehicle can absorb before becoming non-functional. Expressed as hits, using
+the same framework as Minion tiers from the Combat chapter.
+Armor Rating Category Hits
+Rating 1 Standard civilian vehicle 3 hits
+Rating 2 Reinforced or military vehicle 5 hits
+Rating 3 Heavily armored or advanced 8 hits
+vehicle
+Rating 4 Iconic super-vehicle 12 hits or more (defined at
+creation)
+Special Features
+Specific capabilities defined when the vehicle is acquired. A motorcycle has none. An advanced pursuit
+vehicle might have:
+● Stealth Systems: Disadvantage on checks to detect or track it.
+● Pursuit Systems: Advantage on Vehicles checks during chases.
+● Ejection Systems: The hero can exit safely at any speed.
+Special features are negotiated with the GM at acquisition and should reflect the vehicle's concept and
+the hero's resources.
+325
+
+--- PAGE 330 ---
+Vehicles and Zone Movement
+A vehicle moves according to its Speed Rating during combat and chase scenes. A hero piloting a vehicle
+uses their Vehicles Skill for maneuvers. Standard movement and Dash apply: a vehicle can move its
+Speed Rating in Zones as a standard move, or double that on a Dash.
+Vehicle Combat
+When heroes fight from, on, or against vehicles:
+● Attacking a vehicle targets its Armor Rating using normal attack and defense resolution.
+● The vehicle's Armor Rating does not roll Active Defense — attacks against vehicles compare the
+attacker's roll against a static Defense Value of 10 + Armor Rating + pilot's Prowess.
+● Vehicles do not take conditions. They take hits. When a vehicle reaches 0 hits it is disabled or
+destroyed, determined by the fiction and the GM.
+● A hero attacking from inside or on top of a moving vehicle rolls attacks with Disadvantage unless
+they have a Vehicles Specialty or a relevant Class feature or Talent that removes the penalty.
+● A hero attacking a moving vehicle from outside rolls attacks with Disadvantage unless the
+vehicle is stationary or they have a relevant Talent.
+Pursuit Rules
+A chase is a structured encounter using the Zone system. The GM defines the starting Zone positions of
+pursuer and quarry. Each Turn, both sides take actions using the Vehicles Skill or relevant movement
+Powers.
+The goal for the pursuer is to reduce the distance to Close range and maintain it. The goal for the quarry
+is to increase the distance to Long range or beyond and maintain it, or reach a specific escape point.
+Chase Action Mechanic
+Push Attempt to increase or decrease distance by 1
+Zone. Vehicles check DC 15.
+Maneuver Attempt to force the other party into difficult terrain
+or a hazard. Opposed Vehicles check.
+Hazard Introduce an environmental complication. Vehicles
+check DC 15 for the other party to navigate.
+Attack Make a standard attack while maintaining speed,
+at Disadvantage unless a relevant Talent removes
+it.
+Degrees of Success in Chases
+A Strong Success on a Push gives the acting party 2 Zones of movement instead of 1.
+A HEROIC Success produces a Momentum Effect: the pursuer gets Advantage on their next check, or
+the quarry loses a Turn of movement from a collision or near-miss.
+326
+
+--- PAGE 331 ---
+The chase ends when the pursuer achieves Close range and can make a direct intervention, when the
+quarry reaches their escape point, when a vehicle is disabled, or when the fiction makes continuing the
+chase impossible.
+Invention and Crafting
+Some heroes do not just use gear. They build it. HEROIC 5e uses two modes of invention: Downtime
+Invention for planned creation with proper resources and time, and Kitbashing for improvised field
+assembly when there is no time and no guarantee of safety.
+Both modes use the Technology Skill and the standard difficulty scale. Both use Degrees of Success to
+determine the quality of the result. Neither produces permanent Power Set effects without the appropriate
+Power Set and Origin to support it.
+Who Can Invent
+● Any hero with Technology trained can attempt Downtime Invention.
+● Kitbashing requires Technology trained and is significantly harder without a relevant Specialty
+such as Electronics, Power Armor, or Security Systems.
+● A hero's Origin and Power Sets determine what they can build. A Super-Science hero can invent
+devices that replicate effects from their existing Power Sets up to their current Tier. A Gearbound
+hero can upgrade and modify their existing gear. A hero without a relevant Origin or Power Set
+can build mundane technological devices but cannot build devices that replicate Power effects.
+Downtime Invention
+During Downtime, a hero with Technology trained may attempt to build a device. The process has four
+steps.
+Step 1: Define the Device
+The player describes what the device does, what effect it replicates (if any), and what Power Set and Tier
+it draws from. The GM approves the concept or suggests modifications.
+Step 2: Determine Resources
+The GM determines what materials are needed based on the device's complexity. Resources are either:
+● Available: the hero has the appropriate Cash Flow, Wealth, or Patron to cover them without a
+check.
+● Limited: the hero must make a Resource check or narrative effort to acquire them.
+● Unavailable: the materials cannot be found without a significant story arc.
+Step 3: Make the Technology Check
+Downtime Invention DCs
+15Simple utility device with a known effect
+20Complex device replicating an Encounter-tier Power effect
+327
+
+--- PAGE 332 ---
+25Cutting-edge device pushing the limits of known science or replicating a powerful effect
+Add relevant Specialties and Expertise as normal.
+Step 4: Apply Degrees of Success
+Result Outcome
+Normal Success The device works as intended. It has a number of
+uses equal to the hero's Prowess before requiring
+repair or recharging during a Breather or
+Downtime. It functions reliably within its defined
+parameters.
+Strong Success The device works as intended and the player may
+define one additional benefit within reason —
+extra uses, a secondary minor effect, reduced size
+making it Concealable, or faster activation time.
+The GM approves the benefit.
+HEROIC Success The device exceeds expectations. It has unlimited
+uses until destroyed, has an unexpected
+additional capability the player and GM define
+together, or is so well-built that it provides a bonus
+to the first use in a session.
+Failure The device does not work. The materials are
+spent. The hero may try again during their next
+Downtime if they can acquire new materials.
+Invented Gear and the Gear Dependent Flaw
+If a hero builds a device that becomes central to their heroic identity and primary combat effectiveness,
+the Gear Dependent Flaw applies at the Rating appropriate to how devastating its loss would be. A hero
+who builds a utility scanner they use occasionally does not need the Flaw. A hero whose entire offensive
+capability comes from a self-built energy projector should take Gear Dependent at Rating 2 or 3.
+Kitbashing
+Kitbashing is invention under pressure. No proper workspace, no guaranteed materials, no time to do it
+right. It is the hero pulling a device apart and rebuilding it into something new in the middle of a collapsing
+building because there is no other option.
+Kitbashing requires available materials. The GM determines whether the scene contains materials
+appropriate to what the hero is attempting. A hero cannot Kitbash a sonic emitter in an empty room. A
+hero absolutely can Kitbash a signal jammer from a broken drone, a phone, and a fire suppression
+system panel.
+328
+
+--- PAGE 333 ---
+Action Cost
+● Simple devices (one effect, no moving parts, immediate use): Bonus Action.
+● Complex devices (multiple effects, requires assembly, needs calibration): Action.
+● Extremely complex devices: Full Round Action (Movement, Action, Bonus Action, and Reaction
+all consumed — result available at the start of the hero's next Turn).
+DCs and Constraints
+Kitbashing DCs
+15Reasonable device from adequate materials under moderate pressure
+20Complex device from poor materials under significant pressure
+25Complex device from poor materials under extreme pressure
+Kitbashed devices replicate At-Will or Encounter tier effects only. Kitbashing never produces a Daily
+Power equivalent.
+Result Outcome
+Normal Success The device works as intended for one use or until
+the end of the current scene, whichever comes
+first. After that it breaks down, runs out of power,
+or simply stops. The hero gets their moment.
+Strong Success The device works and has one additional use, or
+the player may define a minor additional benefit —
+a slightly broader effect area, a bonus to the first
+roll made with it, or the ability to pass it to an ally
+who can use it effectively.
+HEROIC Success The device works exceptionally well. It functions
+for the entire scene, grants a Momentum Effect
+equivalent on its first use, or produces a better
+outcome than anyone expected.
+Failure The device does not work. The materials are
+spent. There is no separate catastrophic failure
+mechanic. Failure is failure. The scene moves on
+and the hero finds another way.
+Worked Examples
+Example — Downtime Invention
+Ghostwork (Super-Science Origin, Technology trained with Expertise, Electronics Specialty) wants to
+build a miniaturized sensor drone during Downtime. She and the GM agree the drone replicates an At-Will
+329
+
+--- PAGE 334 ---
+surveillance effect from her existing Power Set at her current Tier. Materials are available through her
+Patron Merit.
+She rolls Technology with Expertise: 1d20 + INT +4 + double Prowess (+6) = 1d20 + 10. She rolls 14.
+Total: 24. The DC was 15 for a straightforward At-Will device. Strong Success by a margin of 9.
+The drone works as intended with Prowess uses, and Ghostwork chooses the additional benefit: the
+drone is small enough to be Concealable in a coat pocket.
+Example — Kitbashing
+Crashpoint (Guardian, Technology untrained) is trapped in a power substation with a villain controlling
+the electrical systems. She cannot build anything sophisticated — the GM rules Kitbashing is not
+available to her here, as she lacks Technology training entirely.
+Later, Ghostwork arrives. She assesses the materials (moderate quality), the complexity (simple: she
+wants to short-circuit the villain's control interface, an At-Will equivalent effect), and the time pressure
+(high: the villain is active). The GM sets DC 20.
+Ghostwork rolls Technology with Expertise: 1d20 + 10. She rolls 11. Total: 21. Normal Success. The
+improvised short-circuit works once. The villain's control interface goes dark for one round. The heroes
+use the opening.
+Gear and Origins
+Different Origins interact with gear in different ways.
+Gearbound
+A Gearbound hero derives their primary powers from equipment. Their gear is their Power Set. The Gear
+Dependent Flaw applies at Rating 2 or 3 for primary gear. A Gearbound hero who loses their primary
+equipment loses their Power Set access until the gear is recovered or rebuilt.
+A Gearbound hero has natural access to Downtime Invention for their own gear and may Kitbash
+modifications to their existing equipment at lower DCs: reduce the Kitbashing DC by 3 when modifying
+their own established gear.
+Super-Science
+A Super-Science hero invents things. Their Power Sets represent the categories of technology they have
+mastered. Downtime Invention is a core part of their concept and they should be encouraged to use it
+regularly.
+A Super-Science hero may build devices for other heroes during Downtime with GM approval: the
+receiving hero must have the Gear Access Merit or pay a Resource Cost appropriate to the device's tier
+to represent the materials.
+330
+
+--- PAGE 335 ---
+Legacy
+A Legacy hero may have inherited significant equipment from a predecessor. This equipment is defined at
+character creation with GM approval and functions as established gear with the appropriate Vehicle or
+Gear Access Merit already built into the Origin package. Legacy equipment that is central to the heroic
+identity carries the Gear Dependent Flaw.
+Legacy equipment can be upgraded through Downtime Invention if the hero has Technology trained and
+the relevant expertise.
+Alien
+An alien hero may carry technology that is beyond current Earth manufacturing capability. Alien gear
+functions as described in this chapter but cannot be repaired using the Technology Skill alone :
+repairing alien technology requires either the alien hero themselves, a specific alien resource, or a
+Technology check at DC 25. An alien hero with Technology trained can repair their own equipment
+normally.
+Losing, Repairing, and Upgrading Gear
+Losing Gear
+Gear can be destroyed in combat, stolen, confiscated by authorities, or simply lost in the chaos of a
+desperate fight. The GM introduces gear loss as a narrative consequence of combat damage, villain
+action, or dramatic failure.
+● When a hero loses gear that carries the Gear Dependent Flaw, the Flaw activates at its full Rating
+until the gear is recovered or replaced.
+● When a hero loses gear that does not carry the Flaw, they lose access to that item's benefits until
+it is recovered or replaced. No Flaw activates but the practical loss still matters.
+Repairing Gear
+Damage Level When Check
+Minor repairs Cosmetic damage, depleted Technology DC 10 during a
+power cells, minor component Breather. Success restores full
+replacement function.
+Significant repairs Structural damage, destroyed Technology check during
+components, major system Downtime. DC set by severity.
+failure Failure means the repair takes
+another Downtime period, or the
+gear requires specific materials
+the hero must acquire through
+play.
+Alien or exotic technology increases repair DCs as described in the Gear and Origins section above.
+331
+
+--- PAGE 336 ---
+Upgrading Gear
+Existing gear can be upgraded during Downtime using the Invention rules. Upgrading existing gear is
+easier than building from scratch: reduce the DC by 3 when modifying a piece of gear the hero already
+owns and understands. The upgrade must represent a plausible improvement to the existing item, not a
+wholesale replacement.
+A hero who upgrades gear through play may also improve the Vehicle Merit or Gear Access Merit
+associated with that gear during an advancement choice, with GM approval and story justification. The
+fiction must support it: a hero who has spent three story arcs improving their vehicle has earned the right
+to call it Rating 3 without simply paying an advancement cost.
+Resources and Wealth (Optional Rules)
+Using This Section
+The default resource system in HEROIC 5e is narrative. The Cash Flow, Wealth, and Patron Merits from
+Chapter 9 establish what a hero can reasonably access. The GM interprets these Merits to determine
+what the hero can acquire without tracking individual purchases.
+Groups who want more granular resource tracking may use the following optional system. If your group is
+not using this system, the Merits are sufficient and this section can be ignored entirely.
+Resource Rating
+Every hero using this system has a Resource Rating from 0 to 5. This rating is derived from their Merits
+and story circumstances. It is not fixed: it can rise or fall with story events.
+Rating Level Real-World Equivalent
+0 Destitute No reliable income. The
+Destitute Flaw applies. Survival
+is the daily concern.
+1 Street Level Basic needs covered. Irregular
+income, cheap equipment,
+public transport.
+2 Comfortable Reliable income. A car, an
+apartment, professional
+equipment, modest savings.
+3 Wealthy Significant resources. High-end
+equipment, property,
+professional access.
+4 Rich Major personal wealth. Custom
+vehicles, private facilities,
+significant social access.
+332
+
+--- PAGE 337 ---
+Rating Level Real-World Equivalent
+5 Vast Billionaire, institutional, or royal
+scale. Effectively unlimited for
+personal purchases.
+Deriving Resource Rating from Merits
+Merit / Condition Resource Rating
+No relevant Merits 1 (Street Level)
+Cash Flow 1 2 (Comfortable)
+Cash Flow 2 3 (Wealthy)
+Cash Flow 3 or Wealth 1 4 (Rich)
+Wealth 2 or Wealth 3 5 (Vast)
+Patron 2 or Team Membership 2 +1 to Resource Rating for mission-specific
+purchases only
+Destitute Flaw 0 (Destitute) — overrides all other Merits
+Resource Cost
+Every significant purchase has a Resource Cost from 0 to 5.
+● If the hero's Resource Rating meets or exceeds the Resource Cost, the purchase happens
+without a roll. They simply have it.
+● If the Resource Cost exceeds the hero's Rating by 1 , they may attempt a Cash Flow or
+Influence check against DC 15 to stretch their resources. Success means they acquire it with
+some effort. Failure means they cannot manage it this session but may try again later.
+● If the Resource Cost exceeds the hero's Rating by 2 or more , the purchase is beyond their
+means without GM approval and a significant story justification — a major heist, a windfall, or a
+generous ally.
+Reference Price Table
+The following prices are modern ballpark figures provided as reference. The GM assigns Resource Cost
+based on the fiction, using these examples as anchors. Prices in real markets vary enormously based on
+condition, location, and availability.
+Resource Cost 0 — Free or negligible
+Item Approximate Price
+Burner phone $20–$30
+333
+
+--- PAGE 338 ---
+Item Approximate Price
+Basic first aid kit $15–$25
+Public transport ticket $3–$5
+Basic clothing $20–$50
+Street food, daily meals $5–$15
+Padlock $10–$20
+Notebook and pens $5–$10
+Resource Cost 1 — Affordable, up to a few hundred dollars
+Item Approximate Price
+Decent smartphone $300–$500
+Basic toolkit $50–$150
+Bicycle $200–$500
+Budget hotel room (per night) $60–$100
+Police scanner $100–$200
+Handcuffs (professional) $20–$50
+Basic lockpicks $30–$80
+Tactical flashlight $40–$80
+Prepaid debit cards $10–$50
+Basic body camera $80–$150
+Resource Cost 2 — Significant, hundreds to low thousands
+Item Approximate Price
+Motorcycle $5,000–$15,000
+Used car $8,000–$20,000
+Professional laptop $800–$1,500
+Basic surveillance kit $500–$2,000
+334
+
+--- PAGE 339 ---
+Item Approximate Price
+Semi-professional camera $1,000–$3,000
+Apartment rent, major city (monthly) $1,500–$3,000
+Legal fees, single case $2,000–$5,000
+Basic body armor $500–$1,500
+Night vision goggles $300–$1,000
+Encrypted satellite phone $800–$2,000
+Resource Cost 3 — Expensive, tens of thousands
+Item Approximate Price
+New luxury car $50,000–$100,000
+Speedboat $30,000–$80,000
+Light aircraft rental (per day) $1,000–$3,000
+Professional security system $10,000–$30,000
+Advanced medical equipment $20,000–$50,000
+Small commercial space (monthly lease) $5,000–$15,000
+Professional legal retainer $10,000–$25,000
+Advanced surveillance drone $5,000–$20,000
+Custom tactical gear set $5,000–$15,000
+Private investigation retainer $3,000–$10,000
+Resource Cost 4 — Major, hundreds of thousands to low millions
+Item Approximate Price
+Private helicopter $500,000–$2,000,000
+Corporate jet charter (per trip) $50,000–$150,000
+Small building purchase, major city $1,000,000–$5,000,000
+Advanced research laboratory setup $500,000–$2,000,000
+335
+
+--- PAGE 340 ---
+Item Approximate Price
+Armored vehicle $100,000–$500,000
+Private island $1,000,000–$10,000,000
+Significant political or legal influence $100,000–$500,000
+Advanced powered exoskeleton $300,000–$1,000,000
+Superyacht $5,000,000–$20,000,000
+Private security team (annual) $500,000–$2,000,000
+Resource Cost 5 — Vast, tens of millions and above
+Item Approximate Price
+Private jet (ownership) $20,000,000–$90,000,000
+Commercial satellite $50,000,000–$500,000,000
+Skyscraper $200,000,000+
+Nuclear submarine $3,000,000,000+
+Private space launch $60,000,000–$200,000,000
+Major media company $500,000,000+
+Hospital or research institution $100,000,000–$500,000,000
+Aircraft carrier $13,000,000,000+
+Major sports franchise $1,000,000,000–$5,000,000,000
+Significant national infrastructure project $500,000,000–$10,000,000,000
+Resource Rating Fluctuation
+Resource Ratings are not permanent. Story events change them. A hero who is defrauded, whose assets
+are frozen, or whose Patron withdraws support may drop a Rating level temporarily or permanently. A
+hero who discovers a cache of alien technology, inherits a fortune, or wins a major lawsuit may gain a
+Rating level as a campaign reward.
+Resource Rating changes require GM approval and story justification. They are not advancement
+choices. They are story consequences.
+336
+
+--- PAGE 341 ---
+A Note on Group Resources
+When the party operates as a team with shared infrastructure — a Base of Operations or Team
+Membership Merit — the group's combined resources may be treated as a shared Resource Rating for
+mission-specific purposes. The GM determines how the group's resources combine based on their Merits.
+A team with one billionaire member (Resource Rating 5) and three street-level heroes (Resource Rating
+1) has access to Rating 5 resources for team operations, but individual heroes still have their personal
+Rating for personal purchases.
+HEROIC 5e v2.4 Playtest Draft
+Chapter 13 — Equipment & Gear
+Weapons · Armor · Gadgets · Vehicles · Invention · Resources
+→ Chapter 14: Playing the Game
+337

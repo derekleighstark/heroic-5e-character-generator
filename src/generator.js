@@ -1,3 +1,5 @@
+import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
+
 const rulesSource = await fetch("/app.js").then(response => response.text());
 const rulesPrefix = rulesSource.slice(0, rulesSource.indexOf("const STORAGE_KEY"));
 const {
@@ -10,10 +12,12 @@ const {
   talents,
   merits,
   flaws,
-  powerSets,
   gearCatalog,
   gearRules
-} = Function(`${rulesPrefix}; return { abilities, ranks, classes, skills, origins, callings, talents, merits, flaws, powerSets, gearCatalog, gearRules };`)();
+} = Function(`${rulesPrefix}; return { abilities, ranks, classes, skills, origins, callings, talents, merits, flaws, gearCatalog, gearRules };`)();
+
+const powerSets = powerSetRules.map(powerSet => powerSet.name);
+const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSet.name, powerSet]));
 
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
@@ -388,6 +392,8 @@ let sampleStatus = "";
 let activeCompendiumSection = "glossary";
 let diceRollMode = "normal";
 let diceRollHistory = [];
+let powerChoiceCatalogCache;
+let powerChoiceMapCache;
 
 function load(key, fallback) {
   try {
@@ -503,12 +509,227 @@ function originBonus(key) {
   return (sheet.originPrimaryBonus === key ? 2 : 0) + (sheet.originSecondaryBonus === key ? 1 : 0);
 }
 
+function powerAbilityScoreBonus(key) {
+  return selectedPowerSets().reduce((total, powerSet) => {
+    if (!/^\+1\b/.test(powerSet.abilityScoreBonus || "") || powerSetAbility(powerSet) !== key) return total;
+    return total + purchasedCoreLevel(powerSet);
+  }, 0);
+}
+
 function abilityScore(key) {
-  return Number(sheet[`${key}Score`] || 10) + originBonus(key);
+  return Number(sheet[`${key}Score`] || 10) + originBonus(key) + powerAbilityScoreBonus(key);
 }
 
 function abilityMod(key) {
   return mod(abilityScore(key));
+}
+
+function ensurePowerState() {
+  if (!Array.isArray(sheet.powerPurchases)) sheet.powerPurchases = [];
+  if (!sheet.powerSetAbilities || typeof sheet.powerSetAbilities !== "object" || Array.isArray(sheet.powerSetAbilities)) {
+    sheet.powerSetAbilities = {};
+  }
+}
+
+function powerChoiceId(setId, group, itemId) {
+  return `${setId}::${group}::${itemId}`;
+}
+
+function powerRuleId(name) {
+  return String(name || "power").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function selectedPowerSetNames() {
+  return Array.from({ length: 12 }, (_, index) => sheet[`powerSet${index + 1}`]).filter(Boolean).filter((name, index, items) => items.indexOf(name) === index);
+}
+
+function selectedPowerSets() {
+  return selectedPowerSetNames().map(name => powerSetByName[name]).filter(Boolean);
+}
+
+function powerSetSlotCount() {
+  const values = calc();
+  let lastUsed = 0;
+  for (let index = 1; index <= 12; index += 1) {
+    if (sheet[`powerSet${index}`]) lastUsed = index;
+  }
+  return Math.max(values.maxPowerSets, lastUsed);
+}
+
+function powerTierLimit() {
+  const rankLimit = sheet.rank === "Street Level" ? 1 : sheet.rank === "Mid-Level" ? 2 : 3;
+  if (Number(sheet.level || 1) < 5) return rankLimit;
+  return Math.min(3, rankLimit + (rankLimit < 3 ? 1 : 0));
+}
+
+function powerSetAbility(powerSet) {
+  const options = powerSet?.abilityOptions || [];
+  const stored = sheet.powerSetAbilities?.[powerSet?.id];
+  if (options.includes(stored)) return stored;
+  if (selectedPowerSets()[0]?.id === powerSet?.id && options.includes(sheet.powerAbility)) return sheet.powerAbility;
+  return options[0] || "str";
+}
+
+function powerChoiceCatalog() {
+  if (powerChoiceCatalogCache) return powerChoiceCatalogCache;
+  const choices = [];
+  powerSetRules.forEach(powerSet => {
+    powerSet.coreTrack.forEach(item => choices.push({ ...item, setId: powerSet.id, setName: powerSet.name, group: "core" }));
+    powerSet.powers.forEach(item => choices.push({ ...item, setId: powerSet.id, setName: powerSet.name, group: "power" }));
+    powerSet.utilities.forEach(item => choices.push({ ...item, setId: powerSet.id, setName: powerSet.name, group: "utility" }));
+    powerSet.enhancements.forEach((item, index) => choices.push({ ...item, id: item.id || `enhancement-${index + 1}`, setId: powerSet.id, setName: powerSet.name, group: "enhancement", tier: 1, type: "Enhancement", action: "Passive", creationCost: .5 }));
+    powerSet.limitations.forEach((item, index) => choices.push({ ...item, id: item.id || `limitation-${index + 1}`, setId: powerSet.id, setName: powerSet.name, group: "limitation", tier: 1, type: "Limitation", action: "Varies", creationCost: 0 }));
+  });
+  generalUtilityPowers.forEach(item => choices.push({ ...item, setId: "general-utility", setName: "General Utility", group: "general" }));
+  powerFramework.genericEnhancements.forEach(item => choices.push({ ...item, id: powerRuleId(item.name), setId: "general-enhancement", setName: "General Enhancement", group: "enhancement", tier: 1, type: "Enhancement", action: "Passive", creationCost: .5 }));
+  powerFramework.genericLimitations.forEach(item => choices.push({ ...item, id: powerRuleId(item.name), setId: "general-limitation", setName: "General Limitation", group: "limitation", tier: 1, type: "Limitation", action: "Varies", creationCost: 0 }));
+  powerChoiceCatalogCache = choices.map(choice => ({ ...choice, choiceId: powerChoiceId(choice.setId, choice.group, choice.id) }));
+  return powerChoiceCatalogCache;
+}
+
+function powerChoiceMap() {
+  if (!powerChoiceMapCache) powerChoiceMapCache = new Map(powerChoiceCatalog().map(choice => [choice.choiceId, choice]));
+  return powerChoiceMapCache;
+}
+
+function selectedPowerChoices() {
+  ensurePowerState();
+  const catalog = powerChoiceMap();
+  return sheet.powerPurchases.map(id => catalog.get(id)).filter(Boolean);
+}
+
+function selectedPowerChoiceIds() {
+  ensurePowerState();
+  return new Set(sheet.powerPurchases);
+}
+
+function selectedPowerLimitations() {
+  return selectedPowerChoices().filter(choice => choice.group === "limitation");
+}
+
+function powerLimitationCount() {
+  return Math.max(selectedPowerLimitations().length, Number(sheet.limitations || 0));
+}
+
+function purchasedCoreLevel(powerSet) {
+  return selectedPowerChoices()
+    .filter(choice => choice.setId === powerSet.id && choice.group === "core")
+    .reduce((highest, choice) => Math.max(highest, choice.level), 0);
+}
+
+function prerequisiteMet(choice) {
+  if (choice.group === "limitation") return selectedPowerLimitations().length < calc().maxLimitations;
+  if (choice.setId === "general-enhancement") return selectedPowerSets().length > 0;
+  if (choice.group === "general") {
+    if (!choice.prerequisite) return true;
+    return selectedPowerChoices().some(item => item.name === choice.prerequisite);
+  }
+  const powerSet = powerSetRules.find(item => item.id === choice.setId);
+  if (!powerSet || !selectedPowerSetNames().includes(powerSet.name)) return false;
+  if (choice.group === "core") return choice.level === 1 || purchasedCoreLevel(powerSet) >= choice.level - 1;
+  const prerequisite = choice.prerequisite || `${powerSet.name} 1`;
+  const requiredCore = Number((prerequisite.match(new RegExp(`${powerSet.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")} ([1-4])`)) || [])[1] || 1);
+  if (purchasedCoreLevel(powerSet) < requiredCore) return false;
+  const namedPrerequisites = prerequisite.split(/\u00b7/).map(value => value.trim()).filter(value => value && !value.includes(powerSet.name));
+  const setPurchases = [...powerSet.powers, ...powerSet.utilities];
+  return namedPrerequisites.every(requirement => {
+    const requiredPurchase = setPurchases.find(item => new RegExp(`^${item.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}(?:\\b|$)`, "i").test(requirement));
+    return !requiredPurchase || selectedPowerChoices().some(item => item.name === requiredPurchase.name && item.setId === powerSet.id);
+  });
+}
+
+function powerChoiceAvailable(choice) {
+  if (choice.group !== "limitation" && Number(choice.tier || 1) > powerTierLimit()) return false;
+  return prerequisiteMet(choice);
+}
+
+function prunePowerPurchases() {
+  ensurePowerState();
+  const selectedSetIds = new Set(selectedPowerSets().map(powerSet => powerSet.id));
+  const validIds = new Set(powerChoiceCatalog().filter(choice => choice.setId.startsWith("general-") || selectedSetIds.has(choice.setId)).map(choice => choice.choiceId));
+  sheet.powerPurchases = sheet.powerPurchases.filter(id => validIds.has(id));
+}
+
+function pruneUnmetPowerPrerequisites() {
+  let changed = true;
+  while (changed) {
+    changed = false;
+    const catalog = powerChoiceMap();
+    const next = sheet.powerPurchases.filter(id => {
+      const choice = catalog.get(id);
+      if (!choice || choice.group === "limitation") return Boolean(choice);
+      const keep = Number(choice.tier || 1) <= powerTierLimit() && prerequisiteMet(choice);
+      if (!keep) changed = true;
+      return keep;
+    });
+    sheet.powerPurchases = next;
+  }
+}
+
+function togglePowerChoice(id) {
+  ensurePowerState();
+  const catalog = powerChoiceMap();
+  const choice = catalog.get(id);
+  if (!choice) return;
+  const selected = sheet.powerPurchases.includes(id);
+  if (selected) {
+    sheet.powerPurchases = sheet.powerPurchases.filter(item => item !== id);
+    pruneUnmetPowerPrerequisites();
+  } else if (powerChoiceAvailable(choice)) {
+    sheet.powerPurchases.push(id);
+  }
+  sheet.limitations = selectedPowerLimitations().length;
+  save();
+}
+
+function powerBudget() {
+  const values = calc();
+  const choices = selectedPowerChoices().filter(choice => choice.group !== "limitation" && choice.group !== "enhancement");
+  const enhancementsBySet = selectedPowerChoices().filter(choice => choice.group === "enhancement").reduce((groups, choice) => groups.set(choice.setId, [...(groups.get(choice.setId) || []), choice]), new Map());
+  const enhancementUnits = Array.from(enhancementsBySet.entries()).flatMap(([setId, items]) => Array.from({ length: Math.ceil(items.length / 2) }, (_, index) => ({ choiceId: `${setId}::enhancement-pair::${index + 1}`, name: `${items[0].setName} Enhancements ${index + 1}`, creationCost: 1 })));
+  const purchases = [...choices, ...enhancementUnits];
+  const coreBaseline = choices.filter(choice => choice.group === "core").sort((a, b) => a.creationCost - b.creationCost)[0];
+  const atWillBaseline = choices.filter(choice => choice.type === "At-Will").sort((a, b) => a.creationCost - b.creationCost).slice(0, 2);
+  const encounterBaseline = choices.filter(choice => choice.type === "Encounter").sort((a, b) => a.creationCost - b.creationCost)[0];
+  const baselinePurchases = [coreBaseline, ...atWillBaseline, encounterBaseline].filter(Boolean).filter((choice, index, items) => items.findIndex(item => item.choiceId === choice.choiceId) === index);
+  const baselineIds = new Set(baselinePurchases.map(choice => choice.choiceId));
+  const remainingPurchases = purchases.filter(choice => !baselineIds.has(choice.choiceId)).sort((a, b) => Number(b.creationCost || 1) - Number(a.creationCost || 1));
+  const advancementAvailable = Math.max(0, values.level - 1);
+  const advancementUsed = Math.min(advancementAvailable, remainingPurchases.length);
+  const startingPurchases = [...baselinePurchases, ...remainingPurchases.slice(advancementUsed)];
+  const startingSpent = startingPurchases.reduce((total, choice) => total + Number(choice.creationCost || 1), 0);
+  const limitations = powerLimitationCount();
+  const startingAvailable = values.startingPicks + limitations + Number(sheet.bonusPicks || 0);
+  const enhancements = selectedPowerChoices().filter(choice => choice.group === "enhancement").length;
+  const atWills = selectedPowerChoices().filter(choice => choice.type === "At-Will").length;
+  const encounters = selectedPowerChoices().filter(choice => choice.type === "Encounter").length;
+  const cores = selectedPowerChoices().filter(choice => choice.group === "core").length;
+  const setCount = selectedPowerSetNames().length;
+  const warnings = [];
+  if (setCount > values.maxPowerSets) warnings.push(`Power Set cap exceeded: ${setCount}/${values.maxPowerSets}.`);
+  if (startingSpent > startingAvailable) warnings.push(`Starting Power Picks exceeded by ${startingSpent - startingAvailable}.`);
+  if (cores < 1) warnings.push("Choose at least one Core Track purchase.");
+  if (atWills < 2) warnings.push(`Choose at least two At-Will Powers (${atWills}/2).`);
+  if (encounters < 1) warnings.push("Choose at least one Encounter Power.");
+  if (enhancements % 2 !== 0) warnings.push("Starting Enhancements are purchased in pairs; choose one more Enhancement.");
+  if (limitations > values.maxLimitations) warnings.push(`Limitation cap exceeded: ${limitations}/${values.maxLimitations}.`);
+  const unavailableSelected = selectedPowerChoices().filter(choice => choice.group !== "limitation" && (Number(choice.tier || 1) > powerTierLimit() || !prerequisiteMet(choice)));
+  if (unavailableSelected.length) warnings.push(`${unavailableSelected.length} selected Power purchase${unavailableSelected.length === 1 ? " is" : "s are"} above current Tier access or missing a prerequisite.`);
+  return {
+    startingAvailable,
+    startingSpent,
+    startingRemaining: startingAvailable - startingSpent,
+    advancementAvailable,
+    advancementUsed,
+    advancementRemaining: advancementAvailable - advancementUsed,
+    limitations,
+    atWills,
+    encounters,
+    cores,
+    setCount,
+    enhancements,
+    warnings,
+  };
 }
 
 function calc() {
@@ -517,8 +738,10 @@ function calc() {
   const classInfo = classes[sheet.className] || classes.Bruiser;
   const pro = prowess(level);
   const conMod = abilityMod("con");
+  const primaryPowerSet = selectedPowerSets()[0];
+  const primaryPowerAbility = primaryPowerSet ? powerSetAbility(primaryPowerSet) : (sheet.powerAbility || "str");
   const hp = classInfo.hitDie + abilityScore("con") + ((level - 1) * (hitAverage(classInfo.hitDie) + conMod)) + (sheet.toughTalent ? level * 2 : 0);
-  const limitationPicks = Math.min(Number(sheet.limitations || 0), rank.maxLimitations);
+  const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
   return {
     level,
     pro,
@@ -527,7 +750,7 @@ function calc() {
     hitDie: `d${classInfo.hitDie}`,
     powerDie: rank.powerDie,
     classEV: 10 + abilityMod(classInfo.primary) + pro,
-    powerEV: 10 + abilityMod(sheet.powerAbility || "str") + pro,
+    powerEV: 10 + abilityMod(primaryPowerAbility) + pro,
     edgeStart: rank.edgeStart,
     edgeCap: level + pro,
     recovery: signed(classInfo.recovery),
@@ -808,6 +1031,7 @@ function ensureClassSaves(reset = false) {
 }
 
 function initialize(reset = false) {
+  ensurePowerState();
   normalizeAbilityScores();
   ensureOrigin();
   ensureClassSaves(reset);
@@ -1220,17 +1444,112 @@ function renderMeritsFlaws() {
   `;
 }
 
+function powerSetSelectOptions(field) {
+  const selectedSets = new Set(selectedPowerSetNames());
+  const current = sheet[field] || "";
+  return `<option value="">Choose Power Set</option>${powerSets.map(name => `<option value="${html(name)}" ${selected(current, name)} ${selectedSets.has(name) && current !== name ? "disabled" : ""}>${html(name)}</option>`).join("")}`;
+}
+
+function multilineHtml(value) {
+  return html(value || "").replaceAll("\n", "<br>");
+}
+
+function powerChoiceCard(choice) {
+  const selectedIds = selectedPowerChoiceIds();
+  const isSelected = selectedIds.has(choice.choiceId);
+  const available = isSelected || powerChoiceAvailable(choice);
+  const costLabel = choice.group === "limitation" ? "+1 Pick" : choice.group === "enhancement" ? "2 for 1 Pick" : `${choice.creationCost} Pick${choice.creationCost === 1 ? "" : "s"}`;
+  return `
+    <article class="power-choice-card ${isSelected ? "selected" : ""} ${available ? "" : "unavailable"}">
+      <header>
+        <div><h4>${html(choice.name)}</h4><div class="power-tags"><span>Tier ${choice.tier || 1}</span><span>${html(choice.type)}</span><span>${html(choice.action || "No Action")}</span><span>${costLabel}</span></div></div>
+        <button type="button" data-action="toggle-power-choice" data-power-choice="${html(choice.choiceId)}" ${available ? "" : "disabled"}>${isSelected ? "Remove" : "Add"}</button>
+      </header>
+      ${choice.prerequisite ? `<small><strong>Prerequisite:</strong> ${html(choice.prerequisite)}</small>` : ""}
+      <p>${multilineHtml(choice.text)}</p>
+    </article>
+  `;
+}
+
+function powerChoiceSection(title, choices, open = false) {
+  return `
+    <details class="power-choice-section" ${open ? "open" : ""}>
+      <summary><span>${html(title)}</span><strong>${choices.filter(choice => selectedPowerChoiceIds().has(choice.choiceId)).length}/${choices.length}</strong></summary>
+      <div class="power-choice-list">${choices.map(powerChoiceCard).join("")}</div>
+    </details>
+  `;
+}
+
+function renderPowerSetBuilder(powerSet) {
+  const ability = powerSetAbility(powerSet);
+  const selectedCount = selectedPowerChoices().filter(choice => choice.setId === powerSet.id).length;
+  const slotIndex = Array.from({ length: 12 }, (_, index) => index + 1).find(index => sheet[`powerSet${index}`] === powerSet.name);
+  const fixedAbility = powerSet.abilityOptions.length === 1;
+  const abilityControl = fixedAbility
+    ? `<div class="power-fixed-ability"><span>Governing Ability</span><strong>${ability.toUpperCase()}</strong></div>`
+    : `<label>Governing Ability<select data-power-set-ability="${powerSet.id}">${options(powerSet.abilityOptions.map(key => [key, abilities.find(([abilityKey]) => abilityKey === key)?.[2] || key.toUpperCase()]), ability, "Choose")}</select></label>`;
+  const coreChoices = powerSet.coreTrack.map(item => ({ ...item, setId: powerSet.id, setName: powerSet.name, group: "core", choiceId: powerChoiceId(powerSet.id, "core", item.id) }));
+  const branchChoices = powerSet.powers.map(item => ({ ...item, setId: powerSet.id, setName: powerSet.name, group: "power", choiceId: powerChoiceId(powerSet.id, "power", item.id) }));
+  const utilityChoices = powerSet.utilities.map(item => ({ ...item, setId: powerSet.id, setName: powerSet.name, group: "utility", choiceId: powerChoiceId(powerSet.id, "utility", item.id) }));
+  const enhancementChoices = powerSet.enhancements.map((item, index) => ({ ...item, id: item.id || `enhancement-${index + 1}`, setId: powerSet.id, setName: powerSet.name, group: "enhancement", tier: 1, type: "Enhancement", action: "Passive", creationCost: .5, choiceId: powerChoiceId(powerSet.id, "enhancement", item.id || `enhancement-${index + 1}`) }));
+  const limitationChoices = powerSet.limitations.map((item, index) => ({ ...item, id: item.id || `limitation-${index + 1}`, setId: powerSet.id, setName: powerSet.name, group: "limitation", tier: 1, type: "Limitation", action: "Varies", creationCost: 0, choiceId: powerChoiceId(powerSet.id, "limitation", item.id || `limitation-${index + 1}`) }));
+  return `
+    <details class="power-set-builder" ${selectedCount ? "open" : ""}>
+      <summary><div><span>Power Set</span><strong>${html(powerSet.name)}</strong></div><em>${selectedCount} selected</em></summary>
+      <div class="power-set-overview">
+        <div><p>${html(powerSet.description)}</p><div class="pill-row"><span>${html(powerSet.associatedConditions || "No associated conditions")}</span><span>${html(powerSet.defaultDamage || "See individual powers")}</span></div></div>
+        ${abilityControl}
+      </div>
+      ${powerChoiceSection("Core Track", coreChoices, true)}
+      ${powerChoiceSection("Combat & Branch Powers", branchChoices)}
+      ${powerChoiceSection("Set-Specific Utilities", utilityChoices)}
+      ${powerChoiceSection("Enhancements", enhancementChoices)}
+      ${powerChoiceSection("Limitations", limitationChoices)}
+      ${slotIndex ? textarea(`powerSet${slotIndex}Notes`, `${powerSet.name} Notes`, 4) : ""}
+    </details>
+  `;
+}
+
 function renderPowers() {
   const values = calc();
+  ensurePowerState();
+  const budget = powerBudget();
+  const slots = powerSetSlotCount();
+  const selectedSets = selectedPowerSets();
+  const utilityGroups = [1, 2, 3].map(tier => generalUtilityPowers.filter(item => item.tier === tier).map(item => ({ ...item, setId: "general-utility", setName: "General Utility", group: "general", choiceId: powerChoiceId("general-utility", "general", item.id) })));
+  const genericLimitations = powerFramework.genericLimitations.map(item => ({ ...item, id: powerRuleId(item.name), setId: "general-limitation", setName: "General Limitation", group: "limitation", tier: 1, type: "Limitation", action: "Varies", creationCost: 0, choiceId: powerChoiceId("general-limitation", "limitation", powerRuleId(item.name)) }));
+  const genericEnhancements = powerFramework.genericEnhancements.map(item => ({ ...item, id: powerRuleId(item.name), setId: "general-enhancement", setName: "General Enhancement", group: "enhancement", tier: 1, type: "Enhancement", action: "Passive", creationCost: .5, choiceId: powerChoiceId("general-enhancement", "enhancement", powerRuleId(item.name)) }));
   return `
-    <div class="mechanic-grid">
-      <div><span>Power Die</span><strong>${values.powerDie}</strong></div><div><span>Power EV</span><strong>${values.powerEV}</strong></div><div><span>Picks</span><strong>${values.powerPicks}</strong></div><div><span>Max Sets</span><strong>${values.maxPowerSets}</strong></div><div><span>Max Tier</span><strong>${values.maxTier}</strong></div><div><span>Limit Cap</span><strong>${values.maxLimitations}</strong></div>
+    <div class="mechanic-grid power-budget-grid">
+      <div><span>Power Die</span><strong>${values.powerDie}</strong></div><div><span>Power EV</span><strong>${values.powerEV}</strong></div><div><span>Starting Picks</span><strong>${budget.startingSpent}/${budget.startingAvailable}</strong></div><div><span>Advancement</span><strong>${budget.advancementUsed}/${budget.advancementAvailable}</strong></div><div><span>Power Sets</span><strong>${budget.setCount}/${values.maxPowerSets}</strong></div><div><span>Tier Access</span><strong>${powerTierLimit()}</strong></div>
     </div>
-    <div class="form-grid three">${input("limitations", "Limitations Used", "number", `min="0" max="${values.maxLimitations}"`)}${input("bonusPicks", "Bonus Picks", "number", 'min="0"')}${select("powerAbility", "Power Ability", abilities.map(([key, short, name]) => [key, `${short} - ${name}`]))}</div>
-    <div class="power-builder">${Array.from({ length: values.powerSlots }, (_, index) => {
+    <section class="power-audit ${budget.warnings.length ? "warning" : "complete"}">
+      <div><strong>${budget.warnings.length ? "Power Build Needs Attention" : "Power Build Complete"}</strong><span>${powerFramework.minimumBaseline}</span></div>
+      <div class="pill-row"><span>Core ${budget.cores}</span><span>At-Will ${budget.atWills}/2</span><span>Encounter ${budget.encounters}/1</span><span>Limitations ${budget.limitations}/${values.maxLimitations}</span><span>Enhancements ${budget.enhancements}</span></div>
+      ${budget.warnings.length ? `<ul>${budget.warnings.map(warning => `<li>${html(warning)}</li>`).join("")}</ul>` : ""}
+    </section>
+    <div class="form-grid two">${input("bonusPicks", "Other Bonus Power Picks", "number", 'min="0"')}<div class="rule-card"><h2>Power Pick Rules</h2><p>${html(powerFramework.advancement)}</p><p>${html(powerFramework.limitations)}</p></div></div>
+    <h2 class="power-builder-heading">Choose Power Sets</h2>
+    <div class="form-grid three power-set-selectors">${Array.from({ length: slots }, (_, index) => {
       const number = index + 1;
-      return `<div class="power-card">${select(`powerSet${number}`, `Power Set ${number}`, powerSets, "Choose Power Set")}${textarea(`powerSet${number}Notes`, "At-Wills / Tier Notes", 4)}</div>`;
+      return `<label>Power Set ${number}${number > values.maxPowerSets ? " (Over Cap)" : ""}<select data-field="powerSet${number}">${powerSetSelectOptions(`powerSet${number}`)}</select></label>`;
     }).join("")}</div>
+    <div class="power-set-stack">${selectedSets.length ? selectedSets.map(renderPowerSetBuilder).join("") : `<div class="rule-card"><h2>Select a Power Set</h2><p>Choose a set above to browse its Core Track, At-Wills, Encounter and Daily Powers, Utilities, Enhancements, and Limitations.</p></div>`}</div>
+    <details class="power-set-builder general-utilities">
+      <summary><div><span>Standalone Powers</span><strong>General Utility Powers</strong></div><em>${selectedPowerChoices().filter(choice => choice.group === "general").length} selected</em></summary>
+      <div class="power-set-overview"><p>General Utilities are minor standalone capabilities. They cost 1 Power Pick each and do not replace the stronger version inside a dedicated Power Set.</p></div>
+      ${utilityGroups.map((choices, index) => powerChoiceSection(`Tier ${index + 1} General Utilities`, choices, index === 0)).join("")}
+    </details>
+    <details class="power-set-builder general-utilities">
+      <summary><div><span>Power Restrictions</span><strong>General Limitations</strong></div><em>${selectedPowerChoices().filter(choice => choice.setId === "general-limitation").length} selected</em></summary>
+      <div class="power-set-overview"><p>Each Limitation grants 1 additional starting Power Pick and must directly constrain a Power or Power Set in play. Campaign Rank limits how many may be taken.</p></div>
+      ${powerChoiceSection("General Limitations", genericLimitations, true)}
+    </details>
+    <details class="power-set-builder general-utilities">
+      <summary><div><span>Power Refinements</span><strong>General Enhancements</strong></div><em>${selectedPowerChoices().filter(choice => choice.setId === "general-enhancement").length} selected</em></summary>
+      <div class="power-set-overview"><p>One Power Pick buys two Enhancements. Apply each selected Enhancement to a specific owned power and record that target in the character's Power notes.</p></div>
+      ${powerChoiceSection("General Enhancements", genericEnhancements, true)}
+    </details>
   `;
 }
 
@@ -1315,8 +1634,15 @@ function renderIdentity() {
 }
 
 function chosenPowers() {
-  const values = calc();
-  return Array.from({ length: values.powerSlots }, (_, index) => {
+  const purchased = selectedPowerChoices();
+  if (purchased.length) {
+    return purchased.map(choice => ({
+      name: choice.name,
+      notes: `${choice.setName} - ${choice.type}${choice.tier ? ` - Tier ${choice.tier}` : ""}\n${choice.text}`,
+      group: choice.group,
+    }));
+  }
+  return Array.from({ length: 12 }, (_, index) => {
     const number = index + 1;
     return { name: sheet[`powerSet${number}`], notes: sheet[`powerSet${number}Notes`] };
   }).filter(power => power.name || power.notes);
@@ -1361,7 +1687,7 @@ function renderSheetMarkup() {
       <header class="sheet-title"><p>Features and Powers</p><h1>${html(sheet.heroName || "Character")}</h1></header>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Class Features</h2>${listBlock(lines(sheet.classFeatures))}</div><div class="sheet-section text-list"><h2>Edge Triggers</h2>${listBlock([`Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`])}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
-      <section class="sheet-section"><h2>Powers</h2><div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${html(power.notes || "")}</p></div>`).join("")}</div></section>
+      <section class="sheet-section"><h2>Powers - ${html(selectedPowerSetNames().join(", ") || "Power Sets")}</h2>${selectedPowerSets().length ? `<div class="sheet-stats power-effect-values">${selectedPowerSets().map(powerSet => bigStat(`${powerSet.name} EV`, 10 + abilityMod(powerSetAbility(powerSet)) + values.pro)).join("")}</div>` : ""}<div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${multilineHtml(power.notes || "")}</p></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Gear</h2>${listBlock([...lines(sheet.gear), ...lines(sheet.enhancements), ...lines(sheet.limitationsText), sheet.costume])}</div><div class="sheet-section text-list"><h2>Backstory / Notes</h2>${listBlock([sheet.backstory, sheet.sessionNotes])}</div></section>
     </article>
   `;
@@ -1376,6 +1702,10 @@ function updateField(field, value) {
   }
   sheet[field] = value;
   if (field === "rank") normalizeAbilityScores();
+  if (/^powerSet\d+$/.test(field)) {
+    prunePowerPurchases();
+    pruneUnmetPowerPrerequisites();
+  }
   if (["origin", "originPrimaryBonus", "originSecondaryBonus", "originTrait", "originSkill1", "originSkill2"].includes(field)) fillOrigin();
   if (additionalSkillFields().includes(field)) syncSkillTraining();
   if (field === "className") {
@@ -1588,10 +1918,15 @@ function diceRollerMarkup() {
     ["Melee Attack", abilityMod("fig") + values.pro, "FIG + Prowess"],
     ["Ranged Attack", abilityMod("dex") + values.pro, "DEX + Prowess"],
     ["Mental Attack", abilityMod("int") + values.pro, "INT + Prowess"],
-    ["Social Attack", abilityMod("cha") + values.pro, "CHA + Prowess"],
-    ["Power Attack", abilityMod(sheet.powerAbility || "str") + values.pro, `${String(sheet.powerAbility || "str").toUpperCase()} + Prowess`]
+    ["Social Attack", abilityMod("cha") + values.pro, "CHA + Prowess"]
   ].map(([label, modifier, detail]) => rollActionCard(label, "1d20", modifier, detail));
-  const powerNames = chosenPowers().map(power => power.name).filter(Boolean);
+  const purchasedPowerAttacks = selectedPowerChoices().filter(choice => /Attack:\s*1d20/i.test(choice.text || "")).map(choice => {
+    const explicit = (choice.text.match(/Attack:\s*1d20\s*\+\s*(STR|DEX|CON|FIG|INT|WIS|CHA|PER)/i) || [])[1]?.toLowerCase();
+    const powerSet = powerSetRules.find(item => item.id === choice.setId);
+    const ability = explicit || powerSetAbility(powerSet);
+    return rollActionCard(choice.name, "1d20", abilityMod(ability) + values.pro, `${choice.setName} - ${ability.toUpperCase()} + Prowess`);
+  });
+  const powerNames = selectedPowerSetNames();
   const powerRolls = [1, 2, 3, 4].map(count => rollActionCard(`${count} Power ${count === 1 ? "Die" : "Dice"}`, `${count}${values.powerDie}`, 0, powerNames.join(", ") || "Power damage / effect"));
   const recoveryRolls = [
     rollActionCard("Hit Die", `1${values.hitDie}`, 0, "Recovery roll"),
@@ -1603,7 +1938,7 @@ function diceRollerMarkup() {
     diceActionGroup("Skills", skillRolls),
     diceActionGroup("Saves", saveRolls),
     diceActionGroup("Active Defenses", defenseRolls),
-    diceActionGroup("Attacks", attackRolls),
+    diceActionGroup("Attacks", [...attackRolls, ...purchasedPowerAttacks]),
     diceActionGroup("Powers & Damage", powerRolls),
     diceActionGroup("Recovery & Utility", recoveryRolls)
   ].join("");
@@ -1695,6 +2030,64 @@ function compendiumList(items) {
   return `<div class="compendium-grid">${items.join("")}</div>`;
 }
 
+function compendiumPowerEntry(item, meta = "") {
+  return `
+    <article class="compendium-card power-reference-card">
+      <span>${html(meta || `${item.type}${item.tier ? ` - Tier ${item.tier}` : ""}`)}</span>
+      <h3>${html(item.name)}</h3>
+      ${item.prerequisite ? `<small><strong>Prerequisite:</strong> ${html(item.prerequisite)}</small>` : ""}
+      <p>${multilineHtml(item.text)}</p>
+    </article>
+  `;
+}
+
+function compendiumPowerSet(powerSet) {
+  return `
+    <details class="compendium-power-set">
+      <summary><div><span>Power Set</span><strong>${html(powerSet.name)}</strong></div><em>${powerSet.coreTrack.length + powerSet.powers.length + powerSet.utilities.length} powers</em></summary>
+      <div class="compendium-power-overview">
+        <p>${html(powerSet.description)}</p>
+        <div class="pill-row"><span>${html(powerSet.governingAbility)}</span><span>${html(powerSet.associatedConditions)}</span><span>${html(powerSet.defaultDamage)}</span></div>
+      </div>
+      <h3>Core Track</h3>${compendiumList(powerSet.coreTrack.map(item => compendiumPowerEntry(item, `${item.type} - Tier ${item.tier}`)))}
+      <h3>Combat & Branch Powers</h3>${compendiumList(powerSet.powers.map(item => compendiumPowerEntry(item)))}
+      <h3>Set-Specific Utilities</h3>${compendiumList(powerSet.utilities.map(item => compendiumPowerEntry(item)))}
+      <h3>Enhancements</h3>${compendiumList(powerSet.enhancements.map(item => compendiumCard(item.name, item.text, "Enhancement")))}
+      <h3>Limitations</h3>${compendiumList(powerSet.limitations.map(item => compendiumCard(item.name, item.text, "Limitation")))}
+    </details>
+  `;
+}
+
+function renderPowerCompendium() {
+  return `
+    <div class="compendium-hero"><h2>Powers</h2><p>${html(powerFramework.minimumBaseline)} ${html(powerFramework.advancement)}</p></div>
+    <div class="compendium-grid power-framework-grid">
+      ${Object.entries(powerFramework.creationCosts).map(([name, cost]) => compendiumCard(name, `${cost} Power Pick${cost === 1 ? "" : "s"} at character creation.`, "Power Economy")).join("")}
+      ${compendiumCard("Power Dice", powerFramework.powerDice, "Core Rule")}
+      ${compendiumCard("Limitations", powerFramework.limitations, "Core Rule")}
+      ${compendiumCard("Core Tracks", powerFramework.coreTracks, "Core Rule")}
+      ${compendiumCard("Attack Roll vs. Effect Value", powerFramework.attackAndEffect, "Core Rule")}
+      ${compendiumCard("Tier Access", powerFramework.tierAccess, "Campaign Rank")}
+      ${compendiumCard("Enhancements", powerFramework.enhancementRules, "Power Economy")}
+      ${compendiumCard("Power Stunts", powerFramework.powerStunts, "Edge")}
+      ${compendiumCard("Power Stunt: Emulation", powerFramework.emulation, "Edge & Burnout")}
+      ${compendiumCard("Powers and Gear", powerFramework.powersAndGear, "Core Rule")}
+    </div>
+    <h2 class="compendium-section-title">Power Types</h2>
+    <div class="compendium-grid">${powerFramework.powerTypes.map(item => compendiumCard(item.name, item.text, "Power Type")).join("")}</div>
+    <h2 class="compendium-section-title">General Limitations</h2>
+    <div class="compendium-grid">${powerFramework.genericLimitations.map(item => compendiumCard(item.name, item.text, "Limitation")).join("")}</div>
+    <h2 class="compendium-section-title">General Enhancements</h2>
+    <div class="compendium-grid">${powerFramework.genericEnhancements.map(item => compendiumCard(item.name, item.text, "Enhancement")).join("")}</div>
+    <h2 class="compendium-section-title">Creating New Power Sets</h2>
+    <div class="compendium-grid">${compendiumCard("Design Process", powerFramework.newPowerSetDesign, "GM Reference")}${compendiumCard(powerFramework.examplePowerSet.name, `${powerFramework.examplePowerSet.governingAbility}: ${powerFramework.examplePowerSet.text}`, "Example Power Set")}</div>
+    <h2 class="compendium-section-title">37 Power Sets</h2>
+    <div class="compendium-power-stack">${powerSetRules.map(compendiumPowerSet).join("")}</div>
+    <h2 class="compendium-section-title">36 General Utility Powers</h2>
+    <div class="compendium-grid">${generalUtilityPowers.map(item => compendiumPowerEntry(item)).join("")}</div>
+  `;
+}
+
 function renderCompendium() {
   document.querySelector("[data-compendium-tabs]").innerHTML = compendiumSections().map(([id, label]) => `
     <button type="button" data-action="compendium-section" data-section="${id}" class="${id === activeCompendiumSection ? "active" : ""}">${label}</button>
@@ -1721,7 +2114,7 @@ function renderCompendiumSection(id) {
   if (id === "talents") return compendiumList(talents.map(name => compendiumCard(name, talentRules[name], "Talent")));
   if (id === "merits") return compendiumList(merits.map(name => compendiumCard(name, meritRules[name], "Merit")));
   if (id === "flaws") return compendiumList(flaws.map(name => compendiumCard(name, flawRules[name], "Flaw")));
-  if (id === "powers") return compendiumList(powerSets.map(name => compendiumCard(name, "Power Set reference entry. Add At-Wills, passive benefits, Encounter powers, and tier notes as the full power rules are entered into the generator data.", "Power Set")));
+  if (id === "powers") return renderPowerCompendium();
   if (id === "gear") return compendiumList(Object.entries(gearCatalog).flatMap(([type, items]) => items.map(name => compendiumCard(name, gearRules[name] || `Gear category: ${type}.`, type))));
   return `
     <div class="compendium-hero">
@@ -1864,6 +2257,7 @@ app.addEventListener("input", event => {
 app.addEventListener("change", event => {
   const field = event.target.closest("[data-field]");
   const add = event.target.closest("[data-add-field]");
+  const setAbility = event.target.closest("[data-power-set-ability]");
 
   if (field) {
     updateField(field.dataset.field, fieldValue(field));
@@ -1879,6 +2273,15 @@ app.addEventListener("change", event => {
     renderBuilder();
     renderSheet();
     renderProgress();
+  }
+
+  if (setAbility) {
+    ensurePowerState();
+    sheet.powerSetAbilities[setAbility.dataset.powerSetAbility] = setAbility.value;
+    if (selectedPowerSets()[0]?.id === setAbility.dataset.powerSetAbility) sheet.powerAbility = setAbility.value;
+    save();
+    renderBuilder();
+    renderSheet();
   }
 
   if (event.target.id === "portraitInput") {
@@ -1966,6 +2369,12 @@ app.addEventListener("click", event => {
   if (action === "remove-line") {
     removeLine(button.dataset.field, button.dataset.value);
     save();
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+  }
+  if (action === "toggle-power-choice") {
+    togglePowerChoice(button.dataset.powerChoice);
     renderBuilder();
     renderSheet();
     renderProgress();
