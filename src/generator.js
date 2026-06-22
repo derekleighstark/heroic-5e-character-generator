@@ -457,6 +457,7 @@ let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" 
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
+let activeGmSection = "core";
 let diceRollMode = "normal";
 let diceRollHistory = [];
 let cloudSession = null;
@@ -1156,6 +1157,7 @@ function renderApp() {
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
+          <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
@@ -1223,6 +1225,19 @@ function renderApp() {
         </header>
         <div class="compendium-tabs" data-compendium-tabs></div>
         <div class="compendium-content" data-compendium-content></div>
+      </div>
+    </section>
+    <section class="gm-screen-drawer" data-gm-screen-drawer hidden>
+      <div class="gm-screen-panel" role="dialog" aria-modal="true" aria-label="HEROIC 5e GM Screen">
+        <header>
+          <div>
+            <strong>HEROIC 5e GM Screen</strong>
+            <span>Fast rules and encounter reference</span>
+          </div>
+          <button type="button" data-action="close-gm-screen">Close</button>
+        </header>
+        <div class="gm-screen-tabs" data-gm-screen-tabs></div>
+        <div class="gm-screen-content" data-gm-screen-content></div>
       </div>
     </section>
     <section class="sheet-preview-drawer" data-sheet-preview-drawer hidden>
@@ -2152,6 +2167,168 @@ async function removeCharacterFromCloud(id) {
   await renderCloud();
 }
 
+function gmScreenSections() {
+  return [
+    ["core", "Core Rolls"],
+    ["combat", "Combat"],
+    ["conditions", "Conditions"],
+    ["edge", "Edge & Recovery"],
+    ["challenges", "Challenges"],
+    ["npcs", "NPCs & Encounters"]
+  ];
+}
+
+function gmTable(headers, rows, className = "") {
+  return `
+    <div class="gm-table-wrap ${className}">
+      <table class="gm-table">
+        <thead><tr>${headers.map(header => `<th>${html(header)}</th>`).join("")}</tr></thead>
+        <tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>`).join("")}</tbody>
+      </table>
+    </div>
+  `;
+}
+
+function gmRule(title, body, meta = "Quick Rule") {
+  return `<article class="gm-rule"><span>${html(meta)}</span><h3>${html(title)}</h3><p>${body}</p></article>`;
+}
+
+function gmSection(title, intro, content) {
+  return `<section class="gm-reference-section"><header><h2>${html(title)}</h2>${intro ? `<p>${html(intro)}</p>` : ""}</header>${content}</section>`;
+}
+
+function renderGmCore() {
+  const difficulties = [["Easy", "10", "Routine under pressure"], ["Standard", "15", "Trained hero challenge"], ["Hard", "20", "Serious expert challenge"], ["Extreme", "25", "Exceptional heroic feat"]];
+  const degrees = [["Success", "Meet the target", "Resolve normally"], ["Strong Success", "Beat by 5+", "Gain 1 Momentum"], ["HEROIC Success", "Beat by 10+", "Gain 2 Momentum or 1 HEROIC Effect"]];
+  const defenses = [["Parry / Block", "1d20 + FIG + PER + PRO"], ["Dodge", "1d20 + DEX + PER + PRO"], ["Willpower", "1d20 + WIS + PER + PRO"], ["Social", "1d20 + CHA + INT + PRO"]];
+  return [
+    gmSection("Resolution", "The players roll. NPCs normally supply static values.", `<div class="gm-rule-grid">
+      ${gmRule("Skill Check", "1d20 + Ability modifier + Prowess if trained, against a GM-set DC.")}
+      ${gmRule("Save", "1d20 + Ability modifier + Prowess if that save is trained, against an Effect Value.")}
+      ${gmRule("Attack", "1d20 + relevant Ability modifier + Prowess, against the target's defense.")}
+      ${gmRule("Advantage", "Roll 2d20 and keep the higher. Disadvantage keeps the lower. Multiple sources do not stack; one of each cancels.")}
+      ${gmRule("Natural 20", "On a combat attack, score a critical and use maximum damage. Margin still determines degree. No special effect on skills or saves.")}
+      ${gmRule("Natural 1", "A combat attack automatically misses. A natural 1 on Active Defense lets the attacker critical. No special effect on skills or saves.")}
+    </div>`),
+    gmSection("Difficulty & Degrees", "Use a DC that matches the obstacle, then read the margin.", `<div class="gm-two-column">${gmTable(["Difficulty", "DC", "Use"], difficulties)}${gmTable(["Degree", "Margin", "Result"], degrees)}</div>`),
+    gmSection("Active Defenses", "Heroes roll these when an attack or effect targets them.", gmTable(["Defense", "Formula"], defenses)),
+    gmSection("Range Bands", "Zones and feet are interchangeable tools; use whichever keeps the scene moving.", gmTable(["Band", "Zones", "Feet", "Squares"], [["Close", "Same zone", "0-25", "0-5"], ["Short", "Adjacent", "25-50", "5-10"], ["Medium", "2-3", "50-120", "10-24"], ["Long", "4-6", "120-300", "24-60"]]))
+  ].join("");
+}
+
+function renderGmCombat() {
+  const actions = [
+    ["Attack", "Make one weapon attack or basic Power expression."], ["Use a Power", "Use the listed action cost, range, roll, and effect."],
+    ["Dash", "Move one additional Zone this turn."], ["Disengage", "Movement does not trigger Opportunity Attacks this turn."],
+    ["Dodge", "Attacks you can see have Disadvantage; gain Advantage on DEX saves until your next turn."], ["Help", "Ally's next Skill check gains Advantage, or describe setup for an Edge-funded Team Combo."],
+    ["Hide", "Stealth vs observers' Notice; success grants Hidden."], ["Ready", "Name an observable trigger; use your Reaction when it occurs. Daily Powers cannot be readied."],
+    ["Search", "Notice or Investigation in your Zone or an adjacent Zone."], ["Steady On", "While Bloodied, spend 1 Hit Die and add Recovery Modifier. Once per encounter."],
+    ["Use an Object", "Operate an object requiring more than a free interaction."]
+  ];
+  const momentum = [
+    ["Push", "Move target 5 ft", "STR / CON"], ["Knockdown", "Target becomes Prone", "STR / DEX"], ["Off-Balance", "No Reactions until end of next turn", "DEX"],
+    ["Pressure", "Disadvantage on next roll", "WIS / CHA"], ["Opening", "Next attack gains Advantage", "PER"], ["Delay", "Speed -10 ft", "CON"],
+    ["Disarm", "Drop one held object", "STR / DEX"], ["Suppress", "Cannot gain Advantage", "WIS"], ["Expose", "Lose Hidden / Concealed", "PER"],
+    ["Rattle", "Become Shaken", "WIS / CHA"], ["Shift", "Acting hero moves 5 ft without reactions", "None"], ["Rally", "Ally gains Temp HP equal to Prowess", "None"],
+    ["Contain", "Reduce collateral damage", "None"], ["Stabilize", "End Shaken or Slowed on ally", "None"]
+  ];
+  const heroic = [
+    ["Send Flying", "Fail: push 15 ft + Prone. Success: push 5 ft."], ["Daze", "Fail: Dazed. Success: lose Reactions."],
+    ["Smash Through", "Fail: destroy cover, barrier, or terrain. Success: damage or weaken it."], ["Pin", "Fail: Restrained. Success: Slowed."],
+    ["Break Focus", "Fail: end one Sustained Power. Success: Disadvantage to maintain."], ["Multi-Impact", "Fail: nearby target takes half effect. Success: minor effect."],
+    ["Crater Impact", "Fail: create difficult terrain or hazard. Success: minor difficult terrain."], ["Rescue Swing", "Fail: move full Speed to safety. Success: move half Speed."],
+    ["Tactical Insight", "Fail: allies gain Advantage vs target. Success: one ally gains it."], ["Full Containment", "Fail: prevent collateral. Success: greatly reduce it."]
+  ];
+  return [
+    gmSection("Turn Economy", "In any order: move, one Action, one Bonus Action, one Reaction, one free object interaction, and brief speech.", `<div class="gm-rule-grid">${gmRule("Reaction", "Refreshes at the start of the hero's turn.")}${gmRule("Secondary Attacks", "Granted, Bonus Action, Reaction, and follow-up attacks have Disadvantage unless a rule says otherwise.")}${gmRule("Movement", "Base Speed is 30 ft. Difficult terrain costs 2 ft per 1 ft. Climbing and swimming normally cost half Speed.")}${gmRule("Bloodied", "A creature at half HP or less is Bloodied. Bloodied has no automatic penalty.")}</div>${gmTable(["Action", "Effect"], actions)}`),
+    gmSection("Momentum Effects", "Strong Success grants one. The target makes the listed save when required.", gmTable(["Effect", "Result", "Save"], momentum, "gm-table-dense")),
+    gmSection("HEROIC Effects", "A HEROIC Success grants one HEROIC Effect or two Momentum Effects.", gmTable(["Effect", "Resolution"], heroic, "gm-table-dense")),
+    gmSection("Falling & Impact", "Acrobatics DC 15 halves falling damage when the creature can react.", `<div class="gm-two-column">${gmTable(["Distance", "Damage"], [["Close, up to 25 ft", "1d8"], ["Short, 25-50 ft", "2d8"], ["Medium, 50-120 ft", "4d8"], ["Long, 120-300 ft", "6d8"], ["Extreme, 300+ ft", "8d8"]])}${gmRule("Forced Impact", "A creature launched into a solid surface takes 1d8 per Zone traveled, maximum 4d8, in addition to other damage.", "Environment")}</div>`)
+  ].join("");
+}
+
+function renderGmConditions() {
+  const conditions = [
+    ["Blinded", "Attacks against gain Advantage; own attacks and sight checks have Disadvantage."], ["Burning", "Take source Prowess fire damage at start of turn; Action plus a reasonable method removes it."],
+    ["Charmed", "Cannot willingly attack source; Disadvantage on saves against source."], ["Dazed", "Take either an Action or Bonus Action; no Reactions."],
+    ["Deafened", "Cannot hear; effects requiring hearing fail."], ["Frightened", "Disadvantage while source is visible; cannot willingly move closer."],
+    ["Frozen", "Cannot move; Disadvantage on Dodge; counts as Restrained; STR or CON save at end of turn."], ["Grappled", "Speed 0; Action to escape with Athletics or Acrobatics vs grappler's Athletics."],
+    ["Hidden", "Attacks against have Disadvantage; own attacks gain Advantage. Ends when revealed, attacking, or using a visible Power."], ["Immobilized", "Cannot move by any means; no Athletics escape."],
+    ["Incapacitated", "No actions, Bonus Actions, Reactions, or movement. Usually persists until a Breather."], ["Injured", "Disadvantage on one skill or physical save type; Medicine DC 15 during Breather or Downtime."],
+    ["Overloaded", "Disadvantage on next Power or Technology roll; ends after that roll."], ["Paralyzed", "No movement or actions; auto-fail STR/DEX saves; attacks gain Advantage."],
+    ["Pinned", "Grappled and Prone; escaping grapple ends both."], ["Poisoned", "Disadvantage on attacks and Skill checks."],
+    ["Power Disrupted", "Named Power Set is suppressed: passives inactive and Sustained effects end."], ["Prone", "Melee attacks against gain Advantage; ranged attacks against have Disadvantage; stand for half Speed."],
+    ["Restrained", "Speed 0; attacks and Dodge have Disadvantage; attacks against gain Advantage."], ["Shaken", "Disadvantage on next attack, save, or Skill check, then ends."],
+    ["Slowed", "Half Speed, no Reactions, and take either an Action or Bonus Action."], ["Stunned", "No movement, Action, or Bonus Action; Active Defenses have Disadvantage."],
+    ["Unconscious", "Cannot act or move; Prone; auto-fail STR/DEX saves; attacks gain Advantage; Close hits critical."]
+  ];
+  return gmSection("Conditions", "Unless a rule gives another duration, a condition lasts until the end of the attacker's next turn. Reapplying refreshes; it does not stack.", gmTable(["Condition", "Effect"], conditions, "gm-table-dense"));
+}
+
+function renderGmEdge() {
+  const edgeUses = [
+    ["Reroll", "1", "Reroll one d20 just made; use the new result."], ["Turn the Tide", "1", "Gain Advantage before rolling, or cancel Disadvantage on a roll affecting you."],
+    ["Heroic Defense", "1", "Brace for Advantage on defense/save; Twist Away for Disadvantage on attack; Hold Firm reduces forced movement; or end Shaken."],
+    ["Dramatic Rebound", "1", "At start of turn, end Shaken, Slowed, Frightened, or Dazed."], ["Resist Defeat", "1", "When reduced to 0 HP, drop to 1 HP instead. Once per encounter."],
+    ["Power Stunt", "1", "Attempt an improvised use of a Power Set; GM sets action, roll, effect, and risk."], ["Add Power", "1", "After a successful Power roll, add 1 Power Die to damage, healing, protection, or movement."],
+    ["Reduce Collateral", "1", "Reduce or redirect unintended collateral damage reasonably."], ["Narrative Advantage", "1", "Introduce a reasonable preparation, contact, detail, research result, or position."],
+    ["Refresh Encounter Power", "2", "Regain one spent Encounter Power. Once per encounter."], ["Push Daily Power", "2", "Use a Daily after its safe use; gain 1 Burnout after resolution."],
+    ["Team Combo", "1 each", "Each participant chooses Set Up, Add Power, Cover, Control, Rescue, or Contain."]
+  ];
+  const burnout = [["1", "-1", "-"], ["2", "-2", "-"], ["3", "-3", "Disadvantage on Initiative"], ["4", "-4", "Speed -10 ft"], ["5", "-5", "Cannot Push Dailies or Power Stunt"], ["6th", "-", "Incapacitated until Breather"]];
+  return [
+    gmSection("Edge", "Spend after seeing the roll but before the GM describes the outcome. Only one Edge per roll or immediate effect unless a rule permits otherwise.", `<div class="gm-rule-grid">${gmRule("Starting Edge", "Street Level 3; Mid-Level 2; World Class 1. Refreshes at the start of each session.")}${gmRule("Edge Cap", "Level + Prowess. Refresh restores the starting amount, not the cap.")}</div>${gmTable(["Use", "Cost", "Effect"], edgeUses, "gm-table-dense")}`),
+    gmSection("Recovery", "Hit Dice pool equals Level: Guardian d12, Bruiser d10, all other Classes d8.", `<div class="gm-rule-grid">${gmRule("Breather", "About 5-10 minutes. Spend any number of Hit Dice: roll + CON + Recovery Modifier, using at least the die median (d8 5, d10 6, d12 7). Refresh Breather abilities.")}${gmRule("Second Wind", "Once per encounter as a Bonus Action, spend 1 Hit Die, end Shaken, Slowed, or Dazed, and gain Advantage on the next save before end of next turn.")}${gmRule("Steady On", "While Bloodied, use an Action once per encounter to spend 1 Hit Die and add Recovery Modifier.")}${gmRule("Downtime", "Restore all HP and Hit Dice, refresh starting Edge and Daily Powers, and end most temporary conditions.")}</div>`),
+    gmSection("Burnout", "Check: 1d20 + CON + Prowess vs DC 10 + (current Burnout x 2). After safely maintaining a Power for Prowess turns, check each extra turn.", `<div class="gm-two-column">${gmTable(["Level", "Penalty", "Additional Effect"], burnout)}${gmRule("Burnout Recovery", "Reduce by 1 per Breather and by 2-3 per Downtime, or remove all at the GM's discretion.", "Recovery")}</div>`)
+  ].join("");
+}
+
+function renderGmChallenges() {
+  const challengeResults = [["HEROIC Success", "+3 progress"], ["Strong Success", "+2 progress"], ["Success", "+1 progress"], ["Failure", "+1 failure"], ["Natural 1", "+2 failures, or +1 failure and Disadvantage on next contribution"]];
+  return [
+    gmSection("HEROIC Challenges", "Use when there is a clear goal with real stakes, sustained pressure, and meaningful room for the whole team.", `<div class="gm-two-column">${gmTable(["Complexity", "Progress Needed", "Failure Threshold"], [["Simple", "4", "3"], ["Standard", "6", "3"], ["Complex", "8", "4"]])}${gmTable(["Contribution Result", "Challenge Result"], challengeResults)}</div>`),
+    gmSection("Running the Challenge", "Players know the fiction and stakes, not the hidden progress and failure totals.", `<div class="gm-rule-grid">${gmRule("1. Set Stakes", "Privately choose Complexity, failure threshold, and what partial failure looks like.")}${gmRule("2. Contribute", "Each hero contributes once per round with a fitting Skill, Power, feature, or creative action. Set the obstacle's own DC.")}${gmRule("3. Change the Scene", "After each round, advance the danger, expose a new obstacle, or change which approaches are useful.")}${gmRule("4. Resolve", "End when progress reaches Complexity or failures reach the threshold. Failure should create consequences and forward motion.")}</div>`),
+    gmSection("Scene Pressure", "Strong encounters give several hero types meaningful decisions.", `<div class="gm-rule-grid">${gmRule("Terrain", "Include at least three usable features: height, civilians, hazards, destructible cover, or moving elements.")}${gmRule("Secondary Objective", "Protect civilians, retrieve an object, hold a Zone, capture rather than defeat, or beat a round-based clock.")}${gmRule("Vigilance", "10 + PER + Prowess if trained in Notice. Stealth meeting or beating it goes unnoticed without an active roll.")}${gmRule("Failure", "Prefer changed circumstances, costs, escalation, or lost opportunities over a dead stop.")}</div>`)
+  ].join("");
+}
+
+function renderGmNpcs() {
+  const tiers = [["Day Player", "+1", "d6", "Human-scale supporting cast"], ["Low Power", "+2", "d8", "Street-level superhuman"], ["Medium Power", "+3", "d10", "City-scale / Mid-Level staple"], ["High Power", "+4", "d12", "World-scale threat"], ["Cosmic Power", "+6", "d12+d6", "Campaign-defining threat"]];
+  const hitPoints = [["Day Player", "(CON score + 6) x 1"], ["Low Power", "(CON score + 8) x 1"], ["Medium Power", "(CON score + 10) x 2"], ["High Power", "(CON score + 12) x 3"], ["Cosmic Power", "(CON score + 18) x 4"]];
+  const budgets = [["Street Level", "4 Thugs or 2 Goons", "1 Lieutenant + 2 Goons", "1 Boss + 2 Goons"], ["Mid-Level", "3 Goons or 2 Lieutenants", "1 Lieutenant + 3 Goons", "1 Boss + 1 Lieutenant + 2 Goons"], ["World Class", "2 Lieutenants or 4 Goons", "2 Lieutenants + 2 Goons", "1 Boss + 2 Lieutenants + 2 Goons"]];
+  return [
+    gmSection("NPC Quick Build", "NPCs do not roll. Their Tier Bonus replaces Prowess in static values.", `<div class="gm-rule-grid">${gmRule("Defense Value", "10 + relevant modifiers + Tier Bonus. Parry uses FIG + PER; Dodge DEX + PER; Willpower WIS + PER; Social CHA + INT.")}${gmRule("Attack Value", "10 + primary combat modifier + Tier Bonus.")}${gmRule("Effect Value", "10 + governing modifier + Tier Bonus.")}${gmRule("Trained Skill", "Use 10 + Ability modifier + Tier Bonus as a static value when heroes roll against the NPC.")}</div>${gmTable(["Power Tier", "Tier Bonus", "Power Die", "Best Fit"], tiers)}<div class="gm-two-column">${gmTable(["Power Tier", "Named NPC Hit Points"], hitPoints)}${gmRule("NPC Features", "Give most NPCs 1-2 signature abilities, to a maximum of 3, and 3-5 concise Power entries. Keep every number pre-calculated.", "Build Guidance")}</div>`),
+    gmSection("Minions & Bosses", "Use minions for pace and bosses for centerpiece threats.", `<div class="gm-rule-grid">${gmRule("Thug", "Defeated by 1 damaging hit.", "Minion")}${gmRule("Goon", "Defeated by 2 damaging hits.", "Minion")}${gmRule("Lieutenant", "Defeated by 3 damaging hits.", "Minion")}${gmRule("Minion Handling", "Any damaging hit removes one hit. Area effects score one hit on each. Minions use group initiative and suffer conditions normally.", "Minion")}${gmRule("Boss Resolve", "Once per encounter, ignore a condition or failed save. It cannot negate damage or the same effect type consecutively.", "Boss")}${gmRule("Condition Cap", "A Boss can have at most two conditions. When a third would apply, the GM chooses one existing condition to end.", "Boss")}</div>`),
+    gmSection("Encounter Budget", "Calibrated for a party of four and about 3-5 rounds. Add or remove one Standard enemy per hero above or below four.", gmTable(["Campaign", "Standard", "Hard", "Boss"], budgets, "gm-table-dense")),
+    gmSection("Downed Heroes", "At 0 HP, the hero is Downed and makes Grit Saves.", `<div class="gm-rule-grid">${gmRule("Stabilize", "Three successes stabilize the hero at 0 HP, Unconscious.")}${gmRule("Defeated", "Three failures mean the hero is Defeated.")}${gmRule("Medicine", "An ally can use Medicine DC 10 to stabilize a Downed hero.")}${gmRule("Pacing", "When the drama has peaked, end the encounter: enemies flee or surrender, or the environment forces resolution.")}</div>`)
+  ].join("");
+}
+
+function renderGmSection(id) {
+  if (id === "combat") return renderGmCombat();
+  if (id === "conditions") return renderGmConditions();
+  if (id === "edge") return renderGmEdge();
+  if (id === "challenges") return renderGmChallenges();
+  if (id === "npcs") return renderGmNpcs();
+  return renderGmCore();
+}
+
+function renderGmScreen() {
+  document.querySelector("[data-gm-screen-tabs]").innerHTML = gmScreenSections().map(([id, label]) => `
+    <button type="button" data-action="gm-screen-section" data-section="${id}" class="${id === activeGmSection ? "active" : ""}">${label}</button>
+  `).join("");
+  document.querySelector("[data-gm-screen-content]").innerHTML = renderGmSection(activeGmSection);
+}
+
+function openGmScreen() {
+  document.querySelector("[data-gm-screen-drawer]").hidden = false;
+  renderGmScreen();
+}
+
+function closeGmScreen() {
+  document.querySelector("[data-gm-screen-drawer]").hidden = true;
+}
+
 function compendiumSections() {
   return [
     ["glossary", "Glossary"],
@@ -2840,6 +3017,12 @@ app.addEventListener("click", async event => {
   if (action === "random-character") randomCharacter();
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
+  if (action === "open-gm-screen") openGmScreen();
+  if (action === "close-gm-screen") closeGmScreen();
+  if (action === "gm-screen-section") {
+    activeGmSection = button.dataset.section;
+    renderGmScreen();
+  }
   if (action === "open-sheet-preview") openSheetPreview();
   if (action === "close-sheet-preview") closeSheetPreview();
   if (action === "open-dice-roller") openDiceRoller();
