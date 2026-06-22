@@ -381,10 +381,14 @@ p {
 .random-character-button {
   width: 100%;
   min-height: 42px;
-  margin-top: 10px;
   background: var(--navy);
   border: 2px solid var(--gold);
   color: var(--gold);
+}
+
+.random-concept-action {
+  display: flex;
+  align-items: end;
 }
 
 .random-character-button:hover {

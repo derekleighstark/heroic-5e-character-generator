@@ -1170,7 +1170,6 @@ function renderApp() {
       <aside class="step-rail">
         <div class="progress-card"><span>Completion</span><strong data-progress-text></strong><div class="progress-track"><i data-progress-bar></i></div></div>
         <nav class="step-list"></nav>
-        <button type="button" class="random-character-button" data-action="random-character">Random Character</button>
       </aside>
       <section class="builder-panel"></section>
     </main>
@@ -1325,6 +1324,7 @@ function renderConcept() {
     <div class="form-grid three">
       ${select("rank", "Campaign Rank", Object.keys(ranks))}
       ${input("level", "Level", "number", 'min="1" max="10"')}
+      <div class="random-concept-action"><button type="button" class="random-character-button" data-action="random-character">Random Character</button></div>
     </div>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
   `;
@@ -2431,7 +2431,7 @@ function randomizeSkills() {
 function randomCharacter() {
   if (!confirm("Generate a completely random character? Current unsaved changes will be replaced.")) return;
 
-  const rank = randomItem(Object.keys(ranks));
+  const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
   const originName = randomItem(Object.keys(origins));
   const className = randomItem(Object.keys(classes));
   const side = Math.random() < .75 ? "Heroic" : "Unaligned";
@@ -2443,7 +2443,7 @@ function randomCharacter() {
   let heroName = `${randomItem(randomNames.heroPrefix)} ${randomItem(randomNames.heroSuffix)}`;
   if (Math.random() < .35) heroName = randomItem(randomNames.heroPrefix);
   const identity = randomItem(["Secret", "Public", "Not Public"]);
-  const level = randomBetween(1, 10);
+  const level = Math.max(1, Math.min(10, Number(sheet.level || 1)));
 
   sheet = {
     ...defaults,
