@@ -21,6 +21,12 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
+const THEME_KEY = "heroic5e_generator_theme";
+const themes = [
+  ["classic", "Heroic Classic"],
+  ["four-color", "Four-Color"],
+  ["tactical", "Modern Tactical"]
+];
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
   "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
@@ -392,6 +398,7 @@ const steps = [
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
+let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -399,6 +406,14 @@ let diceRollMode = "normal";
 let diceRollHistory = [];
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
+
+function applyTheme(theme) {
+  activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
+  document.documentElement.dataset.theme = activeTheme;
+  localStorage.setItem(THEME_KEY, activeTheme);
+}
+
+applyTheme(activeTheme);
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
@@ -1098,6 +1113,7 @@ function renderApp() {
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
+          <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
         </div>
       </div>
       <div class="topbar-tools">
@@ -2278,6 +2294,11 @@ app.addEventListener("input", event => {
 });
 
 app.addEventListener("change", event => {
+  if (event.target.id === "themeSwitcher") {
+    applyTheme(event.target.value);
+    return;
+  }
+
   const field = event.target.closest("[data-field]");
   const add = event.target.closest("[data-add-field]");
   const setAbility = event.target.closest("[data-power-set-ability]");

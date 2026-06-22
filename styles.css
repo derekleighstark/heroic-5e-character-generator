@@ -10,7 +10,49 @@
   --green: #276b56;
   --blue: #2c5f88;
   --cream: #fff8e8;
+  --body-bg: #d7d9dc;
+  --control-bg: #fff;
+  --topbar-ink: #fff;
+  --button-ink: #111;
   --shadow: 0 18px 46px rgba(16, 32, 51, .18);
+}
+
+:root[data-theme="four-color"] {
+  --ink: #111820;
+  --muted: #4d5560;
+  --paper: #fffef5;
+  --panel: #ffe8a3;
+  --line: #18202a;
+  --navy: #182c4d;
+  --gold: #ffd21c;
+  --red: #d93645;
+  --green: #008b73;
+  --blue: #087caf;
+  --cream: #fff3bd;
+  --body-bg: #65b9d3;
+  --control-bg: #fffef5;
+  --topbar-ink: #fff;
+  --button-ink: #111820;
+  --shadow: 7px 7px 0 rgba(17, 24, 32, .9);
+}
+
+:root[data-theme="tactical"] {
+  --ink: #182625;
+  --muted: #5d6d69;
+  --paper: #f5f8f5;
+  --panel: #e1e9e4;
+  --line: #a8b7b0;
+  --navy: #203c39;
+  --gold: #dfb747;
+  --red: #bf5149;
+  --green: #2a7368;
+  --blue: #477483;
+  --cream: #edf2ee;
+  --body-bg: #c7d0cc;
+  --control-bg: #fbfdfb;
+  --topbar-ink: #f7faf8;
+  --button-ink: #162321;
+  --shadow: 0 10px 24px rgba(29, 52, 49, .15);
 }
 
 * {
@@ -24,7 +66,7 @@ body {
 
 body {
   min-height: 100vh;
-  background: #d7d9dc;
+  background: var(--body-bg);
   color: var(--ink);
   font-family: "Arial Narrow", "Roboto Condensed", "Helvetica Neue", Arial, sans-serif;
   font-size: 14px;
@@ -44,7 +86,7 @@ button {
   border-radius: 4px;
   padding: 8px 12px;
   background: var(--gold);
-  color: #111;
+  color: var(--button-ink);
   font-weight: 900;
   text-transform: uppercase;
   cursor: pointer;
@@ -64,7 +106,7 @@ textarea {
   border: 1px solid #bfb59e;
   border-bottom: 3px solid var(--navy);
   border-radius: 3px;
-  background: #fff;
+  background: var(--control-bg);
   color: var(--ink);
   padding: 7px 8px;
 }
@@ -97,7 +139,7 @@ p {
   gap: 18px;
   padding: 10px 18px;
   background: var(--navy);
-  color: #fff;
+  color: var(--topbar-ink);
   border-bottom: 5px solid var(--gold);
 }
 
@@ -141,6 +183,86 @@ p {
 
 .brand-reference:hover {
   background: rgba(228, 166, 23, .12);
+}
+
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--topbar-ink);
+  white-space: nowrap;
+}
+
+.theme-switcher span {
+  color: var(--gold);
+  font-size: .68rem;
+}
+
+.theme-switcher select {
+  width: auto;
+  min-width: 132px;
+  min-height: 32px;
+  margin: 0;
+  padding: 5px 28px 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--gold) 62%, transparent);
+  border-bottom-width: 2px;
+  background: var(--navy);
+  color: var(--topbar-ink);
+  font-size: .72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+:root[data-theme="four-color"] button {
+  border: 2px solid var(--ink);
+  border-radius: 1px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+:root[data-theme="four-color"] button:active {
+  box-shadow: 1px 1px 0 var(--ink);
+  transform: translate(2px, 2px);
+}
+
+:root[data-theme="four-color"] .brand-reference,
+:root[data-theme="four-color"] .theme-switcher select {
+  border-color: var(--gold);
+  box-shadow: none;
+}
+
+:root[data-theme="four-color"] .step-rail,
+:root[data-theme="four-color"] .builder-panel,
+:root[data-theme="four-color"] .rule-card,
+:root[data-theme="four-color"] .selection-card,
+:root[data-theme="four-color"] .sheet-page {
+  border-color: var(--ink);
+}
+
+:root[data-theme="four-color"] .selection-card,
+:root[data-theme="four-color"] .power-choice-card,
+:root[data-theme="four-color"] .compendium-card {
+  box-shadow: 4px 4px 0 rgba(17, 24, 32, .9);
+}
+
+:root[data-theme="tactical"] button,
+:root[data-theme="tactical"] input,
+:root[data-theme="tactical"] select,
+:root[data-theme="tactical"] textarea {
+  border-radius: 2px;
+}
+
+:root[data-theme="tactical"] .step-rail,
+:root[data-theme="tactical"] .builder-panel,
+:root[data-theme="tactical"] .selection-card,
+:root[data-theme="tactical"] .rule-card,
+:root[data-theme="tactical"] .sheet-section {
+  border-color: var(--line);
+}
+
+:root[data-theme="tactical"] .selection-card,
+:root[data-theme="tactical"] .side-picker,
+:root[data-theme="tactical"] .rule-card {
+  background: var(--paper);
 }
 
 .topbar-tools {
@@ -1984,6 +2106,19 @@ p {
   .app-topbar,
   .builder-header {
     display: grid;
+  }
+
+  .brand {
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+
+  .brand-actions {
+    width: 100%;
+  }
+
+  .theme-switcher select {
+    min-width: 118px;
   }
 
   .generator-shell {
