@@ -391,7 +391,7 @@ const steps = [
 
 const app = document.querySelector("#app");
 let activeStep = "concept";
-let sheet = load(STORAGE_KEY, defaults);
+let sheet = { ...defaults };
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -399,14 +399,6 @@ let diceRollMode = "normal";
 let diceRollHistory = [];
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
-
-function load(key, fallback) {
-  try {
-    return { ...fallback, ...JSON.parse(localStorage.getItem(key) || "{}") };
-  } catch {
-    return { ...fallback };
-  }
-}
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));

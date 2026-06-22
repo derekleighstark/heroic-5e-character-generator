@@ -464,6 +464,88 @@ p {
   text-transform: uppercase;
 }
 
+.side-builder {
+  display: grid;
+  grid-template-columns: minmax(220px, .7fr) minmax(0, 1.8fr);
+  gap: 14px;
+  align-items: stretch;
+}
+
+.side-picker {
+  padding: 16px;
+  background: var(--cream);
+  border-left: 5px solid var(--gold);
+}
+
+.side-picker p {
+  margin: 14px 0 0;
+  line-height: 1.45;
+}
+
+.side-detail-card {
+  padding: 16px 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--green);
+  box-shadow: 0 7px 18px rgba(16, 32, 51, .08);
+}
+
+.side-detail-card.is-restricted {
+  border-top-color: var(--red);
+}
+
+.side-detail-card header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+.side-detail-card header span,
+.side-detail-card header strong {
+  color: var(--red);
+  font-size: .7rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.side-detail-card header strong {
+  padding: 5px 8px;
+  background: var(--navy);
+  color: #fff;
+}
+
+.side-detail-card h2,
+.gear-selection-grid h2 {
+  margin: 2px 0 0;
+  color: var(--navy);
+  text-transform: uppercase;
+}
+
+.side-detail-card p {
+  margin: 8px 0 0;
+  line-height: 1.45;
+}
+
+.gear-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.gear-selection-grid > section {
+  min-width: 0;
+}
+
+.gear-selection-grid h2 {
+  margin-bottom: 9px;
+  padding-bottom: 6px;
+  border-bottom: 3px solid var(--gold);
+  font-size: 1rem;
+}
+
 .mechanic-grid {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
@@ -1926,7 +2008,9 @@ p {
 
   .power-audit,
   .power-set-overview,
-  .power-choice-list {
+  .power-choice-list,
+  .side-builder,
+  .gear-selection-grid {
     grid-template-columns: 1fr;
   }
 

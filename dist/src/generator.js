@@ -55,6 +55,11 @@ const sideRules = {
     summary: "Unaligned characters operate according to their own logic: personal code, professional ethics, loyalty, survival, curiosity, self-interest, profit, or a private moral framework that does not map cleanly onto heroic idealism.",
     callings: "Unaligned characters are not villains. They have access to the full Calling catalog, including Callings that reflect more personal, self-interested, morally complicated, or privately driven motivations.",
     reputation: "An Unaligned reputation does not carry a clear moral promise in either direction. How the world reads it depends on the character's specific Merits, history, and who is doing the reading."
+  },
+  Villainous: {
+    summary: "Villainous characters move the world toward domination, exploitation, destruction, coercion, or selfish power. Their goals and methods place them in opposition to heroes and the people heroes protect.",
+    callings: "Villainous is included for GM-created NPCs and antagonists. It is not a supported player-character Side in the core rules.",
+    reputation: "A Villainous reputation creates fear, distrust, hostility, or obedience. Even when an antagonist is admired, the world reads their presence through the harm they cause or threaten."
   }
 };
 const glossaryTerms = [
@@ -371,7 +376,7 @@ const steps = [
   ["abilities", "Assign Ability Scores", "Set the eight core ability scores"],
   ["origin", "Choose an Origin", "Origin bonuses and built-in mechanics"],
   ["class", "Choose a Class", "Class chassis and class features"],
-  ["side", "Choose a Side", "Heroic or unaligned"],
+  ["side", "Choose a Side", "Heroic, Unaligned, or GM-only Villainous"],
   ["calling", "Choose a Calling", "Calling and Edge triggers"],
   ["hitPoints", "Calculate Hit Points", "HP, Hit Die, Recovery, and Prowess"],
   ["skills", "Skills & Specialties", "Trained skills, expertise, and specialties"],
@@ -386,7 +391,7 @@ const steps = [
 
 const app = document.querySelector("#app");
 let activeStep = "concept";
-let sheet = load(STORAGE_KEY, defaults);
+let sheet = { ...defaults };
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -394,14 +399,6 @@ let diceRollMode = "normal";
 let diceRollHistory = [];
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
-
-function load(key, fallback) {
-  try {
-    return { ...fallback, ...JSON.parse(localStorage.getItem(key) || "{}") };
-  } catch {
-    return { ...fallback };
-  }
-}
 
 function save() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
@@ -819,6 +816,26 @@ function namedRule(name, rules) {
 
 function gearLine(name) {
   return gearRules[name] ? `${name}: ${gearRules[name]}` : name;
+}
+
+function removableGearCards(field) {
+  const items = lines(sheet[field]);
+  if (!items.length) return `<p class="empty">No selections yet.</p>`;
+
+  return `<div class="selection-card-grid">${items.map(item => {
+    const separator = item.indexOf(": ");
+    const name = separator >= 0 ? item.slice(0, separator) : item;
+    const description = separator >= 0 ? item.slice(separator + 2) : gearRules[name] || "Custom gear entry.";
+    return `
+      <article class="selection-card">
+        <div>
+          <h3>${html(name)}</h3>
+          <p>${html(description)}</p>
+        </div>
+        <button type="button" data-action="remove-line" data-field="${field}" data-value="${html(item)}">Remove</button>
+      </article>
+    `;
+  }).join("")}</div>`;
 }
 
 function ratedRule(name, rules) {
@@ -1309,20 +1326,22 @@ function renderClass() {
 
 function renderSide() {
   const side = sideRules[sheet.side] || sideRules.Heroic;
+  const isVillainous = sheet.side === "Villainous";
   return `
-    <div class="form-grid two">
-      ${select("side", "Side", ["Heroic", "Unaligned"])}
-    </div>
-    <div class="rule-card">
-      <h2>Choose a Side</h2>
-      <p>Every hero in HEROIC 5e has a Side. A Side is not alignment and not a moral cage. It is a simple declaration of narrative position: the broad direction a character's actions tend to move in, and what that means for how the world reads them.</p>
-      <p>Side determines which Callings are available and sets the emotional register of the hero's public presence. Heroic and Unaligned are supported player character choices; Villainous is defined for GM use with NPCs and antagonists.</p>
-    </div>
-    <div class="rule-card">
-      <h2>${html(sheet.side || "Choose a Side")}</h2>
-      <p>${html(side.summary)}</p>
-      <p>${html(side.callings)}</p>
-      <p>${html(side.reputation)}</p>
+    <div class="side-builder">
+      <div class="side-picker">
+        ${select("side", "Side", ["Heroic", "Unaligned", "Villainous"])}
+        <p>A Side declares the broad direction of the character's actions and shapes how the world reads their reputation. It is not alignment or a moral cage.</p>
+      </div>
+      <article class="side-detail-card${isVillainous ? " is-restricted" : ""}">
+        <header>
+          <div><span>Selected Side</span><h2>${html(sheet.side || "Heroic")}</h2></div>
+          <strong>${isVillainous ? "GM / NPC Only" : "Player Character"}</strong>
+        </header>
+        <p>${html(side.summary)}</p>
+        <p>${html(side.callings)}</p>
+        <p>${html(side.reputation)}</p>
+      </article>
     </div>
   `;
 }
@@ -1618,7 +1637,11 @@ function renderGear() {
       <label>Invention & Repair<select data-add-field="enhancements" data-add-rules="gear">${options(gearCatalog.invention, "", "Choose")}</select></label>
     </div>
     <div class="rule-card"><h2>Gear Rules</h2><p>Standard equipment covers reasonable carried items. Weapons use broad categories instead of exact weapon stat blocks. Armor adds a flat bonus after an Active Defense roll. Gadgets create specific fictional effects rather than replacing Power Sets. Vehicles use Speed Rating, Armor Rating, hits, and special features.</p></div>
-    <div class="form-grid two">${textarea("gear", "Gear", 7)}${textarea("enhancements", "Enhancements", 6)}${textarea("limitationsText", "Limitations", 6)}${textarea("sessionNotes", "Session Notes", 7)}</div>
+    <div class="gear-selection-grid">
+      <section><h2>Selected Gear</h2>${removableGearCards("gear")}</section>
+      <section><h2>Selected Features & Upgrades</h2>${removableGearCards("enhancements")}</section>
+    </div>
+    <div class="form-grid two">${textarea("gear", "Gear List (Editable)", 7)}${textarea("enhancements", "Features & Upgrades (Editable)", 6)}${textarea("limitationsText", "Limitations", 6)}${textarea("sessionNotes", "Session Notes", 7)}</div>
   `;
 }
 
