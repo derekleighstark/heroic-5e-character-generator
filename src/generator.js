@@ -395,6 +395,24 @@ const steps = [
   ["identity", "Finalize Identity", "Name, identity, portrait, and final notes"]
 ];
 
+const stepArtwork = {
+  concept: ["Hero Concept", "Portrait, silhouette, or team introduction"],
+  abilities: ["Raw Potential", "A hero demonstrating exceptional ability"],
+  origin: ["Origin Story", "Transformation, legacy, or first awakening"],
+  class: ["Hero in Action", "The character's defining combat role"],
+  side: ["A Line Drawn", "A public choice between duty and personal code"],
+  calling: ["The Call", "The motive that keeps the hero moving"],
+  hitPoints: ["Stand Your Ground", "Endurance under impossible pressure"],
+  skills: ["Training Montage", "Expertise, investigation, or practiced technique"],
+  meritsFlaws: ["Strengths & Scars", "A defining advantage paired with a complication"],
+  powers: ["Power Unleashed", "The hero's signature superhuman display"],
+  talent: ["Defining Talent", "A practiced edge beyond raw power"],
+  defenses: ["Hold the Line", "A dodge, parry, block, or forceful resistance"],
+  edge: ["Turning Point", "The dramatic moment when conviction takes over"],
+  gear: ["Tools of the Trade", "Costume, weapon, vehicle, or iconic equipment"],
+  identity: ["Behind the Mask", "Final character portrait or civilian identity"]
+};
+
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
@@ -1237,6 +1255,7 @@ function renderProgress() {
 function renderBuilder() {
   const index = currentStepIndex();
   const [, label] = steps[index] || steps[0];
+  const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
       <div><p>Step ${index + 1} of ${steps.length}</p><h1>${label}</h1></div>
@@ -1245,7 +1264,16 @@ function renderBuilder() {
         <button type="button" data-action="next" ${index === steps.length - 1 ? "disabled" : ""}>Next</button>
       </div>
     </header>
-    ${renderStep(activeStep)}
+    <div class="builder-workspace">
+      <section class="builder-step-content">${renderStep(activeStep)}</section>
+      <aside class="step-art" data-art-step="${activeStep}">
+        <div class="step-art-canvas" role="img" aria-label="Artwork placeholder for ${html(artTitle)}">
+          <span>${String(index + 1).padStart(2, "0")}</span>
+          <i></i>
+        </div>
+        <footer><span>Artwork Placeholder</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
+      </aside>
+    </div>
   `;
   renderProgress();
 }
