@@ -3,6 +3,7 @@ tmp/
 *.log
 *.zip
 node_modules/
+__pycache__/
 .netlify/
 .env
 .DS_Store
