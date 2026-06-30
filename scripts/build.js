@@ -9,19 +9,12 @@ const files = [
   "gallery.html",
   "gallery.css",
   "gallery.js",
-  "campaigns.html",
-  "campaign.html",
-  "campaigns.css",
-  "campaigns.js",
-  "character.html",
-  "character.css",
-  "character.js",
   "splash.css",
   "styles.css",
   "app.js",
   "cloud-config.js"
 ];
-const dirs = ["src", "sample-characters", "standalone-sheet", "campaigns"];
+const dirs = ["src", "sample-characters", "standalone-sheet"];
 
 function browserConfig() {
   return `window.__HEROIC_CLOUD_CONFIG__ = Object.freeze(${JSON.stringify({
