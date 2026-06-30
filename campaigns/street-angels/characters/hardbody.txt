@@ -1,0 +1,92 @@
+### 🦸 HARDBODY (Sarah Glickman)
+
+**Campaign Rank:** Street Level | **Level:** 1 | **Side:** Heroic | **Calling:** Redeemer
+**Class:** Guardian | **Origin:** Enhanced
+**HP:** 31 *(d12 Max 12 + CON Score 19)* | **Bloodied:** 15
+**Power Die:** d8
+**Prowess (PRO):** +2
+**Starting Edge:** 3 *(Edge Cap: 3)*
+**Class Effect Value (CON):** 16 *(10 + CON mod 4 + PRO 2)*
+**Super Strength Effect Value (STR):** 15 *(10 + STR mod 3 + PRO 2)*
+
+#### 📊 Ability Scores & Defenses
+*(Standard Street Level Array. Origin granted +2 CON, +1 STR. Super Durability 1 granted +1 CON. Super Strength 1 granted +1 STR)*
+*   **Strength (STR):** 16 (+3) *[Save Proficient]*
+*   **Dexterity (DEX):** 13 (+1) 
+*   **Constitution (CON):** 19 (+4) *[Save Proficient]*
+*   **Fighting (FIG):** 15 (+2) 
+*   **Intelligence (INT):** 12 (+1)
+*   **Wisdom (WIS):** 11 (+0)
+*   **Charisma (CHA):** 10 (+0)
+*   **Perception (PER):** 8 (-1) 
+
+**Active Defenses:** *(Roll 1d20 + Bonus vs. Enemy Attacks)*
+*   **Parry/Block (FIG+PER):** +3 *(FIG 2 + PER -1 + PRO 2)* 
+*   **Dodge (DEX+PER):** +2 *(DEX 1 + PER -1 + PRO 2)* 
+*   **Willpower (WIS+PER):** +1 *(WIS 0 + PER -1 + PRO 2)*
+*   **Social (CHA+INT):** +3 *(CHA 0 + INT 1 + PRO 2)*
+*   **Initiative:** +3 *(DEX 1 + PRO 2)* 
+
+#### 🧬 Origin & Class Features (Level 1)
+*   **Origin Talent (Enhanced):** *Adaptive Biology.* Once per encounter when you use an At-Will Power, choose one: add your Prowess (+2) to one damage/protection roll; ignore Disadvantage from stress or unstable conditions; or gain temporary HP equal to your Prowess (2).
+*   **Class Feature (Guardian):** *Stand Between.* When an ally within Close range (25 ft) is hit, you may use your Reaction to become the target instead.
+*   **Class Feature (Guardian):** *Endure.* Once per encounter, when reduced to 0 HP, drop to 1 HP instead as a free action.
+
+#### 🎓 Skills & Talents
+*   **Skills:** Athletics *(Origin)*, Intimidation, Medicine, Streetwise, Survival.
+*   **Starting Talent:** *Durable.* You have Advantage on CON saves against physical effects.
+
+#### 🎒 Merits & Flaws *(3 Point Budget)*
+*   **Merit:** Altered Physiology 1: Enhanced Recovery *(Origin Built-In — Reroll one Hit Die during a Breather and use the better result)*.
+*   **Merit:** Strong Resolve 1.
+*   **Merit:** Wary 1.
+*   **Merit:** Connected 1 (Local Community).
+*   **Flaw:** Marked by Change 1 *(Origin Built-In)*. 
+*   **Flaw:** Enemy 2 (Former Crew).
+*   **Flaw:** Infamy 1.
+
+#### ⚡ Powers & Gear *(8 Starting Picks)*
+
+**Power Set 1: Super Durability** *(CON Governs. Modifiers: +4)*
+*   **Super Durability 1 (Core Track | 1 Pick):** Grants +1 CON *(already added above)*. Flat damage reduction equal to Prowess (2) against all damage sources. Gain temporary HP equal to CON (4) at the start of each encounter.
+*   **Brace for Impact (Tier 1 Reaction | 1 Pick):** *Trigger: You or one ally within Close range is hit by an attack/collision.* Reduce the damage taken by 1d8+4. If used to protect an ally, you must physically interpose yourself.
+*   **Unstoppable Advance (Tier 1 Encounter · Action | 1 Pick):** Move up to your full Speed in a straight line without provoking Reactions. Any creature in your path rolls STR vs. your Power Effect Value (16) or is pushed 10 ft out of your path. Difficult terrain costs no additional movement.
+*   **Thick Skin (Tier 1 Utility | 1 Pick):** Your flat damage reduction (2) also applies to environmental hazards: extreme heat, extreme cold, crushing pressure, and falls.
+
+**Power Set 2: Super Strength** *(STR Governs. Modifiers: +3)*
+*   **Super Strength 1 (Core Track | 1 Pick):** Grants +1 STR *(already added above)*. Lifting, carrying, dragging, and breaking capacity equals your STR score in tons (16 tons). Advantage on all STR-based Skill checks involving lifting, breaking, grappling, or forcing objects.
+*   **Mighty Blow (Tier 1 At-Will · Action | 1 Pick):** *Attack: 1d20+5 vs Parry/Block.* Hit: **1d8+3 bludgeoning damage.** Strong Success: push target 25 ft or knock Prone.
+*   **Object Throw (Tier 1 At-Will · Action | 1 Pick):** *Attack: 1d20+5 vs Dodge.* Range: Short (25-50 ft). Hit: **1d8+3 bludgeoning damage.** Strong Success: creates difficult terrain at landing area.
+*   **Break Object (Tier 1 Utility | 1 Pick):** Deal maximum damage on all dice when attacking objects, barriers, structures, vehicles, or restraints. Mundane locks, doors, and walls present no meaningful resistance.
+
+***
+
+### 🛡️ How to Play Hardbody: A New Player's Guide
+
+Welcome to *HEROIC 5e*! Hardbody is a **Guardian**. While Strikers and Vanguards dart around dealing massive damage, you are the team's anchor. You win fights by wading into the middle of the chaos, soaking up hits that would kill your teammates, and bullying the biggest villains on the battlefield. 
+
+Here is a simple breakdown of how your character operates during combat.
+
+#### 💥 Bread-and-Butter Combos
+
+**Combo 1: The Human Shield (Ultimate Defense)**
+*Use this when the villain tries to target your squishiest teammate.*
+1.  **The Trigger:** The GM announces that an enemy has successfully hit your ally.
+2.  **Reaction (Stand Between):** Because you are a Guardian, you immediately use your Reaction to intercept the attack. The ally takes no damage, and *you* become the target.
+3.  **Reaction (Brace for Impact):** At the exact same time, you trigger your Super Durability power. You roll `1d8 + 4` and subtract that number from the damage you are taking. 
+4.  **The Result:** Between your *Brace for Impact* roll and your passive flat damage reduction (you reduce *all* incoming attacks by an additional 2 points automatically), you will likely reduce a massive, lethal blow to a tiny scratch. 
+
+**Combo 2: The Bulldozer (Crowd Control)**
+*Use this when enemies are clumped together or blocking a doorway.*
+1.  **Action (Unstoppable Advance):** You charge straight through the battlefield. This movement does not provoke opportunity attacks, and you ignore difficult terrain. 
+2.  **The Effect:** Any enemy in your path has to roll a Strength Save against your massive Effect Value (16). If they fail, they are violently shoved out of your way. 
+3.  **Follow-Up:** You are now perfectly positioned right next to the enemy boss. Next turn, you can hit them with a **Mighty Blow** (`1d8 + 3` damage, and knocking them Prone on a Strong Success).
+
+---
+
+#### 🛡️ Core Mechanics & Quick Tips
+
+*   **You Start Fights with Extra Health:** At the beginning of *every* encounter, you automatically gain **4 Temporary Hit Points** from your Super Durability. These absorb damage before your real Hit Points are touched.
+*   **You Shrug Off Pain:** You have a passive damage reduction of 2. Every single time you take damage from a punch, a bullet, or a fire blast, subtract 2 from it. It doesn't cost an action; it's just how tough your skin is. 
+*   **The "Endure" Safety Net:** If a villain gets lucky and somehow reduces your 31 HP to 0, you don't go down. Your Guardian *Endure* class feature automatically kicks in, dropping you to 1 HP instead and keeping you in the fight. 
+*   **Using Your Edge:** You have the **Redeemer** Calling. You start the session with 3 Edge points (which let you reroll dice or push your powers). You earn Edge back by roleplaying your past—like confronting old gang members from your "Enemy" Flaw without running away, or showing mercy to a street kid who reminds you of who you used to be!

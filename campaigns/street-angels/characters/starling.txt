@@ -1,0 +1,95 @@
+### 🦸 STARLING (Cassidy Donnelly)
+
+**Campaign Rank:** Street Level | **Level:** 1 | **Side:** Heroic | **Calling:** Protector
+**Class:** Vanguard | **Origin:** Enhanced
+**HP:** 24 *(d8 Max 8 + CON Score 16)* | **Bloodied:** 12
+**Power Die:** d8
+**Prowess (PRO):** +2
+**Starting Edge:** 3 *(Edge Cap: 3)*
+**Class Effect Value (DEX):** 16 *(10 + DEX mod 4 + PRO 2)*
+**Energy Generation Effect Value (DEX):** 16 *(10 + DEX mod 4 + PRO 2)*
+
+#### 📊 Ability Scores & Defenses
+*(Standard Street Level Array. Origin granted +2 DEX, +1 CON)*
+*   **Strength (STR):** 10 (+0) 
+*   **Dexterity (DEX):** 18 (+4) *[Save Proficient]*
+*   **Constitution (CON):** 16 (+3) 
+*   **Fighting (FIG):** 12 (+1) 
+*   **Intelligence (INT):** 11 (+0)
+*   **Wisdom (WIS):** 13 (+1) 
+*   **Charisma (CHA):** 14 (+2)
+*   **Perception (PER):** 8 (-1) *[Save Proficient]*
+
+**Active Defenses:** *(Roll 1d20 + Bonus vs. Enemy Attacks)*
+*   **Parry/Block (FIG+PER):** +2 *(FIG 1 + PER -1 + PRO 2)* 
+*   **Dodge (DEX+PER):** +5 *(DEX 4 + PER -1 + PRO 2)* 
+*   **Willpower (WIS+PER):** +2 *(WIS 1 + PER -1 + PRO 2)*
+*   **Social (CHA+INT):** +4 *(CHA 2 + INT 0 + PRO 2)*
+*   **Initiative:** +6 *(DEX 4 + PRO 2)* 
+
+#### 🧬 Origin & Class Features (Level 1)
+*   **Origin Talent (Enhanced):** *Adaptive Biology.* Once per encounter when you use an At-Will Power, choose one: add your Prowess (+2) to one damage/protection roll; ignore Disadvantage from stress or unstable conditions; or gain temporary HP equal to your Prowess (2).
+*   **Class Feature (Vanguard):** *Fluid Motion.* Standing from Prone costs no movement. Climbing and difficult terrain cost no extra movement. You have Advantage on checks to escape grapples and restraints.
+*   **Class Feature (Vanguard):** *Elusive.* When you move 15 ft or more on your Turn, the next attack against you before the start of your next Turn is made at Disadvantage.
+
+#### 🎓 Skills & Talents
+*   **Skills:** Athletics, Acrobatics, Notice, Influence, Streetwise.
+*   **Starting Talent:** *Power Focus (Sonic Blast).* Once per encounter, you may gain Advantage on your attack roll with your Sonic Blast power OR impose Disadvantage on the target's save against it.
+
+#### 🎒 Merits & Flaws *(3 Point Budget)*
+*   **Merit:** Altered Physiology 1 *(Origin Built-In — Unusual Senses: Hearing)*.
+*   **Merit:** Public Trust 1.
+*   **Merit:** Local Support 1.
+*   **Merit:** Mentor 1.
+*   **Flaw:** Marked by Change 1 *(Origin Built-In)*. 
+*   **Flaw:** Power Instability 1.
+*   **Flaw:** Responsibility to the Innocent 1.
+*   **Flaw:** Reckless 1.
+
+#### ⚡ Powers & Gear *(8 Starting Picks)*
+
+**Power Set 1: Energy Generation [Sonic]** *(DEX Governs. Modifiers: +4)*
+*   **Energy Generation 1 (Core Track | 1 Pick):** You can generate and project sonic energy. You gain flat Resistance to sonic damage. Fine audio modulation. 
+*   **Sonic Blast (Energy Bolt · Tier 1 At-Will · Action | 1 Pick):** *Attack: 1d20+6 vs Dodge.* Range: Short (25-50 ft). Hit: **1d8+4 sonic damage.** Strong Success: roll your EV (16) vs the target's CON save. Failure: target is Shaken until the end of their next Turn.
+*   **Sonic Burst (Energy Burst · Tier 1 Encounter · Action | 1 Pick):** *Attack: 1d20+6 vs Dodge of each creature in a Short area (20-ft radius).* Hit: **1d8+4 sonic damage.** 
+*   **Sonic Shield (Energy Shield · Tier 1 Encounter · Reaction | 1 Pick):** *Trigger: You or an ally within Short range (25-50 ft) are hit by an attack.* Reduce the incoming damage by 1d8+2.
+*   **Environmental Interaction (Tier 1 Utility | 1 Pick):** Three non-combat sonic uses: Sonar Navigation (map spaces to Short range), Long-Range Communication (project voice up to 1 mile), Selective Shatter (destroy fragile object at Close range after 1 minute of calibration).
+
+**Power Set 2: Flight** *(DEX Governs. Modifiers: +4)*
+*   **Flight 1 (Core Track | 1 Pick):** 30 ft combat flight. 36 mph out-of-combat speed. Hovering is built-in and automatic.
+*   **Sonic Dive (Aerial Strike · Tier 1 At-Will · Action | 1 Pick):** *Prerequisite: You must move at least 25 ft before attacking.* Attack: 1d20+6 vs Parry/Block. Range: Close (at dive endpoint). Hit: 1d8 base + 4 DEX + 1d8 momentum die = **2d8+4 sonic damage.** Strong Success: target is knocked Prone.
+
+**Enhancements** *(1 Pick buys 2 Enhancements)*
+*   **Shield Ally (Energy Generation):** Your *Sonic Shield* may be used to protect allies up to Short range (25-50 ft) away, expanded from the default Close range. *(Already integrated into the power description above).*
+*   **Speed Burst (Flight):** Once per encounter as a Free Action, double your flight speed for one Turn (60 ft / 72 mph).
+
+***
+
+### 🦅 How to Play Starling: A New Player's Guide
+
+Welcome to *HEROIC 5e*! Starling is a **Vanguard**. While Bruisers want to stand still and soak up hits, you survive through sheer, unstoppable momentum. You win fights by launching into the air, raining down blasts from above, dive-bombing crucial targets, and making yourself incredibly difficult for villains to pin down.
+
+Here is a simple breakdown of how your character operates during combat.
+
+#### 💥 Bread-and-Butter Combos
+
+**Combo 1: The Hit-and-Run (Maximum Single Target)**
+*Use this to obliterate an enemy while protecting yourself from retaliation.*
+1.  **The Approach:** Use your **Flight** to soar 25 feet through the air toward your target. 
+2.  **The Trigger (Elusive):** Because you are a Vanguard and moved more than 15 feet, your **Elusive** class feature instantly activates. The next enemy who tries to attack you will have Disadvantage!
+3.  **Action (Sonic Dive):** Because you moved 25 feet, you meet the prerequisite to use your **Sonic Dive** At-Will power. You slam into the enemy from the sky! You roll `1d20+6` against their Parry/Block. If you hit, you deal a massive `2d8+4` damage, and if you roll a Strong Success, you knock them flat on their back (Prone).
+
+**Combo 2: The Sonic Boom (Crowd Control & Team Defense)**
+*Use this when enemies group up, or when your team is in trouble.*
+1.  **Free Action (Speed Burst):** Trigger your *Speed Burst* enhancement to double your flight speed to 60 feet for the turn. Fly straight up into the air so you have a perfect vantage point over the battlefield. 
+2.  **Action (Sonic Burst):** Unleash your encounter power. You target a 40-foot wide circle (20-ft radius) on the ground, rolling your attack against *every single enemy* caught inside it, dealing `1d8+4` sonic damage to anyone you hit.
+3.  **Reaction (Sonic Shield):** When the angry villains shoot back at your teammates, you use your Reaction to trigger your **Sonic Shield**. Because you took the *Shield Ally* enhancement, you can project a sonic barrier over an ally up to 50 feet away, reducing the damage they take by `1d8+2`!
+
+---
+
+#### 🛡️ Core Mechanics & Quick Tips
+
+*   **Never Stop Moving:** Vanguards die when they stand still. If you don't move at least 15 feet every turn, you lose your *Elusive* defensive buff. Always keep flying, repositioning, and making the enemy chase you.
+*   **Push Your Powers:** Don't forget your Enhanced Origin! Once per fight, when you use *Sonic Blast* or *Sonic Dive*, you can trigger **Adaptive Biology** to instantly gain 2 Temporary Hit Points, giving yourself a quick buffer against enemy attacks. 
+*   **Sonar Vision:** Your *Environmental Interaction* utility power essentially gives you Daredevil's radar sense. If a villain turns out the lights or drops a smoke bomb, use your sonar navigation to "see" the battlefield using sound waves!
+*   **Using Your Edge:** You have the **Protector** Calling. You earn your Edge points by making sacrifices for your protected circle—like breaking off an attack against the main villain just to swoop down and shield an innocent bystander from falling debris!

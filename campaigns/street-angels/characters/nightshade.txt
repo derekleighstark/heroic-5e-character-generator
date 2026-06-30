@@ -1,0 +1,97 @@
+### 🦸 NIGHTSHADE (Evelyn Pike)
+
+**Campaign Rank:** Street Level | **Level:** 1 | **Side:** Heroic | **Calling:** Redeemer
+**Class:** Warden | **Origin:** Monster
+**HP:** 25 *(d8 Max 8 + CON Score 17)* | **Bloodied:** 12
+**Power Die:** d8
+**Prowess (PRO):** +2
+**Starting Edge:** 3 *(Edge Cap: 3)*
+**Class Effect Value (WIS):** 15 *(10 + WIS mod 3 + PRO 2)*
+**Shadow Control Effect Value (WIS):** 15 *(10 + WIS mod 3 + PRO 2)*
+
+#### 📊 Ability Scores & Defenses
+*(Standard Street Level Array. Origin granted +2 CON, +1 WIS)*
+*   **Strength (STR):** 10 (+0) 
+*   **Dexterity (DEX):** 14 (+2) 
+*   **Constitution (CON):** 17 (+3) *[Save Proficient]*
+*   **Fighting (FIG):** 12 (+1) 
+*   **Intelligence (INT):** 11 (+0)
+*   **Wisdom (WIS):** 17 (+3) *[Save Proficient]*
+*   **Charisma (CHA):** 13 (+1)
+*   **Perception (PER):** 8 (-1) 
+
+**Active Defenses:** *(Roll 1d20 + Bonus vs. Enemy Attacks)*
+*   **Parry/Block (FIG+PER):** +2 *(FIG 1 + PER -1 + PRO 2)* 
+*   **Dodge (DEX+PER):** +3 *(DEX 2 + PER -1 + PRO 2)* 
+*   **Willpower (WIS+PER):** +4 *(WIS 3 + PER -1 + PRO 2)*
+*   **Social (CHA+INT):** +3 *(CHA 1 + INT 0 + PRO 2)*
+*   **Initiative:** +4 *(DEX 2 + PRO 2)* 
+
+#### 🧬 Origin & Class Features (Level 1)
+*   **Origin Talent (Monster):** *Apex Predator.* Once per encounter, when you move toward a target aggressively to close distance, you make that movement without provoking Reactions. If you reach the target and attack on the same Turn, you gain Advantage on that attack.
+*   **Class Feature (Warden):** *Inner Fortress.* You have Advantage on saves against the Shaken, Frightened, Dazed, and Charmed conditions. Once per encounter as a Reaction, you may reroll a failed save against one of those conditions. When you use Second Wind or Steady On, you gain temporary HP equal to WIS (+3).
+*   **Class Feature (Warden):** *Force of Will.* Once per Turn as a Bonus Action, when a creature within Short range (25-50 ft) causes Shaken, Frightened, Dazed, or Charmed, you may project your discipline against them. Roll 1d20+5 (WIS+PRO) against the creature's WIS Save Value. Success: the creature is Shaken and immediately loses any ongoing fear/charm effect it is sustaining. Failure: the creature is Shaken only.
+
+#### 🎓 Skills & Talents
+*   **Skills:** Intimidation *(Origin)*, Occult, Stealth, Investigation, Athletics.
+*   **Specialty:** Intimidation *(Fearsome Presence)*.
+*   **Starting Talent:** *Iron Will.* You have Advantage on WIS saves against fear and despair effects. (When stacked with *Inner Fortress*, this ensures you almost never fail fear saves).
+
+#### 🎒 Merits & Flaws *(3 Point Budget)*
+*   **Merit:** Inhuman Body 1 *(Origin Built-In — Night Creature: Darkvision to 60 ft)*.
+*   **Merit:** Mentor 1.
+*   **Merit:** Local Support 1.
+*   **Merit:** Connected 1 (Occult Underground).
+*   **Flaw:** Feared 1 *(Origin Built-In)*. 
+*   **Flaw:** Power Instability 1.
+*   **Flaw:** Responsibility to the Innocent 1.
+*   **Flaw:** Haunted 1.
+
+#### ⚡ Powers & Gear *(8 Starting Picks)*
+
+**Power Set 1: Shadow Control** *(WIS Governs. Modifiers: +3)*
+*   **Shadow Control 1 (Core Track | 1 Pick):** Deepen and manipulate shadows within Short range (25-50 ft). Advantage on Stealth checks in dim light or darkness. You can see normally in darkness, including magical darkness.
+*   **Shadow Lash (Tier 1 At-Will · Action | 1 Pick):** *Attack: 1d20+5 vs Dodge.* Range: Short. Hit: **1d8+3 cold or necrotic damage**. Strong Success: Target is Shaken until the end of your next Turn. 
+*   **Fear Shape (Tier 1 Encounter · Action | 1 Pick):** Sculpt the shadows into the shape of a target's deepest fear. *Attack: 1d20+5 vs Willpower.* Range: Short. Hit: Roll your WIS Effect Value (15) vs the target's WIS Save. Failure: target is Frightened of you until the end of your next Turn. Success: target is Shaken only.
+*   **Dim Light Step (Tier 1 Utility · Bonus Action | 1 Pick):** Teleport up to 25 ft (Close range) between any two points of dim light or darkness you can perceive. Does not provoke Reactions.
+*   **Shadow Hide (Tier 1 Utility · Free Action | 1 Pick):** In any area of dim light or darkness, you may attempt to Hide as a Free Action rather than an Action.
+
+**General Utility Powers**
+*   **Toxin Resistance (Tier 1 Utility | 1 Pick):** You have Advantage on saves against poison, disease, venom, narcotics, and radiation.
+*   **Spirit Speech (Tier 1 Utility | 1 Pick):** Perceive and communicate with the spirits of the recently dead (≤1 week). You can experience their final moments if you have 1 minute of contact with their corpse/death location. Automatically sense spirit presence. Advantage on Occult checks related to death/spirits.
+
+**Enhancements** *(1 Pick buys 2 Enhancements)*
+*   **Extended Fear Shape (Shadow Control):** Your *Fear Shape* power now affects up to two targets within Short range simultaneously, projecting individualized fears to each.
+*   **Resonant Shadow (Shadow Control):** When your *Shadow Lash* achieves a Strong Success, the target is also **Blinded** until the end of your next Turn (in addition to being Shaken).
+
+***
+
+### 🦇 How to Play Nightshade: A New Player's Guide
+
+Welcome to *HEROIC 5e*! Nightshade is a **Warden** with a supernatural twist. While Strikers deal massive damage and Guardians soak up physical hits, Wardens are the unshakable anchors of the team's willpower. You win fights by completely locking down the enemy's psychological advantages, shrugging off mental attacks, and using the shadows to terrify criminals into submission.
+
+Here is a simple breakdown of how your character operates during combat and investigations.
+
+#### 💥 Bread-and-Butter Combos
+
+**Combo 1: The Predator from the Dark (Hit and Fade)**
+*Use this to deal debilitating damage while remaining completely untouchable.*
+1.  **Free Action:** Because you are standing in dim light, use your **Shadow Hide** utility to vanish. You gain the *Hidden* condition.
+2.  **The Approach (Apex Predator):** Trigger your Origin talent. You close the distance on an enemy aggressively without provoking any opportunity attacks. 
+3.  **Action:** Lash out from the darkness with **Shadow Lash**. Because you were *Hidden* and used *Apex Predator*, you attack with Advantage! If you roll a Strong Success, your *Resonant Shadow* enhancement kicks in: the enemy takes `1d8+3` damage, and is instantly **Shaken and Blinded**. 
+4.  **Bonus Action:** Use **Dim Light Step** to immediately teleport 25 feet away into another shadow, ready to strike again next turn while the enemy flails blindly.
+
+**Combo 2: The Shape of Nightmares (Crowd Control)**
+*Use this when outnumbered or when a villain tries to rally their thugs.*
+1.  **Action:** Unleash your **Fear Shape** encounter power. Thanks to your *Extended Fear Shape* enhancement, you can target two enemies at once. You roll `1d20+5` against their Willpower.
+2.  **The Save:** If you hit, they must roll against your massive Effect Value of 15. If they fail, they are completely **Frightened** of you—meaning they have Disadvantage on all rolls and cannot willingly move closer to you.
+3.  **Bonus Action:** If an enemy tries to use a power to charm or frighten one of your teammates, immediately use your Warden **Force of Will** to project your own discipline against them, instantly stripping away their effect and leaving *them* Shaken instead!
+
+---
+
+#### 🛡️ Core Mechanics & Quick Tips
+
+*   **You Own the Shadows:** Because of *Shadow Control 1* and your *Inhuman Body*, you can see perfectly in absolute darkness (even magical darkness). Your enemies cannot. Always try to fight in alleys, unlit warehouses, or at night. 
+*   **Your Mind is a Fortress:** Between your *Inner Fortress* class feature and your *Iron Will* talent, it is mathematically almost impossible for an enemy to frighten, charm, or daze you. If a vampire tries to mind-control you, you roll your save with Advantage, and even if you somehow fail, you can use your Reaction to reroll it!
+*   **You Speak for the Dead:** As a supernatural investigator, your **Spirit Speech** utility power is a game-changer. If you find a murder victim, you don't need to dust for fingerprints; you can just ask their ghost who killed them and literally see their final moments through their eyes!
+*   **Using Your Edge:** You have the **Redeemer** Calling, meaning you are trying to make up for your monstrous nature by saving others. You earn your Edge points by extending mercy to villains who remind you of what you used to be, or by standing your ground and confronting your dark past without running away.

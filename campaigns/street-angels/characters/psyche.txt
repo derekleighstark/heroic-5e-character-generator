@@ -1,0 +1,97 @@
+### 🦸 PSYCHE (Zoey Kane)
+
+**Campaign Rank:** Street Level | **Level:** 1 | **Side:** Heroic | **Calling:** Chaos & Connection
+**Class:** Sentinel | **Origin:** Enhanced
+**HP:** 20 *(d8 Max 8 + CON Score 12)* | **Bloodied:** 10
+**Power Die:** d8
+**Prowess (PRO):** +2
+**Starting Edge:** 3 *(Edge Cap: 3)*
+**Class Effect Value (PER):** 15 *(10 + PER mod 3 + PRO 2)*
+**Telekinesis / Telepathy Effect Value (WIS):** 14 *(10 + WIS mod 2 + PRO 2)*
+**Illusion Effect Value (CHA):** 14 *(10 + CHA mod 2 + PRO 2)*
+
+#### 📊 Ability Scores & Defenses
+*(Standard Street Level Array. Origin granted +2 DEX, +1 WIS)*
+*   **Strength (STR):** 10 (+0) 
+*   **Dexterity (DEX):** 16 (+3) *[Save Proficient]*
+*   **Constitution (CON):** 12 (+1)
+*   **Fighting (FIG):** 8 (-1) 
+*   **Intelligence (INT):** 11 (+0)
+*   **Wisdom (WIS):** 14 (+2) 
+*   **Charisma (CHA):** 15 (+2)
+*   **Perception (PER):** 16 (+3) *[Save Proficient]*
+
+**Active Defenses:** *(Roll 1d20 + Bonus vs. Enemy Attacks)*
+*   **Parry/Block (FIG+PER):** +4 *(FIG -1 + PER 3 + PRO 2)* 
+*   **Dodge (DEX+PER):** +8 *(DEX 3 + PER 3 + PRO 2)* 
+*   **Willpower (WIS+PER):** +7 *(WIS 2 + PER 3 + PRO 2)*
+*   **Social (CHA+INT):** +4 *(CHA 2 + INT 0 + PRO 2)*
+*   **Initiative:** +5 *(DEX 3 + PRO 2)* **[Rolls with Advantage due to Reactive Awareness]**
+
+#### 🧬 Origin & Class Features (Level 1)
+*   **Origin Talent (Enhanced):** *Adaptive Biology (TK Set).* Once per encounter when you use your Telekinetic Shove At-Will Power, choose one: add your Prowess (+2) to the damage/forced movement roll; ignore Disadvantage from stress or unstable conditions; or gain temporary HP equal to your Prowess (2).
+*   **Class Feature (Sentinel):** *Threat Assessment.* At the start of each encounter, the GM must reveal the creature with the highest HP, the creature with the highest Attack Value, and any hidden objectives. You have Advantage on checks to detect hidden/invisible creatures, ambushes, and traps.
+*   **Class Feature (Sentinel):** *Reactive Awareness.* You have Advantage on all Initiative rolls and cannot be surprised. Once per encounter, when an enemy within Short range attacks an ally or moves, you may use your Reaction to move your full Speed toward them or make a free attack against them.
+
+#### 🎓 Skills & Talents
+*   **Skills:** Performance *(GM Legacy Skill)*, Insight, Notice, Influence, Investigation.
+*   **Specialty:** Insight *(Emotional Reading)*.
+*   **Starting Talent:** *Power Focus (Telekinetic Shove).* Once per encounter, you may gain Advantage on your attack roll with this power OR impose Disadvantage on the target's save against it.
+
+#### 🎒 Merits & Flaws *(3 Point Budget)*
+*   **Merit:** Unusual Senses 1 *(Origin Built-In — Enhanced Mind: Advantage on Insight checks to read emotions)*.
+*   **Merit:** Mentor 1.
+*   **Merit:** Connected 1 (Performers & Artists).
+*   **Merit:** Public Trust 1.
+*   **Flaw:** Marked by Change 1 *(Origin Built-In)*. 
+*   **Flaw:** Responsibility to the Innocent 1.
+*   **Flaw:** Power Instability 1.
+*   **Flaw:** Enemy 1.
+
+#### ⚡ Powers & Gear *(8 Starting Picks)*
+
+**Power Set 1: Telekinesis** *(WIS Governs. Modifiers: +2)*
+*   **Telekinesis 1 (Core Track | 1 Pick):** Move unattended objects up to your WIS score (14) lbs within Short range (25–50 ft) as a free action. Perform fine manipulation at Close range.
+*   **Telekinetic Shove (Tier 1 At-Will · Action | 1 Pick):** *Attack: 1d20+5 vs Dodge.* Range: Short. Hit: **1d8+2 force damage.** Strong Success: push target Short range (25-50 ft) or knock them Prone.
+
+**Power Set 2: Telepathy** *(WIS Governs. Modifiers: +2)*
+*   **Telepathy 1 (Core Track | 1 Pick):** Sense emotions within Close range (25 ft). Send/receive wordless mental impressions with willing targets within Short range. Advantage on Insight checks.
+*   **Surface Read (Tier 1 Utility · Bonus Action | 1 Pick):** Read one creature's surface thoughts within Close range: emotional state, immediate intention, and one actively concealed thing.
+*   **Telepathic Link (Tier 1 Utility · Action | 1 Pick):** Link up to your Prowess (2) in willing creatures within Short range for one scene. Silent instantaneous communication. Relay to all as a free action 1/Turn.
+
+**Power Set 3: Illusion** *(CHA Governs. Modifiers: +2)*
+*   **Illusion 1 (Core Track | 1 Pick):** Create 1-sense illusions within Short range (50 ft). Static or simple motion. Creatures that physically interact or succeed on a WIS save vs. EV 14 see through it. Sustain as a free action.
+*   **False Image (Tier 1 At-Will · Action | 1 Pick):** Create one illusory duplicate of yourself or a simple object within Short range. Attackers who cannot determine which image is real have Disadvantage on attacks against you. The duplicate is destroyed the first time it is struck.
+*   **Phantom Strike (Tier 1 Encounter · Action | 1 Pick):** *Attack: 1d20+4 vs Willpower.* Range: Short. Hit: **1d8+2 psychic damage.** Target rolls a WIS Save vs. EV 14. Failure: Shaken until the end of your next Turn. Success: Disadvantage on their next attack roll.
+
+***
+
+### 🧠 How to Play Psyche: A New Player's Guide
+
+Welcome to *HEROIC 5e*! Psyche is a **Sentinel** who manipulates the battlefield using an incredibly versatile mix of Telekinesis, Telepathy, and Illusion. You are not a frontline brawler; your physical Fighting is low, but your mind is a weapon. You win fights by keeping enemies at a distance, confusing their senses, and feeding critical information to your team.
+
+Here is a simple breakdown of how your character operates during combat and investigations.
+
+#### 💥 Bread-and-Butter Combos
+
+**Combo 1: The Phantom Controller (Defense into Offense)**
+*Use this to lock down an enemy while keeping yourself perfectly safe.*
+1.  **Action 1 (False Image):** Create an illusionary duplicate of yourself. Enemies who shoot at you won't know which is the real Psyche, giving them Disadvantage on their attacks!
+2.  **Next Turn Action (Phantom Strike):** Blast a tough enemy's mind. You roll against their *Willpower* (which is usually much lower than their physical Dodge!). If you hit, they take psychic damage and become *Shaken* (they suffer Disadvantage on their next roll).
+3.  **The Follow-Up (Telekinetic Shove):** Because they are Shaken, use your *Power Focus* talent on your Telekinetic Shove to give them Disadvantage on their save. You blast them with invisible force, dealing damage and hurling them 25-50 feet backward or knocking them Prone!
+
+**Combo 2: The Unseen Overwatch (Tactical Command)**
+*Psyche's greatest strength is the information she gathers before the first punch is thrown.*
+1.  **The Setup (Threat Assessment):** At the absolute start of the fight, the GM *has* to tell you who the strongest enemy is, who deals the most damage, and if they have any hidden traps or objectives.
+2.  **Action (Telepathic Link):** Link the minds of your heaviest hitters (like Bruisers or Vanguards). 
+3.  **Bonus Action (Surface Read):** Look into the mind of the enemy boss to steal their immediate intention.
+4.  **Free Action:** Relay everything you just learned silently into your team's minds. You just solved the encounter puzzle without making a sound.
+
+---
+
+#### 🛡️ Defensive Moves & Quick Tips
+
+*   **You Are Never Ambushed:** Thanks to your *Reactive Awareness* Sentinel feature, you cannot be surprised. You also roll your Initiative with Advantage (rolling 2d20 and taking the higher result), meaning you almost always act first.
+*   **You are Hard to Hit:** With a 16 Dexterity and a 16 Perception, your **Dodge Active Defense is an astonishing +8** right out of the gate. Ranged attackers will struggle to hit you. Similarly, your **Willpower Active Defense is a +7**, making your mind an absolute fortress against enemy telepaths.
+*   **Adaptive Biology is a Lifesaver:** Once per encounter when you use your Telekinetic Shove, your Enhanced Origin kicks in. You can choose to instantly gain 2 Temporary Hit Points just to buffer yourself against an incoming attack!
+*   **Using Your Edge:** You have the **Chaos & Connection** Calling. You earn your Edge points by prioritizing emotional connections and understanding over cold tactical efficiency—even if that means reaching out telepathically to a villain or making a dangerous choice because of love or loyalty to a teammate!

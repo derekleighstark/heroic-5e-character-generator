@@ -1,0 +1,22 @@
+{
+  "campaigns": [
+    {
+      "id": "street-angels",
+      "name": "Street Angels",
+      "tagline": "Hope, shadow, vengeance, and second chances on the streets of New York.",
+      "status": "Playable roster",
+      "theme": "violet",
+      "characters": [
+        { "id": "nightshade", "name": "Nightshade", "realName": "Evelyn Pike", "className": "Warden", "origin": "Monster", "calling": "Redeemer", "hp": 25, "banner": "campaigns/street-angels/banners/nightshade.png", "file": "campaigns/street-angels/characters/nightshade.txt", "accent": "#8d4fe8" },
+        { "id": "psyche", "name": "Psyche", "realName": "Zoey Kane", "className": "Sentinel", "origin": "Enhanced", "calling": "Chaos & Connection", "hp": 20, "banner": "campaigns/street-angels/banners/psyche.png", "file": "campaigns/street-angels/characters/psyche.txt", "accent": "#ec36b6" },
+        { "id": "shield-maiden", "name": "Shield Maiden", "realName": "Alexandra Mercer", "className": "Bruiser", "origin": "Mystic", "calling": "Protector", "hp": 26, "banner": "campaigns/street-angels/banners/shield-maiden.png", "file": "campaigns/street-angels/characters/shield-maiden.txt", "accent": "#d9a534" },
+        { "id": "starling", "name": "Starling", "realName": "Cassidy Donnelly", "className": "Vanguard", "origin": "Enhanced", "calling": "Protector", "hp": 24, "banner": "campaigns/street-angels/banners/starling.png", "file": "campaigns/street-angels/characters/starling.txt", "accent": "#4b8fd8" },
+        { "id": "ghost-fox", "name": "Ghost Fox", "realName": "Linh Duvall", "className": "Striker", "origin": "Trained", "calling": "Avenger", "hp": 19, "banner": "campaigns/street-angels/banners/ghost-fox.png", "file": "campaigns/street-angels/characters/ghost-fox.txt", "accent": "#d8dce6" },
+        { "id": "hardbody", "name": "Hardbody", "realName": "Sarah Glickman", "className": "Guardian", "origin": "Enhanced", "calling": "Redeemer", "hp": 31, "banner": "", "file": "campaigns/street-angels/characters/hardbody.txt", "accent": "#df7a34" },
+        { "id": "madame-noir", "name": "Madame Noir", "realName": "Vivienne Laurent", "className": "Strategist", "origin": "Mystic", "calling": "Investigator", "hp": 21, "banner": "", "file": "campaigns/street-angels/characters/madame-noir.txt", "accent": "#b18bd9" }
+      ]
+    },
+    { "id": "motor-city-heroes", "name": "Motor City Heroes", "tagline": "Detroit-built heroes standing between the city and the next catastrophe.", "status": "Roster coming soon", "theme": "blue", "characters": [] },
+    { "id": "dawnwatch", "name": "Dawnwatch", "tagline": "Those who stand watch over a new age.", "status": "Roster coming soon", "theme": "sunrise", "characters": [] }
+  ]
+}
