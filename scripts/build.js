@@ -3,18 +3,8 @@ const path = require("path");
 
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
-const files = [
-  "index.html",
-  "generator.html",
-  "gallery.html",
-  "gallery.css",
-  "gallery.js",
-  "splash.css",
-  "styles.css",
-  "app.js",
-  "cloud-config.js"
-];
-const dirs = ["src", "sample-characters", "standalone-sheet"];
+const files = ["index.html", "styles.css", "app.js", "cloud-config.js"];
+const dirs = ["src", "sample-characters"];
 
 function browserConfig() {
   return `window.__HEROIC_CLOUD_CONFIG__ = Object.freeze(${JSON.stringify({

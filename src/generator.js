@@ -3702,18 +3702,3 @@ app.addEventListener("click", async event => {
 initialize();
 renderApp();
 initializeCloud();
-
-function openPortalRoute() {
-  const route = window.location.hash.replace(/^#/, "").toLowerCase();
-  if (route === "gm-screen") {
-    closeCompendium();
-    openGmScreen();
-  }
-  if (route === "compendium") {
-    closeGmScreen();
-    openCompendium();
-  }
-}
-
-openPortalRoute();
-window.addEventListener("hashchange", openPortalRoute);

@@ -1,55 +1,14 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#07111f">
-  <title>HEROIC 5e</title>
-  <link rel="stylesheet" href="splash.css?v=20260629-1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HEROIC 5e Character Generator</title>
+  <link rel="stylesheet" href="styles.css?v=20260622-1">
 </head>
 <body>
-  <main class="portal-shell">
-    <header class="portal-hero">
-      <div class="eyebrow">Zenith Comics presents</div>
-      <div class="hero-lockup"><span>HEROIC</span><b>5e</b></div>
-      <h1>Your campaign starts here.</h1>
-      <p>Build heroes, bring a character to the table, or put the rules you need on screen—fast.</p>
-    </header>
-
-    <nav class="portal-grid" aria-label="HEROIC 5e tools">
-      <a class="portal-card primary" href="generator.html">
-        <span class="card-number">01</span><span class="card-kicker">Create</span>
-        <h2>Character Generator</h2>
-        <p>Build a complete hero step by step with powers, talents, defenses, and export tools.</p>
-        <strong>Launch Generator <i>→</i></strong>
-      </a>
-      <a class="portal-card sheet-card" href="standalone-sheet/index.html">
-        <span class="card-number">02</span><span class="card-kicker">Play</span>
-        <h2>Character Sheet</h2>
-        <p>Open the independent two-page form with autosave, dice rolls, JSON files, and landscape printing.</p>
-        <strong>Open Sheet <i>→</i></strong>
-      </a>
-      <a class="portal-card compact gm-card" href="generator.html#gm-screen">
-        <span class="card-number">03</span><span class="card-kicker">Run</span>
-        <h2>GM Screen</h2>
-        <p>Fast encounter and rules reference.</p>
-        <strong>Open Screen <i>→</i></strong>
-      </a>
-      <a class="portal-card compact rules-card" href="generator.html#compendium">
-        <span class="card-number">04</span><span class="card-kicker">Reference</span>
-        <h2>Compendium</h2>
-        <p>Core terms, powers, talents, and rules.</p>
-        <strong>Browse Rules <i>→</i></strong>
-      </a>
-      <a class="portal-card gallery-card" href="gallery.html">
-        <span class="card-number">05</span><span class="card-kicker">Cast</span>
-        <h2>Hero Gallery</h2>
-        <p>Meet the campaign roster and load ready-to-play heroes for streams and one-shots.</p>
-        <strong>Enter Gallery <i>→</i></strong>
-      </a>
-    </nav>
-
-    <footer><span>HEROIC 5e</span><i></i><span>Fast Cinematic Superhero Action</span></footer>
-  </main>
+  <div id="app"></div>
+  <script src="cloud-config.js"></script>
+  <script type="module" src="src/main.js?v=20260622-cloud1"></script>
 </body>
 </html>
