@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEROIC 5e Standalone Character Sheet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="toolbar no-print">
+    <div><strong>HEROIC 5e</strong><span>Standalone Character Sheet</span></div>
+    <nav>
+      <button type="button" id="saveButton">Save JSON</button>
+      <button type="button" id="loadButton">Load JSON</button>
+      <button type="button" id="diceButton">Dice Roller</button>
+      <button type="button" id="printButton">Print / PDF</button>
+      <button type="button" id="clearButton" class="muted">Clear</button>
+    </nav>
+    <input id="loadFile" type="file" accept="application/json,.json" hidden>
+  </header>
+
+  <p class="autosave-note no-print" id="saveStatus">Changes save automatically in this browser.</p>
+
+  <form id="characterSheet" autocomplete="off">
+    <article class="sheet page-one">
+      <header class="sheet-title">
+        <div class="mark">HEROIC <b>5e</b></div>
+        <div><h1>HEROIC 5e CHARACTER SHEET — PAGE 1</h1><p>Fast Cinematic Superhero Action</p></div>
+      </header>
+
+      <section class="identity two-columns gold-box">
+        <div>
+          <label>Hero Name / Alias<input name="heroName"></label>
+          <label>Concept<textarea name="concept" rows="2"></textarea></label>
+          <label>Player Name<input name="playerName"></label>
+        </div>
+        <div class="identity-options">
+          <label>Level<input name="level" type="number" min="1" max="20" value="1"></label>
+          <label>Rank Bonus<input name="rankBonus" type="number" value="2"></label>
+          <label>Campaign Rank<select name="campaignRank"><option>Street Level</option><option selected>Mid-Level</option><option>World Class</option></select></label>
+          <label>Side<select name="side"><option>Heroic</option><option>Vigilante</option><option>Unaligned</option><option>Villainous</option></select></label>
+          <label class="wide">Calling or Vigilante Code<input name="calling"></label>
+        </div>
+      </section>
+
+      <section class="box abilities-box"><h2>Ability Scores</h2><div id="abilities" class="ability-grid"></div></section>
+
+      <section class="box combat-box">
+        <h2>Core Combat & Resources</h2>
+        <div class="resource-grid">
+          <label>Hit Points<span class="split"><input name="hpCurrent" type="number"><i>/</i><input name="hpMax" type="number"></span></label>
+          <label>Hit Die<input name="hitDie" placeholder="d10"></label>
+          <label>Recovery<span class="split"><input name="recoveryCurrent" type="number"><i>/</i><input name="recoveryMax" type="number"></span></label>
+          <label>Edge<span class="split"><input name="edgeCurrent" type="number"><i>/</i><input name="edgeMax" type="number"></span></label>
+          <label>Initiative<span class="roll-field"><input name="initiative" type="number"><button type="button" data-custom-roll="initiative">Roll</button></span></label>
+        </div>
+        <div class="defense-grid">
+          <label>Melee Defense<span class="roll-field"><input name="meleeDefense" type="number"><button type="button" data-custom-roll="meleeDefense">Roll</button></span></label>
+          <label>Ranged Defense<span class="roll-field"><input name="rangedDefense" type="number"><button type="button" data-custom-roll="rangedDefense">Roll</button></span></label>
+          <label>Mental / Magical Defense<span class="roll-field"><input name="mentalDefense" type="number"><button type="button" data-custom-roll="mentalDefense">Roll</button></span></label>
+          <label>Social Defense<span class="roll-field"><input name="socialDefense" type="number"><button type="button" data-custom-roll="socialDefense">Roll</button></span></label>
+        </div>
+      </section>
+
+      <div class="page-one-main">
+        <section class="box skills-box"><h2>Skills</h2><div class="skill-legend"><span>Skill</span><span>Trained</span><span>Expert</span><span>Specialty</span></div><div id="skills"></div></section>
+        <div class="right-stack">
+          <section class="box powers-box"><h2>Powers Summary</h2><div class="power-grid">
+            <label>Power Sets / Core Tracks<textarea name="powerSets"></textarea></label>
+            <label>At-Will Powers<textarea name="atWillPowers"></textarea></label>
+            <label>Encounter Powers<textarea name="encounterPowers"></textarea></label>
+            <label>Per Day Powers<textarea name="dailyPowers"></textarea></label>
+            <label>Utility / Passive / Sustained<textarea name="utilityPowers"></textarea></label>
+            <label>Enhancements & Limitations<textarea name="enhancements"></textarea></label>
+          </div></section>
+          <div class="two-columns lower-grid">
+            <section class="box"><h2>Class Features & Talents</h2><textarea name="classFeatures"></textarea></section>
+            <section class="box conditions-box"><h2>Conditions & Burnout</h2><div id="conditions" class="condition-grid"></div><label>Burnout Level<input name="burnout" type="number" min="0" max="6" value="0"></label><label>Momentum / Effects<textarea name="momentum"></textarea></label></section>
+          </div>
+        </div>
+      </div>
+      <footer>HEROIC 5e • Zenith Comics • Page 1 of 2</footer>
+    </article>
+
+    <article class="sheet page-two">
+      <header class="sheet-title">
+        <div class="mark">HEROIC <b>5e</b></div>
+        <div><h1>HEROIC 5e CHARACTER SHEET — PAGE 2</h1><p>Narrative & Background</p></div>
+      </header>
+      <div class="two-columns merits-flaws"><section class="box"><h2>Merits</h2><textarea name="merits"></textarea></section><section class="box"><h2>Flaws</h2><textarea name="flaws"></textarea></section></div>
+      <div class="two-columns origin-calling"><section class="box"><h2>Origin</h2><textarea name="origin"></textarea></section><section class="box"><h2>Calling / Vigilante Code</h2><textarea name="callingStory"></textarea><div class="prompts"><label>Who fears or hates you?<input name="whoFearsYou"></label><label>What does the public think of you?<input name="publicOpinion"></label><label>What line will you not cross?<input name="lineNotCrossed"></label><label>What makes you heroic?<input name="heroicReason"></label></div></section></div>
+      <div class="two-columns contacts"><section class="box"><h2>Contacts</h2><textarea name="contacts"></textarea></section><section class="box"><h2>Legend / Reputation</h2><textarea name="reputation"></textarea></section></div>
+      <section class="box background"><h2>Detailed Background & Story</h2><div class="background-grid"><label>Personality<textarea name="personality"></textarea></label><label>Motivations<textarea name="motivations"></textarea></label><label>Secret / Public Identity<textarea name="identityNotes"></textarea></label><label>Key Relationships<textarea name="relationships"></textarea></label><label>Enemies<textarea name="enemies"></textarea></label><label>Allies<textarea name="allies"></textarea></label></div><div class="story-lines"><label>One Clear Idea<input name="oneClearIdea"></label><label>GM Hooks<input name="gmHooks"></label></div></section>
+      <div class="two-columns page-two-bottom"><section class="box"><h2>Advancement Tracker</h2><div class="two-columns fill"><label>Power Picks / Future Levels<textarea name="advancement"></textarea></label><label>Talent Slots<textarea name="talentSlots"></textarea></label></div></section><section class="box"><h2>Miscellaneous</h2><div class="two-columns fill"><label>Equipment / Gear / Headquarters<textarea name="gear"></textarea></label><label>Downtime & Breather Notes<textarea name="downtime"></textarea></label></div><label>Session Notes / Story Hooks<textarea name="sessionNotes"></textarea></label></section></div>
+      <footer>HEROIC 5e • Zenith Comics • Page 2 of 2</footer>
+    </article>
+  </form>
+
+  <aside id="dicePanel" class="dice-panel no-print" hidden>
+    <header><div><strong>Dice Roller</strong><span id="diceCharacter">Unnamed Hero</span></div><button type="button" id="closeDice">×</button></header>
+    <div class="dice-modes"><button type="button" data-mode="normal" class="active">Normal</button><button type="button" data-mode="advantage">Advantage</button><button type="button" data-mode="disadvantage">Disadvantage</button></div>
+    <div class="quick-dice" id="quickDice"></div>
+    <section class="latest-roll"><span id="rollLabel">Choose a roll</span><strong id="rollTotal">—</strong><small id="rollDetail"></small></section>
+    <div id="rollHistory" class="roll-history"></div>
+  </aside>
+  <script src="app.js"></script>
+</body>
+</html>
