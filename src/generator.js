@@ -1,5 +1,6 @@
 import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
 import { npcArchetypes, npcCreatures, npcDayPlayers } from "./npc-data.js";
+import { v33Corebook } from "./v33-corebook-data.js";
 import {
   cloudConfigured,
   cloudPortraitUrl,
@@ -33,6 +34,7 @@ const powerSets = powerSetRules.map(powerSet => powerSet.name);
 const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSet.name, powerSet]));
 
 const STORAGE_KEY = "heroic5e_generator_sheet";
+const OUTPUT_SHEET_KEY = "heroic5e_generator_output_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
 const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
@@ -495,6 +497,7 @@ let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" 
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
+let corebookSearch = "";
 let activeGmSection = "core";
 let activeNpcSection = "build";
 let npcSearch = "";
@@ -1260,6 +1263,7 @@ function renderApp() {
       <div class="topbar-primary">
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
         <div class="brand-actions">
+          <a class="brand-reference" href="character-sheet.html">Character Sheet</a>
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
           <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
@@ -1928,6 +1932,165 @@ function chosenPowers() {
     const number = index + 1;
     return { name: sheet[`powerSet${number}`], notes: sheet[`powerSet${number}Notes`] };
   }).filter(power => power.name || power.notes);
+}
+
+function outputRuleLines(value, rules) {
+  return expandedRuleLines(value, rules).join("\n\n");
+}
+
+function outputPowerLine(text, label) {
+  const match = String(text || "").match(new RegExp(`(?:^|\\n)\\s*-?\\s*${label}\\s*:\\s*([^\\n]+)`, "i"));
+  return match ? match[1].trim() : "";
+}
+
+function outputPowerRecord(choice) {
+  return {
+    name: choice.name || "",
+    usage: choice.type || "",
+    action: choice.action || outputPowerLine(choice.text, "Action"),
+    attack: outputPowerLine(choice.text, "Attack"),
+    range: outputPowerLine(choice.text, "Range"),
+    effect: choice.text || ""
+  };
+}
+
+function outputPowerSets(values) {
+  const purchases = selectedPowerChoices();
+  const sets = selectedPowerSets().map((powerSet, index) => {
+    const setPurchases = purchases.filter(choice => choice.setId === powerSet.id || (index === 0 && ["general-enhancement", "general-limitation"].includes(choice.setId)));
+    const coreTrack = setPurchases.filter(choice => choice.group === "core").sort((a, b) => Number(a.level || 0) - Number(b.level || 0));
+    const branchPowers = setPurchases.filter(choice => choice.group === "power");
+    const utilities = setPurchases.filter(choice => choice.group === "utility");
+    const enhancements = setPurchases.filter(choice => choice.group === "enhancement");
+    const limitations = setPurchases.filter(choice => choice.group === "limitation");
+    const governingAbility = powerSetAbility(powerSet);
+    return {
+      name: powerSet.name,
+      governingAbility: governingAbility.toUpperCase(),
+      powerEffectValue: 10 + abilityMod(governingAbility) + values.pro,
+      powerDie: values.powerDie,
+      tierAccess: `Tier ${Math.max(1, purchasedCoreLevel(powerSet))} / Campaign Tier ${powerTierLimit()}`,
+      picksSpent: setPurchases.filter(choice => choice.group !== "limitation").reduce((total, choice) => total + Number(choice.creationCost || 1), 0),
+      passiveBenefits: coreTrack[0]?.text || "",
+      coreTrack: coreTrack.map(choice => ({ tier: `Purchased Rank ${choice.level || ""}`.trim(), name: choice.name, benefit: choice.text || "" })),
+      atWillPowers: branchPowers.filter(choice => choice.type === "At-Will").map(outputPowerRecord),
+      encounterPowers: branchPowers.filter(choice => choice.type === "Encounter").map(outputPowerRecord),
+      dailyPowers: branchPowers.filter(choice => /Daily|Apex/i.test(choice.type || "")).map(outputPowerRecord),
+      utilityPowers: utilities.map(outputPowerRecord),
+      enhancements: enhancements.map(choice => `${choice.name}: ${choice.text || ""}`),
+      limitations: limitations.map(choice => `${choice.name}: ${choice.text || ""}`),
+      combos: [powerSet.defaultDamage ? `Default damage: ${powerSet.defaultDamage}` : "", powerSet.tacticalRole ? `Tactical role: ${powerSet.tacticalRole}` : ""].filter(Boolean).join("\n")
+    };
+  });
+  const generalUtilities = purchases.filter(choice => choice.group === "general");
+  if (generalUtilities.length) {
+    sets.push({
+      name: "General Utility Powers",
+      governingAbility: "Varies",
+      powerEffectValue: "Varies",
+      powerDie: values.powerDie,
+      tierAccess: `Campaign Tier ${powerTierLimit()}`,
+      picksSpent: generalUtilities.reduce((total, choice) => total + Number(choice.creationCost || 1), 0),
+      coreTrack: [],
+      atWillPowers: [],
+      encounterPowers: [],
+      dailyPowers: [],
+      utilityPowers: generalUtilities.map(outputPowerRecord),
+      enhancements: [],
+      limitations: [],
+      combos: "General utilities may support any owned Power Set when their prerequisites are met."
+    });
+  }
+  return sets;
+}
+
+function generatorOutputPayload() {
+  const values = calc();
+  const origin = origins[sheet.origin] || origins.Enhanced;
+  const originSkills = [sheet.originSkill1, sheet.originSkill2].filter(Boolean).join(", ");
+  const originAbilities = [sheet.originPrimaryBonus ? `${sheet.originPrimaryBonus.toUpperCase()} +2` : "", sheet.originSecondaryBonus ? `${sheet.originSecondaryBonus.toUpperCase()} +1` : ""].filter(Boolean).join(" / ");
+  const talentText = outputRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
+  const meritText = outputRuleLines(sheet.merits, meritRules);
+  const flawText = outputRuleLines(sheet.flaws, flawRules);
+  const classFeatures = lines(sheet.classFeatures).join("\n\n");
+  const skillData = Object.fromEntries(skills.map(([key, name, ability]) => [key, {
+    trained: Boolean(sheet[`skill_${key}_trained`]),
+    expertise: Boolean(sheet[`skill_${key}_expert`]),
+    total: signed(skillBonus(key, ability, values))
+  }]));
+  return {
+    type: "HEROIC 5e Generator Output",
+    schemaVersion: "2.0-generator-output",
+    generatedAt: new Date().toISOString(),
+    hero: {
+      heroName: sheet.heroName || "",
+      realName: sheet.realName || "",
+      identity: sheet.identity || "",
+      concept: sheet.concept || "",
+      origin: sheet.origin || "",
+      calling: sheet.calling || "",
+      class: sheet.className || "",
+      level: values.level,
+      prowess: values.prowess,
+      classLevel: `${sheet.className || ""} / Level ${values.level}`,
+      campaignRank: sheet.rank || "",
+      side: sheet.side || "",
+      portrait: sheet.portrait || "",
+      heroicTagline: sheet.concept || ""
+    },
+    attributes: Object.fromEntries(abilities.map(([key]) => [key, {
+      score: abilityScore(key),
+      modifier: signed(abilityMod(key)),
+      trainedSave: Boolean(sheet[`save_${key}_trained`]),
+      saveTotal: signed(abilityMod(key) + (sheet[`save_${key}_trained`] ? values.pro : 0))
+    }])),
+    combat: {
+      hitPoints: { current: values.hp, maximum: values.hp },
+      tempHp: "",
+      bloodied: Math.floor(values.hp / 2),
+      hitDice: { current: values.level, maximum: `${values.level} ${values.hitDie}` },
+      edge: { current: values.edgeStart, maximum: `${values.edgeStart} / ${values.edgeCap}` },
+      recoveryModifier: values.recovery,
+      powerDie: values.powerDie,
+      speed: 30,
+      initiative: values.initiative,
+      classEV: values.classEV,
+      armorResist: lines(sheet.gear).join("; ")
+    },
+    defenses: { parryBlock: values.parry, dodge: values.dodge, willpower: values.willpower, socialDefense: values.socialDefense },
+    attacks: { meleeAttack: values.meleeAttack, rangedAttack: values.rangedAttack, mentalAttack: values.mentalAttack, socialAttack: values.socialAttack },
+    skills: skillData,
+    powerSets: outputPowerSets(values),
+    story: {
+      origin: sheet.origin || "",
+      classPrimaryAbility: `${sheet.className || ""} / ${values.classPrimary}`,
+      callingCode: sheet.calling || "",
+      originAbilities,
+      originTraitTalent: [sheet.originTrait ? namedRule(sheet.originTrait, originTraitRules) : "", origin.talent || ""].filter(Boolean).join("\n\n"),
+      originSkillsLanguages: [originSkills, sheet.proficiencies].filter(Boolean).join("\n"),
+      originStory: sheet.backstory || "",
+      personalityVoice: "",
+      motivation: sheet.calling || "",
+      identityReputation: sheet.side || "",
+      merits: meritText,
+      talents: talentText,
+      flaws: flawText,
+      triggers: { minor: sheet.minorTrigger || "", major: sheet.majorTrigger || "", defining: sheet.definingTrigger || "" },
+      allies: "",
+      enemies: "",
+      equipment: [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume].filter(Boolean).join("\n"),
+      campaignHook: sheet.concept || "",
+      sessionNotes: sheet.sessionNotes || ""
+    },
+    features: { classFeatures, talents: talentText, merits: meritText, flaws: flawText },
+    choices: { campaignRank: sheet.rank || "", side: sheet.side || "" }
+  };
+}
+
+function saveGeneratorOutput() {
+  const payload = generatorOutputPayload();
+  localStorage.setItem(OUTPUT_SHEET_KEY, JSON.stringify(payload));
+  return payload;
 }
 
 function sheetLine(label, value) {
@@ -2826,6 +2989,7 @@ async function copyNpcText(npc) {
 
 function compendiumSections() {
   return [
+    ["corebook-v33", "v3.3 Corebook"],
     ["glossary", "Glossary"],
     ["overview", "Overview"],
     ["origins", "Origins"],
@@ -2853,8 +3017,11 @@ function closeCompendium() {
 function openSheetPreview() {
   const drawer = document.querySelector("[data-sheet-preview-drawer]");
   const content = document.querySelector("[data-sheet-preview-content]");
-  content.innerHTML = `<div id="sheet">${renderSheetMarkup()}</div>`;
+  const payload = saveGeneratorOutput();
+  content.innerHTML = `<iframe class="generator-output-sheet" title="HEROIC 5e Character Sheet" src="character-sheet.html?embed=1"></iframe>`;
   drawer.hidden = false;
+  const frame = content.querySelector(".generator-output-sheet");
+  frame.addEventListener("load", () => frame.contentWindow?.postMessage({ type: "heroic5e-sheet-data", payload }, "*"), { once: true });
 }
 
 function closeSheetPreview() {
@@ -3012,6 +3179,62 @@ function compendiumList(items) {
   return `<div class="compendium-grid">${items.join("")}</div>`;
 }
 
+function markdownHtml(value) {
+  const escaped = html(value || "")
+    .replace(/^---$/gm, "")
+    .replace(/\\([.!?\-])/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*([^*\n]+)\*/g, "<em>$1</em>")
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+  return escaped
+    .split(/\n{2,}/)
+    .map(block => block.trim())
+    .filter(Boolean)
+    .map(block => `<p>${block.replace(/\n/g, "<br>")}</p>`)
+    .join("");
+}
+
+function corebookSectionCard(section) {
+  return `
+    <article class="corebook-section-card">
+      <span>Level ${section.level}</span>
+      <h3>${html(section.title)}</h3>
+      <div class="corebook-markdown">${markdownHtml(section.body)}</div>
+    </article>
+  `;
+}
+
+function renderCorebookCompendium() {
+  const query = corebookSearch.trim().toLowerCase();
+  const chapters = v33Corebook.chapters.map(chapter => {
+    const chapterMatch = chapter.title.toLowerCase().includes(query);
+    const sections = query
+      ? chapter.sections.filter(section => chapterMatch || section.title.toLowerCase().includes(query) || section.body.toLowerCase().includes(query))
+      : chapter.sections;
+    return { ...chapter, sections };
+  }).filter(chapter => chapter.sections.length || !query);
+
+  return `
+    <div class="compendium-hero">
+      <h2>${html(v33Corebook.title)} ${html(v33Corebook.version)}</h2>
+      <p>Imported from the v3.3 Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
+    </div>
+    <div class="corebook-toolbar">
+      <label>Search v3.3 Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
+      <div><strong>${chapters.length}</strong><span>${query ? "matching sections" : "chapters"}</span></div>
+      <div><strong>${v33Corebook.glossary.length}</strong><span>glossary terms</span></div>
+    </div>
+    <div class="corebook-chapter-list">
+      ${chapters.map((chapter, index) => `
+        <details class="corebook-chapter" ${query || index === 0 ? "open" : ""}>
+          <summary><span>Chapter</span><strong>${html(chapter.title)}</strong><em>${chapter.sections.length} sections</em></summary>
+          <div class="corebook-section-list">${chapter.sections.map(corebookSectionCard).join("")}</div>
+        </details>
+      `).join("")}
+    </div>
+  `;
+}
+
 function compendiumPowerEntry(item, meta = "") {
   return `
     <article class="compendium-card power-reference-card">
@@ -3078,7 +3301,11 @@ function renderCompendium() {
 }
 
 function renderCompendiumSection(id) {
-  if (id === "glossary") return compendiumList(glossaryTerms.map(([term, definition]) => compendiumCard(term, definition, "Glossary")));
+  if (id === "corebook-v33") return renderCorebookCompendium();
+  if (id === "glossary") {
+    const terms = v33Corebook.glossary.length ? v33Corebook.glossary.map(item => [item.term, item.definition]) : glossaryTerms;
+    return compendiumList(terms.map(([term, definition]) => compendiumCard(term, definition, "Glossary")));
+  }
   if (id === "origins") return compendiumList(Object.entries(origins).map(([name, origin]) => compendiumCard(name, [
     `Primary bonuses: ${origin.primary.map(key => key.toUpperCase()).join(", ")}.`,
     `Skills: ${origin.skills.join(", ")}. Choose ${origin.skillPicks}.`,
@@ -3102,7 +3329,7 @@ function renderCompendiumSection(id) {
   return `
     <div class="compendium-hero">
       <h2>HEROIC 5e Core Reference</h2>
-      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. It is not a full replacement for the book yet; it grows as more full rule text is entered.</p>
+      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. The v3.3 Corebook tab now includes the imported full Markdown rules reference.</p>
     </div>
     <div class="compendium-grid">
       ${compendiumCard("Character Creation", "Use the fifteen creation steps plus the final Character Sheet review to build a complete HEROIC 5e character.", "Core")}
@@ -3422,9 +3649,11 @@ function newCharacter() {
 }
 
 function exportPdf() {
-  openSheetPreview();
-  document.body.classList.add("sheet-print-mode");
-  setTimeout(() => window.print(), 0);
+  saveGeneratorOutput();
+  const outputWindow = window.open("character-sheet.html?print=1", "_blank");
+  if (!outputWindow) {
+    alert("The printable character sheet was blocked by the browser. Allow pop-ups for this site, then try Export PDF again.");
+  }
 }
 
 window.addEventListener("afterprint", clearSheetPrintMode);
@@ -3434,6 +3663,11 @@ app.addEventListener("input", event => {
   if (npcFieldElement) {
     npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
     saveNpcDraft();
+    return;
+  }
+  if (event.target.matches("[data-corebook-search]")) {
+    corebookSearch = event.target.value;
+    renderCompendium();
     return;
   }
   const el = event.target.closest("[data-field]");

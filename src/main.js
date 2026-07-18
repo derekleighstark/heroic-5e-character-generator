@@ -1,1 +1,1 @@
-import "./generator.js?v=20260622-npcs1";
+import "./generator.js?v=20260718-v33-corebook";
