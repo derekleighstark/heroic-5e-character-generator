@@ -1940,14 +1940,36 @@ p {
   gap: 8px;
 }
 
+.sheet-preview-size {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 900;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.sheet-preview-size select {
+  min-height: 34px;
+  padding: 5px 28px 5px 8px;
+  color: var(--navy);
+  background: #fff;
+  border: 1px solid var(--gold);
+  font-weight: 900;
+}
+
 .sheet-preview-content {
   padding: 14px;
-  overflow: auto;
+  overflow: scroll;
+  scrollbar-gutter: stable both-edges;
 }
 
 .generator-output-sheet {
   display: block;
   width: 100%;
+  max-width: none;
   min-height: 82vh;
   border: 0;
   border-radius: 10px;

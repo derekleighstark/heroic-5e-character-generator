@@ -498,6 +498,7 @@ let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
 let corebookSearch = "";
+let sheetPreviewZoom = "fit";
 let activeGmSection = "core";
 let activeNpcSection = "build";
 let npcSearch = "";
@@ -1381,6 +1382,16 @@ function renderApp() {
             <span>Live sheet view</span>
           </div>
           <div class="sheet-preview-actions">
+            <label class="sheet-preview-size">Size
+              <select id="sheetPreviewZoom" aria-label="Preview size">
+                <option value="fit" ${selected(sheetPreviewZoom, "fit")}>Fit</option>
+                <option value="0.75" ${selected(sheetPreviewZoom, "0.75")}>75%</option>
+                <option value="1" ${selected(sheetPreviewZoom, "1")}>100%</option>
+                <option value="1.25" ${selected(sheetPreviewZoom, "1.25")}>125%</option>
+                <option value="1.5" ${selected(sheetPreviewZoom, "1.5")}>150%</option>
+                <option value="2" ${selected(sheetPreviewZoom, "2")}>200%</option>
+              </select>
+            </label>
             <button type="button" data-action="export-pdf">Export to PDF</button>
             <button type="button" data-action="close-sheet-preview">Close</button>
           </div>
@@ -3025,7 +3036,23 @@ function openSheetPreview() {
   content.innerHTML = `<iframe class="generator-output-sheet" title="HEROIC 5e Character Sheet" src="character-sheet.html?embed=1"></iframe>`;
   drawer.hidden = false;
   const frame = content.querySelector(".generator-output-sheet");
-  frame.addEventListener("load", () => frame.contentWindow?.postMessage({ type: "heroic5e-sheet-data", payload }, "*"), { once: true });
+  frame.addEventListener("load", () => {
+    applySheetPreviewZoom();
+    frame.contentWindow?.postMessage({ type: "heroic5e-sheet-data", payload }, "*");
+  }, { once: true });
+}
+
+function applySheetPreviewZoom() {
+  const content = document.querySelector("[data-sheet-preview-content]");
+  const frame = content?.querySelector(".generator-output-sheet");
+  const frameRoot = frame?.contentDocument?.documentElement;
+  if (!content || !frame || !frameRoot) return;
+  const zoom = sheetPreviewZoom === "fit"
+    ? Math.min(1, Math.max(.5, (content.clientWidth - 34) / 816))
+    : Number(sheetPreviewZoom) || 1;
+  frameRoot.style.setProperty("--sheet-zoom", String(zoom));
+  frame.style.width = sheetPreviewZoom === "fit" ? "100%" : `${Math.ceil(816 * zoom + 36)}px`;
+  frame.style.marginInline = sheetPreviewZoom === "fit" ? "0" : "auto";
 }
 
 function closeSheetPreview() {
@@ -3736,6 +3763,12 @@ app.addEventListener("change", event => {
 
   if (event.target.id === "dyslexiaToggle") {
     applyDyslexia(event.target.checked);
+    return;
+  }
+
+  if (event.target.id === "sheetPreviewZoom") {
+    sheetPreviewZoom = event.target.value;
+    applySheetPreviewZoom();
     return;
   }
 

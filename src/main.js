@@ -1,1 +1,1 @@
-import "./generator.js?v=20260722-v34-version-label";
+import "./generator.js?v=20260722-sheet-preview-sizing";
