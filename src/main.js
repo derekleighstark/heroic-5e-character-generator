@@ -1,1 +1,1 @@
-import "./generator.js?v=20260718-v33-corebook";
+import "./generator.js?v=20260722-v34-corebook";

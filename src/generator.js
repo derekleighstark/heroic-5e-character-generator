@@ -1,6 +1,6 @@
 import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
 import { npcArchetypes, npcCreatures, npcDayPlayers } from "./npc-data.js";
-import { v33Corebook } from "./v33-corebook-data.js";
+import { corebook } from "./corebook-data.js";
 import {
   cloudConfigured,
   cloudPortraitUrl,
@@ -2989,7 +2989,7 @@ async function copyNpcText(npc) {
 
 function compendiumSections() {
   return [
-    ["corebook-v33", "v3.3 Corebook"],
+    ["corebook", `${corebook.version.replace(/^Playtest\s+/i, "")} Corebook`],
     ["glossary", "Glossary"],
     ["overview", "Overview"],
     ["origins", "Origins"],
@@ -3206,7 +3206,7 @@ function corebookSectionCard(section) {
 
 function renderCorebookCompendium() {
   const query = corebookSearch.trim().toLowerCase();
-  const chapters = v33Corebook.chapters.map(chapter => {
+  const chapters = corebook.chapters.map(chapter => {
     const chapterMatch = chapter.title.toLowerCase().includes(query);
     const sections = query
       ? chapter.sections.filter(section => chapterMatch || section.title.toLowerCase().includes(query) || section.body.toLowerCase().includes(query))
@@ -3216,13 +3216,13 @@ function renderCorebookCompendium() {
 
   return `
     <div class="compendium-hero">
-      <h2>${html(v33Corebook.title)} ${html(v33Corebook.version)}</h2>
-      <p>Imported from the v3.3 Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
+      <h2>${html(corebook.title)} ${html(corebook.version)}</h2>
+      <p>Imported from the ${html(corebook.version)} Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
     </div>
     <div class="corebook-toolbar">
-      <label>Search v3.3 Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
+      <label>Search ${html(corebook.version.replace(/^Playtest\s+/i, ""))} Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
       <div><strong>${chapters.length}</strong><span>${query ? "matching sections" : "chapters"}</span></div>
-      <div><strong>${v33Corebook.glossary.length}</strong><span>glossary terms</span></div>
+      <div><strong>${corebook.glossary.length}</strong><span>glossary terms</span></div>
     </div>
     <div class="corebook-chapter-list">
       ${chapters.map((chapter, index) => `
@@ -3301,9 +3301,9 @@ function renderCompendium() {
 }
 
 function renderCompendiumSection(id) {
-  if (id === "corebook-v33") return renderCorebookCompendium();
+  if (id === "corebook") return renderCorebookCompendium();
   if (id === "glossary") {
-    const terms = v33Corebook.glossary.length ? v33Corebook.glossary.map(item => [item.term, item.definition]) : glossaryTerms;
+    const terms = corebook.glossary.length ? corebook.glossary.map(item => [item.term, item.definition]) : glossaryTerms;
     return compendiumList(terms.map(([term, definition]) => compendiumCard(term, definition, "Glossary")));
   }
   if (id === "origins") return compendiumList(Object.entries(origins).map(([name, origin]) => compendiumCard(name, [
@@ -3329,7 +3329,7 @@ function renderCompendiumSection(id) {
   return `
     <div class="compendium-hero">
       <h2>HEROIC 5e Core Reference</h2>
-      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. The v3.3 Corebook tab now includes the imported full Markdown rules reference.</p>
+      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. The Corebook tab includes the imported full Markdown rules reference.</p>
     </div>
     <div class="compendium-grid">
       ${compendiumCard("Character Creation", "Use the fifteen creation steps plus the final Character Sheet review to build a complete HEROIC 5e character.", "Core")}

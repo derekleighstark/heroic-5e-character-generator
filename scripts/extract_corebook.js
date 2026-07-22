@@ -4,8 +4,8 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const source = process.argv[2]
   ? path.resolve(process.argv[2])
-  : path.join(root, "rules", "HEROIC_5e_v3_3_RAW.md");
-const output = path.join(root, "src", "v33-corebook-data.js");
+  : path.join(root, "rules", "HEROIC_5e_v3_4_RAW.md");
+const output = path.join(root, "src", "corebook-data.js");
 
 function cleanTitle(value) {
   return String(value || "")
@@ -31,6 +31,7 @@ function pushSection(chapter, section) {
 
 const markdown = fs.readFileSync(source, "utf8").replace(/\r\n/g, "\n");
 const lines = markdown.split("\n");
+const version = cleanTitle(lines.find(line => /^Playtest\s+v\d/i.test(line.trim())) || "Playtest");
 const chapters = [];
 let currentChapter = null;
 let currentSection = null;
@@ -80,7 +81,7 @@ if (glossaryChapter) {
 
 const data = {
   title: "HEROIC 5e",
-  version: "Playtest v3.3",
+  version,
   sourceFile: path.basename(source),
   generatedAt: new Date().toISOString(),
   chapterCount: chapters.length,
@@ -90,9 +91,9 @@ const data = {
 
 fs.writeFileSync(
   output,
-  `// Generated from rules/HEROIC_5e_v3_3_RAW.md by scripts/extract_v33_corebook.js.\n` +
+  `// Generated from ${path.relative(root, source).replace(/\\/g, "/")} by scripts/extract_corebook.js.\n` +
     `// Do not edit by hand; update the Markdown source and regenerate.\n\n` +
-    `export const v33Corebook = Object.freeze(${JSON.stringify(data, null, 2)});\n`,
+    `export const corebook = Object.freeze(${JSON.stringify(data, null, 2)});\n`,
   "utf8"
 );
 
