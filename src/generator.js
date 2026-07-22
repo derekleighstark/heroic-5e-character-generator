@@ -1290,6 +1290,10 @@ function renderApp() {
     <main class="generator-shell">
       <aside class="step-rail">
         <nav class="step-list"></nav>
+        <div class="rules-version" aria-label="Rules version">
+          <span>Rules Updated</span>
+          <strong>${html(corebook.version)}</strong>
+        </div>
       </aside>
       <section class="builder-panel"></section>
     </main>
