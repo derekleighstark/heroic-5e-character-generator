@@ -1270,6 +1270,7 @@ function renderApp() {
           <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
           <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
+          <button type="button" class="brand-reference" data-action="open-text-sheet">Text Sheet</button>
         </div>
         <div class="display-controls">
           <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
@@ -1397,6 +1398,23 @@ function renderApp() {
           </div>
         </header>
         <div class="sheet-preview-content" data-sheet-preview-content></div>
+      </div>
+    </section>
+    <section class="text-sheet-drawer" data-text-sheet-drawer hidden>
+      <div class="text-sheet-panel" role="dialog" aria-modal="true" aria-label="Text-only character sheet">
+        <header>
+          <div>
+            <strong>Text-Only Character Sheet</strong>
+            <span data-text-sheet-status>Readable, copyable, and printer friendly</span>
+          </div>
+          <div class="text-sheet-actions">
+            <button type="button" data-action="copy-text-sheet">Copy Text</button>
+            <button type="button" data-action="download-text-sheet">Download .txt</button>
+            <button type="button" data-action="print-text-sheet">Print</button>
+            <button type="button" data-action="close-text-sheet">Close</button>
+          </div>
+        </header>
+        <div class="text-sheet-content" data-text-sheet-content></div>
       </div>
     </section>
     <section class="dice-drawer" data-dice-drawer hidden>
@@ -3059,6 +3077,138 @@ function closeSheetPreview() {
   document.querySelector("[data-sheet-preview-drawer]").hidden = true;
 }
 
+function textSheetModel() {
+  const values = calc();
+  const origin = origins[sheet.origin] || origins.Enhanced;
+  const powers = chosenPowers();
+  const trainedSkills = skills.map(([key, name, ability]) => {
+    const trained = Boolean(sheet[`skill_${key}_trained`]);
+    const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+    return `${name} (${ability.toUpperCase()}) ${signed(skillBonus(key, ability, values))}${expert ? " — Expertise" : trained ? " — Trained" : ""}`;
+  });
+  const powerLines = powers.map(power => [power.name || "Power", power.notes].filter(Boolean).join(" — "));
+  const powerSets = selectedPowerSets().map(powerSet => `${powerSet.name} — Effect Value ${10 + abilityMod(powerSetAbility(powerSet)) + values.pro}`);
+  return {
+    title: sheet.heroName || sheet.realName || "Unnamed Hero",
+    subtitle: [sheet.realName, sheet.identity].filter(Boolean).join(" • "),
+    identity: [
+      ["Concept", sheet.concept], ["Origin", sheet.origin], ["Class", sheet.className],
+      ["Calling", sheet.calling], ["Side", sheet.side], ["Campaign Rank", sheet.rank], ["Level", values.level]
+    ],
+    abilities: abilities.map(([key, short, name]) => [name || short, `${abilityScore(key)} (${signed(abilityMod(key))})`]),
+    resources: [
+      ["Hit Points", values.hp], ["Prowess", values.prowess], ["Hit Die", values.hitDie],
+      ["Power Die", values.powerDie], ["Edge", `${values.edgeStart}/${values.edgeCap}`],
+      ["Recovery", values.recovery], ["Initiative", signed(values.initiative)], ["Speed", sheet.speed || "30 ft"]
+    ],
+    defenses: [
+      ["Parry / Block", signed(values.parry)], ["Dodge", signed(values.dodge)],
+      ["Willpower", signed(values.willpower)], ["Social Defense", signed(values.socialDefense)]
+    ],
+    attacks: [
+      ["Melee Attack", signed(values.meleeAttack)], ["Ranged Attack", signed(values.rangedAttack)],
+      ["Mental Attack", signed(values.mentalAttack)], ["Social Attack", signed(values.socialAttack)],
+      ["Class Effect Value", values.classEV], ["Power Effect Value", values.powerEV]
+    ],
+    lists: [
+      ["Skills", trainedSkills],
+      ["Origin Features", [origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note]],
+      ["Class Features", lines(sheet.classFeatures)],
+      ["Edge Triggers", [`Minor: ${sheet.minorTrigger || "-"}`, `Major: ${sheet.majorTrigger || "-"}`, `Defining: ${sheet.definingTrigger || "-"}`]],
+      ["Talents", expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules)],
+      ["Merits", expandedRuleLines(sheet.merits, meritRules)],
+      ["Flaws", expandedRuleLines(sheet.flaws, flawRules)],
+      ["Power Sets", powerSets],
+      ["Powers", powerLines],
+      ["Limitations", lines(sheet.limitationsText)],
+      ["Gear & Equipment", [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume]],
+      ["Languages & Proficiencies", lines(sheet.proficiencies)],
+      ["Specialties", lines(sheet.specialties)],
+      ["Backstory", lines(sheet.backstory)],
+      ["Session Notes", lines(sheet.sessionNotes)]
+    ]
+  };
+}
+
+function textSheetPlainText() {
+  const model = textSheetModel();
+  const rule = "=".repeat(Math.max(24, model.title.length));
+  const rows = entries => entries.map(([label, value]) => `${label}: ${value || "-"}`);
+  const output = ["HEROIC 5e — TEXT CHARACTER SHEET", rule, model.title, model.subtitle, rule, ""];
+  [["IDENTITY", model.identity], ["ABILITIES", model.abilities], ["RESOURCES", model.resources], ["DEFENSES", model.defenses], ["ATTACKS & EFFECT VALUES", model.attacks]]
+    .forEach(([heading, entries]) => output.push(heading, "-".repeat(heading.length), ...rows(entries), ""));
+  model.lists.forEach(([heading, items]) => {
+    const clean = items.flatMap(item => lines(item)).filter(Boolean);
+    if (!clean.length) return;
+    output.push(heading.toUpperCase(), "-".repeat(heading.length), ...clean.map(item => `• ${item}`), "");
+  });
+  output.push(`Rules: ${corebook.version}`);
+  return output.filter((line, index) => line !== "" || output[index - 1] !== "").join("\n").trim();
+}
+
+function textSheetMarkup() {
+  const model = textSheetModel();
+  const definitionList = entries => `<dl>${entries.map(([label, value]) => `<div><dt>${html(label)}</dt><dd>${html(value || "-")}</dd></div>`).join("")}</dl>`;
+  const listSection = ([heading, items]) => {
+    const clean = items.flatMap(item => lines(item)).filter(Boolean);
+    if (!clean.length) return "";
+    return `<section><h2>${html(heading)}</h2><ul>${clean.map(item => `<li>${html(item)}</li>`).join("")}</ul></section>`;
+  };
+  return `<article class="text-character-sheet">
+    <header><span>HEROIC 5e • ${html(corebook.version)}</span><h1>${html(model.title)}</h1>${model.subtitle ? `<p>${html(model.subtitle)}</p>` : ""}</header>
+    <div class="text-sheet-summary">
+      <section><h2>Identity</h2>${definitionList(model.identity)}</section>
+      <section><h2>Abilities</h2>${definitionList(model.abilities)}</section>
+      <section><h2>Resources</h2>${definitionList(model.resources)}</section>
+      <section><h2>Defenses</h2>${definitionList(model.defenses)}</section>
+      <section><h2>Attacks & Effect Values</h2>${definitionList(model.attacks)}</section>
+    </div>
+    <div class="text-sheet-details">${model.lists.map(listSection).join("")}</div>
+  </article>`;
+}
+
+function openTextSheet() {
+  document.querySelector("[data-text-sheet-content]").innerHTML = textSheetMarkup();
+  document.querySelector("[data-text-sheet-drawer]").hidden = false;
+}
+
+function closeTextSheet() {
+  document.querySelector("[data-text-sheet-drawer]").hidden = true;
+  document.body.classList.remove("text-sheet-print-mode");
+}
+
+async function copyTextSheet() {
+  const text = textSheetPlainText();
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.append(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+  document.querySelector("[data-text-sheet-status]").textContent = "Copied to clipboard";
+}
+
+function downloadTextSheet() {
+  const blob = new Blob([textSheetPlainText()], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = exportFilename().replace(/\.json$/i, ".txt");
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function printTextSheet() {
+  document.body.classList.add("text-sheet-print-mode");
+  window.print();
+}
+
 function rollActionCard(label, dice, modifier = 0, detail = "") {
   return `
     <button type="button" class="dice-action-card" data-action="roll-dice" data-roll-label="${html(label)}" data-roll-dice="${html(dice)}" data-roll-modifier="${Number(modifier || 0)}">
@@ -3194,6 +3344,7 @@ function performDiceRoll(label, notation, modifier = 0) {
 
 function clearSheetPrintMode() {
   document.body.classList.remove("sheet-print-mode");
+  document.body.classList.remove("text-sheet-print-mode");
 }
 
 function compendiumCard(title, body, meta = "") {
@@ -3884,6 +4035,11 @@ app.addEventListener("click", async event => {
   if (action === "close-sheet-preview") closeSheetPreview();
   if (action === "open-dice-roller") openDiceRoller();
   if (action === "close-dice-roller") closeDiceRoller();
+  if (action === "open-text-sheet") openTextSheet();
+  if (action === "close-text-sheet") closeTextSheet();
+  if (action === "copy-text-sheet") await copyTextSheet();
+  if (action === "download-text-sheet") downloadTextSheet();
+  if (action === "print-text-sheet") printTextSheet();
   if (action === "dice-mode") {
     diceRollMode = button.dataset.mode;
     renderDiceRoller();
