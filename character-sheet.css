@@ -1300,11 +1300,16 @@ html.show-action-reference .page-core .turn-reference.action-economy > p span {
   text-transform: uppercase;
 }
 .portrait-controls {
+  position: relative;
+  z-index: 20;
   display: flex;
   justify-content: center;
   gap: .07in;
+  pointer-events: auto;
 }
 .portrait-controls button {
+  position: relative;
+  z-index: 21;
   border: 1.5px solid var(--navy);
   border-radius: 999px;
   background: #fff;
@@ -1314,7 +1319,9 @@ html.show-action-reference .page-core .turn-reference.action-economy > p span {
   font-weight: 900;
   padding: .055in .12in;
   text-transform: uppercase;
+  pointer-events: auto;
 }
+.cover-portrait img { pointer-events: none; }
 .portrait-controls button:hover,
 .portrait-controls button:focus-visible {
   background: var(--navy);
