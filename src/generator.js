@@ -530,7 +530,13 @@ applyTheme(activeTheme);
 applyDyslexia(dyslexiaEnabled);
 
 function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
+    return true;
+  } catch (error) {
+    console.error("Could not save the character locally.", error);
+    return false;
+  }
 }
 
 function loadLibrary() {
@@ -3625,6 +3631,41 @@ function importJson(file) {
   reader.readAsText(file);
 }
 
+async function preparePortrait(file) {
+  const maxFileBytes = 20 * 1024 * 1024;
+  const maxWidth = 1000;
+  const maxHeight = 1400;
+  const targetBytes = 700 * 1024;
+  if (!file.type.startsWith("image/")) throw new Error("Choose an image file.");
+  if (file.size > maxFileBytes) throw new Error("That image is larger than 20 MB. Choose a smaller file.");
+
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = objectUrl;
+    await image.decode();
+    const scale = Math.min(1, maxWidth / image.naturalWidth, maxHeight / image.naturalHeight);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const context = canvas.getContext("2d", { alpha: false });
+    context.fillStyle = "#f7f3e8";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    let quality = .86;
+    let dataUrl = canvas.toDataURL("image/jpeg", quality);
+    while (dataUrl.length * .75 > targetBytes && quality > .5) {
+      quality -= .08;
+      dataUrl = canvas.toDataURL("image/jpeg", quality);
+    }
+    return dataUrl;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
+}
+
 function shuffleItems(items) {
   const result = [...items];
   for (let index = result.length - 1; index > 0; index -= 1) {
@@ -3859,7 +3900,7 @@ app.addEventListener("input", event => {
   renderProgress();
 });
 
-app.addEventListener("change", event => {
+app.addEventListener("change", async event => {
   const npcFieldElement = event.target.closest("[data-npc-field]");
   if (npcFieldElement) {
     npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
@@ -3955,15 +3996,20 @@ app.addEventListener("change", event => {
   if (event.target.id === "portraitInput") {
     const [file] = event.target.files;
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      sheet.portrait = reader.result;
-      save();
+    const input = event.target;
+    input.disabled = true;
+    try {
+      const portrait = await preparePortrait(file);
+      sheet.portrait = portrait;
+      if (!save()) throw new Error("The browser could not store the resized portrait.");
       renderBuilder();
       renderSheet();
-    };
-    reader.readAsDataURL(file);
-    event.target.value = "";
+    } catch (error) {
+      alert(`${error.message || "That portrait could not be loaded."} Your character choices are still safe.`);
+      input.disabled = false;
+      input.value = "";
+    }
+    return;
   }
 
   if (event.target.id === "importFile") {
