@@ -1262,7 +1262,7 @@ function renderApp() {
   app.innerHTML = `
     <header class="app-topbar">
       <div class="topbar-primary">
-        <div class="brand-title"><strong>HEROIC 5e</strong><span>Guided Character Builder</span></div>
+        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Studio</span></div>
         <div class="brand-actions">
           <a class="brand-reference" href="character-sheet.html">Character Sheet</a>
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
@@ -1290,18 +1290,6 @@ function renderApp() {
       </div>
     </header>
     <main class="generator-shell">
-      <aside class="step-rail">
-        <div class="guide-rail-heading">
-          <span>Build your hero</span>
-          <strong>15 guided decisions</strong>
-          <p>Your choices save automatically as you move through the process.</p>
-        </div>
-        <nav class="step-list"></nav>
-        <div class="rules-version" aria-label="Rules version">
-          <span>Rules Updated</span>
-          <strong>${html(corebook.version)}</strong>
-        </div>
-      </aside>
       <section class="builder-panel"></section>
     </main>
     <section class="json-drawer" data-json-drawer hidden>
@@ -1457,9 +1445,11 @@ function renderApp() {
 }
 
 function renderProgress() {
-  document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
+  const navigator = document.querySelector(".creator-tabs");
+  if (!navigator) return;
+  navigator.innerHTML = steps.map(([id, label], index) => `
     <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
-      <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
+      <span>${id === "random" ? "Quick" : String(index).padStart(2, "0")}</span><strong>${label}</strong>
     </button>
   `).join("");
 }
@@ -1468,19 +1458,32 @@ function renderBuilder() {
   const index = currentStepIndex();
   const [id, label, description] = steps[index] || steps[0];
   const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
-  const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
   const artNumber = id === "random" ? 0 : index;
   const progress = id === "random" ? 0 : Math.round((index / (steps.length - 1)) * 100);
+  const values = calc();
+  const heroTitle = characterName();
+  const identityLine = [sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" · ");
   document.querySelector(".builder-panel").innerHTML = `
-    <header class="builder-header">
-      <div class="guided-header-copy"><p>${stepLabel}</p><h1>${label}</h1><span>${html(description || "")}</span></div>
-      <div class="builder-nav">
-        <button type="button" data-action="back" ${index === 0 ? "disabled" : ""}>Back</button>
-        <button type="button" data-action="next" ${index === steps.length - 1 ? "disabled" : ""}>Next</button>
+    <section class="creator-overview">
+      <div class="creator-intro">
+        <span>HEROIC 5e · ${html(corebook.version)}</span>
+        <h1>${html(heroTitle)}</h1>
+        <p>${html(identityLine || "Shape a new hero in one living character workspace.")}</p>
       </div>
-      <div class="guided-progress" aria-label="${progress}% complete">
-        <span><b>${progress}%</b> complete</span>
-        <i><b style="width:${progress}%"></b></i>
+      <div class="creator-vitals" aria-label="Character overview">
+        <div><span>Level</span><strong>${values.level}</strong></div>
+        <div><span>Rank</span><strong>${html(sheet.rank || "—")}</strong></div>
+        <div><span>HP</span><strong>${values.hp}</strong></div>
+        <div><span>Edge</span><strong>${values.edgeStart}/${values.edgeCap}</strong></div>
+      </div>
+      <button type="button" class="creator-preview-button" data-action="open-sheet-preview">View Character Sheet</button>
+    </section>
+    <nav class="creator-tabs" aria-label="Character sections"></nav>
+    <header class="builder-header">
+      <div class="guided-header-copy">
+        <p>Character workspace · ${String(index).padStart(2, "0")}</p>
+        <h2>${label}</h2>
+        <span>${html(description || "")}</span>
       </div>
     </header>
     <div class="builder-workspace">
@@ -1490,7 +1493,7 @@ function renderBuilder() {
           <span>${String(artNumber).padStart(2, "0")}</span>
           <i></i>
         </div>
-        <footer><span>Step focus</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
+        <footer><span>Character focus</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
       </aside>
     </div>
   `;
