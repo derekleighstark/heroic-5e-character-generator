@@ -13,7 +13,7 @@ export const powerFramework = {
     "Utility": 1,
     "Two Enhancements": 1
   },
-  "minimumBaseline": "At least one Core Track purchase, two At-Will Powers, and one Encounter Power.",
+  "minimumBaseline": "Suggested baseline: one Core Track purchase, two At-Will Powers, and one Encounter Power. This is guidance, not a requirement.",
   "advancement": "Levels 2-10 grant one Power Pick each. Advancement purchases cost 1 Pick regardless of Tier. Odd-level Refinement picks stay within owned sets; even-level Expansion picks may add sets or Core Track steps.",
   "powerDice": "Power Die size is set by Campaign Rank. Individual entries specify the number of Power Dice.",
   "limitations": "Each Limitation grants 1 additional starting Power Pick, up to the Campaign Rank limit, and must directly constrain a Power or Power Set.",

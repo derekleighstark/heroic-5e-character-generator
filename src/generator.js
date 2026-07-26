@@ -838,11 +838,12 @@ function powerBudget() {
   const cores = selectedPowerChoices().filter(choice => choice.group === "core").length;
   const setCount = selectedPowerSetNames().length;
   const warnings = [];
+  const suggestions = [];
   if (setCount > values.maxPowerSets) warnings.push(`Power Set cap exceeded: ${setCount}/${values.maxPowerSets}.`);
   if (startingSpent > startingAvailable) warnings.push(`Starting Power Picks exceeded by ${startingSpent - startingAvailable}.`);
-  if (cores < 1) warnings.push("Choose at least one Core Track purchase.");
-  if (atWills < 2) warnings.push(`Choose at least two At-Will Powers (${atWills}/2).`);
-  if (encounters < 1) warnings.push("Choose at least one Encounter Power.");
+  if (cores < 1) suggestions.push("Suggested: at least one Core Track purchase.");
+  if (atWills < 2) suggestions.push(`Suggested: at least two At-Will Powers (${atWills}/2 selected).`);
+  if (encounters < 1) suggestions.push("Suggested: at least one Encounter Power.");
   if (enhancements % 2 !== 0) warnings.push("Starting Enhancements are purchased in pairs; choose one more Enhancement.");
   if (limitations > values.maxLimitations) warnings.push(`Limitation cap exceeded: ${limitations}/${values.maxLimitations}.`);
   const unavailableSelected = selectedPowerChoices().filter(choice => choice.group !== "limitation" && (Number(choice.tier || 1) > powerTierLimit() || !prerequisiteMet(choice)));
@@ -861,6 +862,7 @@ function powerBudget() {
     setCount,
     enhancements,
     warnings,
+    suggestions,
   };
 }
 
@@ -1832,9 +1834,10 @@ function renderPowers() {
       <div><span>Power Die</span><strong>${values.powerDie}</strong></div><div><span>Power EV</span><strong>${values.powerEV}</strong></div><div><span>Starting Picks</span><strong>${budget.startingSpent}/${budget.startingAvailable}</strong></div><div><span>Advancement</span><strong>${budget.advancementUsed}/${budget.advancementAvailable}</strong></div><div><span>Power Sets</span><strong>${budget.setCount}/${values.maxPowerSets}</strong></div><div><span>Tier Access</span><strong>${powerTierLimit()}</strong></div>
     </div>
     <section class="power-audit ${budget.warnings.length ? "warning" : "complete"}">
-      <div><strong>${budget.warnings.length ? "Power Build Needs Attention" : "Power Build Complete"}</strong><span>${powerFramework.minimumBaseline}</span></div>
+      <div><strong>${budget.warnings.length ? "Power Build Needs Attention" : "Power Build Within Limits"}</strong><span>${powerFramework.minimumBaseline}</span></div>
       <div class="pill-row"><span>Core ${budget.cores}</span><span>At-Will ${budget.atWills}/2</span><span>Encounter ${budget.encounters}/1</span><span>Limitations ${budget.limitations}/${values.maxLimitations}</span><span>Enhancements ${budget.enhancements}</span></div>
       ${budget.warnings.length ? `<ul>${budget.warnings.map(warning => `<li>${html(warning)}</li>`).join("")}</ul>` : ""}
+      ${budget.suggestions.length ? `<div class="power-suggestions"><strong>Optional baseline suggestions</strong><ul>${budget.suggestions.map(suggestion => `<li>${html(suggestion)}</li>`).join("")}</ul></div>` : ""}
     </section>
     <div class="form-grid two">${input("bonusPicks", "Other Bonus Power Picks", "number", 'min="0"')}<div class="rule-card"><h2>Power Pick Rules</h2><p>${html(powerFramework.advancement)}</p><p>${html(powerFramework.limitations)}</p></div></div>
     <h2 class="power-builder-heading">Choose Power Sets</h2>
