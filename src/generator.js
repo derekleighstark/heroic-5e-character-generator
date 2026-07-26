@@ -1262,7 +1262,7 @@ function renderApp() {
   app.innerHTML = `
     <header class="app-topbar">
       <div class="topbar-primary">
-        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
+        <div class="brand-title"><strong>HEROIC 5e</strong><span>Guided Character Builder</span></div>
         <div class="brand-actions">
           <a class="brand-reference" href="character-sheet.html">Character Sheet</a>
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
@@ -1291,6 +1291,11 @@ function renderApp() {
     </header>
     <main class="generator-shell">
       <aside class="step-rail">
+        <div class="guide-rail-heading">
+          <span>Build your hero</span>
+          <strong>15 guided decisions</strong>
+          <p>Your choices save automatically as you move through the process.</p>
+        </div>
         <nav class="step-list"></nav>
         <div class="rules-version" aria-label="Rules version">
           <span>Rules Updated</span>
@@ -1461,16 +1466,21 @@ function renderProgress() {
 
 function renderBuilder() {
   const index = currentStepIndex();
-  const [id, label] = steps[index] || steps[0];
+  const [id, label, description] = steps[index] || steps[0];
   const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
   const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
   const artNumber = id === "random" ? 0 : index;
+  const progress = id === "random" ? 0 : Math.round((index / (steps.length - 1)) * 100);
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
-      <div><p>${stepLabel}</p><h1>${label}</h1></div>
+      <div class="guided-header-copy"><p>${stepLabel}</p><h1>${label}</h1><span>${html(description || "")}</span></div>
       <div class="builder-nav">
         <button type="button" data-action="back" ${index === 0 ? "disabled" : ""}>Back</button>
         <button type="button" data-action="next" ${index === steps.length - 1 ? "disabled" : ""}>Next</button>
+      </div>
+      <div class="guided-progress" aria-label="${progress}% complete">
+        <span><b>${progress}%</b> complete</span>
+        <i><b style="width:${progress}%"></b></i>
       </div>
     </header>
     <div class="builder-workspace">
@@ -1480,7 +1490,7 @@ function renderBuilder() {
           <span>${String(artNumber).padStart(2, "0")}</span>
           <i></i>
         </div>
-        <footer><span>Artwork Placeholder</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
+        <footer><span>Step focus</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
       </aside>
     </div>
   `;
@@ -3399,7 +3409,7 @@ function renderCorebookCompendium() {
   return `
     <div class="compendium-hero">
       <h2>${html(corebook.title)} ${html(corebook.version)}</h2>
-      <p>Imported from the ${html(corebook.version)} Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
+      <p>Imported from the official ${html(corebook.version)} rulebook. Use this as the full searchable rules reference while the guided builder keeps character creation focused.</p>
     </div>
     <div class="corebook-toolbar">
       <label>Search ${html(corebook.version.replace(/^Playtest\s+/i, ""))} Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
