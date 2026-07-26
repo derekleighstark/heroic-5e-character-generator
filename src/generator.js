@@ -1289,8 +1289,7 @@ function renderApp() {
         <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
       </div>
       <div class="topbar-tools">
-        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New</button><button type="button" data-action="save-character">Save Local</button><button type="button" data-action="open-library">Load Local</button></div>
-        <div class="topbar-group"><span>Cloud</span><button type="button" data-action="save-cloud-character" data-cloud-save>Save Cloud</button><button type="button" data-action="open-cloud" data-cloud-open>Cloud Library</button></div>
+        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New</button></div>
         <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
