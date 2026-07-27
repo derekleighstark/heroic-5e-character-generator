@@ -393,7 +393,8 @@ const defaults = {
   intScore: 13,
   wisScore: 12,
   chaScore: 10,
-  perScore: 8
+  perScore: 8,
+  portraitMode: "contain"
 };
 
 const steps = [
@@ -2125,7 +2126,7 @@ function generatorOutputPayload() {
     },
     features: { classFeatures, talents: talentText, merits: meritText, flaws: flawText },
     choices: { campaignRank: sheet.rank || "", side: sheet.side || "" },
-    portrait: { image: sheet.portrait || "", mode: "contain" }
+    portrait: { image: sheet.portrait || "", mode: sheet.portraitMode || "contain" }
   };
 }
 
@@ -3624,6 +3625,17 @@ function importedSheetFromPayload(payload) {
   if (recognized.length >= 3) return payload;
   throw new Error("This is not a HEROIC 5e generator character file.");
 }
+
+window.addEventListener("message", event => {
+  const message = event.data;
+  if (!message || message.type !== "heroic5e-portrait-change") return;
+  const previewFrame = document.querySelector("[data-sheet-preview-content] .generator-output-sheet");
+  if (!previewFrame || event.source !== previewFrame.contentWindow) return;
+  if (typeof message.image === "string") sheet.portrait = message.image;
+  if (message.mode === "contain" || message.mode === "cover") sheet.portraitMode = message.mode;
+  save();
+  renderSheet();
+});
 
 function normalizeImportedSheet(source) {
   const imported = {};

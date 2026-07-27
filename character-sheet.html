@@ -425,7 +425,7 @@
     const fillPortrait = document.querySelector('#fillPortrait');
     const clearPortrait = document.querySelector('#clearPortrait');
 
-    function setPortraitMode(mode) {
+    function setPortraitMode(mode, notify = true) {
       if (!coverPortraitImage) return;
       const safeMode = mode === 'contain' ? 'contain' : 'cover';
       coverPortraitImage.style.objectFit = safeMode;
@@ -434,9 +434,12 @@
       } catch (error) {
         console.warn('Portrait display mode could not be saved.', error);
       }
+      if (notify && window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'heroic5e-portrait-change', mode: safeMode }, '*');
+      }
     }
 
-    function setCoverPortrait(dataUrl) {
+    function setCoverPortrait(dataUrl, notify = true) {
       if (!coverPortraitImage || !coverPortraitPlaceholder || !coverPortraitDropzone) return;
       if (dataUrl) {
         coverPortraitImage.src = dataUrl;
@@ -454,6 +457,9 @@
         coverPortraitPlaceholder.style.display = 'grid';
         coverPortraitDropzone.classList.remove('has-portrait');
         localStorage.removeItem('heroicCoverPortrait');
+      }
+      if (notify && window.parent && window.parent !== window) {
+        window.parent.postMessage({ type: 'heroic5e-portrait-change', image: dataUrl || '' }, '*');
       }
     }
 
@@ -501,13 +507,19 @@
 
     coverPortraitButton?.addEventListener('click', () => coverPortraitInput?.click());
     coverPortraitButton?.addEventListener('dblclick', () => coverPortraitInput?.click());
-    replacePortrait?.addEventListener('click', () => coverPortraitInput?.click());
-    fitPortrait?.addEventListener('click', () => setPortraitMode('contain'));
-    fillPortrait?.addEventListener('click', () => setPortraitMode('cover'));
-    clearPortrait?.addEventListener('click', () => {
-      setCoverPortrait(null);
-      if (coverPortraitInput) coverPortraitInput.value = '';
-    });
+    document.addEventListener('click', event => {
+      const control = event.target.closest?.('#replacePortrait, #fitPortrait, #fillPortrait, #clearPortrait');
+      if (!control) return;
+      event.preventDefault();
+      event.stopPropagation();
+      if (control.id === 'replacePortrait') coverPortraitInput?.click();
+      if (control.id === 'fitPortrait') setPortraitMode('contain');
+      if (control.id === 'fillPortrait') setPortraitMode('cover');
+      if (control.id === 'clearPortrait') {
+        setCoverPortrait(null);
+        if (coverPortraitInput) coverPortraitInput.value = '';
+      }
+    }, true);
 
     coverPortraitInput?.addEventListener('change', () => {
       const file = coverPortraitInput.files && coverPortraitInput.files[0];
@@ -531,8 +543,8 @@
       loadPortraitFile(file);
     });
 
-    setPortraitMode(localStorage.getItem('heroicCoverPortraitMode') || 'cover');
-    setCoverPortrait(localStorage.getItem('heroicCoverPortrait'));
+    setPortraitMode(localStorage.getItem('heroicCoverPortraitMode') || 'cover', false);
+    setCoverPortrait(localStorage.getItem('heroicCoverPortrait'), false);
 
     const jsonImportButton = document.querySelector('#importJson');
     const jsonExportButton = document.querySelector('#exportJson');
@@ -953,8 +965,8 @@
       if (Array.isArray(data.checkboxes)) {
         [...document.querySelectorAll('[data-blank-check]')].forEach((check, index) => { check.checked = !!data.checkboxes[index]; });
       }
-      if (data.portrait?.mode) setPortraitMode(data.portrait.mode);
-      if (data.portrait?.image) setCoverPortrait(data.portrait.image);
+      if (data.portrait?.mode) setPortraitMode(data.portrait.mode, false);
+      if (data.portrait?.image) setCoverPortrait(data.portrait.image, false);
       if (typeof settings.inkSaver === 'boolean') {
         inkSaver.checked = settings.inkSaver;
         document.documentElement.classList.toggle('ink-saver', settings.inkSaver);
