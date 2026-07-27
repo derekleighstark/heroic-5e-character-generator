@@ -27,13 +27,8 @@
 <div class="chapter"><small>Official Character Record</small><h1 data-character-title="">Core Hero</h1></div>
 <div class="page-number"><b>01</b><span>of 03</span></div>
 </header>
-<section class="cover-hero card">
-<div class="cover-logo-wrap"><img alt="Heroic 5e Logo" src="assets/heroic-5e-logo-small.png"/></div>
-<div class="cover-title-block">
-<small>Character Record</small>
-<h2 data-character-title="">Core Hero</h2>
-<p data-character-subtitle=""></p>
-</div>
+<section class="cover-hero cover-main card">
+<div class="cover-portrait-column">
 <div class="portrait-uploader" id="coverPortraitDropzone">
 <div aria-label="Add or replace character portrait image" class="cover-portrait" id="coverPortraitButton" role="button" tabindex="0">
 <img alt="Character portrait preview" id="coverPortraitImage"/>
@@ -41,13 +36,20 @@
 </div>
 <input accept="image/png,image/jpeg,image/webp,image/gif,image/*" class="visually-hidden" id="coverPortraitInput" type="file"/>
 <div aria-label="Portrait controls" class="portrait-controls no-print">
-<button id="replacePortrait" type="button">Replace</button>
-<button id="fitPortrait" type="button">Fit</button>
-<button id="fillPortrait" type="button">Fill</button>
-<button id="clearPortrait" type="button">Remove</button>
+<button id="replacePortrait" onclick="window.heroicPortraitReplace(); return false;" type="button">Replace</button>
+<button id="fitPortrait" onclick="window.heroicPortraitFit(); return false;" type="button">Fit</button>
+<button id="fillPortrait" onclick="window.heroicPortraitFill(); return false;" type="button">Fill</button>
+<button id="clearPortrait" onclick="window.heroicPortraitRemove(); return false;" type="button">Remove</button>
 </div>
 </div>
-</section>
+</div>
+<div class="cover-info-column">
+<div class="cover-logo-wrap"><img alt="Heroic 5e Logo" src="assets/heroic-5e-logo-small.png"/></div>
+<div class="cover-title-block">
+<small>Character Record</small>
+<h2 data-character-title="">Core Hero</h2>
+<p data-character-subtitle=""></p>
+</div>
 <section class="cover-details">
 <div class="field card"><label>Player</label><b contenteditable="true" data-blank-field="" data-field="player"></b></div>
 <div class="field card"><label>Campaign</label><b contenteditable="true" data-blank-field="" data-field="campaign"></b></div>
@@ -59,6 +61,8 @@
 <section class="cover-tagline card">
 <label>Heroic Tagline / Issue Quote</label>
 <b contenteditable="true" data-blank-field="" data-field="heroicTagline"></b>
+</section>
+</div>
 </section>
 <footer><span>HEROIC 5e</span><b data-character-title="">Core Hero</b><span>01 / 03</span></footer>
 </article>
@@ -429,6 +433,10 @@
       if (!coverPortraitImage) return;
       const safeMode = mode === 'contain' ? 'contain' : 'cover';
       coverPortraitImage.style.objectFit = safeMode;
+      fitPortrait?.classList.toggle('active', safeMode === 'contain');
+      fillPortrait?.classList.toggle('active', safeMode === 'cover');
+      fitPortrait?.setAttribute('aria-pressed', String(safeMode === 'contain'));
+      fillPortrait?.setAttribute('aria-pressed', String(safeMode === 'cover'));
       try {
         localStorage.setItem('heroicCoverPortraitMode', safeMode);
       } catch (error) {
@@ -507,19 +515,13 @@
 
     coverPortraitButton?.addEventListener('click', () => coverPortraitInput?.click());
     coverPortraitButton?.addEventListener('dblclick', () => coverPortraitInput?.click());
-    document.addEventListener('click', event => {
-      const control = event.target.closest?.('#replacePortrait, #fitPortrait, #fillPortrait, #clearPortrait');
-      if (!control) return;
-      event.preventDefault();
-      event.stopPropagation();
-      if (control.id === 'replacePortrait') coverPortraitInput?.click();
-      if (control.id === 'fitPortrait') setPortraitMode('contain');
-      if (control.id === 'fillPortrait') setPortraitMode('cover');
-      if (control.id === 'clearPortrait') {
-        setCoverPortrait(null);
-        if (coverPortraitInput) coverPortraitInput.value = '';
-      }
-    }, true);
+    window.heroicPortraitReplace = () => coverPortraitInput?.click();
+    window.heroicPortraitFit = () => setPortraitMode('contain');
+    window.heroicPortraitFill = () => setPortraitMode('cover');
+    window.heroicPortraitRemove = () => {
+      setCoverPortrait(null);
+      if (coverPortraitInput) coverPortraitInput.value = '';
+    };
 
     coverPortraitInput?.addEventListener('change', () => {
       const file = coverPortraitInput.files && coverPortraitInput.files[0];
