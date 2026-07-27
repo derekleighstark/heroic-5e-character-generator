@@ -3506,7 +3506,22 @@ p {
 .portrait-box {
   min-height: 260px;
   height: 100%;
+  aspect-ratio: 3 / 4;
+  background-size: cover;
   font-size: 1.4rem;
+}
+
+.live-portrait-target {
+  cursor: pointer;
+  transition: border-color .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+
+.live-portrait-target:hover,
+.live-portrait-target:focus-visible {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 35%, transparent);
+  filter: brightness(1.04);
+  outline: 0;
 }
 
 .core-block,
@@ -4024,11 +4039,11 @@ p {
   }
 
   .portrait-box {
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 3 / 4;
     height: auto;
     min-height: 2.15in;
     background-repeat: no-repeat;
-    background-size: contain;
+    background-size: cover;
   }
 
   .core-block {

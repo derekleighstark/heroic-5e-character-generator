@@ -1305,6 +1305,7 @@ function renderApp() {
         <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New Character</button><button type="button" data-action="random-character">Random Character</button></div>
         <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
+        <input id="livePortraitInput" type="file" accept="image/*" hidden>
       </div>
     </header>
     <main class="generator-shell">
@@ -2154,7 +2155,7 @@ function renderSheetMarkup() {
   return `
     <article class="sheet-page">
       <header class="sheet-title"><p>HEROIC 5e</p><h1>${html(sheet.heroName || "Character Sheet")}</h1></header>
-      <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
+      <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box live-portrait-target" role="button" tabindex="0" data-action="choose-live-portrait" aria-label="${sheet.portrait ? "Replace character portrait" : "Add character portrait"}" title="${sheet.portrait ? "Click to replace portrait" : "Click to add portrait"}" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Click to add portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
       <section class="sheet-section"><h2>Abilities</h2><div class="sheet-abilities">${abilities.map(([key, short]) => `<div><span>${short}</span><strong>${abilityScore(key)}</strong><em>${signed(abilityMod(key))}</em></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat("Class EV", values.classEV)}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
       <section class="sheet-section"><h2>Skills</h2><div class="sheet-skills">${skills.map(([key, name, ability]) => {
@@ -4031,7 +4032,7 @@ app.addEventListener("change", async event => {
     renderSheet();
   }
 
-  if (event.target.id === "portraitInput") {
+  if (event.target.id === "portraitInput" || event.target.id === "livePortraitInput") {
     const [file] = event.target.files;
     if (!file) return;
     const input = event.target;
@@ -4057,6 +4058,13 @@ app.addEventListener("change", async event => {
   }
 });
 
+app.addEventListener("keydown", event => {
+  const portraitTarget = event.target.closest("[data-action='choose-live-portrait']");
+  if (!portraitTarget || !["Enter", " "].includes(event.key)) return;
+  event.preventDefault();
+  portraitTarget.click();
+});
+
 app.addEventListener("click", async event => {
   const button = event.target.closest("[data-action]");
   if (!button) return;
@@ -4076,6 +4084,7 @@ app.addEventListener("click", async event => {
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
   if (action === "random-character") randomCharacter();
+  if (action === "choose-live-portrait") document.querySelector("#livePortraitInput")?.click();
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-gm-screen") openGmScreen();
