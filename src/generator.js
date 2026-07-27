@@ -492,6 +492,7 @@ const originBackgrounds = {
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
+let liveSheetMode = "visual";
 let activeTheme = localStorage.getItem(THEME_KEY) || "midnight";
 let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
 let fontScaleLevel = Math.max(1, Math.min(10, Number(localStorage.getItem(FONT_SCALE_KEY) || 4)));
@@ -1284,13 +1285,10 @@ function renderApp() {
       <div class="topbar-primary">
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
         <div class="brand-actions">
-          <a class="brand-reference" href="character-sheet.html">Character Sheet</a>
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
           <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
-          <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
-          <button type="button" class="brand-reference" data-action="open-text-sheet">Text Sheet</button>
         </div>
         <div class="display-controls">
           <label class="font-scale-control"><span>Font</span><input id="fontScaleSlider" type="range" min="1" max="10" step="1" value="${fontScaleLevel}" aria-label="Interface font size"><strong data-font-scale-output>${fontScaleLevel}/10</strong></label>
@@ -1495,8 +1493,14 @@ function renderBuilder() {
     <div class="builder-workspace">
       <section class="builder-step-content">${renderStep(activeStep)}</section>
       <aside class="live-sheet-panel">
-        <header><div><span>Live Character Sheet</span><strong>${html(characterName())}</strong></div><button type="button" data-action="open-sheet-preview">Open Full Preview</button></header>
-        <div id="sheet">${renderSheetMarkup()}</div>
+        <header>
+          <div><span>Live Character Sheet</span><strong>${html(characterName())}</strong></div>
+          <nav class="live-sheet-toggle" aria-label="Character sheet view">
+            <button type="button" data-action="sheet-mode" data-mode="visual" class="${liveSheetMode === "visual" ? "active" : ""}">Live Sheet</button>
+            <button type="button" data-action="sheet-mode" data-mode="text" class="${liveSheetMode === "text" ? "active" : ""}">Text Sheet</button>
+          </nav>
+        </header>
+        <div id="sheet">${liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup()}</div>
       </aside>
     </div>
   `;
@@ -2140,7 +2144,7 @@ function listBlock(items) {
 
 function renderSheet() {
   const target = document.querySelector("#sheet");
-  if (target) target.innerHTML = renderSheetMarkup();
+  if (target) target.innerHTML = liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup();
 }
 
 function renderSheetMarkup() {
@@ -4062,6 +4066,10 @@ app.addEventListener("click", async event => {
   if (action === "next") activeStep = steps[Math.min(steps.length - 1, index + 1)][0];
   if (action === "back") activeStep = steps[Math.max(0, index - 1)][0];
   if (["step", "next", "back"].includes(action)) renderBuilder();
+  if (action === "sheet-mode") {
+    liveSheetMode = button.dataset.mode === "text" ? "text" : "visual";
+    renderBuilder();
+  }
   if (action === "export-json") exportJson();
   if (action === "download-json") downloadJson();
   if (action === "copy-json") copyJson();
@@ -4111,11 +4119,9 @@ app.addEventListener("click", async event => {
     activeGmSection = button.dataset.section;
     renderGmScreen();
   }
-  if (action === "open-sheet-preview") openSheetPreview();
   if (action === "close-sheet-preview") closeSheetPreview();
   if (action === "open-dice-roller") openDiceRoller();
   if (action === "close-dice-roller") closeDiceRoller();
-  if (action === "open-text-sheet") openTextSheet();
   if (action === "close-text-sheet") closeTextSheet();
   if (action === "copy-text-sheet") await copyTextSheet();
   if (action === "download-text-sheet") downloadTextSheet();

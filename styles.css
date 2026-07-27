@@ -4537,9 +4537,31 @@ p {
   font-size: .65rem;
 }
 
+.live-sheet-toggle {
+  display: flex;
+  gap: 4px;
+}
+
+.live-sheet-toggle button {
+  border: 1px solid color-mix(in srgb, var(--gold) 58%, transparent);
+  background: transparent;
+  color: #fff;
+}
+
+.live-sheet-toggle button.active {
+  background: var(--gold);
+  color: var(--button-ink);
+}
+
 .live-sheet-panel #sheet {
   gap: 12px;
   padding: 12px;
+}
+
+.live-sheet-panel .text-character-sheet {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
 }
 
 .live-sheet-panel .sheet-page {
