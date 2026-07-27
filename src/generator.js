@@ -2126,7 +2126,7 @@ function generatorOutputPayload() {
     },
     features: { classFeatures, talents: talentText, merits: meritText, flaws: flawText },
     choices: { campaignRank: sheet.rank || "", side: sheet.side || "" },
-    portrait: { image: sheet.portrait || "", mode: sheet.portraitMode || "contain" }
+    portrait: { image: sheet.portrait || "", mode: "contain" }
   };
 }
 

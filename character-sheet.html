@@ -35,12 +35,6 @@
 <span id="coverPortraitPlaceholder"><b>Character Portrait</b><em>Click to Add Character Art<br/>or Drag &amp; Drop Here</em></span>
 </div>
 <input accept="image/png,image/jpeg,image/webp,image/gif,image/*" class="visually-hidden" id="coverPortraitInput" type="file"/>
-<div aria-label="Portrait controls" class="portrait-controls no-print">
-<button id="replacePortrait" onclick="window.heroicPortraitReplace(); return false;" type="button">Replace</button>
-<button id="fitPortrait" onclick="window.heroicPortraitFit(); return false;" type="button">Fit</button>
-<button id="fillPortrait" onclick="window.heroicPortraitFill(); return false;" type="button">Fill</button>
-<button id="clearPortrait" onclick="window.heroicPortraitRemove(); return false;" type="button">Remove</button>
-</div>
 </div>
 </div>
 <div class="cover-info-column">
@@ -503,6 +497,7 @@
           quality -= .08;
           dataUrl = canvas.toDataURL('image/jpeg', quality);
         }
+        setPortraitMode('contain');
         setCoverPortrait(dataUrl);
       } catch (error) {
         console.error('Portrait could not be prepared.', error);
@@ -514,14 +509,11 @@
     }
 
     coverPortraitButton?.addEventListener('click', () => coverPortraitInput?.click());
-    coverPortraitButton?.addEventListener('dblclick', () => coverPortraitInput?.click());
-    window.heroicPortraitReplace = () => coverPortraitInput?.click();
-    window.heroicPortraitFit = () => setPortraitMode('contain');
-    window.heroicPortraitFill = () => setPortraitMode('cover');
-    window.heroicPortraitRemove = () => {
-      setCoverPortrait(null);
-      if (coverPortraitInput) coverPortraitInput.value = '';
-    };
+    coverPortraitButton?.addEventListener('keydown', event => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      coverPortraitInput?.click();
+    });
 
     coverPortraitInput?.addEventListener('change', () => {
       const file = coverPortraitInput.files && coverPortraitInput.files[0];
@@ -545,7 +537,7 @@
       loadPortraitFile(file);
     });
 
-    setPortraitMode(localStorage.getItem('heroicCoverPortraitMode') || 'cover', false);
+    setPortraitMode('contain', false);
     setCoverPortrait(localStorage.getItem('heroicCoverPortrait'), false);
 
     const jsonImportButton = document.querySelector('#importJson');
@@ -1052,106 +1044,6 @@
       syncHeroTitle();
     });
   </script>
-<script id="heroic-portrait-dragdrop-failsafe">
-(function(){
-  if (window.__heroicPortraitDragDropFailsafe) return;
-  window.__heroicPortraitDragDropFailsafe = true;
-
-  function $(sel){ return document.querySelector(sel); }
-  function hasFileDrag(event){
-    return event && event.dataTransfer && Array.from(event.dataTransfer.types || []).includes('Files');
-  }
-  function setPortrait(dataUrl){
-    const dropzone = $('#coverPortraitDropzone');
-    const img = $('#coverPortraitImage');
-    const placeholder = $('#coverPortraitPlaceholder');
-    if (!dropzone || !img || !placeholder) return;
-    if (dataUrl) {
-      img.src = dataUrl;
-      img.style.display = 'block';
-      placeholder.style.display = 'none';
-      dropzone.classList.add('has-portrait');
-      try { localStorage.setItem('heroicCoverPortrait', dataUrl); } catch(e) {}
-    }
-  }
-  function loadImageFile(file){
-    if (!file) return;
-    if (!/^image\//i.test(file.type || '')) {
-      alert('Please drop or choose an image file.');
-      return;
-    }
-    const reader = new FileReader();
-    reader.onload = function(event){ setPortrait(event.target.result); };
-    reader.readAsDataURL(file);
-  }
-  function bindPortraitDragDrop(){
-    const dropzone = $('#coverPortraitDropzone');
-    const target = $('#coverPortraitButton');
-    const input = $('#coverPortraitInput');
-    if (!dropzone || !target || !input) return;
-
-    // Click / keyboard upload.
-    target.addEventListener('click', function(event){
-      event.preventDefault();
-      input.click();
-    });
-    target.addEventListener('keydown', function(event){
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        input.click();
-      }
-    });
-
-    // Prevent browsers from opening dropped images as a new page.
-    ['dragenter','dragover','drop'].forEach(function(type){
-      document.addEventListener(type, function(event){
-        if (hasFileDrag(event)) {
-          event.preventDefault();
-          if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
-        }
-      }, false);
-    });
-
-    ['dragenter','dragover'].forEach(function(type){
-      [dropzone, target].forEach(function(el){
-        el.addEventListener(type, function(event){
-          if (!hasFileDrag(event)) return;
-          event.preventDefault();
-          event.stopPropagation();
-          dropzone.classList.add('is-dragover');
-          if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
-        }, false);
-      });
-    });
-
-    ['dragleave','dragend'].forEach(function(type){
-      dropzone.addEventListener(type, function(event){
-        event.preventDefault();
-        dropzone.classList.remove('is-dragover');
-      }, false);
-    });
-
-    [dropzone, target].forEach(function(el){
-      el.addEventListener('drop', function(event){
-        event.preventDefault();
-        event.stopPropagation();
-        dropzone.classList.remove('is-dragover');
-        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
-        loadImageFile(file);
-      }, false);
-    });
-
-    input.addEventListener('change', function(){
-      const file = input.files && input.files[0];
-      loadImageFile(file);
-      input.value = '';
-    });
-  }
-
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindPortraitDragDrop);
-  else bindPortraitDragDrop();
-})();
-</script>
 <script id="heroic-toolbar-failsafe">
 (function(){
   'use strict';
