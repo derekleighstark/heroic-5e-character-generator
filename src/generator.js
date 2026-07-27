@@ -36,18 +36,8 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const OUTPUT_SHEET_KEY = "heroic5e_generator_output_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
-const THEME_KEY = "heroic5e_generator_theme";
-const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
-const FONT_SCALE_KEY = "heroic5e_generator_font_scale";
 const NPC_DRAFT_KEY = "heroic5e_npc_draft";
 const NPC_LIBRARY_KEY = "heroic5e_npc_library";
-const themes = [
-  ["classic", "Heroic Classic"],
-  ["four-color", "Four-Color"],
-  ["tactical", "Modern Tactical"],
-  ["dark", "Dark Style"],
-  ["midnight", "Midnight Console"]
-];
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
   "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
@@ -493,9 +483,6 @@ const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
 let liveSheetMode = "visual";
-let activeTheme = localStorage.getItem(THEME_KEY) || "midnight";
-let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
-let fontScaleLevel = Math.max(1, Math.min(10, Number(localStorage.getItem(FONT_SCALE_KEY) || 4)));
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -516,31 +503,10 @@ let activeCloudCharacterId = null;
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
 
-function applyTheme(theme) {
-  activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
-  document.documentElement.dataset.theme = activeTheme === "midnight" ? "dark" : activeTheme;
-  if (activeTheme === "midnight") document.documentElement.dataset.layout = "midnight";
-  else delete document.documentElement.dataset.layout;
-  localStorage.setItem(THEME_KEY, activeTheme);
-}
-
-function applyDyslexia(enabled) {
-  dyslexiaEnabled = Boolean(enabled);
-  document.documentElement.dataset.dyslexia = dyslexiaEnabled ? "true" : "false";
-  localStorage.setItem(DYSLEXIA_KEY, String(dyslexiaEnabled));
-}
-
-function applyFontScale(level) {
-  fontScaleLevel = Math.max(1, Math.min(10, Number(level) || 4));
-  document.documentElement.style.setProperty("--ui-font-scale", String(.86 + fontScaleLevel * .035));
-  localStorage.setItem(FONT_SCALE_KEY, String(fontScaleLevel));
-  const output = document.querySelector("[data-font-scale-output]");
-  if (output) output.textContent = `${fontScaleLevel}/10`;
-}
-
-applyTheme(activeTheme);
-applyDyslexia(dyslexiaEnabled);
-applyFontScale(fontScaleLevel);
+document.documentElement.dataset.theme = "dark";
+document.documentElement.dataset.layout = "midnight";
+delete document.documentElement.dataset.dyslexia;
+document.documentElement.style.removeProperty("--ui-font-scale");
 
 function save() {
   try {
@@ -1290,22 +1256,12 @@ function renderApp() {
           <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
-        <div class="display-controls">
-          <label class="font-scale-control"><span>Font</span><input id="fontScaleSlider" type="range" min="1" max="10" step="1" value="${fontScaleLevel}" aria-label="Interface font size"><strong data-font-scale-output>${fontScaleLevel}/10</strong></label>
-          <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
-          <label class="dyslexia-toggle" title="Use a dyslexia-friendly font throughout the app">
-            <input id="dyslexiaToggle" type="checkbox" ${dyslexiaEnabled ? "checked" : ""}>
-            <span class="toggle-track" aria-hidden="true"></span>
-            <strong>Dyslexia Font</strong>
-          </label>
+        <div class="header-tools">
+          <div class="topbar-group"><button type="button" data-action="new-character">New Character</button><button type="button" data-action="random-character">Random Character</button></div>
+          <div class="topbar-group"><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
+          <input id="importFile" type="file" accept="application/json,.json" hidden>
+          <input id="livePortraitInput" type="file" accept="image/*" hidden>
         </div>
-        <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
-      </div>
-      <div class="topbar-tools">
-        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New Character</button><button type="button" data-action="random-character">Random Character</button></div>
-        <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
-        <input id="importFile" type="file" accept="application/json,.json" hidden>
-        <input id="livePortraitInput" type="file" accept="image/*" hidden>
       </div>
     </header>
     <main class="generator-shell">
@@ -3923,10 +3879,6 @@ function exportPdf() {
 window.addEventListener("afterprint", clearSheetPrintMode);
 
 app.addEventListener("input", event => {
-  if (event.target.id === "fontScaleSlider") {
-    applyFontScale(event.target.value);
-    return;
-  }
   const npcFieldElement = event.target.closest("[data-npc-field]");
   if (npcFieldElement) {
     npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
@@ -3984,16 +3936,6 @@ app.addEventListener("change", async event => {
     renderBuilder();
     renderSheet();
     renderProgress();
-    return;
-  }
-
-  if (event.target.id === "themeSwitcher") {
-    applyTheme(event.target.value);
-    return;
-  }
-
-  if (event.target.id === "dyslexiaToggle") {
-    applyDyslexia(event.target.checked);
     return;
   }
 

@@ -4216,9 +4216,26 @@ p {
 }
 
 :root[data-layout="midnight"] .topbar-primary {
+  grid-template-columns: auto minmax(320px, 1fr) auto;
   min-height: 70px;
   padding: 10px 20px;
   border-bottom: 1px solid var(--line);
+}
+
+.header-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.header-tools .topbar-group {
+  flex-wrap: nowrap;
+}
+
+.header-tools .topbar-group button {
+  white-space: nowrap;
 }
 
 :root[data-layout="midnight"] .brand-title {
@@ -4429,7 +4446,8 @@ p {
 
 @media (max-width: 1080px) {
   :root[data-layout="midnight"] .topbar-primary { grid-template-columns: 1fr; }
-  :root[data-layout="midnight"] .display-controls { flex-wrap: wrap; }
+  .header-tools { justify-content: flex-start; }
+  .header-tools .topbar-group { flex-wrap: wrap; }
   :root[data-layout="midnight"] .builder-workspace { grid-template-columns: 1fr; }
   :root[data-layout="midnight"] .step-art { position: static; }
 }
