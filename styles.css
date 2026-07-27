@@ -4407,8 +4407,10 @@ p {
 
 :root[data-layout="midnight"] .builder-header h1 {
   color: #f2f5fa;
-  font-size: clamp(2.6rem, 5vw, 4.5rem);
+  max-width: 100%;
+  font-size: clamp(2rem, 3.4vw, 4rem);
   letter-spacing: -.04em;
+  overflow-wrap: anywhere;
 }
 
 :root[data-layout="midnight"] .builder-workspace {
@@ -4433,6 +4435,55 @@ p {
   border-bottom-width: 1px;
   border-radius: 0;
   background: #08111d;
+}
+
+:root[data-layout="midnight"] .mechanic-grid div,
+:root[data-layout="midnight"] .compact-stat-grid div,
+:root[data-layout="midnight"] .power-audit,
+:root[data-layout="midnight"] .check-row {
+  border-color: #34465c;
+  background: #101b29;
+  color: #e8edf2;
+}
+
+:root[data-layout="midnight"] .check-row:nth-child(even) {
+  background: #0c1623;
+}
+
+:root[data-layout="midnight"] .mechanic-grid strong,
+:root[data-layout="midnight"] .compact-stat-grid strong,
+:root[data-layout="midnight"] .power-audit > div > strong,
+:root[data-layout="midnight"] .check-row strong {
+  color: #f2f5fa;
+}
+
+:root[data-layout="midnight"] .mechanic-grid span,
+:root[data-layout="midnight"] .compact-stat-grid span,
+:root[data-layout="midnight"] .power-audit > div > span,
+:root[data-layout="midnight"] .check-row small {
+  color: #9fb1c6;
+}
+
+:root[data-layout="midnight"] .power-audit ul {
+  background: rgba(239, 113, 102, .1);
+  color: #ff9c93;
+}
+
+:root[data-layout="midnight"] .power-builder-heading,
+:root[data-layout="midnight"] .defense-layout h2 {
+  color: #f2f5fa;
+}
+
+:root[data-layout="midnight"] .ability-builder {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+:root[data-layout="midnight"] .defense-stat-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+:root[data-layout="midnight"] .attack-stat-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 :root[data-layout="midnight"] .step-art {
