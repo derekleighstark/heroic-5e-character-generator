@@ -30,10 +30,10 @@
 <section class="cover-hero cover-main card">
 <div class="cover-portrait-column">
 <div class="portrait-uploader" id="coverPortraitDropzone">
-<div aria-label="Add or replace character portrait image" class="cover-portrait" id="coverPortraitButton" role="button" tabindex="0">
+<label aria-label="Add or replace character portrait image" class="cover-portrait" for="coverPortraitInput" id="coverPortraitButton" tabindex="0">
 <img alt="Character portrait preview" id="coverPortraitImage"/>
 <span id="coverPortraitPlaceholder"><b>Character Portrait</b><em>Click to Add Character Art<br/>or Drag &amp; Drop Here</em></span>
-</div>
+</label>
 <input accept="image/png,image/jpeg,image/webp,image/gif,image/*" class="visually-hidden" id="coverPortraitInput" type="file"/>
 </div>
 </div>
@@ -508,7 +508,6 @@
       }
     }
 
-    coverPortraitButton?.addEventListener('click', () => coverPortraitInput?.click());
     coverPortraitButton?.addEventListener('keydown', event => {
       if (event.key !== 'Enter' && event.key !== ' ') return;
       event.preventDefault();
