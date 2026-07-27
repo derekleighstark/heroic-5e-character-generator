@@ -411,7 +411,6 @@
       if (event.target.matches?.('[data-skill-trained], [data-skill-expertise], .skill-checks input')) autoCalcSkillTotals();
     });
     syncHeroTitle();
-    autoCalcSkillTotals();
 
     const coverPortraitDropzone = document.querySelector('#coverPortraitDropzone');
     const coverPortraitButton = document.querySelector('#coverPortraitButton');
@@ -759,6 +758,7 @@
         setText(totalField, formatSigned(total));
       });
     }
+    autoCalcSkillTotals();
 
     function importValue(value) {
       if (value && typeof value === 'object') {
