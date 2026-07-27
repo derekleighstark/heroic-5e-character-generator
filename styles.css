@@ -4418,3 +4418,141 @@ p {
   :root[data-layout="midnight"] .builder-workspace { grid-template-columns: 1fr; }
   :root[data-layout="midnight"] .step-art { position: static; }
 }
+
+/* Universal top-step workspace and live-sheet column. */
+.app-topbar {
+  position: relative;
+}
+
+.generator-shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding: 0;
+}
+
+.step-rail {
+  position: sticky;
+  z-index: 18;
+  top: 0;
+  max-height: none;
+  overflow: hidden;
+  padding: 8px 12px;
+  border-width: 0 0 1px;
+  box-shadow: 0 8px 24px rgba(16, 32, 51, .15);
+}
+
+.step-list {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.step-list button {
+  grid-template-columns: auto minmax(0, 1fr);
+  flex: 1 0 100px;
+  min-width: 100px;
+  min-height: 48px;
+  border-bottom: 3px solid transparent;
+  text-align: center;
+}
+
+.step-list button.complete {
+  border-bottom-color: var(--green);
+}
+
+.step-list button.active {
+  border-bottom-color: var(--navy);
+}
+
+.step-list span {
+  width: 22px;
+  height: 22px;
+}
+
+.step-list strong {
+  font-size: .68rem;
+}
+
+.rules-version {
+  display: none;
+}
+
+.builder-panel {
+  min-height: calc(100vh - 170px);
+  padding: clamp(18px, 2.5vw, 38px);
+}
+
+.builder-workspace {
+  grid-template-columns: minmax(0, .9fr) minmax(430px, 1.1fr);
+  gap: clamp(22px, 3vw, 42px);
+}
+
+.live-sheet-panel {
+  position: sticky;
+  top: 72px;
+  max-height: calc(100vh - 88px);
+  min-width: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--panel) 84%, var(--paper));
+  box-shadow: var(--shadow);
+}
+
+.live-sheet-panel > header {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-bottom: 3px solid var(--gold);
+  background: var(--navy);
+  color: #fff;
+}
+
+.live-sheet-panel > header div {
+  display: grid;
+}
+
+.live-sheet-panel > header span {
+  color: var(--gold);
+  font-size: .62rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+.live-sheet-panel > header strong {
+  font-size: .9rem;
+  text-transform: uppercase;
+}
+
+.live-sheet-panel > header button {
+  min-height: 30px;
+  padding: 6px 9px;
+  font-size: .65rem;
+}
+
+.live-sheet-panel #sheet {
+  gap: 12px;
+  padding: 12px;
+}
+
+.live-sheet-panel .sheet-page {
+  width: 100%;
+  min-height: 0;
+}
+
+@media (max-width: 1080px) {
+  .builder-workspace {
+    grid-template-columns: 1fr;
+  }
+  .live-sheet-panel {
+    position: static;
+    max-height: 75vh;
+  }
+}

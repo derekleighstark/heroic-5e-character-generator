@@ -494,7 +494,7 @@ const originBackgrounds = {
 const app = document.querySelector("#app");
 let activeStep = "random";
 let sheet = { ...defaults };
-let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
+let activeTheme = localStorage.getItem(THEME_KEY) || "midnight";
 let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
 let fontScaleLevel = Math.max(1, Math.min(10, Number(localStorage.getItem(FONT_SCALE_KEY) || 4)));
 let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
@@ -1486,9 +1486,7 @@ function renderProgress() {
 function renderBuilder() {
   const index = currentStepIndex();
   const [id, label] = steps[index] || steps[0];
-  const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
   const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
-  const artNumber = id === "random" ? 0 : index;
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
       <div><p>${stepLabel}</p><h1>${label}</h1></div>
@@ -1499,12 +1497,9 @@ function renderBuilder() {
     </header>
     <div class="builder-workspace">
       <section class="builder-step-content">${renderStep(activeStep)}</section>
-      <aside class="step-art" data-art-step="${activeStep}">
-        <div class="step-art-canvas" role="img" aria-label="Artwork placeholder for ${html(artTitle)}">
-          <span>${String(artNumber).padStart(2, "0")}</span>
-          <i></i>
-        </div>
-        <footer><span>Artwork Placeholder</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
+      <aside class="live-sheet-panel">
+        <header><div><span>Live Character Sheet</span><strong>${html(characterName())}</strong></div><button type="button" data-action="open-sheet-preview">Open Full Preview</button></header>
+        <div id="sheet">${renderSheetMarkup()}</div>
       </aside>
     </div>
   `;
