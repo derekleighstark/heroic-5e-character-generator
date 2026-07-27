@@ -2213,9 +2213,10 @@ function fieldValue(el) {
 function exportPayload() {
   return {
     type: "HEROIC 5e Character Generator",
-    version: 2,
+    schemaVersion: 3,
+    rulesVersion: corebook.version,
     exportedAt: new Date().toISOString(),
-    sheet
+    sheet: cloneSheet(sheet)
   };
 }
 
@@ -2252,7 +2253,7 @@ function showExportJson() {
 }
 
 function exportJson() {
-  showExportJson();
+  downloadJson();
 }
 
 async function copyJson() {
@@ -3613,25 +3614,57 @@ function deleteCharacter(id) {
   renderLibrary();
 }
 
-function importJson(file) {
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const payload = JSON.parse(reader.result);
-      const imported = payload.sheet && typeof payload.sheet === "object" ? payload.sheet : payload;
-      sheet = { ...defaults, ...imported };
-      activeCloudCharacterId = null;
-      updateCloudControls();
-      diceRollHistory = [];
-      initialize(true);
-      renderBuilder();
-      renderSheet();
-      renderProgress();
-    } catch {
-      alert("That JSON file could not be imported.");
-    }
-  };
-  reader.readAsText(file);
+function importedSheetFromPayload(payload) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("The file does not contain a character object.");
+  }
+  if (payload.sheet && typeof payload.sheet === "object" && !Array.isArray(payload.sheet)) return payload.sheet;
+  if (payload.character?.sheet && typeof payload.character.sheet === "object" && !Array.isArray(payload.character.sheet)) return payload.character.sheet;
+  const recognized = Object.keys(defaults).filter(key => Object.hasOwn(payload, key));
+  if (recognized.length >= 3) return payload;
+  throw new Error("This is not a HEROIC 5e generator character file.");
+}
+
+function normalizeImportedSheet(source) {
+  const imported = {};
+  Object.keys(defaults).forEach(key => {
+    if (Object.hasOwn(source, key)) imported[key] = source[key];
+  });
+  if (Object.hasOwn(imported, "powerPurchases")) {
+    imported.powerPurchases = Array.isArray(imported.powerPurchases)
+      ? [...new Set(imported.powerPurchases.filter(value => typeof value === "string"))]
+      : [];
+  }
+  if (Object.hasOwn(imported, "powerSetAbilities")) {
+    imported.powerSetAbilities = imported.powerSetAbilities && typeof imported.powerSetAbilities === "object" && !Array.isArray(imported.powerSetAbilities)
+      ? { ...imported.powerSetAbilities }
+      : {};
+  }
+  if (Object.hasOwn(imported, "portrait") && typeof imported.portrait !== "string") imported.portrait = "";
+  return { ...defaults, ...imported };
+}
+
+async function importJson(file) {
+  const previousSheet = cloneSheet(sheet);
+  try {
+    if (!file || file.size > 12 * 1024 * 1024) throw new Error("Choose a JSON character file smaller than 12 MB.");
+    const text = (await file.text()).replace(/^\uFEFF/, "");
+    const payload = JSON.parse(text);
+    sheet = normalizeImportedSheet(importedSheetFromPayload(payload));
+    activeCloudCharacterId = null;
+    updateCloudControls();
+    diceRollHistory = [];
+    initialize(true);
+    if (!save()) throw new Error("The imported character could not be stored by this browser.");
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+    alert(`Imported ${characterName()} successfully.`);
+  } catch (error) {
+    sheet = previousSheet;
+    save();
+    alert(`Import failed: ${error instanceof SyntaxError ? "The file is not valid JSON." : error.message || "The character file is invalid."}`);
+  }
 }
 
 async function preparePortrait(file) {
@@ -4017,7 +4050,7 @@ app.addEventListener("change", async event => {
 
   if (event.target.id === "importFile") {
     const [file] = event.target.files;
-    if (file) importJson(file);
+    if (file) await importJson(file);
     event.target.value = "";
   }
 });
