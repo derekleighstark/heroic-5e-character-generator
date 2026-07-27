@@ -4547,6 +4547,45 @@ p {
   min-height: 0;
 }
 
+/* Character sheets use a stable paper palette, independent of the app theme. */
+.sheet-page {
+  --paper: #fffdf8;
+  --panel: #edf1f5;
+  --cream: #fff8e8;
+  --control-bg: #ffffff;
+  --navy: #102033;
+  --ink: #172536;
+  --muted: #62748a;
+  --line: #9babbc;
+  --green: #28765f;
+  color: var(--ink);
+}
+
+.sheet-page .identity-block,
+.sheet-page .core-block,
+.sheet-page .sheet-section {
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, .62), #fff 44%),
+    #fff;
+}
+
+.sheet-page .identity-block strong,
+.sheet-page .sheet-section h2,
+.sheet-page .sheet-abilities strong,
+.sheet-page .sheet-skills strong,
+.sheet-page .sheet-powers strong {
+  color: var(--navy);
+}
+
+.sheet-page .identity-block span,
+.sheet-page .sheet-section > h2,
+.sheet-page .sheet-abilities span,
+.sheet-page .sheet-abilities em,
+.sheet-page .sheet-skills span,
+.sheet-page .sheet-skills em {
+  color: var(--muted);
+}
+
 @media (max-width: 1080px) {
   .builder-workspace {
     grid-template-columns: 1fr;
