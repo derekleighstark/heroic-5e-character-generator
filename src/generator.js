@@ -400,7 +400,6 @@ const defaults = {
 };
 
 const steps = [
-  ["random", "Random Character", "Optional guided random character generation"],
   ["concept", "Create the Concept", "Hero idea, campaign rank, and notes"],
   ["abilities", "Assign Ability Scores", "Set the eight core ability scores"],
   ["origin", "Choose an Origin", "Origin bonuses and built-in mechanics"],
@@ -419,7 +418,6 @@ const steps = [
 ];
 
 const stepArtwork = {
-  random: ["Infinite Possibilities", "A roster of heroes waiting to be discovered"],
   concept: ["Hero Concept", "Portrait, silhouette, or team introduction"],
   abilities: ["Raw Potential", "A hero demonstrating exceptional ability"],
   origin: ["Origin Story", "Transformation, legacy, or first awakening"],
@@ -492,12 +490,11 @@ const originBackgrounds = {
 };
 
 const app = document.querySelector("#app");
-let activeStep = "random";
+let activeStep = "concept";
 let sheet = { ...defaults };
 let activeTheme = localStorage.getItem(THEME_KEY) || "midnight";
 let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
 let fontScaleLevel = Math.max(1, Math.min(10, Number(localStorage.getItem(FONT_SCALE_KEY) || 4)));
-let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -1307,7 +1304,7 @@ function renderApp() {
         <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
       </div>
       <div class="topbar-tools">
-        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New</button></div>
+        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New Character</button><button type="button" data-action="random-character">Random Character</button></div>
         <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
         <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
@@ -1478,7 +1475,7 @@ function renderProgress() {
   const currentIndex = currentStepIndex();
   document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
     <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""} ${index < currentIndex ? "complete" : ""}">
-      <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
+      <span>${index + 1}</span><strong>${label}</strong>
     </button>
   `).join("");
 }
@@ -1486,7 +1483,7 @@ function renderProgress() {
 function renderBuilder() {
   const index = currentStepIndex();
   const [id, label] = steps[index] || steps[0];
-  const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
+  const stepLabel = `Step ${index + 1} of ${steps.length}`;
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
       <div><p>${stepLabel}</p><h1>${label}</h1></div>
@@ -1507,7 +1504,6 @@ function renderBuilder() {
 }
 
 function renderStep(id) {
-  if (id === "random") return renderRandomCharacter();
   if (id === "concept") return renderConcept();
   if (id === "abilities") return renderAbilityScores();
   if (id === "origin") return renderOrigin();
@@ -1533,25 +1529,6 @@ function renderConcept() {
       ${input("level", "Level", "number", 'min="1" max="10"')}
     </div>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
-  `;
-}
-
-function renderRandomCharacter() {
-  const randomSelect = (field, label, items, blankLabel) => `<label>${label}<select data-random-character-field="${field}">${options(items, randomCharacterOptions[field], blankLabel)}</select></label>`;
-  return `
-    <div class="rule-card random-generator-intro">
-      <h2>Guided Random Creation</h2>
-      <p>Lock any choices that matter to the campaign. Leave a category set to Random and the generator will choose it, then complete all remaining character mechanics and identity details automatically.</p>
-    </div>
-    <div class="form-grid three random-generator-grid">
-      ${select("rank", "Campaign Rank", Object.keys(ranks))}
-      ${input("level", "Starting Level", "number", 'min="1" max="10"')}
-      ${randomSelect("origin", "Origin", Object.keys(origins), "Random Origin")}
-      ${randomSelect("className", "Class", Object.keys(classes), "Random Class")}
-      ${randomSelect("side", "Side", ["Heroic", "Unaligned", "Villainous"], "Random PC Side")}
-      ${randomSelect("calling", "Calling", Object.keys(callings), "Random Calling")}
-    </div>
-    <div class="random-generator-action"><button type="button" class="random-character-button" data-action="random-character">Generate Complete Character</button></div>
   `;
 }
 
@@ -3837,13 +3814,13 @@ function randomizeSkills() {
 }
 
 function randomCharacter() {
-  if (!confirm("Generate a complete character from the selected Step 0 options? Current unsaved changes will be replaced.")) return;
+  if (!confirm("Generate a complete random character? Current unsaved changes will be replaced.")) return;
 
   const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
-  const originName = origins[randomCharacterOptions.origin] ? randomCharacterOptions.origin : randomItem(Object.keys(origins));
-  const className = classes[randomCharacterOptions.className] ? randomCharacterOptions.className : randomItem(Object.keys(classes));
-  const side = ["Heroic", "Unaligned", "Villainous"].includes(randomCharacterOptions.side) ? randomCharacterOptions.side : (Math.random() < .75 ? "Heroic" : "Unaligned");
-  const calling = callings[randomCharacterOptions.calling] ? randomCharacterOptions.calling : randomItem(Object.keys(callings));
+  const originName = randomItem(Object.keys(origins));
+  const className = randomItem(Object.keys(classes));
+  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
+  const calling = randomItem(Object.keys(callings));
   const origin = origins[originName];
   const originPrimaryBonus = randomItem(origin.primary);
   const originSecondaryBonus = randomItem(origin.secondary[originPrimaryBonus]);
@@ -3909,7 +3886,7 @@ function randomCharacter() {
   sheet.costume = `${colors[0]} and ${colors[1]} field costume with a distinctive ${randomItem(["chevron", "circle", "starburst", "shield", "split-mask", "vertical-stripe"])} symbol, reinforced gloves, and concealed communications gear.`;
   sheet.sessionNotes = `Public reputation: ${side}. Primary motivation: ${calling}. The character is ready for the player to refine names, relationships, and campaign-specific details.`;
 
-  activeStep = "identity";
+  activeStep = "concept";
   diceRollHistory = [];
   initialize(true);
   renderBuilder();
@@ -3923,7 +3900,7 @@ function newCharacter() {
   activeCloudCharacterId = null;
   updateCloudControls();
   diceRollHistory = [];
-  activeStep = "random";
+  activeStep = "concept";
   initialize(true);
   renderBuilder();
   renderSheet();
@@ -3987,12 +3964,6 @@ app.addEventListener("change", async event => {
   if (event.target.matches("[data-npc-filter='rank']")) {
     npcRankFilter = event.target.value || "All";
     renderNpcBuilder();
-    return;
-  }
-
-  const randomChoice = event.target.closest("[data-random-character-field]");
-  if (randomChoice) {
-    randomCharacterOptions[randomChoice.dataset.randomCharacterField] = randomChoice.value;
     return;
   }
 
