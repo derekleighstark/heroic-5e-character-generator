@@ -38,13 +38,15 @@ const OUTPUT_SHEET_KEY = "heroic5e_generator_output_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
 const THEME_KEY = "heroic5e_generator_theme";
 const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
+const FONT_SCALE_KEY = "heroic5e_generator_font_scale";
 const NPC_DRAFT_KEY = "heroic5e_npc_draft";
 const NPC_LIBRARY_KEY = "heroic5e_npc_library";
 const themes = [
   ["classic", "Heroic Classic"],
   ["four-color", "Four-Color"],
   ["tactical", "Modern Tactical"],
-  ["dark", "Dark Style"]
+  ["dark", "Dark Style"],
+  ["midnight", "Midnight Console"]
 ];
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
@@ -494,6 +496,7 @@ let activeStep = "random";
 let sheet = { ...defaults };
 let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
 let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
+let fontScaleLevel = Math.max(1, Math.min(10, Number(localStorage.getItem(FONT_SCALE_KEY) || 4)));
 let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
 let sampleCharacters = [];
 let sampleStatus = "";
@@ -517,7 +520,9 @@ let powerChoiceMapCache;
 
 function applyTheme(theme) {
   activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
-  document.documentElement.dataset.theme = activeTheme;
+  document.documentElement.dataset.theme = activeTheme === "midnight" ? "dark" : activeTheme;
+  if (activeTheme === "midnight") document.documentElement.dataset.layout = "midnight";
+  else delete document.documentElement.dataset.layout;
   localStorage.setItem(THEME_KEY, activeTheme);
 }
 
@@ -527,8 +532,17 @@ function applyDyslexia(enabled) {
   localStorage.setItem(DYSLEXIA_KEY, String(dyslexiaEnabled));
 }
 
+function applyFontScale(level) {
+  fontScaleLevel = Math.max(1, Math.min(10, Number(level) || 4));
+  document.documentElement.style.setProperty("--ui-font-scale", String(.86 + fontScaleLevel * .035));
+  localStorage.setItem(FONT_SCALE_KEY, String(fontScaleLevel));
+  const output = document.querySelector("[data-font-scale-output]");
+  if (output) output.textContent = `${fontScaleLevel}/10`;
+}
+
 applyTheme(activeTheme);
 applyDyslexia(dyslexiaEnabled);
+applyFontScale(fontScaleLevel);
 
 function save() {
   try {
@@ -1282,6 +1296,7 @@ function renderApp() {
           <button type="button" class="brand-reference" data-action="open-text-sheet">Text Sheet</button>
         </div>
         <div class="display-controls">
+          <label class="font-scale-control"><span>Font</span><input id="fontScaleSlider" type="range" min="1" max="10" step="1" value="${fontScaleLevel}" aria-label="Interface font size"><strong data-font-scale-output>${fontScaleLevel}/10</strong></label>
           <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
           <label class="dyslexia-toggle" title="Use a dyslexia-friendly font throughout the app">
             <input id="dyslexiaToggle" type="checkbox" ${dyslexiaEnabled ? "checked" : ""}>
@@ -1460,8 +1475,9 @@ function renderApp() {
 }
 
 function renderProgress() {
+  const currentIndex = currentStepIndex();
   document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
-    <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
+    <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""} ${index < currentIndex ? "complete" : ""}">
       <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
     </button>
   `).join("");
@@ -3930,6 +3946,10 @@ function exportPdf() {
 window.addEventListener("afterprint", clearSheetPrintMode);
 
 app.addEventListener("input", event => {
+  if (event.target.id === "fontScaleSlider") {
+    applyFontScale(event.target.value);
+    return;
+  }
   const npcFieldElement = event.target.closest("[data-npc-field]");
   if (npcFieldElement) {
     npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
