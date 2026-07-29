@@ -391,7 +391,10 @@ const defaults = {
   wisScore: 12,
   chaScore: 10,
   perScore: 8,
-  portraitMode: "contain"
+  portraitMode: "contain",
+  portraitZoom: 1,
+  portraitX: 50,
+  portraitY: 50
 };
 
 const steps = [
@@ -2242,10 +2245,34 @@ function renderSheetMarkup() {
   const values = calc();
   const origin = origins[sheet.origin] || origins.Enhanced;
   const powers = chosenPowers();
+  const portraitMode = sheet.portraitMode === "cover" ? "cover" : "contain";
+  const portraitZoom = Math.max(1, Math.min(2.5, Number(sheet.portraitZoom || 1)));
+  const portraitX = Math.max(0, Math.min(100, Number(sheet.portraitX ?? 50)));
+  const portraitY = Math.max(0, Math.min(100, Number(sheet.portraitY ?? 50)));
   return `
     <article class="sheet-page">
       <header class="sheet-title"><p>HEROIC 5e</p><h1>${html(sheet.heroName || "Character Sheet")}</h1></header>
-      <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box live-portrait-target" role="button" tabindex="0" data-action="choose-live-portrait" aria-label="${sheet.portrait ? "Replace character portrait" : "Add character portrait"}" title="${sheet.portrait ? "Click to replace portrait" : "Click to add portrait"}" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Click to add portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
+      <section class="sheet-hero-grid">
+        <div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div>
+        <div class="portrait-box-wrap">
+          <div class="portrait-box live-portrait-target" role="button" tabindex="0" data-action="choose-live-portrait" aria-label="${sheet.portrait ? "Replace character portrait" : "Add character portrait"}" title="${sheet.portrait ? "Click to replace portrait" : "Click to add portrait"}">
+            ${sheet.portrait ? `<img class="live-portrait-image" src="${html(sheet.portrait)}" alt="Character portrait" style="object-fit:${portraitMode};object-position:${portraitX}% ${portraitY}%;transform:scale(${portraitZoom});transform-origin:${portraitX}% ${portraitY}%">` : "Click to add portrait"}
+          </div>
+          ${sheet.portrait ? `<details class="live-portrait-tools">
+            <summary>Portrait Tools</summary>
+            <div class="portrait-mode-buttons">
+              <button type="button" data-action="portrait-mode" data-mode="contain" class="${portraitMode === "contain" ? "active" : ""}">Fit</button>
+              <button type="button" data-action="portrait-mode" data-mode="cover" class="${portraitMode === "cover" ? "active" : ""}">Fill / Crop</button>
+              <button type="button" data-action="choose-live-portrait">Replace</button>
+              <button type="button" data-action="portrait-reset">Reset</button>
+            </div>
+            <label>Zoom <input type="range" min="100" max="250" step="5" value="${Math.round(portraitZoom * 100)}" data-portrait-setting="portraitZoom"></label>
+            <label>Horizontal crop <input type="range" min="0" max="100" step="1" value="${portraitX}" data-portrait-setting="portraitX"></label>
+            <label>Vertical crop <input type="range" min="0" max="100" step="1" value="${portraitY}" data-portrait-setting="portraitY"></label>
+          </details>` : ""}
+        </div>
+        <div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div>
+      </section>
       <section class="sheet-section"><h2>Abilities</h2><div class="sheet-abilities">${abilities.map(([key, short]) => `<div><span>${short}</span><strong>${abilityScore(key)}</strong><em>${signed(abilityMod(key))}</em></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat("Class EV", values.classEV)}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
       <section class="sheet-section"><h2>Skills</h2><div class="sheet-skills">${skills.map(([key, name, ability]) => {
@@ -3998,6 +4025,22 @@ app.addEventListener("input", event => {
     renderCompendium();
     return;
   }
+  const portraitSetting = event.target.closest("[data-portrait-setting]");
+  if (portraitSetting) {
+    const field = portraitSetting.dataset.portraitSetting;
+    sheet[field] = field === "portraitZoom" ? Number(portraitSetting.value) / 100 : Number(portraitSetting.value);
+    const image = portraitSetting.closest(".portrait-box-wrap")?.querySelector(".live-portrait-image");
+    if (image) {
+      const zoom = Math.max(1, Math.min(2.5, Number(sheet.portraitZoom || 1)));
+      const x = Math.max(0, Math.min(100, Number(sheet.portraitX ?? 50)));
+      const y = Math.max(0, Math.min(100, Number(sheet.portraitY ?? 50)));
+      image.style.objectPosition = `${x}% ${y}%`;
+      image.style.transform = `scale(${zoom})`;
+      image.style.transformOrigin = `${x}% ${y}%`;
+    }
+    save();
+    return;
+  }
   const el = event.target.closest("[data-field]");
   if (!el) return;
   updateField(el.dataset.field, fieldValue(el));
@@ -4090,7 +4133,13 @@ app.addEventListener("change", async event => {
     try {
       const portrait = await preparePortrait(file);
       sheet.portrait = portrait;
+      sheet.portraitMode = "contain";
+      sheet.portraitZoom = 1;
+      sheet.portraitX = 50;
+      sheet.portraitY = 50;
       if (!save()) throw new Error("The browser could not store the resized portrait.");
+      input.disabled = false;
+      input.value = "";
       renderBuilder();
       renderSheet();
     } catch (error) {
@@ -4135,6 +4184,20 @@ app.addEventListener("click", async event => {
   if (action === "new-character") newCharacter();
   if (action === "random-character") randomCharacter();
   if (action === "choose-live-portrait") document.querySelector("#livePortraitInput")?.click();
+  if (action === "portrait-mode") {
+    sheet.portraitMode = button.dataset.mode === "cover" ? "cover" : "contain";
+    if (sheet.portraitMode === "contain") sheet.portraitZoom = 1;
+    save();
+    renderSheet();
+  }
+  if (action === "portrait-reset") {
+    sheet.portraitMode = "contain";
+    sheet.portraitZoom = 1;
+    sheet.portraitX = 50;
+    sheet.portraitY = 50;
+    save();
+    renderSheet();
+  }
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-gm-screen") openGmScreen();

@@ -3543,11 +3543,29 @@ p {
 }
 
 .portrait-box {
+  position: relative;
   min-height: 260px;
-  height: 100%;
+  height: auto;
   aspect-ratio: 3 / 4;
-  background-size: cover;
+  padding: 0;
+  overflow: hidden;
+  background-size: contain;
   font-size: 1.4rem;
+}
+
+.portrait-box-wrap {
+  display: grid;
+  align-content: start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.live-portrait-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: object-position .12s ease, transform .12s ease;
 }
 
 .live-portrait-target {
@@ -3561,6 +3579,61 @@ p {
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--gold) 35%, transparent);
   filter: brightness(1.04);
   outline: 0;
+}
+
+.live-portrait-tools {
+  border: 1px solid var(--line);
+  background: var(--control-bg);
+  color: var(--ink);
+}
+
+.live-portrait-tools summary {
+  padding: 6px 8px;
+  color: var(--navy);
+  cursor: pointer;
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.live-portrait-tools > div,
+.live-portrait-tools > label {
+  margin: 0 7px 7px;
+}
+
+.portrait-mode-buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4px;
+}
+
+.portrait-mode-buttons button {
+  min-height: 26px;
+  padding: 4px 6px;
+  font-size: .58rem;
+}
+
+.portrait-mode-buttons button.active {
+  background: var(--gold);
+  color: var(--button-ink);
+}
+
+.live-portrait-tools label {
+  display: grid;
+  grid-template-columns: 82px 1fr;
+  align-items: center;
+  gap: 5px;
+  color: var(--muted);
+  font-size: .62rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.live-portrait-tools input[type="range"] {
+  width: 100%;
+  min-height: 20px;
+  padding: 0;
 }
 
 .core-block,
@@ -4975,8 +5048,13 @@ p {
   }
 
   body.sheet-print-mode .builder-step-content,
-  body.sheet-print-mode .live-sheet-panel > header {
+  body.sheet-print-mode .live-sheet-panel > header,
+  body.sheet-print-mode .live-portrait-tools {
     display: none !important;
+  }
+
+  body.sheet-print-mode .portrait-box-wrap {
+    display: block;
   }
 
   body.sheet-print-mode #sheet > .sheet-page,

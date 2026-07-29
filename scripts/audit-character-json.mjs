@@ -23,6 +23,10 @@ const completeSheet = {
   gear: "A signature device",
   sessionNotes: "Do not drop this.",
   portrait: "data:image/jpeg;base64,abc123",
+  portraitMode: "cover",
+  portraitZoom: 1.65,
+  portraitX: 28,
+  portraitY: 72,
   futureField: { nested: ["preserved", 42, true] }
 };
 
