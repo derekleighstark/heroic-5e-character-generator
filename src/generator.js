@@ -1270,7 +1270,7 @@ function renderApp() {
   app.innerHTML = `
     <header class="app-topbar">
       <div class="topbar-primary">
-        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
+        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator · Playtest v3.5.3</span></div>
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
