@@ -4252,6 +4252,12 @@ app.addEventListener("click", async event => {
   if (action === "export-pdf") exportPdf();
 });
 
+const requestedPrintView = new URLSearchParams(window.location.search).get("print-view");
+if (["visual", "text", "official"].includes(requestedPrintView)) {
+  liveSheetMode = requestedPrintView;
+  document.body.classList.add("sheet-print-mode");
+}
+
 initialize();
 renderApp();
 initializeCloud();

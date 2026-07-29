@@ -1,1 +1,1 @@
-import "./generator.js?v=20260729-official-sheet";
+import "./generator.js?v=20260729-print-layout";

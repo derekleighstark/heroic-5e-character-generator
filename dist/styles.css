@@ -4907,3 +4907,140 @@ p {
     max-height: 75vh;
   }
 }
+
+/* One print contract for Live, Text, and Official sheet views. */
+@page {
+  size: Letter portrait;
+  margin: .25in;
+  background: #fff;
+}
+
+@media print {
+  html,
+  :root[data-layout="midnight"],
+  :root[data-layout="midnight"] body,
+  body.sheet-print-mode,
+  body.sheet-print-mode #app,
+  body.sheet-print-mode .generator-shell,
+  body.sheet-print-mode .builder-panel,
+  body.sheet-print-mode .builder-workspace,
+  body.sheet-print-mode .live-sheet-panel,
+  body.sheet-print-mode .live-sheet-panel #sheet {
+    color-scheme: light !important;
+    width: 8in !important;
+    min-width: 0 !important;
+    max-width: 8in !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body.sheet-print-mode .builder-step-content,
+  body.sheet-print-mode .live-sheet-panel > header {
+    display: none !important;
+  }
+
+  body.sheet-print-mode #sheet > .sheet-page,
+  body.sheet-print-mode #sheet > .official-sheet > .official-page {
+    display: block !important;
+    width: 8in !important;
+    min-width: 8in !important;
+    max-width: 8in !important;
+    height: 10.5in !important;
+    min-height: 10.5in !important;
+    max-height: 10.5in !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    break-before: auto;
+    break-after: page !important;
+    break-inside: avoid !important;
+    page-break-after: always !important;
+    page-break-inside: avoid !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+  }
+
+  body.sheet-print-mode #sheet > .sheet-page {
+    padding: .14in !important;
+    border-left: 4px solid var(--gold) !important;
+  }
+
+  body.sheet-print-mode #sheet > .official-sheet {
+    display: block !important;
+    width: 8in !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body.sheet-print-mode #sheet > .official-sheet > .official-page {
+    padding: .24in .3in !important;
+    font-size: 6.9pt !important;
+  }
+
+  body.sheet-print-mode .official-section {
+    margin-top: 3px;
+  }
+
+  body.sheet-print-mode .official-section > header {
+    min-height: 18px;
+    padding-block: 2px;
+  }
+
+  body.sheet-print-mode .official-skill-grid > div,
+  body.sheet-print-mode .official-write-rows > div {
+    min-height: 20px;
+    padding-block: 3px;
+  }
+
+  body.sheet-print-mode .official-field {
+    min-height: 28px;
+  }
+
+  body.sheet-print-mode .official-page footer {
+    margin-top: 4px;
+  }
+
+  body.sheet-print-mode #sheet > .sheet-page:last-child,
+  body.sheet-print-mode #sheet > .official-sheet > .official-page:last-child {
+    break-after: auto !important;
+    page-break-after: auto !important;
+  }
+
+  body.sheet-print-mode #sheet > .text-character-sheet {
+    display: block !important;
+    width: 8in !important;
+    min-width: 8in !important;
+    max-width: 8in !important;
+    min-height: 10.5in !important;
+    margin: 0 !important;
+    padding: .34in !important;
+    overflow: visible !important;
+    border: 0 !important;
+    outline: 0 !important;
+    background: #fff !important;
+    box-shadow: none !important;
+    font-size: 9.5pt !important;
+  }
+
+  body.sheet-print-mode .text-character-sheet > header,
+  body.sheet-print-mode .text-character-sheet section,
+  body.sheet-print-mode .text-character-sheet dl div,
+  body.sheet-print-mode .text-character-sheet li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  body.sheet-print-mode .text-sheet-details > section {
+    break-before: auto;
+  }
+}
