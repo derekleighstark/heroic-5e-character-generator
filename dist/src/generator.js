@@ -2,6 +2,11 @@ import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-dat
 import { npcArchetypes, npcCreatures, npcDayPlayers } from "./npc-data.js";
 import { corebook } from "./corebook-data.js";
 import {
+  createCharacterExport,
+  importedSheetFromPayload,
+  normalizeImportedSheet
+} from "./character-json.mjs";
+import {
   cloudConfigured,
   cloudPortraitUrl,
   cloudSignOut,
@@ -2252,13 +2257,11 @@ function fieldValue(el) {
 }
 
 function exportPayload() {
-  return {
-    type: "HEROIC 5e Character Generator",
-    schemaVersion: 3,
+  return createCharacterExport(sheet, {
     rulesVersion: corebook.version,
-    exportedAt: new Date().toISOString(),
-    sheet: cloneSheet(sheet)
-  };
+    activeStep,
+    liveSheetMode
+  });
 }
 
 function exportFilename() {
@@ -3655,17 +3658,6 @@ function deleteCharacter(id) {
   renderLibrary();
 }
 
-function importedSheetFromPayload(payload) {
-  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
-    throw new Error("The file does not contain a character object.");
-  }
-  if (payload.sheet && typeof payload.sheet === "object" && !Array.isArray(payload.sheet)) return payload.sheet;
-  if (payload.character?.sheet && typeof payload.character.sheet === "object" && !Array.isArray(payload.character.sheet)) return payload.character.sheet;
-  const recognized = Object.keys(defaults).filter(key => Object.hasOwn(payload, key));
-  if (recognized.length >= 3) return payload;
-  throw new Error("This is not a HEROIC 5e generator character file.");
-}
-
 window.addEventListener("message", event => {
   const message = event.data;
   if (!message || message.type !== "heroic5e-portrait-change") return;
@@ -3677,36 +3669,23 @@ window.addEventListener("message", event => {
   renderSheet();
 });
 
-function normalizeImportedSheet(source) {
-  const imported = {};
-  Object.keys(defaults).forEach(key => {
-    if (Object.hasOwn(source, key)) imported[key] = source[key];
-  });
-  if (Object.hasOwn(imported, "powerPurchases")) {
-    imported.powerPurchases = Array.isArray(imported.powerPurchases)
-      ? [...new Set(imported.powerPurchases.filter(value => typeof value === "string"))]
-      : [];
-  }
-  if (Object.hasOwn(imported, "powerSetAbilities")) {
-    imported.powerSetAbilities = imported.powerSetAbilities && typeof imported.powerSetAbilities === "object" && !Array.isArray(imported.powerSetAbilities)
-      ? { ...imported.powerSetAbilities }
-      : {};
-  }
-  if (Object.hasOwn(imported, "portrait") && typeof imported.portrait !== "string") imported.portrait = "";
-  return { ...defaults, ...imported };
-}
-
 async function importJson(file) {
   const previousSheet = cloneSheet(sheet);
+  const previousActiveStep = activeStep;
+  const previousLiveSheetMode = liveSheetMode;
   try {
     if (!file || file.size > 12 * 1024 * 1024) throw new Error("Choose a JSON character file smaller than 12 MB.");
     const text = (await file.text()).replace(/^\uFEFF/, "");
     const payload = JSON.parse(text);
-    sheet = normalizeImportedSheet(importedSheetFromPayload(payload));
+    sheet = normalizeImportedSheet(importedSheetFromPayload(payload), defaults);
+    if (payload.state && typeof payload.state === "object") {
+      if (steps.some(([id]) => id === payload.state.activeStep)) activeStep = payload.state.activeStep;
+      if (["visual", "text", "official"].includes(payload.state.liveSheetMode)) liveSheetMode = payload.state.liveSheetMode;
+    }
     activeCloudCharacterId = null;
     updateCloudControls();
     diceRollHistory = [];
-    initialize(true);
+    initialize(false);
     if (!save()) throw new Error("The imported character could not be stored by this browser.");
     renderBuilder();
     renderSheet();
@@ -3714,6 +3693,8 @@ async function importJson(file) {
     alert(`Imported ${characterName()} successfully.`);
   } catch (error) {
     sheet = previousSheet;
+    activeStep = previousActiveStep;
+    liveSheetMode = previousLiveSheetMode;
     save();
     alert(`Import failed: ${error instanceof SyntaxError ? "The file is not valid JSON." : error.message || "The character file is invalid."}`);
   }
