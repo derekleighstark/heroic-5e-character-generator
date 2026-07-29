@@ -2167,6 +2167,15 @@ function officialRows(items, minimum = 1) {
   return `<div class="official-write-rows">${rows.map(item => `<div>${html(item || " ")}</div>`).join("")}</div>`;
 }
 
+function uniqueOfficialRuleLines(originRule, selectedRules, rules) {
+  const unique = new Map();
+  [originRule, ...selectedRules].filter(Boolean).forEach(line => {
+    const key = baseRuleName(line).toLowerCase();
+    if (!unique.has(key)) unique.set(key, expandedRuleLines(line, rules)[0] || line);
+  });
+  return [...unique.values()];
+}
+
 function officialPowerTable(rows, minimum = 0) {
   const padded = [...rows, ...Array(Math.max(0, minimum - rows.length)).fill({ name: "", attack: "", mechanics: "" })];
   return `<div class="official-table official-powers">
@@ -2221,8 +2230,9 @@ function officialSheetMarkup() {
         <footer>HEROIC 5e - Official Character Sheet <span>Power Continuation ${index + 1} of ${pages.length}</span></footer>
       </article>
     `).join("");
-  const meritLines = expandedRuleLines(sheet.merits, meritRules);
-  const flawLines = expandedRuleLines(sheet.flaws, flawRules);
+  const meritLines = uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules);
+  const flawLines = uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules);
+  const limitationLines = selectedLimitationLines();
   const talentLines = expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
   const featureLines = lines(sheet.classFeatures);
   const gearLines = [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume].filter(Boolean);
@@ -2256,11 +2266,12 @@ function officialSheetMarkup() {
         <div class="official-two">
           ${officialSection("Talents", "Origin Talent + starting Talent", officialRows([origin.talent, ...talentLines], 2))}
           ${officialSection("Class Features", "", officialRows(featureLines, 2))}
-          ${officialSection("Merits", "Rating 1-3", officialRows([origin.merit, ...meritLines], 2))}
-          ${officialSection("Flaws", "Rating 1-3", officialRows([origin.flaw, ...flawLines], 2))}
+          ${officialSection("Merits", "Rating 1-3", officialRows(meritLines, 2))}
+          ${officialSection("Flaws", "Rating 1-3", officialRows(flawLines, 2))}
           ${officialSection("Calling & Edge Triggers", "", officialRows([sheet.calling, `Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`], 4))}
           ${officialSection("Signature Gear", "", officialRows(gearLines, 3))}
         </div>
+        ${officialSection("Power Limitations", "Selected limitations and custom notes", officialRows(limitationLines, 2), "official-limitations")}
         ${officialSection("Identity & Ties", "", `<div class="official-identity-ties"><div class="official-flags">${identityFlags.map(item => `<span>${sheet.identity === item ? "☑" : "☐"} ${item}</span>`).join("")}</div>${officialBox("Costume & Symbol", sheet.costume)}${officialBox("Team / Base of Operations", sheet.team)}${officialBox("Who Trusts You", sheet.allies)}${officialBox("Who Fears or Hates You", sheet.enemies)}${officialBox("What the Public Thinks", sheet.publicView)}${officialBox("The Line You Will Not Cross", sheet.lineNotCross)}</div>`)}
         ${officialSection("Notes, Leads & Consequences", "", officialRows([sheet.backstory, sheet.sessionNotes], 4))}
         <footer>HEROIC 5e - ZEG Media / Zenith Comics <span>Page 2 - Hero Side</span></footer>
