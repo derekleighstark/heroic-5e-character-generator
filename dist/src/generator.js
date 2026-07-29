@@ -1920,7 +1920,7 @@ function renderIdentity() {
 }
 
 function chosenPowers() {
-  const purchased = selectedPowerChoices();
+  const purchased = selectedPowerChoices().filter(choice => !["limitation", "enhancement"].includes(choice.group));
   if (purchased.length) {
     return purchased.map(choice => ({
       name: choice.name,
@@ -1938,6 +1938,34 @@ function chosenPowers() {
       mechanics: sheet[`powerSet${number}Notes`] || ""
     };
   }).filter(power => power.name || power.notes);
+}
+
+function powerSetSheetDetails() {
+  const purchases = selectedPowerChoices();
+  return selectedPowerSets().map((powerSet, index) => {
+    const slot = Array.from({ length: 12 }, (_, slotIndex) => slotIndex + 1)
+      .find(slotIndex => sheet[`powerSet${slotIndex}`] === powerSet.name);
+    const limitations = purchases
+      .filter(choice => choice.group === "limitation" && (choice.setId === powerSet.id || (index === 0 && choice.setId === "general-limitation")))
+      .map(choice => choice.name);
+    if (index === 0) limitations.push(...lines(sheet.limitationsText));
+    return {
+      powerSet,
+      notes: slot ? String(sheet[`powerSet${slot}Notes`] || "").trim() : "",
+      limitations: limitations.filter(Boolean)
+    };
+  });
+}
+
+function powerSetNoteLines() {
+  return powerSetSheetDetails().filter(detail => detail.notes).map(detail => `${detail.powerSet.name}: ${detail.notes}`);
+}
+
+function selectedLimitationLines() {
+  const selected = selectedPowerChoices()
+    .filter(choice => choice.group === "limitation")
+    .map(choice => `${choice.name}: ${choice.text || ""}`);
+  return [...selected, ...lines(sheet.limitationsText)].filter((line, index, items) => items.indexOf(line) === index);
 }
 
 function outputRuleLines(value, rules) {
@@ -2172,11 +2200,11 @@ function officialSheetMarkup() {
   const classInfo = classes[sheet.className] || classes.Bruiser;
   const trainedSaves = new Set(classInfo.saves || []);
   const identityFlags = ["Secret", "Public", "Known to some", "No civilian life"];
-  const powerSetRows = selectedPowerSets().map(powerSet => [
+  const powerSetRows = powerSetSheetDetails().map(({ powerSet, notes, limitations }) => [
     powerSet.name,
     powerSetAbility(powerSet).toUpperCase(),
-    chosenPowers().filter(power => power.setId === powerSet.id).some(power => power.tier === "Core") ? "Core" : "-",
-    lines(sheet.limitationsText).join("; "),
+    purchasedCoreLevel(powerSet) ? `${powerSet.name} ${purchasedCoreLevel(powerSet)}` : "-",
+    [...limitations, notes ? `Notes: ${notes}` : ""].filter(Boolean).join("\n"),
     10 + abilityMod(powerSetAbility(powerSet)) + values.pro
   ]);
   const powerRows = powers.map(power => ({
@@ -2218,7 +2246,7 @@ function officialSheetMarkup() {
           <div>${officialSection("Edge", `Cap ${values.edgeCap}`, `<div class="official-resource"><strong>${values.edgeStart}</strong><span>per session / ${values.edgeCap} cap</span></div>`)}${officialSection("Burnout", "Penalty to rolls & EVs", officialRows([], 1))}</div>
         </div>
         ${officialSection("Conditions", "Burnout 3: Disadv.; Initiative -4; Speed -10 ft.", `<div class="official-check-grid">${["Shaken","Slowed","Dazed","Prone","Grappled","Restrained","Frightened","Stunned","Blinded","Deafened","Poisoned","Burning","Immobilized","Overheated","Power Disrupted","Hidden"].map(item => `<span>☐ ${item}</span>`).join("")}</div>`)}
-        ${officialSection("Power Sets", `Max sets ${values.maxPowerSets}`, `<div class="official-table official-power-sets"><div class="head"><b>Power Set</b><b>Governs</b><b>Core Track</b><b>Limitations</b><b>Power EV</b></div>${[...powerSetRows, ...Array(Math.max(0, 5 - powerSetRows.length)).fill(["","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
+        ${officialSection("Power Sets", `Max sets ${values.maxPowerSets}`, `<div class="official-table official-power-sets"><div class="head"><b>Power Set</b><b>Governs</b><b>Core Track</b><b>Limitations & Notes</b><b>Power EV</b></div>${[...powerSetRows, ...Array(Math.max(0, 5 - powerSetRows.length)).fill(["","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
         ${officialSection("Powers & Attacks", "Attack = 1d20 + PRO + governing modifier", officialPowerTable(firstPowerRows, 4))}
         <footer>HEROIC 5e - Official Character Sheet <span>Page 1 - Play Side</span></footer>
       </article>
@@ -2226,15 +2254,15 @@ function officialSheetMarkup() {
       <article class="official-page">
         ${officialSection("Skills", "1d20 + modifier + PRO if trained", `<div class="official-skill-grid">${skills.map(([key, name, ability]) => { const trained = Boolean(sheet[`skill_${key}_trained`]); const expert = trained && Boolean(sheet[`skill_${key}_expert`]); return `<div><b>${html(name)}</b><small>${ability.toUpperCase()}</small><span>${trained ? "☑" : "☐"} T ${expert ? "☑" : "☐"} E</span><strong>${signed(skillBonus(key, ability, values))}</strong><em>${html(sheet[`skill_${key}_specialty`] || "")}</em></div>`; }).join("")}</div>`)}
         <div class="official-two">
-          ${officialSection("Talents", "Origin Talent + starting Talent", officialRows([origin.talent, ...talentLines], 6))}
-          ${officialSection("Class Features", "", officialRows(featureLines, 6))}
-          ${officialSection("Merits", "Rating 1-3", officialRows([origin.merit, ...meritLines], 6))}
-          ${officialSection("Flaws", "Rating 1-3", officialRows([origin.flaw, ...flawLines], 6))}
+          ${officialSection("Talents", "Origin Talent + starting Talent", officialRows([origin.talent, ...talentLines], 2))}
+          ${officialSection("Class Features", "", officialRows(featureLines, 2))}
+          ${officialSection("Merits", "Rating 1-3", officialRows([origin.merit, ...meritLines], 2))}
+          ${officialSection("Flaws", "Rating 1-3", officialRows([origin.flaw, ...flawLines], 2))}
           ${officialSection("Calling & Edge Triggers", "", officialRows([sheet.calling, `Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`], 4))}
-          ${officialSection("Signature Gear", "", officialRows(gearLines, 4))}
+          ${officialSection("Signature Gear", "", officialRows(gearLines, 3))}
         </div>
         ${officialSection("Identity & Ties", "", `<div class="official-identity-ties"><div class="official-flags">${identityFlags.map(item => `<span>${sheet.identity === item ? "☑" : "☐"} ${item}</span>`).join("")}</div>${officialBox("Costume & Symbol", sheet.costume)}${officialBox("Team / Base of Operations", sheet.team)}${officialBox("Who Trusts You", sheet.allies)}${officialBox("Who Fears or Hates You", sheet.enemies)}${officialBox("What the Public Thinks", sheet.publicView)}${officialBox("The Line You Will Not Cross", sheet.lineNotCross)}</div>`)}
-        ${officialSection("Notes, Leads & Consequences", "", officialRows([sheet.backstory, sheet.sessionNotes], 6))}
+        ${officialSection("Notes, Leads & Consequences", "", officialRows([sheet.backstory, sheet.sessionNotes], 4))}
         <footer>HEROIC 5e - ZEG Media / Zenith Comics <span>Page 2 - Hero Side</span></footer>
       </article>
     </div>
@@ -2285,7 +2313,7 @@ function renderSheetMarkup() {
       <header class="sheet-title"><p>Features and Powers</p><h1>${html(sheet.heroName || "Character")}</h1></header>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Class Features</h2>${listBlock(lines(sheet.classFeatures))}</div><div class="sheet-section text-list"><h2>Edge Triggers</h2>${listBlock([`Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`])}</div></section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
-      <section class="sheet-section"><h2>Powers - ${html(selectedPowerSetNames().join(", ") || "Power Sets")}</h2>${selectedPowerSets().length ? `<div class="sheet-stats power-effect-values">${selectedPowerSets().map(powerSet => bigStat(`${powerSet.name} EV`, 10 + abilityMod(powerSetAbility(powerSet)) + values.pro)).join("")}</div>` : ""}<div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${multilineHtml(power.notes || "")}</p></div>`).join("")}</div></section>
+      <section class="sheet-section"><h2>Powers - ${html(selectedPowerSetNames().join(", ") || "Power Sets")}</h2>${selectedPowerSets().length ? `<div class="sheet-stats power-effect-values">${selectedPowerSets().map(powerSet => bigStat(`${powerSet.name} EV`, 10 + abilityMod(powerSetAbility(powerSet)) + values.pro)).join("")}</div>` : ""}<div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${multilineHtml(power.notes || "")}</p></div>`).join("")}</div>${powerSetNoteLines().length ? `<div class="sheet-power-notes"><h3>Power Notes</h3>${listBlock(powerSetNoteLines())}</div>` : ""}${selectedLimitationLines().length ? `<div class="sheet-power-notes"><h3>Limitations</h3>${listBlock(selectedLimitationLines())}</div>` : ""}</section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Gear</h2>${listBlock([...lines(sheet.gear), ...lines(sheet.enhancements), ...lines(sheet.limitationsText), sheet.costume])}</div><div class="sheet-section text-list"><h2>Backstory / Notes</h2>${listBlock([sheet.backstory, sheet.sessionNotes])}</div></section>
     </article>
   `;
@@ -3239,7 +3267,8 @@ function textSheetModel() {
       ["Flaws", expandedRuleLines(sheet.flaws, flawRules)],
       ["Power Sets", powerSets],
       ["Powers", powerLines],
-      ["Limitations", lines(sheet.limitationsText)],
+      ["Power Notes", powerSetNoteLines()],
+      ["Limitations", selectedLimitationLines()],
       ["Gear & Equipment", [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume]],
       ["Languages & Proficiencies", lines(sheet.proficiencies)],
       ["Specialties", lines(sheet.specialties)],
