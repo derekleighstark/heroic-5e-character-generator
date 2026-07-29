@@ -8,7 +8,7 @@
     "dev": "node server.js",
     "start": "node server.js",
     "corebook": "node scripts/extract_corebook.js",
-    "check": "node --check app.js && node --check server.js && node --check src/main.js && node --check src/generator.js && node --check src/character-json.mjs && node --check src/cloud.js && node --check src/power-data.js && node --check src/npc-data.js && node --check src/corebook-data.js && node --check scripts/build.js && node --check scripts/audit-power-data.js && node --check scripts/audit-character-json.mjs && node --check scripts/extract_corebook.js && node scripts/audit-power-data.js && node scripts/audit-character-json.mjs"
+    "check": "node --check app.js && node --check server.js && node --check src/main.js && node --check src/generator.js && node --check src/character-json.js && node --check src/cloud.js && node --check src/power-data.js && node --check src/npc-data.js && node --check src/corebook-data.js && node --check scripts/build.js && node --check scripts/audit-power-data.js && node --check scripts/audit-character-json.mjs && node --check scripts/extract_corebook.js && node scripts/audit-power-data.js && node scripts/audit-character-json.mjs"
   },
   "devDependencies": {
     "classic-level": "^2.0.0"

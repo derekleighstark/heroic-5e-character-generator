@@ -3,7 +3,7 @@ import {
   createCharacterExport,
   importedSheetFromPayload,
   normalizeImportedSheet
-} from "../src/character-json.mjs";
+} from "../src/character-json.js";
 
 const defaults = { rank: "Mid-Level", level: 1, portraitMode: "contain" };
 const completeSheet = {

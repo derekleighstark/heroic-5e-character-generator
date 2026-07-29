@@ -1,1 +1,1 @@
-import "./generator.js?v=20260729-json-roundtrip";
+import "./generator.js?v=20260729-power-mechanics";

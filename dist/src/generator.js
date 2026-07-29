@@ -5,7 +5,7 @@ import {
   createCharacterExport,
   importedSheetFromPayload,
   normalizeImportedSheet
-} from "./character-json.mjs";
+} from "./character-json.js";
 import {
   cloudConfigured,
   cloudPortraitUrl,
@@ -1922,12 +1922,18 @@ function chosenPowers() {
     return purchased.map(choice => ({
       name: choice.name,
       notes: `${choice.setName} - ${choice.type}${choice.tier ? ` - Tier ${choice.tier}` : ""}\n${choice.text}`,
+      mechanics: choice.text || "",
+      attack: outputPowerLine(choice.text, "Attack"),
       group: choice.group,
     }));
   }
   return Array.from({ length: 12 }, (_, index) => {
     const number = index + 1;
-    return { name: sheet[`powerSet${number}`], notes: sheet[`powerSet${number}Notes`] };
+    return {
+      name: sheet[`powerSet${number}`],
+      notes: sheet[`powerSet${number}Notes`],
+      mechanics: sheet[`powerSet${number}Notes`] || ""
+    };
   }).filter(power => power.name || power.notes);
 }
 
@@ -2130,6 +2136,32 @@ function officialRows(items, minimum = 1) {
   return `<div class="official-write-rows">${rows.map(item => `<div>${html(item || " ")}</div>`).join("")}</div>`;
 }
 
+function officialPowerTable(rows, minimum = 0) {
+  const padded = [...rows, ...Array(Math.max(0, minimum - rows.length)).fill({ name: "", attack: "", mechanics: "" })];
+  return `<div class="official-table official-powers">
+    <div class="head"><b>Power / Attack</b><b>Attack / EV</b><b>Damage & Effect</b></div>
+    ${padded.map(row => `<div><span>${html(row.name)}</span><span>${html(row.attack)}</span><span>${html(row.mechanics)}</span></div>`).join("")}
+  </div>`;
+}
+
+function packOfficialPowerRows(rows, budget) {
+  const pages = [];
+  let page = [];
+  let used = 0;
+  rows.forEach(row => {
+    const weight = Math.max(2, Math.ceil((String(row.name).length + String(row.mechanics).length) / 105));
+    if (page.length && used + weight > budget) {
+      pages.push(page);
+      page = [];
+      used = 0;
+    }
+    page.push(row);
+    used += weight;
+  });
+  if (page.length) pages.push(page);
+  return pages;
+}
+
 function officialSheetMarkup() {
   const values = calc();
   const powers = chosenPowers();
@@ -2144,15 +2176,20 @@ function officialSheetMarkup() {
     lines(sheet.limitationsText).join("; "),
     10 + abilityMod(powerSetAbility(powerSet)) + values.pro
   ]);
-  const powerRows = powers.map(power => [
-    power.name || "Power",
-    power.tier || "-",
-    "",
-    power.action || "-",
-    power.range || "-",
-    power.attack || values.powerEV,
-    power.notes || "-"
-  ]);
+  const powerRows = powers.map(power => ({
+    name: power.name || "Power",
+    attack: power.attack || values.powerEV,
+    mechanics: power.mechanics || power.notes || "-"
+  }));
+  const [firstPowerRows = [], ...remainingPowerGroups] = packOfficialPowerRows(powerRows, 9);
+  const continuationPages = packOfficialPowerRows(remainingPowerGroups.flat(), 40)
+    .map((rows, index, pages) => `
+      <article class="official-page official-power-continuation">
+        <header class="official-continuation-title"><div class="official-logo"><b>HEROIC<span>5e</span></b><small>Character Sheet</small></div><div><span>Powers & Attacks</span><h1>${html(characterName())}</h1></div></header>
+        ${officialSection("Powers & Attacks - Continued", "Full Power Mechanics", officialPowerTable(rows))}
+        <footer>HEROIC 5e - Official Character Sheet <span>Power Continuation ${index + 1} of ${pages.length}</span></footer>
+      </article>
+    `).join("");
   const meritLines = expandedRuleLines(sheet.merits, meritRules);
   const flawLines = expandedRuleLines(sheet.flaws, flawRules);
   const talentLines = expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
@@ -2179,9 +2216,10 @@ function officialSheetMarkup() {
         </div>
         ${officialSection("Conditions", "Burnout 3: Disadv.; Initiative -4; Speed -10 ft.", `<div class="official-check-grid">${["Shaken","Slowed","Dazed","Prone","Grappled","Restrained","Frightened","Stunned","Blinded","Deafened","Poisoned","Burning","Immobilized","Overheated","Power Disrupted","Hidden"].map(item => `<span>☐ ${item}</span>`).join("")}</div>`)}
         ${officialSection("Power Sets", `Max sets ${values.maxPowerSets}`, `<div class="official-table official-power-sets"><div class="head"><b>Power Set</b><b>Governs</b><b>Core Track</b><b>Limitations</b><b>Power EV</b></div>${[...powerSetRows, ...Array(Math.max(0, 5 - powerSetRows.length)).fill(["","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
-        ${officialSection("Powers & Attacks", "Attack = 1d20 + PRO + governing modifier", `<div class="official-table official-powers"><div class="head"><b>Power / Attack</b><b>Use</b><b>Spent</b><b>Action</b><b>Range</b><b>Attack / EV</b><b>Damage & Effect</b></div>${[...powerRows, ...Array(Math.max(0, 8 - powerRows.length)).fill(["","","","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
+        ${officialSection("Powers & Attacks", "Attack = 1d20 + PRO + governing modifier", officialPowerTable(firstPowerRows, 4))}
         <footer>HEROIC 5e - Official Character Sheet <span>Page 1 - Play Side</span></footer>
       </article>
+      ${continuationPages}
       <article class="official-page">
         ${officialSection("Skills", "1d20 + modifier + PRO if trained", `<div class="official-skill-grid">${skills.map(([key, name, ability]) => { const trained = Boolean(sheet[`skill_${key}_trained`]); const expert = trained && Boolean(sheet[`skill_${key}_expert`]); return `<div><b>${html(name)}</b><small>${ability.toUpperCase()}</small><span>${trained ? "☑" : "☐"} T ${expert ? "☑" : "☐"} E</span><strong>${signed(skillBonus(key, ability, values))}</strong><em>${html(sheet[`skill_${key}_specialty`] || "")}</em></div>`; }).join("")}</div>`)}
         <div class="official-two">
