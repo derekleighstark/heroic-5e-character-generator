@@ -1455,9 +1455,10 @@ function renderBuilder() {
           <nav class="live-sheet-toggle" aria-label="Character sheet view">
             <button type="button" data-action="sheet-mode" data-mode="visual" class="${liveSheetMode === "visual" ? "active" : ""}">Live Sheet</button>
             <button type="button" data-action="sheet-mode" data-mode="text" class="${liveSheetMode === "text" ? "active" : ""}">Text Sheet</button>
+            <button type="button" data-action="sheet-mode" data-mode="official" class="${liveSheetMode === "official" ? "active" : ""}">Official Sheet</button>
           </nav>
         </header>
-        <div id="sheet">${liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup()}</div>
+        <div id="sheet">${sheetViewMarkup()}</div>
       </aside>
     </div>
   `;
@@ -2101,7 +2102,97 @@ function listBlock(items) {
 
 function renderSheet() {
   const target = document.querySelector("#sheet");
-  if (target) target.innerHTML = liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup();
+  if (target) target.innerHTML = sheetViewMarkup();
+}
+
+function sheetViewMarkup() {
+  if (liveSheetMode === "text") return textSheetMarkup();
+  if (liveSheetMode === "official") return officialSheetMarkup();
+  return renderSheetMarkup();
+}
+
+function officialBox(label, value = "") {
+  return `<div class="official-field"><span>${html(label)}</span><strong>${html(value || "-")}</strong></div>`;
+}
+
+function officialSection(title, note, content, className = "") {
+  return `<section class="official-section ${className}"><header><h2>${html(title)}</h2>${note ? `<small>${html(note)}</small>` : ""}</header>${content}</section>`;
+}
+
+function officialRows(items, minimum = 1) {
+  const rows = items.flatMap(item => lines(item)).filter(Boolean);
+  while (rows.length < minimum) rows.push("");
+  return `<div class="official-write-rows">${rows.map(item => `<div>${html(item || " ")}</div>`).join("")}</div>`;
+}
+
+function officialSheetMarkup() {
+  const values = calc();
+  const powers = chosenPowers();
+  const origin = origins[sheet.origin] || origins.Enhanced;
+  const classInfo = classes[sheet.className] || classes.Bruiser;
+  const trainedSaves = new Set(classInfo.saves || []);
+  const identityFlags = ["Secret", "Public", "Known to some", "No civilian life"];
+  const powerSetRows = selectedPowerSets().map(powerSet => [
+    powerSet.name,
+    powerSetAbility(powerSet).toUpperCase(),
+    chosenPowers().filter(power => power.setId === powerSet.id).some(power => power.tier === "Core") ? "Core" : "-",
+    lines(sheet.limitationsText).join("; "),
+    10 + abilityMod(powerSetAbility(powerSet)) + values.pro
+  ]);
+  const powerRows = powers.map(power => [
+    power.name || "Power",
+    power.tier || "-",
+    "",
+    power.action || "-",
+    power.range || "-",
+    power.attack || values.powerEV,
+    power.notes || "-"
+  ]);
+  const meritLines = expandedRuleLines(sheet.merits, meritRules);
+  const flawLines = expandedRuleLines(sheet.flaws, flawRules);
+  const talentLines = expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
+  const featureLines = lines(sheet.classFeatures);
+  const gearLines = [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume].filter(Boolean);
+
+  return `
+    <div class="official-sheet" aria-label="Official HEROIC 5e character sheet">
+      <article class="official-page">
+        <header class="official-identity">
+          <div class="official-logo"><b>HEROIC<span>5e</span></b><small>Character Sheet</small></div>
+          <div class="official-identity-fields">
+            <div class="official-wide">${officialBox("Hero Name", sheet.heroName || characterName())}${officialBox("Level", values.level)}${officialBox("Prowess", values.prowess)}</div>
+            <div class="official-wide">${officialBox("Civilian Name", sheet.realName)}${officialBox("Origin", sheet.origin)}${officialBox("Class", sheet.className)}${officialBox("Calling", sheet.calling)}</div>
+            <div class="official-wide">${officialBox("Player", sheet.playerName)}${officialBox("Side", sheet.side)}${officialBox("Campaign Rank", sheet.rank)}</div>
+          </div>
+        </header>
+        ${officialSection("Ability Scores", `Prowess ${values.prowess}`, `<div class="official-abilities">${abilities.map(([key, short]) => `<div><b>${short}</b><strong>${abilityScore(key)}</strong><small>${signed(abilityMod(key))}</small></div>`).join("")}</div>`)}
+        ${officialSection("Vitals", `Starting HP ${values.startingHp}`, `<div class="official-vitals">${officialBox("Max HP", values.hp)}${officialBox("Current HP", values.hp)}${officialBox("Temp", "")}${officialBox("Hit Die", values.hitDie)}${officialBox("Recovery", values.recovery)}${officialBox("Speed", sheet.speed || "30 ft")}${officialBox("Initiative", values.initiative)}${officialBox("Vigilance", 10 + abilityMod("per") + values.pro)}</div>`)}
+        <div class="official-three">
+          ${officialSection("Active Defenses", "Roll 1d20 + bonus", `<dl class="official-stat-list"><div><dt>Parry / Block</dt><dd>${values.parry}</dd></div><div><dt>Dodge</dt><dd>${values.dodge}</dd></div><div><dt>Willpower</dt><dd>${values.willpower}</dd></div><div><dt>Social</dt><dd>${values.socialDefense}</dd></div><div><dt>Class Effect Value</dt><dd>${values.classEV}</dd></div></dl>`)}
+          ${officialSection("Saves", "PRO if trained", `<div class="official-saves">${abilities.map(([key, short]) => `<div><b>${short}</b><span>${trainedSaves.has(key) ? "☑ Trained" : "☐"}</span><strong>${signed(abilityMod(key) + (trainedSaves.has(key) ? values.pro : 0))}</strong></div>`).join("")}</div>`)}
+          <div>${officialSection("Edge", `Cap ${values.edgeCap}`, `<div class="official-resource"><strong>${values.edgeStart}</strong><span>per session / ${values.edgeCap} cap</span></div>`)}${officialSection("Burnout", "Penalty to rolls & EVs", officialRows([], 1))}</div>
+        </div>
+        ${officialSection("Conditions", "Burnout 3: Disadv.; Initiative -4; Speed -10 ft.", `<div class="official-check-grid">${["Shaken","Slowed","Dazed","Prone","Grappled","Restrained","Frightened","Stunned","Blinded","Deafened","Poisoned","Burning","Immobilized","Overheated","Power Disrupted","Hidden"].map(item => `<span>☐ ${item}</span>`).join("")}</div>`)}
+        ${officialSection("Power Sets", `Max sets ${values.maxPowerSets}`, `<div class="official-table official-power-sets"><div class="head"><b>Power Set</b><b>Governs</b><b>Core Track</b><b>Limitations</b><b>Power EV</b></div>${[...powerSetRows, ...Array(Math.max(0, 5 - powerSetRows.length)).fill(["","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
+        ${officialSection("Powers & Attacks", "Attack = 1d20 + PRO + governing modifier", `<div class="official-table official-powers"><div class="head"><b>Power / Attack</b><b>Use</b><b>Spent</b><b>Action</b><b>Range</b><b>Attack / EV</b><b>Damage & Effect</b></div>${[...powerRows, ...Array(Math.max(0, 8 - powerRows.length)).fill(["","","","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
+        <footer>HEROIC 5e - Official Character Sheet <span>Page 1 - Play Side</span></footer>
+      </article>
+      <article class="official-page">
+        ${officialSection("Skills", "1d20 + modifier + PRO if trained", `<div class="official-skill-grid">${skills.map(([key, name, ability]) => { const trained = Boolean(sheet[`skill_${key}_trained`]); const expert = trained && Boolean(sheet[`skill_${key}_expert`]); return `<div><b>${html(name)}</b><small>${ability.toUpperCase()}</small><span>${trained ? "☑" : "☐"} T ${expert ? "☑" : "☐"} E</span><strong>${signed(skillBonus(key, ability, values))}</strong><em>${html(sheet[`skill_${key}_specialty`] || "")}</em></div>`; }).join("")}</div>`)}
+        <div class="official-two">
+          ${officialSection("Talents", "Origin Talent + starting Talent", officialRows([origin.talent, ...talentLines], 6))}
+          ${officialSection("Class Features", "", officialRows(featureLines, 6))}
+          ${officialSection("Merits", "Rating 1-3", officialRows([origin.merit, ...meritLines], 6))}
+          ${officialSection("Flaws", "Rating 1-3", officialRows([origin.flaw, ...flawLines], 6))}
+          ${officialSection("Calling & Edge Triggers", "", officialRows([sheet.calling, `Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`], 4))}
+          ${officialSection("Signature Gear", "", officialRows(gearLines, 4))}
+        </div>
+        ${officialSection("Identity & Ties", "", `<div class="official-identity-ties"><div class="official-flags">${identityFlags.map(item => `<span>${sheet.identity === item ? "☑" : "☐"} ${item}</span>`).join("")}</div>${officialBox("Costume & Symbol", sheet.costume)}${officialBox("Team / Base of Operations", sheet.team)}${officialBox("Who Trusts You", sheet.allies)}${officialBox("Who Fears or Hates You", sheet.enemies)}${officialBox("What the Public Thinks", sheet.publicView)}${officialBox("The Line You Will Not Cross", sheet.lineNotCross)}</div>`)}
+        ${officialSection("Notes, Leads & Consequences", "", officialRows([sheet.backstory, sheet.sessionNotes], 6))}
+        <footer>HEROIC 5e - ZEG Media / Zenith Comics <span>Page 2 - Hero Side</span></footer>
+      </article>
+    </div>
+  `;
 }
 
 function renderSheetMarkup() {
@@ -3870,10 +3961,8 @@ function newCharacter() {
 
 function exportPdf() {
   saveGeneratorOutput();
-  const outputWindow = window.open("character-sheet.html?print=1", "_blank");
-  if (!outputWindow) {
-    alert("The printable character sheet was blocked by the browser. Allow pop-ups for this site, then try Export PDF again.");
-  }
+  document.body.classList.add("sheet-print-mode");
+  requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
 }
 
 window.addEventListener("afterprint", clearSheetPrintMode);
@@ -4017,7 +4106,7 @@ app.addEventListener("click", async event => {
   if (action === "back") activeStep = steps[Math.max(0, index - 1)][0];
   if (["step", "next", "back"].includes(action)) renderBuilder();
   if (action === "sheet-mode") {
-    liveSheetMode = button.dataset.mode === "text" ? "text" : "visual";
+    liveSheetMode = ["visual", "text", "official"].includes(button.dataset.mode) ? button.dataset.mode : "visual";
     renderBuilder();
   }
   if (action === "export-json") exportJson();
