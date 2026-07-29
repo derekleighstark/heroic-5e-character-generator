@@ -3870,10 +3870,8 @@ function newCharacter() {
 
 function exportPdf() {
   saveGeneratorOutput();
-  const outputWindow = window.open("character-sheet.html?print=1", "_blank");
-  if (!outputWindow) {
-    alert("The printable character sheet was blocked by the browser. Allow pop-ups for this site, then try Export PDF again.");
-  }
+  document.body.classList.add("sheet-print-mode");
+  requestAnimationFrame(() => requestAnimationFrame(() => window.print()));
 }
 
 window.addEventListener("afterprint", clearSheetPrintMode);

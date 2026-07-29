@@ -1929,6 +1929,27 @@ p {
   grid-template-rows: auto auto minmax(360px, 72vh);
 }
 
+.compendium-drawer,
+.dice-drawer {
+  place-items: stretch end;
+  padding: 0;
+  background: rgba(16, 32, 51, .72);
+}
+
+.compendium-panel,
+.dice-panel {
+  height: 100vh;
+  max-height: none;
+  border-width: 0 0 0 1px;
+  box-shadow: -16px 0 42px rgba(16, 32, 51, .3);
+  animation: gm-screen-slide-in .22s ease-out;
+}
+
+.compendium-panel {
+  width: min(1180px, 96vw);
+  grid-template-rows: auto auto minmax(0, 1fr);
+}
+
 .gm-screen-drawer {
   place-items: stretch end;
   padding: 0;
@@ -2132,7 +2153,7 @@ p {
 
 .dice-panel {
   width: min(1220px, 97vw);
-  grid-template-rows: auto auto minmax(420px, 78vh);
+  grid-template-rows: auto auto minmax(0, 1fr);
 }
 
 .dice-toolbar {
@@ -2200,7 +2221,7 @@ p {
 
 .dice-action-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
   gap: 8px;
 }
 
@@ -2261,8 +2282,26 @@ p {
   gap: 10px;
   min-height: 0;
   padding: 14px;
-  background: #f2ecdd;
+  background: var(--control-bg);
   border-left: 1px solid var(--line);
+}
+
+:root[data-theme="dark"] .dice-toolbar,
+:root[data-theme="dark"] .dice-history-panel {
+  background: #0c1623;
+}
+
+:root[data-theme="dark"] .dice-group h2,
+:root[data-theme="dark"] .dice-history-header h2 {
+  color: #f2f5fa;
+}
+
+:root[data-theme="dark"] .dice-history-item {
+  background: #101b29;
+}
+
+:root[data-theme="dark"] .dice-history-item strong {
+  color: #f2f5fa;
 }
 
 .dice-history-header {
@@ -3996,18 +4035,40 @@ p {
     page-break-after: auto;
   }
 
-  body.sheet-print-mode .generator-shell,
   body:has(.sheet-preview-drawer:not([hidden])) .generator-shell {
     display: none;
   }
 
-  body.sheet-print-mode .sheet-preview-drawer,
   body:has(.sheet-preview-drawer:not([hidden])) .sheet-preview-drawer {
     display: block;
     position: static;
     inset: auto;
     padding: 0;
     background: transparent;
+  }
+
+  body.sheet-print-mode .generator-shell,
+  body.sheet-print-mode .builder-panel,
+  body.sheet-print-mode .builder-workspace,
+  body.sheet-print-mode .live-sheet-panel,
+  body.sheet-print-mode .live-sheet-panel #sheet {
+    display: block;
+    position: static;
+    width: auto;
+    max-width: none;
+    max-height: none;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  body.sheet-print-mode .builder-step-content,
+  body.sheet-print-mode .live-sheet-panel > header {
+    display: none;
   }
 
   .sheet-title {
