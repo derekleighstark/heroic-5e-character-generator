@@ -3554,6 +3554,7 @@ p {
 }
 
 .portrait-box-wrap {
+  position: relative;
   display: grid;
   align-content: start;
   gap: 5px;
@@ -3582,19 +3583,37 @@ p {
 }
 
 .live-portrait-tools {
+  position: absolute;
+  z-index: 2;
+  right: 7px;
+  bottom: 7px;
+  left: 7px;
   border: 1px solid var(--line);
-  background: var(--control-bg);
+  background: color-mix(in srgb, var(--control-bg) 96%, transparent);
   color: var(--ink);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, .28);
 }
 
 .live-portrait-tools summary {
   padding: 6px 8px;
-  color: var(--navy);
+  background: var(--navy);
+  color: #fff;
   cursor: pointer;
   font-size: .68rem;
   font-weight: 900;
   letter-spacing: .08em;
   text-transform: uppercase;
+}
+
+.live-portrait-tools summary::after {
+  content: "Open";
+  float: right;
+  color: var(--gold);
+  font-size: .9em;
+}
+
+.live-portrait-tools[open] summary::after {
+  content: "Close";
 }
 
 .live-portrait-tools > div,
