@@ -1,0 +1,71 @@
+{
+  "name": "Threshold",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/threshold/Portrait-Threshold.png",
+  "system": {
+    "biography": "<h2>Derek Briggs - Threshold</h2><blockquote><p>I'm the Threshold that stands between danger and civilians.</p></blockquote><p><strong>Concept:</strong> A former security guard transformed by <em>the Pulse</em>, who uses his powers to spot trouble and stand between danger and civilians.</p><p><strong>Origin:</strong> Enhanced<br><strong>Class:</strong> Sentinel<br><strong>Side:</strong> Heroic<br><strong>Calling:</strong> Defender</p>",
+    "notes": "<h3>Combat Reference</h3><p><strong>Class Effect Value:</strong> 15<br><strong>Power Effect Value:</strong> 14<br><strong>Initiative:</strong> 1d20 + 2 with Advantage<br><strong>Power Picks:</strong> 8/8</p><p><strong>Trained Saves:</strong> Perception (+5), Dexterity (+2).</p>",
+    "level": 1,
+    "rank": "Street Level",
+    "className": "Sentinel",
+    "powerAbility": "wis",
+    "side": "Heroic",
+    "calling": "Defender",
+    "triggers": {
+      "minor": "Place yourself physically between a threat and someone who cannot protect themselves, absorbing or redirecting the danger.",
+      "major": "Hold a position against a superior threat alone so that others can escape, recover, or regroup.",
+      "defining": "You are defeated, critically injured, or lose something significant specifically because you refused to abandon the people you were protecting."
+    },
+    "tough": false,
+    "initiativeOverride": "2",
+    "abilities": {
+      "str": {"value": 11, "trained": false}, "dex": {"value": 10, "trained": true},
+      "con": {"value": 17, "trained": false}, "fig": {"value": 12, "trained": false},
+      "int": {"value": 13, "trained": false}, "wis": {"value": 15, "trained": false},
+      "cha": {"value": 8, "trained": false}, "per": {"value": 16, "trained": true}
+    },
+    "skills": {
+      "acrobatics": {"trained": false, "expertise": false}, "athletics": {"trained": false, "expertise": false},
+      "culture": {"trained": true, "expertise": false}, "finesse": {"trained": false, "expertise": false},
+      "influence": {"trained": false, "expertise": false}, "insight": {"trained": true, "expertise": false},
+      "intimidation": {"trained": false, "expertise": false}, "investigation": {"trained": true, "expertise": false},
+      "medicine": {"trained": true, "expertise": false}, "notice": {"trained": true, "expertise": false},
+      "occult": {"trained": false, "expertise": false}, "science": {"trained": false, "expertise": false},
+      "stealth": {"trained": false, "expertise": false}, "streetwise": {"trained": true, "expertise": false},
+      "survival": {"trained": true, "expertise": false}, "technology": {"trained": false, "expertise": false},
+      "vehicles": {"trained": false, "expertise": false}
+    },
+    "hp": {"value": 25, "max": 25}, "tempHp": 0, "edge": {"value": 3, "max": 3},
+    "burnout": {"value": 0, "max": 6}, "recovery": {"value": 1, "max": 1},
+    "speed": 30, "conditions": "", "schemaVersion": 1
+  },
+  "prototypeToken": {
+    "name": "Threshold", "actorLink": true, "disposition": 1, "displayName": 20, "displayBars": 20,
+    "bar1": {"attribute": "hp"}, "bar2": {"attribute": "edge"}, "width": 1, "height": 1,
+    "texture": {"src": "systems/heroic5e/assets/characters/threshold/Token-Threshold-Costume.png", "anchorX": 0.5, "anchorY": 0.5, "fit": "contain", "scaleX": 1, "scaleY": 1, "rotation": 0, "tint": "#ffffff", "alphaThreshold": 0.75}
+  },
+  "items": [
+    {"name":"Sentinel","type":"class","img":"icons/svg/shield.svg","system":{"description":"<h3>Sentinel</h3><p>Alert, reactive, and always ready to answer danger.</p>","subtype":"Class","category":"Class","source":"Heroic 5e v2.4","cost":0}},
+    {"name":"Enhanced","type":"origin","img":"icons/svg/upgrade.svg","system":{"description":"<p>Derek was transformed by <em>the Pulse</em>, gaining extraordinary mental and spatial abilities.</p>","subtype":"Origin","category":"Origin","source":"Heroic 5e v2.4","cost":0}},
+    {"name":"Defender","type":"calling","img":"icons/svg/compass.svg","system":{"description":"<p>Your hero has placed themselves between danger and everyone who cannot protect themselves.</p><h3>Minor Trigger</h3><p>Place yourself physically between a threat and someone who cannot protect themselves, absorbing or redirecting the danger.</p><h3>Major Trigger</h3><p>Hold a position against a superior threat alone so that others can escape, recover, or regroup.</p><h3>Defining Trigger</h3><p>You are defeated, critically injured, or lose something significant specifically because you refused to abandon the people you were protecting.</p>","subtype":"Edge Triggers","category":"Calling","source":"Heroic 5e v2.4","triggerMinor":"Place yourself physically between a threat and someone who cannot protect themselves, absorbing or redirecting the danger.","triggerMajor":"Hold a position against a superior threat alone so that others can escape, recover, or regroup.","triggerDefining":"You are defeated, critically injured, or lose something significant specifically because you refused to abandon the people you were protecting.","cost":0}},
+    {"name":"Threat Assessment","type":"feature","img":"icons/svg/eye.svg","system":{"description":"<p>At the start of each encounter before initiative, the GM reveals the creature with the highest HP, the creature with the highest Attack Value, and whether any creature has hidden objectives.</p><p>Gain Advantage on checks to detect hidden, invisible, or concealed creatures, ambushes, traps, and environmental threats.</p>","subtype":"Class Feature","action":"Passive","category":"Sentinel","source":"Heroic 5e v2.4","cost":0}},
+    {"name":"Reactive Awareness","type":"feature","img":"icons/svg/lightning.svg","system":{"description":"<p>Gain Advantage on Initiative rolls and cannot be surprised while conscious.</p><p><strong>Once per encounter,</strong> when an enemy within Short Range attacks an ally or moves in a way you can perceive, use your Reaction to choose:</p><ul><li><strong>Intercept:</strong> Move up to your full speed toward that creature without provoking Opportunity Attacks. As a negation/interception, declare this first.</li><li><strong>Counterstrike:</strong> Make one attack against that creature that never suffers Disadvantage.</li></ul>","subtype":"Class Feature","action":"Reaction","category":"Sentinel","source":"Heroic 5e v2.4","uses":{"value":1,"max":1},"cost":0}},
+    {"name":"Skilled","type":"talent","img":"icons/svg/book.svg","system":{"description":"<p>Gain two additional trained skills.</p>","subtype":"Talent","category":"General","source":"Heroic 5e v2.4","cost":0}},
+    {"name":"Adaptive Biology","type":"talent","img":"icons/svg/blood.svg","system":{"description":"<p><strong>Once per encounter</strong> when using an At-Will power, choose one:</p><ul><li>Add Prowess (+2) to one damage, healing, or protection roll.</li><li>Ignore Disadvantage from stress or unstable conditions.</li><li>Gain 2 Temporary HP.</li></ul>","subtype":"Origin Talent","action":"Special","category":"Enhanced","source":"Heroic 5e v2.4","uses":{"value":1,"max":1},"cost":0}},
+    {"name":"Telepathy 1","type":"power","img":"icons/magic/perception/eye-ringed-glow-angry-small-teal.webp","system":{"description":"<p><strong>Passive Benefits:</strong> Sense emotional states of minded creatures within Close Range (25 ft), send and receive mental impressions within Short Range (50 ft), and gain Advantage on Insight checks.</p>","subtype":"Core Track","action":"Passive","category":"Telepathy","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telepathy","cost":1,"ability":"wis","effect":"Power Effect Value 14"}},
+    {"name":"Psychic Assault","type":"power","img":"icons/magic/control/hypnosis-mesmerism-eye-tan.webp","system":{"description":"<p>Assault a target's mind within Short Range (50 ft).</p><p><strong>Hit:</strong> 2d8 Psychic damage. The target rolls 1d20 + WIS against PEV 14. On a failure it is <strong>Dazed</strong>; on a success it is <strong>Shaken</strong>. The condition lasts until the end of your next turn.</p>","subtype":"Encounter","action":"Action","category":"Attack","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telepathy","cost":1,"ability":"int","attackBonus":2,"damage":"2@powerDie","effect":"Attack +5 vs Willpower; PEV 14","uses":{"value":1,"max":1}}},
+    {"name":"Telepathic Link","type":"power","img":"icons/magic/control/energy-stream-link-spiral-blue.webp","system":{"description":"<p>Establish a two-way telepathic link between yourself and up to 2 willing allies within Short Range (50 ft). The link persists for one scene. Linked creatures communicate silently and instantaneously regardless of distance within the scene. Once per Turn, relay information to all linked creatures simultaneously as a free action.</p>","subtype":"Utility","action":"Action","category":"Utility","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telepathy","cost":1,"ability":"wis","effect":"Up to 2 willing allies; one scene"}},
+    {"name":"Telekinesis 1","type":"power","img":"icons/magic/movement/abstract-ribbons-red-orange.webp","system":{"description":"<p><strong>Passive Benefits:</strong> Move unattended objects weighing up to 15 pounds within Short Range (50 ft), and perform fine manipulation within Close Range (25 ft).</p>","subtype":"Core Track","action":"Passive","category":"Telekinesis","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telekinesis","cost":1,"ability":"wis","effect":"Power Effect Value 14"}},
+    {"name":"Telekinetic Shove","type":"power","img":"icons/magic/air/wind-tornado-wall-blue.webp","system":{"description":"<p>Strike a target within Short Range (50 ft) with telekinetic force.</p><p><strong>Strong Success — choose one:</strong> Push the target Short Range, or knock the target Prone.</p>","subtype":"At-Will","action":"Action","category":"Attack","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telekinesis","cost":1,"ability":"dex","attackBonus":2,"damage":"1@powerDie + 2","effect":"Attack +4 vs Dodge; Force damage"}},
+    {"name":"Deflection Field","type":"power","img":"icons/magic/defensive/shield-barrier-blue.webp","system":{"description":"<p><strong>Trigger:</strong> You or one ally within Close Range (25 ft) is hit by a ranged attack or ranged power.</p><p>Interpose telekinetic force and reduce the damage by 1d8 + 2. If reduced to 0, the attack is completely deflected; redirect the projectile at any target within Short Range (50 ft) as a free action, dealing 1d8 Force damage with no attack roll. Reduction reactions must be declared first.</p>","subtype":"Encounter","action":"Reaction","category":"Protection","source":"Heroic 5e v2.4","tier":"1","powerSet":"Telekinesis","cost":1,"ability":"wis","damage":"1@powerDie + 2","effect":"Reduce damage; possible 1d8 redirect","uses":{"value":1,"max":1}}},
+    {"name":"Teleportation 1","type":"power","img":"icons/magic/movement/trail-streak-zigzag-yellow.webp","system":{"description":"<p><strong>Passive Benefits:</strong> Teleport up to 25 feet as a Movement Action. You carry worn equipment and must be able to see the destination.</p>","subtype":"Core Track","action":"Movement","category":"Teleportation","source":"Heroic 5e v2.4","tier":"1","powerSet":"Teleportation","cost":1,"ability":"wis","effect":"Power Effect Value 14"}},
+    {"name":"Combat Teleport","type":"power","img":"icons/magic/movement/trail-streak-impact-blue.webp","system":{"description":"<p>Teleport up to 25 feet without provoking Opportunity Attacks. If you appear adjacent to an enemy, gain Advantage on your next attack against that enemy before the end of your turn.</p>","subtype":"At-Will","action":"Movement","category":"Movement","source":"Heroic 5e v2.4","tier":"1","powerSet":"Teleportation","cost":1,"ability":"wis","effect":"Teleport 25 ft; situational Advantage"}},
+    {"name":"Altered Physiology 1","type":"merit","img":"icons/svg/eye.svg","system":{"description":"<p><strong>Unusual Senses (Sight):</strong> Gain Advantage on Notice checks involving sight.</p>","subtype":"Origin Merit","category":"Enhanced","source":"Heroic 5e v2.4","cost":1}},
+    {"name":"Local Support 2","type":"merit","img":"icons/svg/house.svg","system":{"description":"<p>Community leaders, residents, and local organizations trust Threshold. Gain Advantage when seeking assistance, information, shelter, or cooperation from local communities.</p>","subtype":"Merit","category":"Social","source":"Heroic 5e v2.4","cost":2}},
+    {"name":"Wary 1","type":"merit","img":"icons/svg/eye.svg","system":{"description":"<p>Gain Advantage on Insight checks to detect lies, scams, manipulation, false friendliness, or suspicious motives.</p>","subtype":"Merit","category":"Mental","source":"Heroic 5e v2.4","cost":1}},
+    {"name":"Marked by Change 1","type":"flaw","img":"icons/svg/hazard.svg","system":{"description":"<p>Glowing eyes and white temples identify Derek as Enhanced.</p>","subtype":"Origin Flaw","category":"Enhanced","source":"Heroic 5e v2.4","cost":1}},
+    {"name":"Responsibility to the Innocent 2","type":"flaw","img":"icons/svg/angel.svg","system":{"description":"<p>When innocent lives are in danger, Threshold prioritizes their safety above personal objectives.</p>","subtype":"Flaw","category":"Responsibility","source":"Heroic 5e v2.4","cost":2}},
+    {"name":"Haunted 1","type":"flaw","img":"icons/svg/terror.svg","system":{"description":"<p>The memory of the Pulse and the lives changed by it continue to weigh on him. When this meaningfully complicates a situation, gain Edge.</p>","subtype":"Flaw","category":"Psychological","source":"Heroic 5e v2.4","cost":1}}
+  ],
+  "effects": [], "folder": null, "flags": {}, "ownership": {"default": 0}
+}

@@ -8,8 +8,8 @@ const data = Function(`const data = {}; ${executable}; return data;`)();
 const { powerFramework, powerSetRules, generalUtilityPowers } = data;
 const errors = [];
 
-if (!Array.isArray(powerSetRules) || powerSetRules.length !== 37) {
-  errors.push(`Expected 37 Power Sets, found ${powerSetRules?.length ?? "none"}.`);
+if (!Array.isArray(powerSetRules) || powerSetRules.length !== 38) {
+  errors.push(`Expected 38 Power Sets, found ${powerSetRules?.length ?? "none"}.`);
 }
 
 if (!Array.isArray(generalUtilityPowers) || generalUtilityPowers.length !== 36) {
@@ -37,8 +37,26 @@ for (const powerSet of powerSetRules || []) {
   }
 }
 
-for (const requiredSet of ["earth-control", "water-control"]) {
+for (const requiredSet of ["absorption", "earth-control", "water-control"]) {
   if (!seenSetIds.has(requiredSet)) errors.push(`Required Power Set missing: ${requiredSet}.`);
+}
+
+const absorption = powerSetRules.find(powerSet => powerSet.id === "absorption");
+if (absorption) {
+  const requiredEntries = {
+    coreTrack: ["Absorption 1", "Absorption 2", "Absorption 3", "Absorption 4"],
+    powers: ["Absorb & Redirect", "Fortified Shell", "Energy Conversion", "Kinetic Burst", "Total Absorption"],
+    utilities: ["Matter Conversion", "Power Leech", "Adaptive Resilience"],
+    enhancements: ["Rapid Conversion", "Sustained Charge", "Feedback Loop", "Kinetic Rebound", "Energy Battery", "Metabolic Absorption"],
+    limitations: ["Overload Risk", "Selective Only", "Painful Conversion"]
+  };
+  for (const [group, names] of Object.entries(requiredEntries)) {
+    const actual = new Set(absorption[group].map(item => item.name));
+    for (const name of names) {
+      if (!actual.has(name)) errors.push(`Absorption is missing ${group} entry: ${name}.`);
+    }
+  }
+  if (absorption.governingAbility !== "CON") errors.push("Absorption must be governed by CON.");
 }
 
 const utilityIds = new Set();
@@ -58,11 +76,11 @@ const setUtilityCount = powerSetRules.reduce((total, powerSet) => total + powerS
 const coreCount = powerSetRules.reduce((total, powerSet) => total + powerSet.coreTrack.length, 0);
 const enhancementCount = powerSetRules.reduce((total, powerSet) => total + powerSet.enhancements.length, 0);
 const limitationCount = powerSetRules.reduce((total, powerSet) => total + powerSet.limitations.length, 0);
-if (combatCount !== 233) errors.push(`Expected 233 Combat Powers, found ${combatCount}.`);
-if (setUtilityCount !== 158) errors.push(`Expected 158 set utilities, found ${setUtilityCount}.`);
-if (coreCount !== 148) errors.push(`Expected 148 Core Track entries, found ${coreCount}.`);
-if (enhancementCount !== 148) errors.push(`Expected 148 set Enhancements, found ${enhancementCount}.`);
-if (limitationCount !== 111) errors.push(`Expected 111 set Limitations, found ${limitationCount}.`);
+if (combatCount !== 238) errors.push(`Expected 238 Combat Powers, found ${combatCount}.`);
+if (setUtilityCount !== 161) errors.push(`Expected 161 set utilities, found ${setUtilityCount}.`);
+if (coreCount !== 152) errors.push(`Expected 152 Core Track entries, found ${coreCount}.`);
+if (enhancementCount !== 154) errors.push(`Expected 154 set Enhancements, found ${enhancementCount}.`);
+if (limitationCount !== 114) errors.push(`Expected 114 set Limitations, found ${limitationCount}.`);
 
 if (errors.length) {
   console.error(errors.join("\n"));

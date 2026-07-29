@@ -1,0 +1,980 @@
+{
+  "name": "Madame Noir",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/madame-noir/Portrait-Madame-Noir.png",
+  "system": {
+    "biography": "Vivienne Laurent — Madame Noir\n\n“The Occult Investigator”\n\nClass: Strategist\nOrigin: Mystic\nCalling: Investigator\nSide: Heroic\n\nPortrait and biography information can be added here.",
+    "notes": "Combat Reference\nPower Die: d8\nProwess: +2\nTrained Saves: INT, PER.\nTrained Skills: Influence, Insight, Investigation, Occult, Stealth.\nClass EV (INT): 15\nPrecognition EV (WIS): 15",
+    "level": 2,
+    "rank": "Street Level",
+    "className": "Strategist",
+    "powerAbility": "int",
+    "tough": false,
+    "abilities": {
+      "str": {
+        "value": 8,
+        "trained": false
+      },
+      "dex": {
+        "value": 11,
+        "trained": false
+      },
+      "con": {
+        "value": 13,
+        "trained": false
+      },
+      "fig": {
+        "value": 10,
+        "trained": false
+      },
+      "int": {
+        "value": 17,
+        "trained": true
+      },
+      "wis": {
+        "value": 16,
+        "trained": false
+      },
+      "cha": {
+        "value": 16,
+        "trained": false
+      },
+      "per": {
+        "value": 13,
+        "trained": true
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": false,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": false,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": false,
+        "expertise": false
+      },
+      "influence": {
+        "trained": true,
+        "expertise": false
+      },
+      "insight": {
+        "trained": true,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": true,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": false,
+        "expertise": false
+      },
+      "occult": {
+        "trained": true,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": true,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": false,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 27,
+      "max": 27
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 4
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "defenses": {},
+    "attacks": {},
+    "schemaVersion": 1,
+    "conditions": "",
+    "side": "Heroic",
+    "calling": "Investigator",
+    "triggers": {
+      "minor": "Uncover a meaningful clue through careful inquiry or deduction.",
+      "major": "Reveal a hidden truth that changes the direction of the mission.",
+      "defining": "Solve the central mystery at significant personal cost or expose a truth others wanted buried."
+    }
+  },
+  "prototypeToken": {
+    "name": "Madame Noir",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "depth": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/madame-noir/Token-Madame-Noir-Costume.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Strategist",
+      "type": "class",
+      "img": "icons/svg/shield.svg",
+      "system": {
+        "description": "<h3>Strategist</h3><p>The Occult Investigator</p>",
+        "subtype": "Class",
+        "action": "Passive",
+        "category": "Class",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "YSPmK131xutie4Lf",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Mystic",
+      "type": "origin",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Vivienne Laurent’s origin is <strong>Mystic</strong>.</p>",
+        "subtype": "Origin",
+        "action": "Passive",
+        "category": "Origin",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "orkjBzHVnURmWLto",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Ward the Soul",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter, add +2 to ally save vs fear/charm/possession/psychic.</p>",
+        "subtype": "Origin",
+        "action": "Action",
+        "category": "Strategist",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "CziY6DVs5GodYeO",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Tactical Analysis",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Bonus Action to mark target; learn highest HP, Attack Value, or hidden vulnerability.</p>",
+        "subtype": "Strategist",
+        "action": "Bonus Action",
+        "category": "Strategist",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "zvGbYPA48rZQKASn",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Tactical Exploitation",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/Turn on hitting analyzed target: grant ally Advantage, deal +3 damage, grant save Advantage, or gain 5 Temp HP.</p>",
+        "subtype": "Strategist",
+        "action": "Passive",
+        "category": "Strategist",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "fmqr6vMkhMDTeetT",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Cold Reader",
+      "type": "talent",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": "<p>Advantage on Insight/Influence after 1 min observation.</p>",
+        "subtype": "Talent",
+        "action": "Passive",
+        "category": "Strategist",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "11Fza4Yn3Xs47o3",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Mystic Attunement 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Mystic Attunement 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "3SLQqhOVnn4WqUm",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Connected 2 (Elite)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Connected 2 (Elite)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 2,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "WZeq6lDiWuQGIBHi",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Connected 1 (Occult)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Connected 1 (Occult)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "20pFi1MyRatkVLA1",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Supernatural Burden 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Supernatural Burden 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "OW8MNULAr7LfxFam",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enemy 2 (Syndicate)",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Enemy 2 (Syndicate)</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 2,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "XhuohyvAbr8iuaQs",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Obligation 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Obligation 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "8Bpe0banQ34eKP6t",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Precognition 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>+1 WIS. Cannot be surprised. Advantage on Initiative.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "twTgZoFs0qDOpSn",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Forewarned",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Add +3 to Active Defense vs triggering attack.</p>",
+        "subtype": "Reaction",
+        "action": "Reaction",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Fz0utmZ06pUcEx",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Precognitive Counter",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>If an attack misses you, free attack at Advantage. Improved Counter: +1d8 damage.</p>",
+        "subtype": "Encounter Reaction",
+        "action": "Reaction",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "1d8",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "oUwKxJ4Z5hTgqEb",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Read the Room",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Ask GM two questions about hidden dangers/desires.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "BttJHeFpZf50J8x",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Fated Step",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1/session, avoid random hazard. Temporal Awareness: 1/encounter, act on highest initiative count.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Xc7AkC9XJMZt7NT",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Super Senses 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>+1 PER. Advantage on Notice checks. Darkvision to 50 ft.</p>",
+        "subtype": "L2 Core",
+        "action": "Passive",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Opz0XBsBV1dTxIg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Spirit Speech",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Commune with the recently dead.</p>",
+        "subtype": "Gen. Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "xJ498MEUStYILk0P",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Psychic Resistance",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Flat Resistance to psychic damage.</p>",
+        "subtype": "Gen. Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "int",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "T3XfsQ0z7mI2LlFU",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Investigator",
+      "type": "calling",
+      "img": "icons/svg/target.svg",
+      "system": {
+        "description": "<p>Investigator Calling</p>",
+        "subtype": "Calling",
+        "action": "Passive",
+        "category": "Calling",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true,
+        "triggerMinor": "Uncover a meaningful clue through careful inquiry or deduction.",
+        "triggerMajor": "Reveal a hidden truth that changes the direction of the mission.",
+        "triggerDefining": "Solve the central mystery at significant personal cost or expose a truth others wanted buried."
+      },
+      "_id": "SSDwGKcq8u7XjbR",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": []
+}

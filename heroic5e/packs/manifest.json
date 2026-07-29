@@ -1,0 +1,17 @@
+{
+  "generated": "2026-07-15T17:14:16.944Z",
+  "source": "Heroic 5e v2.4 Playtest Edition",
+  "counts": {
+    "talents": 57,
+    "merits": 73,
+    "flaws": 88,
+    "callings": 24,
+    "powers": 888,
+    "origins": 10,
+    "classes": 8,
+    "featured-heroes": 11,
+    "ready-templates": 30,
+    "npcs-opponents": 75
+  },
+  "total": 1264
+}

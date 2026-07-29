@@ -1,0 +1,8 @@
+{
+  "html": "heroic5e.html",
+  "css": "heroic5e.css",
+  "authors": "Derek Stark, Codex",
+  "roll20userid": "",
+  "instructions": "Custom Roll20 character sheet for HEROIC 5e v2.4. Upload heroic5e.html and heroic5e.css as a custom character sheet in a Roll20 Pro game, or use this folder as the basis for a Roll20 community sheet submission.",
+  "legacy": false
+}

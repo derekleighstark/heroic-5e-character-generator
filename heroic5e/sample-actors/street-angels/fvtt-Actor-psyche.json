@@ -1,0 +1,1085 @@
+{
+  "name": "Psyche",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/psyche/Portrait-Psyche.png",
+  "system": {
+    "biography": "Zoey Kane — Psyche\n\n“Chaos With A Heart”\n\nClass: Sentinel\nOrigin: Enhanced\nCalling: Chaos & Connection\nSide: Heroic\n\nDescription Psyche is one of the strangest young heroes in the city and very possibly one of the most dangerous. A powerful psychic with an emotionally chaotic mind, Zoey experiences thoughts, emotions, memories, and mental noise more intensely than most people can comprehend. Rather than trying to hide her eccentricity, she embraces it completely through bizarre fashion, theatrical behavior, colorful makeup, and an almost surreal sense of humor. To some people she seems ridiculous. To others, unsettling. But beneath the rainbow-goth weirdness is an extraordinarily perceptive and emotionally intelligent young woman who understands people better than they understand themselves. Her unpredictability often masks just how powerful her mind truly is. Personality Creative, emotionally impulsive, playful, deeply sensitive, and wildly expressive. Zoey uses humor, color, weirdness, and constant emotional noise as armor against loneliness and overstimulation. She can shift from goofy to heartbreakingly sincere in seconds and often sees through emotional facades immediately. Powers Psyche possesses powerful telepathic and empathic abilities, including mind-reading, emotional sensing, illusion casting, psychic projections, telekinetic manipulation, memory intrusion, and surreal psychic manifestations shaped directly by emotion and imagination.",
+    "notes": "Combat Reference\nPower Die: d8\nProwess: +2\nTrained Saves: DEX, PER.\nTrained Skills: Influence, Insight, Investigation, Notice, Stealth.\nClass EV (PER): 15\nTelekinesis EV (WIS): 14\nIllusion EV (CHA): 14",
+    "level": 2,
+    "rank": "Street Level",
+    "className": "Sentinel",
+    "powerAbility": "per",
+    "tough": false,
+    "abilities": {
+      "str": {
+        "value": 10,
+        "trained": false
+      },
+      "dex": {
+        "value": 16,
+        "trained": true
+      },
+      "con": {
+        "value": 12,
+        "trained": false
+      },
+      "fig": {
+        "value": 8,
+        "trained": false
+      },
+      "int": {
+        "value": 11,
+        "trained": false
+      },
+      "wis": {
+        "value": 14,
+        "trained": false
+      },
+      "cha": {
+        "value": 15,
+        "trained": false
+      },
+      "per": {
+        "value": 16,
+        "trained": true
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": false,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": false,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": false,
+        "expertise": false
+      },
+      "influence": {
+        "trained": true,
+        "expertise": false
+      },
+      "insight": {
+        "trained": true,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": true,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": true,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": true,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": false,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 26,
+      "max": 26
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 4
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "defenses": {},
+    "attacks": {},
+    "schemaVersion": 1,
+    "conditions": "",
+    "side": "Heroic",
+    "calling": "Chaos & Connection",
+    "triggers": {
+      "minor": "Create an unexpected solution that also brings people together.",
+      "major": "Trust an emotional connection when logic or caution says not to.",
+      "defining": "Accept a lasting consequence to preserve a bond or prove that connection is stronger than fear."
+    }
+  },
+  "prototypeToken": {
+    "name": "Psyche",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "depth": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/psyche/Token-Psyche-Costume.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Sentinel",
+      "type": "class",
+      "img": "icons/svg/shield.svg",
+      "system": {
+        "description": "<h3>Sentinel</h3><p>Chaos With A Heart</p>",
+        "subtype": "Class",
+        "action": "Passive",
+        "category": "Class",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "9ky5HmQG8gIPycz",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enhanced",
+      "type": "origin",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Zoey Kane’s origin is <strong>Enhanced</strong>.</p>",
+        "subtype": "Origin",
+        "action": "Passive",
+        "category": "Origin",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "uGLfePraC7uZk6m",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Adaptive Biology",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter on TK At-Will: add +2 to roll, ignore Disadvantage, or gain 2 Temp HP.</p>",
+        "subtype": "Origin",
+        "action": "Action",
+        "category": "Sentinel",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "KZJYgTppeJlHQKPw",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Threat Assessment",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>GM reveals highest HP, highest Attack Value, and hidden threats at combat start. Advantage to spot hidden enemies.</p>",
+        "subtype": "Sentinel",
+        "action": "Passive",
+        "category": "Sentinel",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "IKaPMGvSlgkjMjx0",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Reactive Awareness",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Cannot be surprised. 1/encounter Reaction when ally attacked: move full Speed or make a free attack.</p>",
+        "subtype": "Sentinel",
+        "action": "Reaction",
+        "category": "Sentinel",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Rn0DA6CHpExZxOZR",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Power Focus",
+      "type": "talent",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": "<p>1/encounter, Advantage on Telekinetic Shove attack OR Disadvantage on target save.</p>",
+        "subtype": "Talent",
+        "action": "Passive",
+        "category": "Sentinel",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "v9uGlyu1eLI46oik",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Unusual Senses 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Unusual Senses 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Z0LfGqgAblofmf1",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Mentor 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Mentor 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "AGkvJgTNLiuBmFF",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Connected 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Connected 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "ZSf5AONxvagirSDr",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Public Trust 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Public Trust 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "1QWHDdiIOXTWHnQ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Marked by Change 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Marked by Change 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "1i47wPUh9GZEkcP",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Responsibility 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Responsibility 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "DRnUSqqx4mt1JrUV",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Power Instability 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Power Instability 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "PEToDRAfvzAoUIzf",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enemy 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Enemy 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "7tzm63bYKXn1zfwz",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Telekinesis 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Move objects up to 14 lbs within 50 ft.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Telekinesis",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Telekinesis",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "plwpeHGcWk2iSISi",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Telekinetic Shove",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+5 vs Dodge. Hit: 1d8+2 force. Strong: Push 25 ft or Prone.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Telekinesis",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Telekinesis",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 5,
+        "damage": "1d20+5",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Lj8ODdhZaoWUbO7",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Telepathy 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Sense emotions, silent communication.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "wg7euDVdUIbdtKk",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Surface Read",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Read surface thoughts of target.</p>",
+        "subtype": "Utility BA",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "UcCKlGt6D5HNQFPY",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Kaleidoscope Burst",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Prerequisite: Illusion 1. A chaotic eruption of overlapping phantom light, sound, and psychic impression radiates in a Short radius (one Zone). Each enemy of your choice in range must make a WIS save (DC 16). Failure: the creature becomes Dazed until the end of your next turn. Success: the creature has Disadvantage on its next attack roll before the end of its next turn. No damage is dealt — this is pure psychic and illusory disruption.</p>",
+        "subtype": "L2 Encounter, Action",
+        "action": "Passive",
+        "category": "Illusion",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Illusion",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "mZeQzMYO5zPfPJIF",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Telepathic Link",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Link up to 2 allies for silent scene comms.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "7iuv1f6j8EPGGwe5",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Illusion 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Create 1-sense illusions within 50 ft.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Illusion",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Illusion",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "K98Jp7T0X6ijamOS",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "False Image",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Create illusory duplicate. Attackers have Disadvantage if unable to tell which is real.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Illusion",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Illusion",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "uFRVh1ZbTl3a4YQ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Phantom Strike",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+4 vs Willpower. Hit: 1d8+2 psychic. EV 14 vs WIS or Shaken.</p>",
+        "subtype": "Encounter",
+        "action": "Action",
+        "category": "Illusion",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Illusion",
+        "cost": 0,
+        "tags": [],
+        "ability": "per",
+        "attackBonus": 4,
+        "damage": "1d20+4",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "hr8VCfikqIEDZ0wE",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Chaos & Connection",
+      "type": "calling",
+      "img": "icons/svg/target.svg",
+      "system": {
+        "description": "<p>Chaos & Connection Calling</p>",
+        "subtype": "Calling",
+        "action": "Passive",
+        "category": "Calling",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true,
+        "triggerMinor": "Create an unexpected solution that also brings people together.",
+        "triggerMajor": "Trust an emotional connection when logic or caution says not to.",
+        "triggerDefining": "Accept a lasting consequence to preserve a bond or prove that connection is stronger than fear."
+      },
+      "_id": "dNRYyQQle0eSmsck",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": []
+}

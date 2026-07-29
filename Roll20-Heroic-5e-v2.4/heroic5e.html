@@ -1,0 +1,347 @@
+<div class="sheet-heroic5e">
+  <input type="hidden" name="attr_sheet_version" value="2.4.0-roll20-1" />
+  <input type="hidden" name="attr_class_saves_initialized" value="0" />
+
+  <input id="sheet-tab-core" class="sheet-tab sheet-tab-core" type="radio" name="attr_sheet_tab" value="core" checked="checked" />
+  <input id="sheet-tab-skills" class="sheet-tab sheet-tab-skills" type="radio" name="attr_sheet_tab" value="skills" />
+  <input id="sheet-tab-powers" class="sheet-tab sheet-tab-powers" type="radio" name="attr_sheet_tab" value="powers" />
+  <input id="sheet-tab-features" class="sheet-tab sheet-tab-features" type="radio" name="attr_sheet_tab" value="features" />
+  <input id="sheet-tab-notes" class="sheet-tab sheet-tab-notes" type="radio" name="attr_sheet_tab" value="notes" />
+
+  <div class="sheet-header">
+    <div>
+      <span>HEROIC 5e</span>
+      <div class="sheet-character-name"><input type="text" name="attr_character_name" placeholder="Hero name" /></div>
+    </div>
+    <div class="sheet-header-grid">
+      <label>Player<input type="text" name="attr_player_name" /></label>
+      <label>Real Name<input type="text" name="attr_real_name" /></label>
+      <label>Rank
+        <select name="attr_rank">
+          <option value="Street Level">Street Level</option>
+          <option value="Mid-Level" selected="selected">Mid-Level</option>
+          <option value="World Class">World Class</option>
+        </select>
+      </label>
+      <label>Level<input type="number" name="attr_level" value="1" min="1" max="10" /></label>
+    </div>
+  </div>
+
+  <div class="sheet-tabs">
+    <label class="sheet-nav-core" for="sheet-tab-core">Core</label>
+    <label class="sheet-nav-skills" for="sheet-tab-skills">Skills</label>
+    <label class="sheet-nav-powers" for="sheet-tab-powers">Powers</label>
+    <label class="sheet-nav-features" for="sheet-tab-features">Features</label>
+    <label class="sheet-nav-notes" for="sheet-tab-notes">Notes</label>
+  </div>
+
+  <div class="sheet-panel sheet-core-panel">
+    <div class="sheet-identity-grid">
+      <label>Origin<input type="text" name="attr_origin" /></label>
+      <label>Class
+        <select name="attr_class_name">
+          <option value="Beacon">Beacon</option>
+          <option value="Bruiser" selected="selected">Bruiser</option>
+          <option value="Guardian">Guardian</option>
+          <option value="Sentinel">Sentinel</option>
+          <option value="Strategist">Strategist</option>
+          <option value="Striker">Striker</option>
+          <option value="Vanguard">Vanguard</option>
+          <option value="Warden">Warden</option>
+        </select>
+      </label>
+      <label>Calling<input type="text" name="attr_calling" /></label>
+      <label>Power Ability
+        <select name="attr_power_ability">
+          <option value="str">STR</option>
+          <option value="dex">DEX</option>
+          <option value="con">CON</option>
+          <option value="fig">FIG</option>
+          <option value="int">INT</option>
+          <option value="wis">WIS</option>
+          <option value="cha">CHA</option>
+          <option value="per">PER</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="sheet-stat-strip">
+      <div><span>Prowess</span><input type="number" name="attr_prowess" value="2" readonly="readonly" /></div>
+      <div><span>Power Die</span><input type="text" name="attr_power_die" value="d10" readonly="readonly" /></div>
+      <div><span>Hit Die</span><input type="text" name="attr_hit_die" value="d10" readonly="readonly" /></div>
+      <div><span>Edge</span><input type="number" name="attr_edge" value="2" /><em>/</em><input type="number" name="attr_edge_cap" value="3" readonly="readonly" /><small>Start <input type="number" name="attr_edge_start" value="2" readonly="readonly" /></small></div>
+      <div><span>HP</span><input type="number" name="attr_hp" value="0" /><em>/</em><input type="number" name="attr_hp_max" value="0" /></div>
+    </div>
+
+    <div class="sheet-ability-grid">
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Strength <b>STR</b></div>
+        <label>Score<input type="number" name="attr_str" value="10" /></label>
+        <label>Mod<input type="number" name="attr_str_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_str_save_trained" value="1" /> Save <input type="number" name="attr_str_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_str" value="&{template:heroic5e} {{name=Strength}} {{roll=[[1d20 + @{str_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Dexterity <b>DEX</b></div>
+        <label>Score<input type="number" name="attr_dex" value="10" /></label>
+        <label>Mod<input type="number" name="attr_dex_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_dex_save_trained" value="1" /> Save <input type="number" name="attr_dex_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_dex" value="&{template:heroic5e} {{name=Dexterity}} {{roll=[[1d20 + @{dex_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Constitution <b>CON</b></div>
+        <label>Score<input type="number" name="attr_con" value="10" /></label>
+        <label>Mod<input type="number" name="attr_con_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_con_save_trained" value="1" /> Save <input type="number" name="attr_con_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_con" value="&{template:heroic5e} {{name=Constitution}} {{roll=[[1d20 + @{con_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Fighting <b>FIG</b></div>
+        <label>Score<input type="number" name="attr_fig" value="10" /></label>
+        <label>Mod<input type="number" name="attr_fig_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_fig_save_trained" value="1" /> Save <input type="number" name="attr_fig_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_fig" value="&{template:heroic5e} {{name=Fighting}} {{roll=[[1d20 + @{fig_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Intelligence <b>INT</b></div>
+        <label>Score<input type="number" name="attr_int" value="10" /></label>
+        <label>Mod<input type="number" name="attr_int_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_int_save_trained" value="1" /> Save <input type="number" name="attr_int_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_int" value="&{template:heroic5e} {{name=Intelligence}} {{roll=[[1d20 + @{int_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Wisdom <b>WIS</b></div>
+        <label>Score<input type="number" name="attr_wis" value="10" /></label>
+        <label>Mod<input type="number" name="attr_wis_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_wis_save_trained" value="1" /> Save <input type="number" name="attr_wis_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_wis" value="&{template:heroic5e} {{name=Wisdom}} {{roll=[[1d20 + @{wis_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Charisma <b>CHA</b></div>
+        <label>Score<input type="number" name="attr_cha" value="10" /></label>
+        <label>Mod<input type="number" name="attr_cha_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_cha_save_trained" value="1" /> Save <input type="number" name="attr_cha_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_cha" value="&{template:heroic5e} {{name=Charisma}} {{roll=[[1d20 + @{cha_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+      <div class="sheet-ability">
+        <div class="sheet-ability-title">Perception <b>PER</b></div>
+        <label>Score<input type="number" name="attr_per" value="10" /></label>
+        <label>Mod<input type="number" name="attr_per_mod" value="0" readonly="readonly" /></label>
+        <label class="sheet-save"><input type="checkbox" name="attr_per_save_trained" value="1" /> Save <input type="number" name="attr_per_save" value="0" readonly="readonly" /></label>
+        <button type="roll" name="roll_per" value="&{template:heroic5e} {{name=Perception}} {{roll=[[1d20 + @{per_mod}]]}} {{detail=Ability check}}">Roll</button>
+      </div>
+    </div>
+
+    <div class="sheet-defense-grid">
+      <div><span>Initiative</span><input type="number" name="attr_initiative" readonly="readonly" /><button type="roll" name="roll_initiative" value="&{template:heroic5e} {{name=Initiative}} {{roll=[[1d20 + @{initiative} &{tracker}]]}} {{detail=DEX + PER}}">Roll</button></div>
+      <div><span>Parry / Block</span><input type="number" name="attr_parry" readonly="readonly" /><button type="roll" name="roll_parry" value="&{template:heroic5e} {{name=Parry / Block}} {{roll=[[1d20 + @{parry}]]}} {{detail=FIG + PER + Prowess}}">Roll</button></div>
+      <div><span>Dodge</span><input type="number" name="attr_dodge" readonly="readonly" /><button type="roll" name="roll_dodge" value="&{template:heroic5e} {{name=Dodge}} {{roll=[[1d20 + @{dodge}]]}} {{detail=DEX + PER + Prowess}}">Roll</button></div>
+      <div><span>Willpower</span><input type="number" name="attr_willpower" readonly="readonly" /><button type="roll" name="roll_willpower" value="&{template:heroic5e} {{name=Willpower}} {{roll=[[1d20 + @{willpower}]]}} {{detail=WIS + PER + Prowess}}">Roll</button></div>
+      <div><span>Social Defense</span><input type="number" name="attr_social_defense" readonly="readonly" /><button type="roll" name="roll_social_defense" value="&{template:heroic5e} {{name=Social Defense}} {{roll=[[1d20 + @{social_defense}]]}} {{detail=CHA + INT + Prowess}}">Roll</button></div>
+      <div><span>Class EV</span><input type="number" name="attr_class_ev" readonly="readonly" /></div>
+      <div><span>Power EV</span><input type="number" name="attr_power_ev" readonly="readonly" /><button type="roll" name="roll_power_effect" value="&{template:heroic5e} {{name=Power Effect}} {{roll=[[@{power_ev}]]}} {{detail=10 + Power Ability + Prowess}}">Show</button></div>
+      <div><span>Burnout Check</span><button type="roll" name="roll_burnout" value="&{template:heroic5e} {{name=Burnout Check}} {{roll=[[1d20 + @{con_mod} + @{prowess}]]}} {{detail=DC 10 + current Burnout x 2}}">Roll</button></div>
+    </div>
+  </div>
+
+  <div class="sheet-panel sheet-skills-panel">
+    <div class="sheet-skill-grid">
+      <div class="sheet-skill"><span>Acrobatics <b>DEX</b></span><label><input type="checkbox" name="attr_acrobatics_trained" value="1" /> T</label><label><input type="checkbox" name="attr_acrobatics_expertise" value="1" /> E</label><input type="number" name="attr_acrobatics" readonly="readonly" /><button type="roll" name="roll_acrobatics" value="&{template:heroic5e} {{name=Acrobatics}} {{roll=[[1d20 + @{acrobatics}]]}} {{detail=DEX skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Athletics <b>STR</b></span><label><input type="checkbox" name="attr_athletics_trained" value="1" /> T</label><label><input type="checkbox" name="attr_athletics_expertise" value="1" /> E</label><input type="number" name="attr_athletics" readonly="readonly" /><button type="roll" name="roll_athletics" value="&{template:heroic5e} {{name=Athletics}} {{roll=[[1d20 + @{athletics}]]}} {{detail=STR skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Culture <b>INT</b></span><label><input type="checkbox" name="attr_culture_trained" value="1" /> T</label><label><input type="checkbox" name="attr_culture_expertise" value="1" /> E</label><input type="number" name="attr_culture" readonly="readonly" /><button type="roll" name="roll_culture" value="&{template:heroic5e} {{name=Culture}} {{roll=[[1d20 + @{culture}]]}} {{detail=INT skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Finesse <b>DEX</b></span><label><input type="checkbox" name="attr_finesse_trained" value="1" /> T</label><label><input type="checkbox" name="attr_finesse_expertise" value="1" /> E</label><input type="number" name="attr_finesse" readonly="readonly" /><button type="roll" name="roll_finesse" value="&{template:heroic5e} {{name=Finesse}} {{roll=[[1d20 + @{finesse}]]}} {{detail=DEX skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Influence <b>CHA</b></span><label><input type="checkbox" name="attr_influence_trained" value="1" /> T</label><label><input type="checkbox" name="attr_influence_expertise" value="1" /> E</label><input type="number" name="attr_influence" readonly="readonly" /><button type="roll" name="roll_influence" value="&{template:heroic5e} {{name=Influence}} {{roll=[[1d20 + @{influence}]]}} {{detail=CHA skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Insight <b>WIS</b></span><label><input type="checkbox" name="attr_insight_trained" value="1" /> T</label><label><input type="checkbox" name="attr_insight_expertise" value="1" /> E</label><input type="number" name="attr_insight" readonly="readonly" /><button type="roll" name="roll_insight" value="&{template:heroic5e} {{name=Insight}} {{roll=[[1d20 + @{insight}]]}} {{detail=WIS skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Intimidation <b>CHA</b></span><label><input type="checkbox" name="attr_intimidation_trained" value="1" /> T</label><label><input type="checkbox" name="attr_intimidation_expertise" value="1" /> E</label><input type="number" name="attr_intimidation" readonly="readonly" /><button type="roll" name="roll_intimidation" value="&{template:heroic5e} {{name=Intimidation}} {{roll=[[1d20 + @{intimidation}]]}} {{detail=CHA skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Investigation <b>INT</b></span><label><input type="checkbox" name="attr_investigation_trained" value="1" /> T</label><label><input type="checkbox" name="attr_investigation_expertise" value="1" /> E</label><input type="number" name="attr_investigation" readonly="readonly" /><button type="roll" name="roll_investigation" value="&{template:heroic5e} {{name=Investigation}} {{roll=[[1d20 + @{investigation}]]}} {{detail=INT skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Medicine <b>INT</b></span><label><input type="checkbox" name="attr_medicine_trained" value="1" /> T</label><label><input type="checkbox" name="attr_medicine_expertise" value="1" /> E</label><input type="number" name="attr_medicine" readonly="readonly" /><button type="roll" name="roll_medicine" value="&{template:heroic5e} {{name=Medicine}} {{roll=[[1d20 + @{medicine}]]}} {{detail=INT skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Notice <b>PER</b></span><label><input type="checkbox" name="attr_notice_trained" value="1" /> T</label><label><input type="checkbox" name="attr_notice_expertise" value="1" /> E</label><input type="number" name="attr_notice" readonly="readonly" /><button type="roll" name="roll_notice" value="&{template:heroic5e} {{name=Notice}} {{roll=[[1d20 + @{notice}]]}} {{detail=PER skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Occult <b>WIS</b></span><label><input type="checkbox" name="attr_occult_trained" value="1" /> T</label><label><input type="checkbox" name="attr_occult_expertise" value="1" /> E</label><input type="number" name="attr_occult" readonly="readonly" /><button type="roll" name="roll_occult" value="&{template:heroic5e} {{name=Occult}} {{roll=[[1d20 + @{occult}]]}} {{detail=WIS skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Science <b>INT</b></span><label><input type="checkbox" name="attr_science_trained" value="1" /> T</label><label><input type="checkbox" name="attr_science_expertise" value="1" /> E</label><input type="number" name="attr_science" readonly="readonly" /><button type="roll" name="roll_science" value="&{template:heroic5e} {{name=Science}} {{roll=[[1d20 + @{science}]]}} {{detail=INT skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Stealth <b>DEX</b></span><label><input type="checkbox" name="attr_stealth_trained" value="1" /> T</label><label><input type="checkbox" name="attr_stealth_expertise" value="1" /> E</label><input type="number" name="attr_stealth" readonly="readonly" /><button type="roll" name="roll_stealth" value="&{template:heroic5e} {{name=Stealth}} {{roll=[[1d20 + @{stealth}]]}} {{detail=DEX skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Streetwise <b>CHA</b></span><label><input type="checkbox" name="attr_streetwise_trained" value="1" /> T</label><label><input type="checkbox" name="attr_streetwise_expertise" value="1" /> E</label><input type="number" name="attr_streetwise" readonly="readonly" /><button type="roll" name="roll_streetwise" value="&{template:heroic5e} {{name=Streetwise}} {{roll=[[1d20 + @{streetwise}]]}} {{detail=CHA skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Survival <b>WIS</b></span><label><input type="checkbox" name="attr_survival_trained" value="1" /> T</label><label><input type="checkbox" name="attr_survival_expertise" value="1" /> E</label><input type="number" name="attr_survival" readonly="readonly" /><button type="roll" name="roll_survival" value="&{template:heroic5e} {{name=Survival}} {{roll=[[1d20 + @{survival}]]}} {{detail=WIS skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Technology <b>INT</b></span><label><input type="checkbox" name="attr_technology_trained" value="1" /> T</label><label><input type="checkbox" name="attr_technology_expertise" value="1" /> E</label><input type="number" name="attr_technology" readonly="readonly" /><button type="roll" name="roll_technology" value="&{template:heroic5e} {{name=Technology}} {{roll=[[1d20 + @{technology}]]}} {{detail=INT skill}}">Roll</button></div>
+      <div class="sheet-skill"><span>Vehicles <b>DEX</b></span><label><input type="checkbox" name="attr_vehicles_trained" value="1" /> T</label><label><input type="checkbox" name="attr_vehicles_expertise" value="1" /> E</label><input type="number" name="attr_vehicles" readonly="readonly" /><button type="roll" name="roll_vehicles" value="&{template:heroic5e} {{name=Vehicles}} {{roll=[[1d20 + @{vehicles}]]}} {{detail=DEX skill}}">Roll</button></div>
+    </div>
+    <label>Specialties<textarea name="attr_specialties" placeholder="Skill specialties; apply Advantage when the narrow focus fits."></textarea></label>
+  </div>
+
+  <div class="sheet-panel sheet-powers-panel">
+    <div class="sheet-repeat-heading"><div class="sheet-section-title">Power Sets</div><span>Record core tracks, at-wills, encounter, daily, utility, enhancements, and limitations.</span></div>
+    <fieldset class="repeating_powersets">
+      <div class="sheet-repeating-card">
+        <div class="sheet-row-three">
+          <label>Power Set<input type="text" name="attr_power_set_name" /></label>
+          <label>Governing Ability<select name="attr_power_set_ability"><option value="str">STR</option><option value="dex">DEX</option><option value="con">CON</option><option value="fig">FIG</option><option value="int">INT</option><option value="wis">WIS</option><option value="cha">CHA</option><option value="per">PER</option></select></label>
+          <label>Tier<input type="text" name="attr_power_set_tier" /></label>
+        </div>
+        <label>Core Track<textarea name="attr_power_set_core"></textarea></label>
+        <label>Notes<textarea name="attr_power_set_notes"></textarea></label>
+      </div>
+    </fieldset>
+
+    <div class="sheet-repeat-heading"><div class="sheet-section-title">Powers</div><span>Use the roll button for attack powers. Damage can include inline dice such as 2@{power_die}+@{power_mod}.</span></div>
+    <fieldset class="repeating_powers">
+      <div class="sheet-repeating-card">
+        <div class="sheet-row-four">
+          <label>Name<input type="text" name="attr_power_name" /></label>
+          <label>Type<select name="attr_power_type"><option>At-Will</option><option>Encounter</option><option>Daily</option><option>Utility</option><option>Enhancement</option></select></label>
+          <label>Attack Bonus<input type="number" name="attr_power_attack_bonus" value="0" /></label>
+          <label>Damage / Effect<input type="text" name="attr_power_damage" placeholder="1@{power_die}+@{power_mod}" /></label>
+        </div>
+        <textarea name="attr_power_text" placeholder="Range, target, hit, strong success, duration, cost, and notes."></textarea>
+        <button type="roll" name="roll_power" value="&{template:heroic5e} {{name=@{power_name}}} {{roll=[[1d20 + @{power_attack_bonus}]]}} {{damage=[[@{power_damage}]]}} {{detail=@{power_type}}} {{notes=@{power_text}}}">Roll Power</button>
+      </div>
+    </fieldset>
+  </div>
+
+  <div class="sheet-panel sheet-features-panel">
+    <div class="sheet-row-two">
+      <label>Class Features<textarea name="attr_class_features"></textarea></label>
+      <label>Talents<textarea name="attr_talents"></textarea></label>
+    </div>
+    <div class="sheet-row-two">
+      <label>Merits<textarea name="attr_merits"></textarea></label>
+      <label>Flaws<textarea name="attr_flaws"></textarea></label>
+    </div>
+    <div class="sheet-row-three">
+      <label>Minor Trigger - 1 Edge<textarea name="attr_minor_trigger"></textarea></label>
+      <label>Major Trigger - 2 Edge<textarea name="attr_major_trigger"></textarea></label>
+      <label>Defining Trigger - 3 Edge<textarea name="attr_defining_trigger"></textarea></label>
+    </div>
+  </div>
+
+  <div class="sheet-panel sheet-notes-panel">
+    <div class="sheet-row-two">
+      <label>Gear<textarea name="attr_gear"></textarea></label>
+      <label>Conditions / Burnout / Session Notes<textarea name="attr_conditions"></textarea></label>
+    </div>
+    <div class="sheet-row-two">
+      <label>Allies<textarea name="attr_allies"></textarea></label>
+      <label>Enemies<textarea name="attr_enemies"></textarea></label>
+    </div>
+    <label>Character Notes<textarea name="attr_character_notes"></textarea></label>
+  </div>
+</div>
+
+<rolltemplate class="sheet-rolltemplate-heroic5e" style="display:none;">
+  <div class="sheet-template">
+    <div class="sheet-template-title">{{name}}</div>
+    {{#roll}}<div class="sheet-template-roll">{{roll}}</div>{{/roll}}
+    {{#damage}}<div class="sheet-template-row"><span>Damage / Effect</span><b>{{damage}}</b></div>{{/damage}}
+    {{#detail}}<div class="sheet-template-row"><span>Detail</span><b>{{detail}}</b></div>{{/detail}}
+    {{#notes}}<div class="sheet-template-notes">{{notes}}</div>{{/notes}}
+  </div>
+</rolltemplate>
+
+<script type="text/worker">
+const abilities = ["str", "dex", "con", "fig", "int", "wis", "cha", "per"];
+const skills = {
+  acrobatics: "dex",
+  athletics: "str",
+  culture: "int",
+  finesse: "dex",
+  influence: "cha",
+  insight: "wis",
+  intimidation: "cha",
+  investigation: "int",
+  medicine: "int",
+  notice: "per",
+  occult: "wis",
+  science: "int",
+  stealth: "dex",
+  streetwise: "cha",
+  survival: "wis",
+  technology: "int",
+  vehicles: "dex"
+};
+const classes = {
+  Beacon: {primary: "cha", hitDie: 8, saves: ["cha", "wis"], recovery: 1},
+  Bruiser: {primary: "str", hitDie: 10, saves: ["str", "con"], recovery: 1},
+  Guardian: {primary: "con", hitDie: 12, saves: ["con", "str"], recovery: 2},
+  Sentinel: {primary: "per", hitDie: 8, saves: ["per", "dex"], recovery: 1},
+  Strategist: {primary: "int", hitDie: 8, saves: ["int", "per"], recovery: 0},
+  Striker: {primary: "fig", hitDie: 8, saves: ["fig", "dex"], recovery: 0},
+  Vanguard: {primary: "dex", hitDie: 8, saves: ["dex", "per"], recovery: 0},
+  Warden: {primary: "wis", hitDie: 8, saves: ["wis", "con"], recovery: 2}
+};
+const ranks = {
+  "Street Level": {powerDie: "d8", hpMultiplier: 1, edgeStart: 3},
+  "Mid-Level": {powerDie: "d10", hpMultiplier: 2, edgeStart: 2},
+  "World Class": {powerDie: "d12", hpMultiplier: 3, edgeStart: 1}
+};
+const num = value => parseInt(value, 10) || 0;
+const mod = score => Math.floor((num(score) - 10) / 2);
+const prowess = level => num(level) >= 10 ? 5 : num(level) >= 7 ? 4 : num(level) >= 4 ? 3 : 2;
+const hitAverage = die => Math.floor(die / 2) + 1;
+const checked = value => value === "1" || value === 1 || value === true;
+
+function recalc() {
+  const fields = ["rank", "level", "class_name", "power_ability", "tough_talent"];
+  abilities.forEach(key => fields.push(key, `${key}_save_trained`));
+  Object.keys(skills).forEach(key => fields.push(`${key}_trained`, `${key}_expertise`));
+  getAttrs(fields, values => {
+    const level = Math.max(1, num(values.level) || 1);
+    const pro = prowess(level);
+    const classInfo = classes[values.class_name] || classes.Bruiser;
+    const rankInfo = ranks[values.rank] || ranks["Mid-Level"];
+    const updates = {
+      prowess: pro,
+      power_die: rankInfo.powerDie,
+      hit_die: `d${classInfo.hitDie}`,
+      edge_cap: level + pro,
+      edge_start: rankInfo.edgeStart,
+      recovery: classInfo.recovery
+    };
+    const mods = {};
+    abilities.forEach(key => {
+      mods[key] = mod(values[key]);
+      updates[`${key}_mod`] = mods[key];
+      updates[`${key}_save`] = mods[key] + (checked(values[`${key}_save_trained`]) ? pro : 0);
+    });
+    Object.keys(skills).forEach(key => {
+      const trained = checked(values[`${key}_trained`]);
+      const expertise = checked(values[`${key}_expertise`]);
+      updates[key] = mods[skills[key]] + (trained ? pro : 0) + (expertise ? pro : 0);
+    });
+    updates.initiative = mods.dex + mods.per;
+    updates.parry = mods.fig + mods.per + pro;
+    updates.dodge = mods.dex + mods.per + pro;
+    updates.willpower = mods.wis + mods.per + pro;
+    updates.social_defense = mods.cha + mods.int + pro;
+    updates.melee_attack = mods.fig + pro;
+    updates.ranged_attack = mods.dex + pro;
+    updates.mental_attack = mods.int + pro;
+    updates.social_attack = mods.cha + pro;
+    updates.class_ev = 10 + mods[classInfo.primary] + pro;
+    updates.power_mod = mods[values.power_ability || "str"] || 0;
+    updates.power_ev = 10 + updates.power_mod + pro;
+    updates.hp_max = num(values.con) + (classInfo.hitDie * rankInfo.hpMultiplier) + ((level - 1) * (hitAverage(classInfo.hitDie) + mods.con)) + (checked(values.tough_talent) ? level * 2 : 0);
+    setAttrs(updates, {silent: true});
+  });
+}
+
+on("change:" + abilities.join(" change:") + " change:rank change:level change:class_name change:power_ability change:tough_talent", recalc);
+on("change:" + abilities.map(key => key + "_save_trained").join(" change:"), recalc);
+on("change:" + Object.keys(skills).map(key => key + "_trained change:" + key + "_expertise").join(" change:"), recalc);
+
+function applyClassSaves() {
+  getAttrs(["class_name"], values => {
+    const classInfo = classes[values.class_name] || classes.Bruiser;
+    const updates = {class_saves_initialized: 1};
+    abilities.forEach(key => {
+      updates[`${key}_save_trained`] = classInfo.saves.indexOf(key) >= 0 ? 1 : 0;
+    });
+    setAttrs(updates, {silent: true}, recalc);
+  });
+}
+
+on("change:class_name", applyClassSaves);
+on("sheet:opened", () => {
+  getAttrs(["class_saves_initialized"], values => {
+    if (values.class_saves_initialized === "1") recalc();
+    else applyClassSaves();
+  });
+});
+</script>

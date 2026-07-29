@@ -1,0 +1,1050 @@
+{
+  "name": "Starling",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/starling/Portrait-Starling.png",
+  "system": {
+    "biography": "Cassidy Donnelly — Starling\n\n“The Hero Everyone Loves”\n\nClass: Vanguard\nOrigin: Enhanced\nCalling: Protector\nSide: Heroic\n\nDescription Starling is one of the city’s newest rising superheroes and quickly becoming one of its most beloved. Young, energetic, and genuinely compassionate, she has earned a reputation for showing up wherever people are in danger: collapsing buildings, transit disasters, bridge failures, apartment fires, and street-level crises alike. While many heroes chase villains, Starling is often the one carrying civilians out of danger while everyone else is still fighting. To the public, Starling represents the kind of superhero people desperately want to believe still exists: hopeful, sincere, approachable, and inspiring. News crews love her. Children adore her. Emergency responders trust her. In many ways, she is the emotional heart of the team and the hero most likely to someday become a major public symbol. Personality Warm, optimistic, compassionate, and deeply people-oriented. Cassidy genuinely believes heroes are supposed to help people first and fight villains second. She is emotionally intelligent, naturally charismatic, and often acts as the glue holding the team together during difficult moments. Even under pressure, she tries to see the best in others. Powers Starling possesses powerful sonic manipulation abilities combined with controlled aerial flight. She can generate focused sonic blasts, powerful concussive shockwaves, vibration fields, and precision sound control capable of disabling enemies, protecting civilians, or manipulating the battlefield. Her powers also allow her to fly with remarkable agility and speed.",
+    "notes": "Combat Reference\nPower Die: d8\nProwess: +2\nTrained Saves: DEX, PER.\nTrained Skills: Acrobatics, Athletics, Finesse, Influence, Notice, Streetwise.\nClass & Energy EV (DEX): 16",
+    "level": 2,
+    "rank": "Street Level",
+    "className": "Vanguard",
+    "powerAbility": "dex",
+    "tough": false,
+    "abilities": {
+      "str": {
+        "value": 10,
+        "trained": false
+      },
+      "dex": {
+        "value": 18,
+        "trained": true
+      },
+      "con": {
+        "value": 16,
+        "trained": false
+      },
+      "fig": {
+        "value": 12,
+        "trained": false
+      },
+      "int": {
+        "value": 11,
+        "trained": false
+      },
+      "wis": {
+        "value": 13,
+        "trained": false
+      },
+      "cha": {
+        "value": 14,
+        "trained": false
+      },
+      "per": {
+        "value": 8,
+        "trained": true
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": true,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": true,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": true,
+        "expertise": false
+      },
+      "influence": {
+        "trained": true,
+        "expertise": false
+      },
+      "insight": {
+        "trained": false,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": false,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": true,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": false,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": true,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 32,
+      "max": 32
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 4
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "defenses": {},
+    "attacks": {},
+    "schemaVersion": 1,
+    "conditions": "",
+    "side": "Heroic",
+    "calling": "Protector",
+    "triggers": {
+      "minor": "Put yourself in harm’s way to protect someone in your chosen circle.",
+      "major": "Suffer a serious setback because you placed another person’s safety before victory.",
+      "defining": "Risk or lose something irreplaceable rather than abandon those you protect."
+    }
+  },
+  "prototypeToken": {
+    "name": "Starling",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "depth": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/starling/Token-Starling-Costume.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Vanguard",
+      "type": "class",
+      "img": "icons/svg/shield.svg",
+      "system": {
+        "description": "<h3>Vanguard</h3><p>The Hero Everyone Loves</p>",
+        "subtype": "Class",
+        "action": "Passive",
+        "category": "Class",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "gURqk1GoLSLuQiag",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enhanced",
+      "type": "origin",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Cassidy Donnelly’s origin is <strong>Enhanced</strong>.</p>",
+        "subtype": "Origin",
+        "action": "Passive",
+        "category": "Origin",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "hW9OI6nPNjKNB3fI",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Adaptive Biology",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter on At-Will Power: add +2 to roll, ignore Disadvantage, or gain 2 Temp HP.</p>",
+        "subtype": "Origin",
+        "action": "Action",
+        "category": "Vanguard",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "o02k2i6UO5nXd4O",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Fluid Motion",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Movement ≥15 ft grants Advantage on the next attack. Stand from Prone for free.</p>",
+        "subtype": "Vanguard",
+        "action": "Passive",
+        "category": "Vanguard",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "5KZZ4aphndTABo6",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Elusive",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Moving ≥15 ft imposes Disadvantage on the next attack against you.</p>",
+        "subtype": "Vanguard",
+        "action": "Passive",
+        "category": "Vanguard",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "n0sHtcZfGBn7lv",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Power Focus",
+      "type": "talent",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": "<p>1/encounter, Advantage on Sonic Blast attack OR Disadvantage on target save.</p>",
+        "subtype": "Talent",
+        "action": "Passive",
+        "category": "Vanguard",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "NxINKGvmVLgYPym",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Altered Physiology 1 (Unusual Hearing)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Altered Physiology 1 (Unusual Hearing)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "MLfklRT1uVB5IA5X",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Public Trust 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Public Trust 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "gfc5cpNy428fSAXR",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Local Support 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Local Support 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "vo1ZwliZZe2WJBGk",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Mentor 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Mentor 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "3vVMlb5BDhHUNO9",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Marked by Change 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Marked by Change 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "1cPAevAL0JNVFvlA",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Power Instability 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Power Instability 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "8up4hY6AwE4qbgam",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Responsibility 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Responsibility 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "kYEBIic8RCIEOV",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Reckless 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Reckless 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "coc5ggQya6pNfEZ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Energy Generation 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Full sonic resistance. Unlocks Tier 1.</p>",
+        "subtype": "Sonic Core",
+        "action": "Passive",
+        "category": "Energy Generation (Sonic)",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Energy Generation (Sonic)",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "6lwad61vlzdL4p",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Sonic Blast",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+6 vs Dodge. Hit: 1d8+4 sonic. Strong: EV 16 vs CON save or Shaken.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Energy Generation (Sonic)",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Energy Generation (Sonic)",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 6,
+        "damage": "1d20+6",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "DsY9wWGAHjhmO",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Sonic Burst",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+6 vs Dodge in a 20-ft radius. Hit: 1d8+4 sonic.</p>",
+        "subtype": "Encounter",
+        "action": "Action",
+        "category": "Energy Generation (Sonic)",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Energy Generation (Sonic)",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 6,
+        "damage": "1d20+6",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "ztuO8hcLg8QEigH",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Sonic Shield",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Reduce damage to self/ally by 1d8+2. Shield Ally: can target allies up to 50 ft away.</p>",
+        "subtype": "Encounter Reaction",
+        "action": "Reaction",
+        "category": "Energy Generation (Sonic)",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Energy Generation (Sonic)",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "1d8+2",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "4vu6xEh827e3rRtu",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Flight 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>30 ft combat flight. Immune to ground terrain/prone while airborne. Speed Burst: 1/encounter Free Action to double fly speed.</p>",
+        "subtype": "Core",
+        "action": "Free Action",
+        "category": "Flight",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Flight",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "SygBV1rZYhVsop",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Sonic Dive",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+6 vs Parry/Block after 25 ft dive. Hit: 2d8+4 sonic. Strong: Prone.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Energy Generation (Sonic)",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Energy Generation (Sonic)",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 6,
+        "damage": "1d20+6",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "b3WrpFfyiCvDVXgi",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Hover",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Remain entirely stationary in the air indefinitely without losing altitude.</p>",
+        "subtype": "L2 Flight Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "jQ4xojx0FxyGxy",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Environmental Interaction",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Sonar navigation, long-range communication, selective shatter.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "dex",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "FJmKPJZRr4naQgp",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Protector",
+      "type": "calling",
+      "img": "icons/svg/target.svg",
+      "system": {
+        "description": "<p>Protector Calling</p>",
+        "subtype": "Calling",
+        "action": "Passive",
+        "category": "Calling",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true,
+        "triggerMinor": "Put yourself in harm’s way to protect someone in your chosen circle.",
+        "triggerMajor": "Suffer a serious setback because you placed another person’s safety before victory.",
+        "triggerDefining": "Risk or lose something irreplaceable rather than abandon those you protect."
+      },
+      "_id": "PGfoY5iBIAbkFazL",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": []
+}

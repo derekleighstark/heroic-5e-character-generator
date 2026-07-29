@@ -1,0 +1,14 @@
+{
+  "HEROIC5E.Name": "Heroic 5e",
+  "TYPES.Actor.character": "Hero",
+  "TYPES.Actor.npc": "NPC",
+  "TYPES.Item.power": "Power",
+  "TYPES.Item.talent": "Talent",
+  "TYPES.Item.merit": "Merit",
+  "TYPES.Item.flaw": "Flaw",
+  "TYPES.Item.calling": "Calling",
+  "TYPES.Item.origin": "Origin",
+  "TYPES.Item.class": "Class",
+  "TYPES.Item.feature": "Feature",
+  "TYPES.Item.equipment": "Equipment"
+}

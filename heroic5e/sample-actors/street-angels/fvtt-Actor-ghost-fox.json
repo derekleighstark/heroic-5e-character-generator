@@ -1,0 +1,980 @@
+{
+  "name": "Ghost Fox",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/ghost-fox/Portrait-Ghost-Fox.png",
+  "system": {
+    "biography": "Linh “Lynn” Duvall — Ghost Fox\n\n“The City’s Silent Hunter”\n\nClass: Striker\nOrigin: Trained\nCalling: Avenger\nSide: Heroic\n\nDescription Ghost Fox is an urban vigilante who wages a one-woman war against the Syndicate, the sprawling criminal organization responsible for her father’s murder. The daughter of a Vietnamese mother and a former Marine turned anti-drug task force operative, Lynn grew up between two worlds: disciplined military structure and quiet cultural tradition. After her father was killed for getting too close to the Syndicate’s operations, she vanished from public life for several years before reappearing as Ghost Fox, a rooftop predator feared throughout the city’s criminal underworld. Ghost Fox specializes in stealth, infiltration, surveillance, and precision strikes. She is not a flashy superhero. She is the figure criminals glimpse watching from a rooftop before the lights go out. Despite her cold reputation, ordinary people in the neighborhoods she protects often see her as a guardian spirit watching over the streets at night. Personality Quiet, observant, disciplined, and emotionally guarded. Lynn rarely opens up to others and struggles deeply with trust, grief, and anger. She tends to keep teammates at arm’s length, preferring to work alone whenever possible. Beneath the hardened exterior, however, she possesses a fierce protective instinct, especially toward civilians, children, and vulnerable people caught in the crossfire of crime and corruption. Powers Ghost Fox possesses no true superpowers, but operates at the absolute peak of human capability. She combines elite martial arts training, extreme agility, stealth tactics, parkour movement, wall-crawling gear, retractable claw weapons, smoke devices, grappling systems, and advanced infiltration skills into a terrifying urban combat style built around speed, surprise, and precision.",
+    "notes": "Combat Reference\nPower Die: d8\nProwess: +2\nTrained Saves: DEX, FIG.\nTrained Skills: Acrobatics, Athletics, Finesse, Insight, Investigation, Stealth, Streetwise.\nClass EV (FIG): 16\nGadgetry EV (INT): 13",
+    "level": 2,
+    "rank": "Street Level",
+    "className": "Striker",
+    "powerAbility": "fig",
+    "tough": false,
+    "abilities": {
+      "str": {
+        "value": 12,
+        "trained": false
+      },
+      "dex": {
+        "value": 15,
+        "trained": true
+      },
+      "con": {
+        "value": 11,
+        "trained": false
+      },
+      "fig": {
+        "value": 19,
+        "trained": true
+      },
+      "int": {
+        "value": 13,
+        "trained": false
+      },
+      "wis": {
+        "value": 10,
+        "trained": false
+      },
+      "cha": {
+        "value": 8,
+        "trained": false
+      },
+      "per": {
+        "value": 15,
+        "trained": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": true,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": true,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": true,
+        "expertise": false
+      },
+      "influence": {
+        "trained": false,
+        "expertise": false
+      },
+      "insight": {
+        "trained": true,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": true,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": false,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": true,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": true,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 24,
+      "max": 24
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 4
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "defenses": {},
+    "attacks": {},
+    "schemaVersion": 1,
+    "conditions": "",
+    "side": "Heroic",
+    "calling": "Avenger",
+    "triggers": {
+      "minor": "Act directly against the people or forces responsible for a grave wrong.",
+      "major": "Sacrifice safety or advantage to bring a major offender to justice.",
+      "defining": "Accept a lasting consequence to complete your vengeance or finally choose what justice means."
+    }
+  },
+  "prototypeToken": {
+    "name": "Ghost Fox",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "depth": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/ghost-fox/Token-Ghost-Fox-Costume.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Striker",
+      "type": "class",
+      "img": "icons/svg/shield.svg",
+      "system": {
+        "description": "<h3>Striker</h3><p>The City’s Silent Hunter</p>",
+        "subtype": "Class",
+        "action": "Passive",
+        "category": "Class",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "gLpFHy5cN3wWhfZP",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Trained",
+      "type": "origin",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Linh “Lynn” Duvall’s origin is <strong>Trained</strong>.</p>",
+        "subtype": "Origin",
+        "action": "Passive",
+        "category": "Origin",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "hGpIi6nQaWUUbsBe",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Trained to Survive",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter, reroll a failed trained Skill check.</p>",
+        "subtype": "Origin",
+        "action": "Action",
+        "category": "Striker",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "rDzZGAQwZYEMK5",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Precision Strike",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Always add FIG modifier (+4) to damage rolls.</p>",
+        "subtype": "Striker",
+        "action": "Passive",
+        "category": "Striker",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "BGovsQ71zr8SLbD",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Exploit Opening",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/Turn, when hitting a target suffering a Condition or granting Advantage, spend Bonus Action to add 1d8 damage. Target rolls save vs EV 16 or is Dazed.</p>",
+        "subtype": "Striker",
+        "action": "Bonus Action",
+        "category": "Striker",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "vc9rsiG4JIKHjk",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Takedown Artist",
+      "type": "talent",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": "<p>Add Prowess (+2) to damage vs Prone/Grappled/Dazed/Shaken targets. 1/encounter, on reducing target to 0 HP, move 10 ft or shove adjacent target as a free action.</p>",
+        "subtype": "Talent",
+        "action": "Free Action",
+        "category": "Striker",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "MYw2caz5soXBdD4B",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Prepared Foundation 1 (Safehouses)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Prepared Foundation 1 (Safehouses)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "k2qSIrV03Y6TsyQ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Secret Identity 2",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Secret Identity 2</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 2,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "8RztkFXQ7wfNh1z",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Connected 1 (Underworld)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Connected 1 (Underworld)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "3fY12workCK6NKKm",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Only Human 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Only Human 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "XIVPior84Kz4xseg",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enemy 2 (The Syndicate)",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Enemy 2 (The Syndicate)</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 2,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Z2RAiC3HBrNMPcTR",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Haunted 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Haunted 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "kvGsNFM3FKwF6bm",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Martial Mastery 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>+1 FIG. Unarmed deals default damage. +1 to Active Defenses in light/no armor.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Martial Mastery",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Martial Mastery",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "go7ng1xb0IgUer",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Brutal Strike",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+6 vs Parry/Block. Hit: 1d8+8 damage. Strong: Push 25 ft or Prone. Signature Technique: Add +2 damage 1/encounter.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Martial Mastery",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Martial Mastery",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 6,
+        "damage": "1d20+6",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "YqVjpPqvBgG4ofhG",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Combat Awareness",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Cannot be surprised. Advantage on Initiative.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "FWn6GVRMqmqjWLaa",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Controlled Fall",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Ignore first 30 ft of falling damage. Cannot be knocked Prone by falling.</p>",
+        "subtype": "L2 Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "XLgzDMoqBR1QrfSx",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Gadgetry 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Prepare 3 gadgets/breather. Produce small tools.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Gadgetry",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "qfsuhYRAC9NQvPr",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Gadget Strike",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+3 vs Dodge. Hit: 1d8+5 damage. Strong: target is Shaken.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Gadgetry",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 3,
+        "damage": "1d20+3",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "LiJX1zNAGwJu2i1",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Smoke Pellet",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Create heavily obscured 15-ft radius. Quick Deploy: Free Action 1/encounter.</p>",
+        "subtype": "Encounter",
+        "action": "Free Action",
+        "category": "Gadgetry",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "14VRXH0anyHMpT",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Grapnel Line",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Fire line Short range (25-50 ft) to swing/traverse.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Gadgetry",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": [],
+        "ability": "fig",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "hHbZQTszTNkhbod",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Avenger",
+      "type": "calling",
+      "img": "icons/svg/target.svg",
+      "system": {
+        "description": "<p>Avenger Calling</p>",
+        "subtype": "Calling",
+        "action": "Passive",
+        "category": "Calling",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true,
+        "triggerMinor": "Act directly against the people or forces responsible for a grave wrong.",
+        "triggerMajor": "Sacrifice safety or advantage to bring a major offender to justice.",
+        "triggerDefining": "Accept a lasting consequence to complete your vengeance or finally choose what justice means."
+      },
+      "_id": "mJBwPZJHsHDcwL7f",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": []
+}

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b0c">
+  <meta name="description" content="Shadows of Tatooine campaign command dashboard.">
+  <title>Shadows of Tatooine // Command Dashboard</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#dashboard">Skip to dashboard</a>
+  <div class="screen-noise" aria-hidden="true"></div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Shadows of Tatooine dashboard">
+        <span class="brand-sigil">✦</span>
+        <span><b>SHADOWS OF TATOOINE</b><small>CAMPAIGN COMMAND // TATOO SYSTEM</small></span>
+      </a>
+      <div class="topbar-readouts" aria-label="Campaign status">
+        <span><i></i> SYSTEM ONLINE</span>
+        <span>ERA <b>1 ABY</b></span>
+        <span>THREAT <b class="alert">SEVERE</b></span>
+        <span id="local-time">00:00:00</span>
+      </div>
+      <button class="compact-toggle" type="button" aria-label="Open dashboard menu" aria-expanded="false">MENU</button>
+    </header>
+
+    <main class="dashboard" id="dashboard">
+      <div class="mobile-tabs" role="tablist" aria-label="Dashboard panels">
+        <button class="active" type="button" data-panel="left-rail">Campaign</button>
+        <button type="button" data-panel="session-console">Sessions</button>
+        <button type="button" data-panel="archive-console">Archive</button>
+      </div>
+
+      <aside class="left-rail dashboard-panel active-panel">
+        <section class="module campaign-module">
+          <header class="module-header"><span>01</span><h2>Campaign</h2><i>LIVE</i></header>
+          <div class="campaign-display">
+            <img src="Logo.png" alt="Shadows of Tatooine emblem">
+            <div>
+              <p class="kicker">Under Imperial Occupation</p>
+              <p>Six bounty hunters, criminals, and survivors cross paths with The Jackals, a covert Rebel cell.</p>
+            </div>
+          </div>
+          <div class="campaign-metrics"><span><small>System</small>OpenD6</span><span><small>Location</small>Tatooine</span><span><small>Status</small><b>Active</b></span></div>
+        </section>
+
+        <section class="module cast-module">
+          <header class="module-header"><span>02</span><h2>The Cast</h2><i>06 FILES</i></header>
+          <div class="cast-selector" role="tablist" aria-label="Cast dossiers"></div>
+          <div class="cast-readout" aria-live="polite">
+            <div class="cast-token-wrap"><img class="cast-token" src="Character_Assets/Token-Dex.png" alt="Dex"></div>
+            <div class="cast-info"><p class="kicker cast-code">CAST // 01</p><h3 class="cast-name">Dex</h3><p class="cast-role">Scoundrel // Gunslinger</p></div>
+          </div>
+          <p class="cast-description">A quick draw and a quicker smile. Dex survives on instinct, nerve, and the certainty that there is always another angle.</p>
+          <div class="cast-actions"><button class="cast-sheet" type="button">Character Sheet</button><button class="cast-reference" type="button">Field Reference</button></div>
+        </section>
+      </aside>
+
+      <section class="module session-console dashboard-panel">
+        <header class="module-header"><span>03</span><h2>Session Archive</h2><i>SELECT LOG</i></header>
+        <div class="session-tabs" role="tablist" aria-label="Select session"></div>
+        <article class="session-display" aria-live="polite">
+          <div class="session-titlebar"><div><p class="kicker session-label">SESSION 04 // LATEST</p><h1 class="session-title">Vengeance in the Wastes</h1></div><span class="archive-state">Complete archive</span></div>
+          <div class="session-media-grid"></div>
+          <div class="session-footer"><span><small>Archive contents</small><b class="archive-count">03 FILES AVAILABLE</b></span><span><small>Classification</small>CAMPAIGN RECORD</span><span><small>Source</small>FIELD UPLINK</span></div>
+        </article>
+      </section>
+
+      <section class="module archive-console dashboard-panel">
+        <header class="module-header"><span>04</span><h2>Recovered Data</h2><i class="archive-total">12 FILES</i></header>
+        <div class="archive-tabs" role="tablist" aria-label="Archive category">
+          <button class="active" type="button" data-archive="intel">Intel Archive</button>
+          <button type="button" data-archive="locations">Across Tatooine</button>
+        </div>
+        <div class="archive-toolbar">
+          <div class="intel-filters" role="group" aria-label="Intel filter">
+            <button class="active" type="button" data-filter="all">All</button><button type="button" data-filter="bounty">Bounty</button><button type="button" data-filter="feed">Holo</button><button type="button" data-filter="field">Field</button>
+          </div>
+          <div class="pager"><button class="page-prev" type="button" aria-label="Previous archive page">←</button><span class="page-readout">01 / 02</span><button class="page-next" type="button" aria-label="Next archive page">→</button></div>
+        </div>
+        <div class="archive-grid"></div>
+        <div class="archive-footer">
+          <button class="quick-image" type="button" data-image="StarwarsD6-CheatSheet.png" data-title="Star Wars D6 cheat sheet">RULES CHEAT SHEET ↗</button>
+          <span>IMPERIAL ENCRYPTION // DECRYPTED</span>
+        </div>
+      </section>
+    </main>
+
+    <footer class="statusbar"><span><i></i> DATA LINK STABLE</span><span>REBEL CELL: THE JACKALS // FORT TUSKEN</span><span>SHADOWS ARCHIVE v2.0</span></footer>
+  </div>
+
+  <dialog class="media-modal" aria-labelledby="modal-title">
+    <button class="modal-close" type="button" aria-label="Close viewer">×</button>
+    <p class="kicker">ARCHIVE VIEWER</p>
+    <h2 id="modal-title">Media viewer</h2>
+    <div class="modal-media"></div>
+  </dialog>
+</body>
+</html>

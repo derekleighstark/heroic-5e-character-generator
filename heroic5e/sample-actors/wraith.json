@@ -1,0 +1,780 @@
+{
+  "_id": "f90f9a4bb2fc2734",
+  "name": "Wraith",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/wraith/portrait.png",
+  "system": {
+    "biography": "<h2>Eddie Swazey</h2><p>A ghostly enhanced hero who phases between the living world and Limbo/Purgatory, slipping through walls, avoiding harm, and speaking with spirits of the dead.</p><h3>Backstory</h3><p>Eddie Swazey became Wraith after the Pulse changed his body into something partially out of phase with the physical world. His powers make him an infiltrator, protector, and uneasy bridge between the living and the dead.</p><h3>Costume</h3><p>Ghostly EMF signature; phase-sense altered physiology.</p>",
+    "notes": "<p>Stealth and infiltration<br>Reading emotions and motives<br>Spotting danger and surveillance details<br>Driving and vehicle handling<br>Spirit communication and death-related occult clues</p><p>Level 1: Inner Fortress<br>Level 1: Force of Will</p><p>Cannot be surprised while conscious.<br>Advantage on saves against Shaken, Frightened, Dazed, and Charmed.<br>Once per encounter, reroll a failed save.<br>When using Steady On or Second Wind, gain temporary HP equal to WIS.<br>Can maintain phased state without it ending when attacking or using powers; attacks and powers work normally while selectively solid at the point of contact.</p><p>Solid Ground Required.<br>Phasing passes through the living world but not through beings, objects, obstacles, or barriers in Limbo/Purgatory. Physical attacks and damage from phased beings or Limbo/Purgatory sources affect Wraith normally while phased.</p>",
+    "side": "Heroic",
+    "calling": "Boy Scout",
+    "triggers": {
+      "minor": "Use phasing to protect or rescue someone who cannot protect themselves.",
+      "major": "Enter danger alone by phasing through a barrier, wall, or hostile space so allies or civilians can escape.",
+      "defining": "Suffer a major loss, defeat, or injury because you refused to abandon innocent people or trapped spirits."
+    },
+    "level": 1,
+    "rank": "Street Level",
+    "className": "Warden",
+    "powerAbility": "con",
+    "abilities": {
+      "str": {
+        "value": 12,
+        "trained": false
+      },
+      "dex": {
+        "value": 11,
+        "trained": false
+      },
+      "con": {
+        "value": 15,
+        "trained": true
+      },
+      "fig": {
+        "value": 8,
+        "trained": false
+      },
+      "int": {
+        "value": 14,
+        "trained": false
+      },
+      "wis": {
+        "value": 16,
+        "trained": true
+      },
+      "cha": {
+        "value": 10,
+        "trained": false
+      },
+      "per": {
+        "value": 16,
+        "trained": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": false,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": false,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": false,
+        "expertise": false
+      },
+      "influence": {
+        "trained": false,
+        "expertise": false
+      },
+      "insight": {
+        "trained": true,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": false,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": true,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": false,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": false,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 25,
+      "max": 25
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 3
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "conditions": "",
+    "schemaVersion": 1
+  },
+  "prototypeToken": {
+    "name": "Wraith",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/wraith/token.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic"
+    }
+  },
+  "items": [
+    {
+      "_id": "48e9c79e786ad181",
+      "name": "Adaptive Biology 1 - Instinctive Phasing Control",
+      "type": "talent",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Adaptive Biology 1 - Instinctive Phasing Control</p>",
+        "subtype": "talent",
+        "action": "Passive",
+        "category": "talent",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "66b0b3fb08798d29",
+      "name": "Psychic Discipline 1",
+      "type": "talent",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Psychic Discipline 1</p>",
+        "subtype": "talent",
+        "action": "Passive",
+        "category": "talent",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "bf46df304c815c33",
+      "name": "Altered Physiology 1 - Unusual Senses - Phase Senses",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Altered Physiology 1 - Unusual Senses - Phase Senses: Gain Advantage on Perception checks tied to phase senses.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "8fae28ba3fd0b76a",
+      "name": "Base of Operations 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Base of Operations 1: A modest safehouse, garage, apartment, backroom, small lab, or hidden bunker.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "ff761ab65ceaf542",
+      "name": "Cash Flow 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Cash Flow 1: Comfortable reliable income/support.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "a196708ec4b42680",
+      "name": "Marked by Change 1 - Ghostly EMF",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Marked by Change 1 - Ghostly EMF: Wraith emits a strong EMF signature detectable by technology or beings that can sense electromagnetic frequencies.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "96ae2e9de6152639",
+      "name": "Honest to a Fault 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Honest to a Fault 1: Disadvantage on Influence checks involving direct lies or deliberate misdirection.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "13daa183c70037c8",
+      "name": "Responsibility to the Innocent 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Responsibility to the Innocent 1: Cannot ignore civilian danger when aware of it.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "518f760198e7ef62",
+      "name": "Limitation - Solid Ground Required",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Limitation - Solid Ground Required: Cannot phase through floors or ground-level surfaces; can pass through walls, ceilings, and vertical barriers but needs solid ground beneath his feet.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "30599fd9bd4f20d2",
+      "name": "Limitation - Limbo/Purgatory Phase State",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Limitation - Limbo/Purgatory Phase State: While phased, he exists partly in Limbo/Purgatory and cannot pass through beings or obstacles there; phased beings and Limbo/Purgatory sources affect him normally.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "2e88dedebab4fb6c",
+      "name": "Phasing",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>PHASING 1 - Power Effect Value: 15<br>Passive Benefits: Selectively phase individual limbs, whole body, or objects in contact with you. Fully phased, physical attacks cannot target you; you cannot interact with physical objects and pass through solid matter at normal speed.<br>Phase Through (Tier 1 At-Will, Bonus Action): Move up to Close range (25 ft) through solid matter without provoking Reactions. Must end in open space.<br>Disruptive Phase (Tier 1 Encounter, Action): Close range. Attack 1d20 + CON + Rank Bonus vs Parry/Block. Hit: 2d8 + CON physical damage bypassing armor and worn equipment. Target rolls 1d20 + CON vs EV 15. Failure: Dazed until end of next turn. Success: Shaken until end of next turn.<br>Walk Through Walls 1 (Utility): Outside combat, phase through solid barriers of any thickness at normal speed while carrying worn/held items.<br>Phase Slip 1 (Utility): Free action once per Turn, extend phased state to one object carried or worn.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Phasing",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "c34c71d0ab748e7a",
+      "name": "Phase Through",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Move up to Close range (25 ft) through solid matter without provoking Reactions. Must end in open space.</p>",
+        "subtype": "Tier 1 At-Will, Bonus Action",
+        "action": "Bonus Action",
+        "category": "Power",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Phasing",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Move up to Close range (25 ft) through solid matter without provoking Reactions. Must end in open space.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "246eeb6055f7f80a",
+      "name": "Disruptive Phase",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Close range. Attack 1d20 + CON + Rank Bonus vs Parry/Block. Hit: 2d8 + CON physical damage bypassing armor and worn equipment. Target rolls 1d20 + CON vs EV 15. Failure: Dazed until end of next turn. Success: Shaken until end of next turn.</p>",
+        "subtype": "Tier 1 Encounter, Action",
+        "action": "Action",
+        "category": "Power",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Phasing",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Close range. Attack 1d20 + CON + Rank Bonus vs Parry/Block. Hit: 2d8 + CON physical damage bypassing armor and worn equipment. Target rolls 1d20 + CON vs EV 15. Failure: Dazed until end of next turn. Success: Shaken until end of next turn.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "917950b3806bae61",
+      "name": "Walk Through Walls 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Outside combat, phase through solid barriers of any thickness at normal speed while carrying worn/held items.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Utility",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Phasing",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Outside combat, phase through solid barriers of any thickness at normal speed while carrying worn/held items.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "c2b751d28755cedc",
+      "name": "Phase Slip 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Free action once per Turn, extend phased state to one object carried or worn.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Utility",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Phasing",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Free action once per Turn, extend phased state to one object carried or worn.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "25f3cb0bb2cfcf2b",
+      "name": "Invisibility",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>INVISIBILITY 1 (General Utility)<br>As an Action, turn invisible until the end of your next Turn. While invisible, you gain Hidden: attacks against you have Disadvantage and your attacks have Advantage. Hidden ends if you attack, use a visible power, or take damage. Sound and scent can still reveal you.<br>Enhancement: Sound is muffled and distorted while active.<br>Enhancement: Sustainable Power - may be maintained with a Bonus Action each turn.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Invisibility",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "268bb93e14392cff",
+      "name": "Spirit Speech",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>SPIRIT SPEECH 1 (General Utility)<br>You can perceive and briefly communicate with spirits of the recently dead if they died within the last week and their remains, a significant possession, or death location is within Short range. Willing spirits communicate for up to one minute. With one minute at a corpse or death location, experience the subject’s final moments. Advantage on Occult checks related to death and spiritual activity.<br>Enhancements: Automatically senses spirits nearby; extended duration for willing spirits to one scene; can communicate with spirits that refused to cross over after one week and remain in Limbo/Purgatory.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Spirit Speech",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

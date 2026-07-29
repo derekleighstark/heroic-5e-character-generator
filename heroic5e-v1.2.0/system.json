@@ -1,0 +1,37 @@
+{
+  "id": "heroic5e",
+  "title": "Heroic 5e",
+  "description": "A complete Heroic 5e game system for Foundry Virtual Tabletop.",
+  "version": "1.2.0",
+  "compatibility": { "minimum": "14", "verified": "14.364" },
+  "authors": [{ "name": "Derek Stark" }],
+  "esmodules": ["scripts/heroic5e.mjs"],
+  "styles": ["styles/heroic5e.css"],
+  "languages": [{ "lang": "en", "name": "English", "path": "lang/en.json" }],
+  "documentTypes": {
+    "Actor": {
+      "character": { "htmlFields": ["biography", "notes"] },
+      "npc": { "htmlFields": ["classAbilities", "powers", "skillsText", "talentsText", "meritsText", "flawsText", "notes"] }
+    },
+    "Item": {
+      "power": { "htmlFields": ["description"] },
+      "talent": { "htmlFields": ["description"] },
+      "merit": { "htmlFields": ["description"] },
+      "flaw": { "htmlFields": ["description"] },
+      "origin": { "htmlFields": ["description"] },
+      "class": { "htmlFields": ["description"] },
+      "feature": { "htmlFields": ["description"] },
+      "equipment": { "htmlFields": ["description"] }
+    }
+  },
+  "packs": [
+    { "name": "talents", "label": "Heroic 5e Talents", "path": "packs/talents", "type": "Item", "system": "heroic5e" },
+    { "name": "merits", "label": "Heroic 5e Merits", "path": "packs/merits", "type": "Item", "system": "heroic5e" },
+    { "name": "flaws", "label": "Heroic 5e Flaws", "path": "packs/flaws", "type": "Item", "system": "heroic5e" },
+    { "name": "powers", "label": "Heroic 5e Powers", "path": "packs/powers", "type": "Item", "system": "heroic5e" },
+    { "name": "origins", "label": "Heroic 5e Origins", "path": "packs/origins", "type": "Item", "system": "heroic5e" },
+    { "name": "classes", "label": "Heroic 5e Classes", "path": "packs/classes", "type": "Item", "system": "heroic5e" }
+  ],
+  "socket": false,
+  "initiative": "1d20 + @initiative"
+}

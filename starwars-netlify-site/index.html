@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11100e">
+  <meta name="description" content="Shadows of Tatooine, a Star Wars D6 campaign chronicle.">
+  <title>Shadows of Tatooine | Campaign Chronicle</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script defer src="assets/js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to campaign chronicle</a>
+
+  <header class="site-header" id="top">
+    <a class="brand" href="#top" aria-label="Shadows of Tatooine home">
+      <img src="assets/images/Logo.webp" alt="">
+      <span><b>Shadows of Tatooine</b><small>A Star Wars D6 campaign</small></span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span><span class="sr-only">Toggle navigation</span>
+    </button>
+    <nav id="primary-nav" aria-label="Primary navigation">
+      <a href="#campaign">Campaign</a>
+      <a href="#crew">The Jackals</a>
+      <a href="#episodes">Episodes</a>
+      <a href="#archive">Archive</a>
+      <a href="#atlas">Atlas</a>
+    </nav>
+    <button class="audio-toggle" type="button" aria-pressed="false" title="Play campaign prologue">
+      <span class="audio-icon" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="audio-label">Prologue</span>
+    </button>
+  </header>
+
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-map" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-copy">
+          <p class="chapter-label"><span></span> Campaign transmission 001</p>
+          <h1 id="hero-title">Shadows<br>of Tatooine</h1>
+          <p class="hero-deck">Six drifters. One stolen freighter. An Imperial occupation closing in beneath the twin suns.</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#episodes">Read the latest episode <span aria-hidden="true">&rarr;</span></a>
+            <a class="secondary-action" href="#crew">Meet the Jackals</a>
+          </div>
+        </div>
+        <figure class="hero-emblem">
+          <img src="assets/images/Logo.webp" alt="Shadows of Tatooine campaign emblem">
+          <figcaption>Under Imperial occupation</figcaption>
+        </figure>
+      </div>
+      <div class="hero-status" aria-label="Campaign status">
+        <span><small>System</small>OpenD6</span>
+        <span><small>Era</small>1 ABY</span>
+        <span><small>Current base</small>Fort Tusken</span>
+        <span><small>Threat</small><b>Severe</b></span>
+      </div>
+    </section>
+
+    <section class="campaign-band" id="campaign">
+      <div class="section-number">01</div>
+      <div class="campaign-intro">
+        <p class="chapter-label">The campaign</p>
+        <h2>Out here, survival has a price.</h2>
+      </div>
+      <div class="campaign-copy">
+        <p class="lead">The Empire has tightened its grip on Tatooine. The dunes conceal rebels, criminals, hunters, and the fragile beginnings of something larger.</p>
+        <p>Known as <strong>The Jackals</strong>, six survivors have been pulled into a widening conflict stretching from the streets of Mos Shuuta to the walls of Fort Tusken.</p>
+      </div>
+      <button class="campaign-art image-trigger" type="button" data-image="assets/images/MissionDroid.webp" data-title="Missing droid notice">
+        <img src="assets/images/MissionDroid.webp" alt="Hand-painted missing droid notice from Mos Shuuta">
+        <span>Recovered notice <b>View file</b></span>
+      </button>
+    </section>
+
+    <section class="crew-section" id="crew">
+      <header class="section-heading">
+        <div><p class="chapter-label">02 / Personnel files</p><h2>The Jackals</h2></div>
+        <p>Select a crew member to inspect their record, character sheet, and field reference.</p>
+      </header>
+
+      <div class="crew-layout">
+        <div class="crew-roster" role="tablist" aria-label="Crew dossiers"></div>
+        <article class="crew-dossier" aria-live="polite">
+          <button class="dossier-visual image-trigger-dynamic" type="button" aria-label="Open field reference">
+            <img class="profile-reference-image" src="assets/images/Character_Assets/Reference-Dex.webp" alt="Dex field reference">
+            <span class="image-corner">Field reference <b>Open</b></span>
+          </button>
+          <div class="dossier-copy">
+            <p class="chapter-label profile-code">Jackal 01 / Active</p>
+            <h3 class="profile-name">Dex</h3>
+            <p class="profile-role">Scoundrel / Gunslinger</p>
+            <p class="profile-description">A quick draw and a quicker smile. Dex survives on instinct, nerve, and the certainty that there is always another angle.</p>
+            <dl class="dossier-facts">
+              <div><dt>Affiliation</dt><dd>The Jackals</dd></div>
+              <div><dt>Status</dt><dd>At large</dd></div>
+            </dl>
+            <div class="dossier-actions">
+              <button class="primary-action profile-sheet" type="button">View character sheet</button>
+              <button class="secondary-button profile-reference" type="button">Open concept art</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="episode-section" id="episodes">
+      <header class="section-heading inverse">
+        <div><p class="chapter-label">03 / Campaign chronicle</p><h2>Episodes</h2></div>
+        <p>Opening crawls and recovered records from the crew's journey across Tatooine.</p>
+      </header>
+
+      <article class="latest-episode">
+        <button class="latest-art image-trigger" type="button" data-image="assets/images/Session4.webp" data-title="Session 4 recap: Vengeance in the Wastes">
+          <img src="assets/images/Session4.webp" alt="Session 4 illustrated campaign recap">
+          <span>Open full recap</span>
+        </button>
+        <div class="latest-copy">
+          <p class="chapter-label"><span></span> Latest transmission / Session 04</p>
+          <h3>Vengeance in the Wastes</h3>
+          <p>The hunt turns bloody in the Jundland Wastes. A divided crew, a desert ambush, and the road to Fort Tusken leave the Jackals with new allies and a trail of bodies.</p>
+          <div class="episode-meta"><span>Jundland Wastes</span><span>Archive complete</span></div>
+          <button class="primary-action image-trigger" type="button" data-image="assets/images/Session4.webp" data-title="Session 4 recap: Vengeance in the Wastes">Read session recap</button>
+        </div>
+      </article>
+
+      <div class="episode-list" aria-label="Session archive">
+        <article class="episode-row">
+          <span class="episode-index">01</span><div><small>The debt comes due</small><h3>Escape from Mos Shuuta</h3></div>
+          <div class="episode-actions"><button class="text-command image-trigger" type="button" data-image="assets/images/Session1.webp" data-title="Session 1 recap: Escape from Mos Shuuta">Recap</button><button class="circle-command" type="button" data-video="assets/video/Crawl-1.mp4" aria-label="Play Session 1 opening crawl">&#9654;</button></div>
+        </article>
+        <article class="episode-row">
+          <span class="episode-index">02</span><div><small>Loose ends</small><h3>Secrets in the Desert</h3></div>
+          <div class="episode-actions"><button class="text-command image-trigger" type="button" data-image="assets/images/Session2.webp" data-title="Session 2 recap: Secrets in the Desert">Recap</button><button class="circle-command" type="button" data-video="assets/video/Crawl-2.mp4" aria-label="Play Session 2 opening crawl">&#9654;</button></div>
+        </article>
+        <article class="episode-row">
+          <span class="episode-index">03</span><div><small>Desert reckoning</small><h3>The Hunt Begins</h3></div>
+          <div class="episode-actions"><button class="text-command image-trigger" type="button" data-image="assets/images/Session3.webp" data-title="Session 3 recap: The Hunt Begins">Recap</button><button class="circle-command" type="button" data-video="assets/video/Crawl-3.mp4" aria-label="Play Session 3 opening crawl">&#9654;</button></div>
+        </article>
+        <article class="episode-row current">
+          <span class="episode-index">04</span><div><small>Vengeance in the wastes</small><h3>Road to Fort Tusken</h3></div>
+          <div class="episode-actions"><button class="text-command image-trigger" type="button" data-image="assets/images/Session4.webp" data-title="Session 4 recap: Vengeance in the Wastes">Recap</button><span class="archive-tag">Latest</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="archive-section" id="archive">
+      <header class="section-heading">
+        <div><p class="chapter-label">04 / Recovered intelligence</p><h2>The archive</h2></div>
+        <p>Bounties, intercepted broadcasts, crew intelligence, and evidence recovered in the field.</p>
+      </header>
+      <div class="filter-bar" role="group" aria-label="Filter archive">
+        <button class="active" type="button" data-filter="all">All files</button>
+        <button type="button" data-filter="bounty">Bounties</button>
+        <button type="button" data-filter="feed">Holo feeds</button>
+        <button type="button" data-filter="field">Field intel</button>
+      </div>
+      <div class="archive-grid">
+        <button class="archive-item wide image-trigger" type="button" data-category="bounty" data-image="assets/images/DataPad-AdarTallon-Bounty.webp" data-title="Adar Tallon bounty"><img src="assets/images/DataPad-AdarTallon-Bounty.webp" alt="Adar Tallon bounty datapad"><span><small>Bounty / 25,000 credits</small><b>Adar Tallon</b></span></button>
+        <button class="archive-item image-trigger" type="button" data-category="feed" data-image="assets/images/HoloFeed-MosShuuta.webp" data-title="Mos Shuuta holo feed"><img src="assets/images/HoloFeed-MosShuuta.webp" alt="Mos Shuuta intercepted holo feed"><span><small>Intercepted feed</small><b>Mos Shuuta</b></span></button>
+        <button class="archive-item tall image-trigger" type="button" data-category="field" data-image="assets/images/DataPad-Jackals.webp" data-title="The Jackals dossier"><img src="assets/images/DataPad-Jackals.webp" alt="The Jackals crew intelligence"><span><small>Crew intelligence</small><b>The Jackals</b></span></button>
+        <button class="archive-item image-trigger" type="button" data-category="bounty" data-image="assets/images/DataPad-Dex-Bounty.webp" data-title="Dex bounty"><img src="assets/images/DataPad-Dex-Bounty.webp" alt="Dex bounty datapad"><span><small>Bounty dossier</small><b>Dex</b></span></button>
+        <button class="archive-item image-trigger" type="button" data-category="feed" data-image="assets/images/HoloFeed-Bestine.webp" data-title="Bestine holo feed"><img src="assets/images/HoloFeed-Bestine.webp" alt="Bestine Imperial broadcast"><span><small>Imperial broadcast</small><b>Bestine</b></span></button>
+        <button class="archive-item wide image-trigger" type="button" data-category="field" data-image="assets/images/DataPad-Loot.webp" data-title="Recovered loot manifest"><img src="assets/images/DataPad-Loot.webp" alt="Recovered loot manifest"><span><small>Recovered cargo</small><b>Loot manifest</b></span></button>
+        <button class="archive-item image-trigger" type="button" data-category="field" data-image="assets/images/DataPad-Trex.webp" data-title="Trex dossier"><img src="assets/images/DataPad-Trex.webp" alt="Trex target dossier"><span><small>Target dossier</small><b>Trex</b></span></button>
+        <button class="archive-item image-trigger" type="button" data-category="field" data-image="assets/images/DataPad-MandoMartialArts.webp" data-title="Mandalorian combat doctrine"><img src="assets/images/DataPad-MandoMartialArts.webp" alt="Mandalorian combat notes"><span><small>Field notes</small><b>Combat doctrine</b></span></button>
+      </div>
+    </section>
+
+    <section class="atlas-section" id="atlas">
+      <div class="atlas-map">
+        <img src="assets/images/Mos-Shuuta-FINAL-DAY.webp" alt="Illustrated map of Mos Shuuta">
+      </div>
+      <div class="atlas-copy">
+        <p class="chapter-label">05 / Campaign atlas</p>
+        <h2>Across Tatooine</h2>
+        <p>Walk the streets of Mos Shuuta, inspect the Krayt Fang, and open the tactical records used at the table.</p>
+        <div class="atlas-links">
+          <button class="location-link image-trigger" type="button" data-image="assets/images/Mos-Shuuta-FINAL-DAY.webp" data-title="Mos Shuuta: daylight survey"><span>01</span><b>Mos Shuuta / Day</b><i>&rarr;</i></button>
+          <button class="location-link image-trigger" type="button" data-image="assets/images/Mos-Shuuta-FINAL-NIGHT.webp" data-title="Mos Shuuta: night survey"><span>02</span><b>Mos Shuuta / Night</b><i>&rarr;</i></button>
+          <button class="location-link image-trigger" type="button" data-image="assets/images/Krayt-Outside.webp" data-title="The Krayt Fang: exterior"><span>03</span><b>The Krayt Fang</b><i>&rarr;</i></button>
+          <button class="location-link image-trigger" type="button" data-image="assets/images/Krayt-Inside.webp" data-title="The Krayt Fang: deck plan"><span>04</span><b>Ship deck plan</b><i>&rarr;</i></button>
+        </div>
+        <button class="rules-link image-trigger" type="button" data-image="assets/images/StarwarsD6-CheatSheet.webp" data-title="Star Wars D6 cheat sheet">Open D6 rules reference <span>&rarr;</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div><img src="assets/images/Logo.webp" alt=""><b>Shadows of Tatooine</b></div>
+    <p>A fan-made Star Wars D6 campaign chronicle.</p>
+    <a href="#top">Back to the transmission &uarr;</a>
+  </footer>
+
+  <dialog class="media-modal" aria-labelledby="modal-title">
+    <div class="modal-bar"><p>Campaign archive</p><button class="modal-close" type="button" aria-label="Close viewer">&times;</button></div>
+    <h2 id="modal-title">Media viewer</h2>
+    <div class="modal-media"></div>
+  </dialog>
+
+  <audio id="ambient-audio" src="assets/audio/Narration.mp3" preload="none"></audio>
+</body>
+</html>

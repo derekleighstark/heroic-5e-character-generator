@@ -1,0 +1,20 @@
+<header class="sheet-header item-header"><img class="profile-img" src="{{item.img}}" data-edit="img" data-action="editImage" alt=""><input class="name" name="name" value="{{item.name}}"><strong>{{item.type}}</strong></header>
+<div class="item-fields">
+  <label>Subtype<input name="system.subtype" value="{{system.subtype}}"></label>
+  <label>Action<input name="system.action" value="{{system.action}}"></label>
+  <label>Category<input name="system.category" value="{{system.category}}"></label>
+  <label>Source<input name="system.source" value="{{system.source}}"></label>
+  <label>Prerequisite<input name="system.prerequisite" value="{{system.prerequisite}}"></label>
+  <label>Tier<input name="system.tier" value="{{system.tier}}"></label>
+  <label>Power Set<input name="system.powerSet" value="{{system.powerSet}}"></label>
+  <label>Cost<input type="number" step="0.5" name="system.cost" value="{{system.cost}}"></label>
+  {{#if (eq item.type "power")}}
+  <label>Ability<select name="system.ability">{{selectOptions abilities selected=system.ability}}</select></label>
+  <label>Attack Bonus<input type="number" name="system.attackBonus" value="{{system.attackBonus}}"></label>
+  <label>Damage<input name="system.damage" value="{{system.damage}}" placeholder="2@powerDie + @powerMod"></label>
+  <label>Effect<input name="system.effect" value="{{system.effect}}"></label>
+  <label>Uses<input type="number" name="system.uses.value" value="{{system.uses.value}}"> / <input type="number" name="system.uses.max" value="{{system.uses.max}}"></label>
+  {{/if}}
+  {{#if (eq item.type "equipment")}}<label>Quantity<input type="number" name="system.quantity" value="{{system.quantity}}"></label><label><input type="checkbox" name="system.equipped" {{checked system.equipped}}> Equipped</label>{{/if}}
+  <label class="description">Description<textarea name="system.description">{{system.description}}</textarea></label>
+</div>

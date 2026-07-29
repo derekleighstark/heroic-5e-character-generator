@@ -1,0 +1,43 @@
+<div class="mancer-shell">
+  <header><div><span>HEROIC 5e</span><h1>Build Your Hero</h1></div><p>Native Foundry character creation</p></header>
+  <ol class="mancer-progress">{{#each steps}}<li><button type="button" data-mancer-jump="{{@index}}"><b>{{number}}</b><span>{{label}}</span></button></li>{{/each}}</ol>
+  <main>
+    <section data-mancer-step>
+      <h2>Who answers the call?</h2><p class="lead">Name the hero and set the scale of the campaign.</p>
+      <div class="mancer-form-grid"><label>Hero Name<input name="heroName" value="{{actor.name}}" placeholder="Heroic identity"></label><label>Campaign Rank<select name="rank">{{selectOptions ranks selected="Street Level"}}</select></label><label>Power Ability<select name="powerAbility">{{selectOptions abilities selected="str"}}</select></label><label>Side<select name="side">{{selectOptions sides selected="Heroic"}}</select></label><label>Calling<select name="calling" data-choice-preview><option value="">Choose Calling</option>{{#each callings}}<option value="{{_id}}">{{name}}</option>{{/each}}</select></label></div>
+      <div class="mancer-preview-grid single"><article class="choice-preview-card" data-calling-preview></article></div>
+    </section>
+    <section data-mancer-step>
+      <h2>Origin & Class</h2><p class="lead">Origin explains where the power came from. Class defines how the hero acts under pressure.</p>
+      <div class="mancer-form-grid"><label>Origin<select name="origin" data-choice-preview><option value="">Choose Origin</option>{{#each origins}}<option value="{{name}}">{{name}}</option>{{/each}}</select></label><label>Class<select name="className" data-choice-preview><option value="">Choose Class</option>{{#each classes}}<option value="{{name}}">{{name}}</option>{{/each}}</select></label><label>Origin +2 Ability<select name="primaryBonus"><option value="">Choose an Origin first</option></select></label><label>Origin +1 Ability<select name="secondaryBonus"><option value="">Choose +2 first</option></select></label></div>
+      <div class="mancer-tip"><i class="fa-solid fa-circle-info"></i> The wizard validates the +2 choice against the selected Origin. The +1 ability must be different.</div>
+      <div class="mancer-preview-grid"><article class="choice-preview-card" data-origin-preview></article><article class="choice-preview-card" data-class-preview></article></div>
+    </section>
+    <section data-mancer-step>
+      <h2>Assign Ability Scores</h2><p class="lead">Use every Campaign Rank array score exactly once. Origin bonuses are applied after assignment.</p>
+      <div class="mancer-ability-grid">{{#each abilities as |label key|}}<label><b>{{key}}</b><span>{{label}}</span><input data-ability-score type="number" name="abilities.{{key}}" value="{{lookup ../array @index}}"></label>{{/each}}</div>
+      <div class="mancer-array-tracker">
+        <div class="mancer-array-heading"><h3>Campaign Rank Array</h3><strong data-array-status>0 / 8 used</strong></div>
+        <div class="mancer-array-values" data-array-values>{{#each array}}<span data-array-value="{{this}}">{{this}}</span>{{/each}}</div>
+        <p>Each number must be assigned exactly once. Used values are checked off automatically.</p>
+      </div>
+    </section>
+    <section data-mancer-step>
+      <h2>Training & Talent</h2><p class="lead">Choose the Origin-trained Skill, four additional Skills, and one starting Talent. Skilled grants six additional choices.</p>
+      <div class="mancer-form-grid"><label>Origin Skill 1<select name="originSkill1"><option value="">Choose Skill</option>{{#each skills as |definition key|}}<option value="{{key}}">{{lookup definition 0}}</option>{{/each}}</select></label><label>Origin Skill 2 (Origins with two picks)<select name="originSkill2"><option value="">None</option>{{#each skills as |definition key|}}<option value="{{key}}">{{lookup definition 0}}</option>{{/each}}</select></label><label>Starting Talent<select name="talentName" data-choice-preview><option value="">Choose Talent</option>{{#each talents}}<option value="{{name}}">{{name}}</option>{{/each}}</select></label></div>
+      <div class="mancer-choice-grid">{{#each skills as |definition key|}}<label><input type="checkbox" name="skills.{{key}}"> <span>{{lookup definition 0}} <small>{{lookup definition 1}}</small></span></label>{{/each}}</div>
+      <div class="mancer-preview-grid single"><article class="choice-preview-card" data-talent-preview></article></div>
+    </section>
+    <section data-mancer-step>
+      <h2>Strengths, Scars & Powers</h2><p class="lead">Standard Start provides 3 points of Merits and 3 points of Flaws. Origin Merits and Flaws are added automatically and do not count against either budget.</p>
+      <nav class="choice-section-menu"><button type="button" class="active" data-choice-tab="merits"><i class="fa-solid fa-star"></i> Merits <strong data-merits-budget>0 / 3</strong></button><button type="button" data-choice-tab="flaws"><i class="fa-solid fa-triangle-exclamation"></i> Flaws <strong data-flaws-budget>0 / 3</strong></button><button type="button" data-choice-tab="powers"><i class="fa-solid fa-bolt"></i> Powers</button></nav>
+      <div class="choice-section active" data-choice-panel="merits"><div class="mancer-budget-heading"><h3>Choose Merits</h3><span>Spend exactly 3 points</span></div><div class="mancer-choice-grid rated-choice-grid">{{#each merits}}<label><input type="checkbox" name="merits.{{_id}}" data-budget-choice="merits" data-base-name="{{system.subtype}}" data-cost="{{system.cost}}"><span><b>{{name}}</b><small>{{system.cost}} point{{#unless (eq system.cost 1)}}s{{/unless}}</small></span></label>{{/each}}</div><div class="mancer-preview-grid" data-merits-preview></div></div>
+      <div class="choice-section" data-choice-panel="flaws"><div class="mancer-budget-heading"><h3>Choose Flaws</h3><span>Take exactly 3 points</span></div><div class="mancer-choice-grid rated-choice-grid">{{#each flaws}}<label><input type="checkbox" name="flaws.{{_id}}" data-budget-choice="flaws" data-base-name="{{system.subtype}}" data-cost="{{system.cost}}"><span><b>{{name}}</b><small>{{system.cost}} point{{#unless (eq system.cost 1)}}s{{/unless}}</small></span></label>{{/each}}</div><div class="mancer-preview-grid" data-flaws-preview></div></div>
+      <div class="choice-section" data-choice-panel="powers"><div class="mancer-budget-heading"><h3>Choose Power Sets</h3><span>Limited by Campaign Rank</span></div><div class="mancer-choice-grid power-set-grid">{{#each powerSets}}<label><input type="checkbox" name="powerSets.{{_id}}" data-choice-preview><span><b>{{name}}</b></span></label>{{/each}}</div><div class="mancer-powers-preview" data-powers-preview></div></div>
+    </section>
+    <section data-mancer-step>
+      <div class="mancer-finish"><i class="fa-solid fa-shield-halved"></i><h2>Ready to Become Heroic?</h2><p>The Charactermancer will calculate HP, Edge, saves, defenses, and Effect Values, then import the selected Side, Calling and triggers, Origin, Class, Talent, 3-point Merit and Flaw budgets, Power Sets, and first Core Track entries from the compendiums.</p><button type="submit"><i class="fa-solid fa-bolt"></i> Create Hero</button></div>
+    </section>
+  </main>
+  <footer><button type="button" data-mancer-back><i class="fa-solid fa-arrow-left"></i> Back</button><span>Heroic 5e Character Creation</span><button type="button" data-mancer-next>Next <i class="fa-solid fa-arrow-right"></i></button></footer>
+</div>

@@ -1,0 +1,815 @@
+{
+  "_id": "21128c087658aa2a",
+  "name": "The Motor City Sentinel",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/motor-city-sentinel/portrait.png",
+  "system": {
+    "biography": "<h2>Jake Fulton</h2><p>A Detroit mechanic and body-shop owner transformed by the Pulse into a powered-suit hero, using armor, gadgets, and machine interface abilities to protect the city.</p><h3>Backstory</h3><p>Jake Fulton is a Detroit native and lifelong Pistons, Tigers, Red Wings, and Lions fan. He learned shop work in high school, fixed cars and small engines around the neighborhood, and grew that skill into a solid repair business. He and his close high-school friends were ice fishing when the Pulse happened. He now balances hero work with caring for his nephew Colton after Chloe and Kyle died in a car wreck.</p><h3>Costume</h3><p>A Detroit-inspired powered armor suit built from automotive and machine-shop parts.</p>",
+    "notes": "<p>Technology and machine systems<br>Science and mechanical problem-solving<br>Vehicles and high-speed handling<br>Acrobatics and armored mobility<br>Insight and tactical reads<br>Pattern recognition</p><p>Mechanic/body shop work; cars and small engine equipment; powered armor fabrication and repair.</p><p>Level 1: Precision Strike<br>Level 1: Exploit the Opening</p><p>Armor grants +2 to all Active Defense rolls while armored.<br>Armor grants Resistance: Bludgeoning.<br>Machine Interface grants Advantage on Technology checks.<br>Enhanced Recovery rerolls one Hit Die per Breather.<br>Precision Strike adds FIG to damage when hitting with an attack or Power that deals damage.<br>Exploit the Opening adds an extra Power Die 1x/Turn when target has a Condition, has already been damaged this Turn, or you have Advantage; failed save leaves target Dazed until end of next Turn.</p><p>Gear Dependent: Gadgetry requires gear loadout. Armor Interface powers only function while wearing the suit. Rebuilding or recovering the suit requires Downtime and appropriate resources.</p><p>Doug was on a beer run during the ice-fishing Pulse event and missed the cool stuff.</p>",
+    "side": "Heroic",
+    "calling": "",
+    "triggers": {
+      "minor": "Exploit an enemy opening with precision or use armor/gadgets to protect someone in immediate danger.",
+      "major": "Take the bold approach against a dangerous threat to keep Detroit civilians, teammates, or Colt safe.",
+      "defining": "Lose something significant or suffer defeat because you trusted your suit, gadgets, or own confidence while protecting others."
+    },
+    "level": 1,
+    "rank": "Street Level",
+    "className": "Striker",
+    "powerAbility": "int",
+    "abilities": {
+      "str": {
+        "value": 14,
+        "trained": false
+      },
+      "dex": {
+        "value": 14,
+        "trained": true
+      },
+      "con": {
+        "value": 14,
+        "trained": false
+      },
+      "fig": {
+        "value": 15,
+        "trained": true
+      },
+      "int": {
+        "value": 16,
+        "trained": false
+      },
+      "wis": {
+        "value": 11,
+        "trained": false
+      },
+      "cha": {
+        "value": 10,
+        "trained": false
+      },
+      "per": {
+        "value": 8,
+        "trained": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": false,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": false,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": false,
+        "expertise": false
+      },
+      "influence": {
+        "trained": false,
+        "expertise": false
+      },
+      "insight": {
+        "trained": true,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": false,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": false,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": false,
+        "expertise": false
+      },
+      "notice": {
+        "trained": false,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": false,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": false,
+        "expertise": false
+      },
+      "survival": {
+        "trained": false,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 22,
+      "max": 22
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 3
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "conditions": "",
+    "schemaVersion": 1
+  },
+  "prototypeToken": {
+    "name": "The Motor City Sentinel",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/motor-city-sentinel/portrait.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic"
+    }
+  },
+  "items": [
+    {
+      "_id": "a21d3a338fe849fa",
+      "name": "Adaptive Biology - Instinctive Control (Origin)",
+      "type": "talent",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Adaptive Biology - Instinctive Control (Origin)</p>",
+        "subtype": "talent",
+        "action": "Passive",
+        "category": "talent",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "7a360ff5211f9ef9",
+      "name": "Pattern Recognition",
+      "type": "talent",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Pattern Recognition</p>",
+        "subtype": "talent",
+        "action": "Passive",
+        "category": "talent",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "f9cd76c205123c0c",
+      "name": "Enhanced Recovery (Origin)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Enhanced Recovery (Origin): 1x/Breather, when spending Hit Dice, reroll one die and use the better result.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "546fc2254ed0f440",
+      "name": "Base of Ops 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Base of Ops 1: 2-bay auto repair garage with 2-bedroom apartment above and small fabrication shop in basement; basic locks and security system.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "3e733f4cb642b4a1",
+      "name": "Eidetic Memory",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Eidetic Memory: Accurately recall anything deliberately studied, read, witnessed, or memorized; Advantage on INT checks to remember those details under pressure.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "54ed36ef395ea4c3",
+      "name": "Cash 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Cash 1: Comfortable income from mechanic/body shop for cars and small engine equipment.</p>",
+        "subtype": "merit",
+        "action": "Passive",
+        "category": "merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "2c97e1843966311f",
+      "name": "Marked by Change 1 (Origin)",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Marked by Change 1 (Origin): Abnormal brain waves and nervous-system bio-electric markers can create social or narrative pressure.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "1adcb579b7fae2fd",
+      "name": "Dependent 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Dependent 1: Nephew Colton \"Colt\" Becker, age 12; parents killed in car wreck 6 months ago.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 1,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "3ec88e67b3dd07cc",
+      "name": "Absent Minded",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Absent Minded: Under stress, may forget names, appointments, clues, items, or obvious details; roll 1d20 + INT vs DC 15 when invoked.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "4551d22deaaeec9f",
+      "name": "Overconfident",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Overconfident: When warned about a specific threat or cautious approach, roll 1d20 + WIS vs DC 15; on failure choose the bold approach, expose yourself, or suffer Disadvantage on first defensive check.</p>",
+        "subtype": "flaw",
+        "action": "Passive",
+        "category": "flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "0dd027d33ce769c6",
+      "name": "Gadgetry",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>GADGETRY 1<br>You carry a compact kit of specialized devices covering your core tactical needs. Produce mundane small tools or simple devices appropriate to your concept as a free action. Once per Breather, prepare temporary single-use gadgets equal to INT modifier + Rank Bonus, minimum 1.<br>Gadget Strike (Tier 1 At-Will, Action): Short range. Attack 1d20 + INT + Rank Bonus vs Dodge. Hit: default damage track based on device. Strong Success: target rolls 1d20 + CON vs Power Effect Value or is Shaken until end of your next Turn.<br>Gadget Kit (Tier 1): Produce small mundane or near-future tools such as lockpick, glass cutter, rebreather, cable spool, adhesive patch, forensic scanner, signal detector, or similar.<br>Gear Dependent: Gadgetry powers require kit, belt, pouch system, or equipment loadout. Grants +1 Power Pick.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "3118aee36941ecb7",
+      "name": "Gadget Strike",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Short range. Attack 1d20 + INT + Rank Bonus vs Dodge. Hit: default damage track based on device. Strong Success: target rolls 1d20 + CON vs Power Effect Value or is Shaken until end of your next Turn.</p>",
+        "subtype": "Tier 1 At-Will, Action",
+        "action": "Action",
+        "category": "Power",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Short range. Attack 1d20 + INT + Rank Bonus vs Dodge. Hit: default damage track based on device. Strong Success: target rolls 1d20 + CON vs Power Effect Value or is Shaken until end of your next Turn.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "a5b4c5f6c814dba0",
+      "name": "Gadget Kit",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Produce small mundane or near-future tools such as lockpick, glass cutter, rebreather, cable spool, adhesive patch, forensic scanner, signal detector, or similar.</p>",
+        "subtype": "Tier 1",
+        "action": "Tier 1",
+        "category": "Power",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Gadgetry",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Produce small mundane or near-future tools such as lockpick, glass cutter, rebreather, cable spool, adhesive patch, forensic scanner, signal detector, or similar.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "62634bd4eb809b9c",
+      "name": "Armor Interface",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>ARMOR INTERFACE 1<br>Your armor is active and functional. Gain +2 to all Active Defense rolls while armored. Gain Resistance to Bludgeoning damage. You can don or deploy armor in one minute unless modified by Utility Powers.<br>Repulsor Blast (Tier 1 At-Will, Action): Short range. Attack 1d20 + governing Attribute + Rank Bonus vs Dodge. Hit: default energy or force damage. Strong Success: push target Short range, knock Prone, or impose Disadvantage on next attack before end of next Turn.<br>Suit Deployment (Tier 1 Utility): Don or deploy armor as a Bonus Action.<br>Gear Dependent: Powers exist only while wearing the suit. Grants +1 Power Pick.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Armor Interface",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "9c2f32b928a77aa8",
+      "name": "Repulsor Blast",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Short range. Attack 1d20 + governing Attribute + Rank Bonus vs Dodge. Hit: default energy or force damage. Strong Success: push target Short range, knock Prone, or impose Disadvantage on next attack before end of next Turn.</p>",
+        "subtype": "Tier 1 At-Will, Action",
+        "action": "Action",
+        "category": "Power",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Armor Interface",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Short range. Attack 1d20 + governing Attribute + Rank Bonus vs Dodge. Hit: default energy or force damage. Strong Success: push target Short range, knock Prone, or impose Disadvantage on next attack before end of next Turn.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "a2a315291b30b8a9",
+      "name": "Suit Deployment",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Don or deploy armor as a Bonus Action.</p>",
+        "subtype": "Tier 1 Utility",
+        "action": "Tier 1 Utility",
+        "category": "Utility",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Armor Interface",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Don or deploy armor as a Bonus Action.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "505eae4764714b8b",
+      "name": "Machine Interface",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>MACHINE INTERFACE 1<br>Interface with electronic or mechanical systems through direct touch. Lock mechanisms, security panels, vehicle controls, and networked devices respond to mental commands as if you had physical access and credentials. Communicate with simple electronic systems and receive basic status information. Gain Advantage on Technology checks.<br>Remote Access (Tier 1 Utility): Access networked systems within Short range without physical contact. Unlock doors, disable cameras, access building systems, read data, and send commands through networks as a free action once per Turn. Physical systems not networked still require touch.</p>",
+        "subtype": "Power Set",
+        "action": "Passive",
+        "category": "Power Set",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Machine Interface",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    },
+    {
+      "_id": "9477cd64754c80a4",
+      "name": "Remote Access",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Access networked systems within Short range without physical contact. Unlock doors, disable cameras, access building systems, read data, and send commands through networks as a free action once per Turn. Physical systems not networked still require touch.</p>",
+        "subtype": "Tier 1 Utility",
+        "action": "Tier 1 Utility",
+        "category": "Utility",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": "",
+        "powerSet": "Machine Interface",
+        "cost": 0,
+        "tags": "",
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "Access networked systems within Short range without physical contact. Unlock doors, disable cameras, access building systems, read data, and send commands through networks as a free action once per Turn. Physical systems not networked still require touch.",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0
+      },
+      "flags": {}
+    }
+  ],
+  "effects": [],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {}
+}

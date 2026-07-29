@@ -1,0 +1,2035 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<title>HEROIC 5e Character Sheet</title>
+<link href="character-sheet.css?v=20260702-generator-output" rel="stylesheet"/>
+</head>
+<body>
+<nav aria-label="Character sheet controls" class="toolbar">
+<a href="index.html">Back to Generator</a>
+<div><strong>HEROIC 5e Character Record</strong><span id="packetSummary">US Letter portrait - Modern Heroic</span></div>
+<label class="power-page-control">Power Set pages <input id="powerSetPageCount" max="16" min="1" type="number" value="8"/></label>
+<button id="addPowerSet" type="button">+ Power Set</button>
+<button id="removePowerSet" type="button">− Last Set</button>
+<label><input id="inkSaver" type="checkbox"/> Grayscale / ink saver</label>
+<button id="importJson" onclick="window.heroicImportJson &amp;&amp; window.heroicImportJson(event)" type="button">Import JSON</button>
+<button id="exportJson" onclick="window.heroicExportJson &amp;&amp; window.heroicExportJson(event)" type="button">Export JSON</button>
+<input accept="application/json,.json" class="visually-hidden" id="jsonImportInput" type="file"/>
+<button id="clearSheet" type="button">Clear typed notes</button>
+<button class="primary" id="printSheet" onclick="window.heroicPrintSheet &amp;&amp; window.heroicPrintSheet(event)" type="button">Print / Save PDF</button>
+</nav>
+<main class="document" id="blankSheet">
+<article class="page page-cover">
+<header class="masthead cover-masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/>
+<div class="chapter"><small>Official Character Record</small><h1 data-character-title="">Core Hero</h1></div>
+<div class="page-number"><b>01</b><span>of 03</span></div>
+</header>
+<section class="cover-hero card">
+<div class="cover-logo-wrap"><img alt="Heroic 5e Logo" src="assets/heroic-5e-logo-small.png"/></div>
+<div class="cover-title-block">
+<small>Character Record</small>
+<h2 data-character-title="">Core Hero</h2>
+<p data-character-subtitle=""></p>
+</div>
+<div class="portrait-uploader" id="coverPortraitDropzone">
+<div aria-label="Add or replace character portrait image" class="cover-portrait" id="coverPortraitButton" role="button" tabindex="0">
+<img alt="Character portrait preview" id="coverPortraitImage"/>
+<span id="coverPortraitPlaceholder"><b>Character Portrait</b><em>Click to Add Character Art<br/>or Drag &amp; Drop Here</em></span>
+</div>
+<input accept="image/png,image/jpeg,image/webp,image/gif,image/*" class="visually-hidden" id="coverPortraitInput" type="file"/>
+<div aria-label="Portrait controls" class="portrait-controls no-print">
+<button id="replacePortrait" type="button">Replace</button>
+<button id="fitPortrait" type="button">Fit</button>
+<button id="fillPortrait" type="button">Fill</button>
+<button id="clearPortrait" type="button">Remove</button>
+</div>
+</div>
+</section>
+<section class="cover-details">
+<div class="field card"><label>Player</label><b contenteditable="true" data-blank-field="" data-field="player"></b></div>
+<div class="field card"><label>Campaign</label><b contenteditable="true" data-blank-field="" data-field="campaign"></b></div>
+<div class="field card"><label>GM</label><b contenteditable="true" data-blank-field="" data-field="gm"></b></div>
+<div class="field card"><label>Origin</label><b contenteditable="true" data-blank-field="" data-field="origin"></b></div>
+<div class="field card"><label>Calling</label><b contenteditable="true" data-blank-field="" data-field="calling"></b></div>
+<div class="field card"><label>Class / Level</label><b contenteditable="true" data-blank-field="" data-field="classLevel"></b></div>
+</section>
+<section class="cover-tagline card">
+<label>Heroic Tagline / Issue Quote</label>
+<b contenteditable="true" data-blank-field="" data-field="heroicTagline"></b>
+</section>
+<footer><span>HEROIC 5e</span><b data-character-title="">Core Hero</b><span>01 / 03</span></footer>
+</article>
+<article class="page page-core">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/>
+<div class="chapter"><small>Character Record</small><h1 data-character-title="">Core Hero</h1></div>
+<div class="page-number"><b>01</b><span>of 03</span></div>
+</header>
+<section class="hero-intro card">
+<div class="field hero-name"><label>Hero name / alias</label><b contenteditable="true" data-blank-field="" data-field="heroName"></b></div>
+<div class="field concept"><label>Concept - describe the hero in one clear sentence</label><b contenteditable="true" data-blank-field="" data-field="concept"></b></div>
+<div class="intro-row">
+<div class="field"><label>Player</label><b contenteditable="true" data-blank-field="" data-field="player"></b></div>
+<div class="field"><label>Real / public identity</label><b contenteditable="true" data-blank-field="" data-field="identity"></b></div>
+<div class="field"><label>Origin</label><b contenteditable="true" data-blank-field="" data-field="origin"></b></div>
+<div class="field"><label>Calling</label><b contenteditable="true" data-blank-field="" data-field="calling"></b></div>
+<div class="field"><label>Class</label><b contenteditable="true" data-blank-field="" data-field="class"></b></div>
+<div class="field mini"><label>Level</label><b contenteditable="true" data-blank-field="" data-field="level"></b></div>
+<div class="field mini"><label>Prowess</label><b contenteditable="true" data-blank-field="" data-field="prowess"></b></div>
+</div>
+</section>
+<div class="section-heading"><h2>Abilities &amp; Saves</h2><p>Write total score, modifier, and trained save bonus.</p></div>
+<section class="ability-grid">
+<div class="ability"><h3>Strength <i>STR</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="strScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="strMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="strSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="strSave"></b></label></div>
+<div class="ability"><h3>Dexterity <i>DEX</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="dexScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="dexMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="dexSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="dexSave"></b></label></div>
+<div class="ability"><h3>Constitution <i>CON</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="conScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="conMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="conSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="conSave"></b></label></div>
+<div class="ability"><h3>Fighting <i>FIG</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="figScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="figMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="figSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="figSave"></b></label></div>
+<div class="ability"><h3>Intelligence <i>INT</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="intScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="intMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="intSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="intSave"></b></label></div>
+<div class="ability"><h3>Wisdom <i>WIS</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="wisScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="wisMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="wisSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="wisSave"></b></label></div>
+<div class="ability"><h3>Perception <i>PER</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="perScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="perMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="perSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="perSave"></b></label></div>
+<div class="ability"><h3>Charisma <i>CHA</i></h3><label>Score<b contenteditable="true" data-blank-field="" data-field="chaScore"></b></label><label>Modifier<b contenteditable="true" data-blank-field="" data-field="chaMod"></b></label><label>Save <span class="save-trained"><input data-blank-check="" data-field="chaSaveTrained" data-save-trained="" type="checkbox"/> trained</span><b contenteditable="true" data-blank-field="" data-field="chaSave"></b></label></div>
+</section>
+<div class="section-heading"><h2>Combat &amp; Resources</h2><p>Use circles for maximums and tracks during play.</p></div>
+<section class="resource-grid">
+<div class="resource featured"><h3>Hit Points</h3><div><label>Current<b contenteditable="true" data-blank-field=""></b></label><i>/</i><label>Maximum<b contenteditable="true" data-blank-field=""></b></label></div></div>
+<div class="resource"><h3>Temp HP / Bloodied</h3><div><label>Temp<b contenteditable="true" data-blank-field=""></b></label><i>/</i><label>Bloodied<b contenteditable="true" data-blank-field=""></b></label></div></div>
+<div class="resource"><h3>Hit Dice</h3><div><label>Current<b contenteditable="true" data-blank-field=""></b></label><i>/</i><label>Max / Die<b contenteditable="true" data-blank-field=""></b></label></div></div>
+<div class="resource small-resource"><h3>Recovery Mod</h3><b contenteditable="true" data-blank-field=""></b></div>
+<div class="resource small-resource"><h3>Power Die</h3><b contenteditable="true" data-blank-field=""></b></div>
+<div class="resource featured"><h3>Edge</h3><div><label>Current<b contenteditable="true" data-blank-field=""></b></label><i>/</i><label>Start / Cap<b contenteditable="true" data-blank-field=""></b></label></div></div>
+<div class="resource small-resource"><h3>Speed</h3><b contenteditable="true" data-blank-field=""></b></div>
+<div class="resource small-resource"><h3>Initiative</h3><b contenteditable="true" data-blank-field=""></b><small>DEX + PER</small></div>
+<div class="resource small-resource"><h3>Class EV</h3><b contenteditable="true" data-blank-field=""></b><small>10 + Primary + Prowess</small></div>
+<div class="resource small-resource"><h3>Armor / Resist</h3><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<section class="defense-grid">
+<div class="defense"><span>Parry / Block</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + FIG + PER + Prowess</small></div>
+<div class="defense"><span>Dodge</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + DEX + PER + Prowess</small></div>
+<div class="defense"><span>Willpower</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + WIS + PER + Prowess</small></div>
+<div class="defense"><span>Social Defense</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + CHA + INT + Prowess</small></div>
+<div class="defense attack"><span>Melee Attack</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + FIG + Prowess</small></div>
+<div class="defense attack"><span>Ranged Attack</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + DEX + Prowess</small></div>
+<div class="defense attack"><span>Mental Attack</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + INT + Prowess</small></div>
+<div class="defense attack"><span>Social Attack</span><b contenteditable="true" data-blank-field=""></b><small>1d20 + CHA + Prowess</small></div>
+</section>
+<div class="section-heading"><h2>Skills</h2><p>T = +Prowess; E = +2× Prowess and marks the skill *; an applicable Specialty grants Advantage.</p></div>
+<section class="skills card">
+<div class="skill-list">
+<p data-skill="acrobatics" data-skill-ability="DEX"><strong>Acrobatics <i>DEX</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="athletics" data-skill-ability="STR"><strong>Athletics <i>STR</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="influence" data-skill-ability="CHA"><strong>Influence <i>CHA</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="insight" data-skill-ability="WIS"><strong>Insight <i>WIS</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="intimidation" data-skill-ability="CHA"><strong>Intimidation <i>CHA</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="investigation" data-skill-ability="INT"><strong>Investigation <i>INT</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="medicine" data-skill-ability="INT"><strong>Medicine <i>INT</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="notice" data-skill-ability="PER"><strong>Notice <i>PER</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+</div>
+<div class="skill-list">
+<p data-skill="occult" data-skill-ability="WIS"><strong>Occult <i>WIS</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="science" data-skill-ability="INT"><strong>Science <i>INT</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="sleight" data-skill-ability="DEX"><strong>Sleight <i>DEX</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="stealth" data-skill-ability="DEX"><strong>Stealth <i>DEX</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="streetwise" data-skill-ability="CHA"><strong>Streetwise <i>CHA</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="survival" data-skill-ability="WIS"><strong>Survival <i>WIS</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="technology" data-skill-ability="INT"><strong>Technology <i>INT</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+<p data-skill="vehicles" data-skill-ability="DEX"><strong>Vehicles <i>DEX</i></strong><span class="skill-checks"><label><input data-blank-check="" data-skill-trained="" type="checkbox"/> T</label><label><input data-blank-check="" data-skill-expertise="" type="checkbox"/> E</label></span><b contenteditable="true" data-blank-field="" data-skill-total=""></b></p>
+</div>
+</section>
+<section aria-label="Class features, talents, and status notes" class="classic-support">
+<div class="classic-notes card"><h3>Class Features &amp; Talents</h3><div contenteditable="true" data-blank-field=""></div></div>
+<div class="classic-notes card"><h3>Conditions, Momentum &amp; Burnout</h3><div class="classic-tracks"><span>Conditions</span><b contenteditable="true" data-blank-field=""></b><span>Momentum</span><b contenteditable="true" data-blank-field=""></b><span>Burnout</span><b contenteditable="true" data-blank-field=""></b></div></div>
+</section>
+<footer><span>HEROIC 5e</span><b data-character-title="">Core Hero</b><span>01 / 03</span></footer>
+</article>
+<article class="page page-powers">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>Character Record</small><h1>Powers &amp; Features</h1></div><div class="page-number"><b>02</b><span>of 03</span></div></header>
+<section class="power-profile card">
+<div class="field"><label>Power set / core track</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field"><label>Power ability</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Power EV</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Power DC</label><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<div class="section-heading"><h2>Powers &amp; Attacks</h2><p>Write complete action, roll, range, effect, duration, and limits.</p></div>
+<section class="power-cards">
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+<div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field=""></b><em>□ At-Will  □ Encounter  □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field=""></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field=""></b></label><label>Range / Area<b contenteditable="true" data-blank-field=""></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field=""></b></label></div>
+</section>
+<div class="section-heading"><h2>Features, Talents &amp; Build Notes</h2></div>
+<section class="feature-grid">
+<div class="lined card"><h3>Class Features</h3><div contenteditable="true" data-blank-field=""></div></div>
+<div class="lined card"><h3>Talents</h3><div contenteditable="true" data-blank-field=""></div></div>
+<div class="lined card"><h3>Enhancements</h3><div contenteditable="true" data-blank-field=""></div></div>
+<div class="lined card"><h3>Limitations</h3><div contenteditable="true" data-blank-field=""></div></div>
+</section>
+<section class="status-grid">
+<div class="conditions card"><h3>Conditions</h3><div><span>□ Blinded</span><span>□ Charmed</span><span>□ Dazed</span><span>□ Frightened</span><span>□ Grappled</span><span>□ Incapacitated</span><span>□ Injured</span><span>□ Invisible</span><span>□ Overloaded</span><span>□ Paralyzed</span><span>□ Prone</span><span>□ Restrained</span><span>□ Shaken</span><span>□ Slowed</span><span>□ Stunned</span><span>□ Other</span></div><b contenteditable="true" data-blank-field=""></b></div>
+<div class="burnout card"><h3>Burnout</h3><div><span>□ 1 / -1</span><span>□ 2 / -2</span><span>□ 3 / -3</span><span>□ 4 / -4</span><span>□ 5 / -5</span><span>□ 6 / -6</span></div><label>Current momentum / ongoing effects<b contenteditable="true" data-blank-field=""></b></label></div>
+</section>
+<footer><span>HEROIC 5e</span><b>Powers &amp; Features</b><span>02 / 03</span></footer>
+</article>
+<div aria-live="polite" id="powerSetPages"></div>
+<template id="powerSetTemplate">
+<article class="page power-set-sheet">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>Character Record</small><h1>Power Set <span data-set-number=""></span></h1></div><div class="page-number"><b></b><span></span></div></header>
+<section class="set-profile card">
+<div class="field set-name"><label>Power Set Name</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field"><label>Governing Ability</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Power EV</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Power Die</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Tier Access</label><b contenteditable="true" data-blank-field=""></b></div>
+<div class="field mini"><label>Picks Spent</label><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<div class="section-heading"><h2>Core Track</h2><p>Record every purchased rank and its complete mechanical benefit.</p></div>
+<section class="record-table core-track card">
+<div class="record-head"><b>Tier / Rank</b><b>Name</b><b>Mechanical Benefit, Scaling &amp; Notes</b></div>
+<div class="record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<div class="section-heading"><h2>At-Will Powers</h2><p>Minimum baseline: 2. Add every later pick.</p></div>
+<section class="power-records card">
+<div class="power-record-head"><b>Name</b><b>Action</b><b>Attack / Defense</b><b>Range / Area</b><b>Effect, Duration &amp; Scaling</b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<div class="section-heading"><h2>Encounter &amp; Daily / Apex Powers</h2><p>Mark expended uses during play.</p></div>
+<section class="power-records encounter-records card">
+<div class="power-record-head"><b>Use / Name</b><b>Action</b><b>Attack / Defense</b><b>Range / Area</b><b>Effect, Duration, Recharge &amp; Scaling</b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field="">□ Encounter — </b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field="">□ Encounter — </b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field="">□ Encounter — </b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="power-record-row"><b contenteditable="true" data-blank-field="">□ Daily / Apex — </b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<div class="set-bottom-grid">
+<section class="lined card"><h3>Utility / Sustained Powers</h3><div contenteditable="true" data-blank-field=""></div></section>
+<section class="lined card"><h3>Enhancements</h3><div contenteditable="true" data-blank-field=""></div></section>
+<section class="lined card"><h3>Limitations</h3><div contenteditable="true" data-blank-field=""></div></section>
+<section class="lined card"><h3>Combos, Power Stunts &amp; Tactical Notes</h3><div contenteditable="true" data-blank-field=""></div></section>
+</div>
+<aside class="power-reminder"><b>Power attack:</b> 1d20 + delivery ability + Prowess. <b>Power EV:</b> 10 + governing ability + Prowess. <b>Sustain:</b> Bonus Action at start of turn; only one sustained power at a time.</aside>
+<footer><span>HEROIC 5e</span><b>Power Set <span data-set-number=""></span></b><span></span></footer>
+</article>
+</template>
+<article class="page page-story">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>Character Record</small><h1>Identity &amp; Story</h1></div><div class="page-number"><b>03</b><span>of 03</span></div></header>
+<section class="campaign-strip card">
+<div class="field"><label>Origin</label><b contenteditable="true" data-blank-field="" data-field="story.origin"></b></div>
+<div class="field"><label>Class / Primary Ability</label><b contenteditable="true" data-blank-field="" data-field="story.classPrimaryAbility"></b></div>
+<div class="field"><label>Calling / Code</label><b contenteditable="true" data-blank-field="" data-field="story.callingCode"></b></div>
+<div class="field"><label>Origin +2 / +1 Abilities</label><b contenteditable="true" data-blank-field="" data-field="story.originAbilities"></b></div>
+<div class="field"><label>Origin Trait / Talent</label><b contenteditable="true" data-blank-field="" data-field="story.originTraitTalent"></b></div>
+<div class="field"><label>Origin Skills / Languages</label><b contenteditable="true" data-blank-field="" data-field="story.originSkillsLanguages"></b></div>
+<div class="field"><label>Campaign</label><b contenteditable="true" data-blank-field="" data-field="story.campaign"></b></div>
+<div class="choice choice-rank"><label>Rank</label><label class="choice-option"><input data-choice="campaignRank" name="campaignRank" type="radio" value="Street"/><span>Street</span></label><label class="choice-option"><input data-choice="campaignRank" name="campaignRank" type="radio" value="Mid"/><span>Mid</span></label><label class="choice-option"><input data-choice="campaignRank" name="campaignRank" type="radio" value="World"/><span>World</span></label></div>
+<div class="choice choice-side"><label>Side</label><label class="choice-option"><input data-choice="side" name="side" type="radio" value="Heroic"/><span>Heroic</span></label><label class="choice-option"><input data-choice="side" name="side" type="radio" value="Unaligned"/><span>Unaligned</span></label><label class="choice-option"><input data-choice="side" name="side" type="radio" value="Villainous"/><span>Villainous</span></label></div>
+</section>
+<div class="section-heading"><h2>Who Is This Hero?</h2><p>Write useful truths that generate choices and scenes.</p></div>
+<section class="story-panels">
+<div class="story-panel card"><h3>Origin Story</h3><p>Where did the powers come from, and what changed?</p><div contenteditable="true" data-blank-field="" data-field="story.originStory"></div></div>
+<div class="story-panel card"><h3>Personality &amp; Voice</h3><p>How do they act, speak, and respond under pressure?</p><div contenteditable="true" data-blank-field="" data-field="story.personalityVoice"></div></div>
+<div class="story-panel card"><h3>Motivation</h3><p>What do they want, protect, fear, or need to prove?</p><div contenteditable="true" data-blank-field="" data-field="story.motivation"></div></div>
+<div class="story-panel card"><h3>Identity &amp; Reputation</h3><p>Who knows the truth, and what does the public believe?</p><div contenteditable="true" data-blank-field="" data-field="story.identityReputation"></div></div>
+</section>
+<section class="merit-grid">
+<div class="lined card"><h3>Merits</h3><small>Resources, trust, status, access, advantages</small><div contenteditable="true" data-blank-field="" data-field="story.merits"></div></div>
+<div class="lined card"><h3>Talents</h3><small>Trained gifts, origin talents, class talents</small><div contenteditable="true" data-blank-field="" data-field="story.talents"></div></div>
+<div class="lined card"><h3>Flaws</h3><small>Enemies, duties, weaknesses, complications</small><div contenteditable="true" data-blank-field="" data-field="story.flaws"></div></div>
+</section>
+<div class="section-heading"><h2>Calling Triggers</h2><p>Record the exact moments that award Edge.</p></div>
+<section class="trigger-grid card">
+<label><span>Minor Trigger</span><b contenteditable="true" data-blank-field="" data-field="story.triggers.minor"></b></label>
+<label><span>Major Trigger</span><b contenteditable="true" data-blank-field="" data-field="story.triggers.major"></b></label>
+<label><span>Defining Trigger</span><b contenteditable="true" data-blank-field="" data-field="story.triggers.defining"></b></label>
+</section>
+<div class="section-heading"><h2>People, Places &amp; Gear</h2></div>
+<section class="contact-table card">
+<div class="table-head"><b>Name / Role</b><b>Relationship</b><b>Access, Services, Leverage, Notes</b></div>
+<div class="table-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="table-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+<div class="table-row"><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b><b contenteditable="true" data-blank-field=""></b></div>
+</section>
+<section class="people-grid">
+<div class="lined card"><h3>Allies &amp; Key Relationships</h3><div contenteditable="true" data-blank-field="" data-field="story.allies"></div></div>
+<div class="lined card"><h3>Enemies &amp; Complications</h3><div contenteditable="true" data-blank-field="" data-field="story.enemies"></div></div>
+<div class="lined card"><h3>Equipment &amp; Headquarters</h3><div contenteditable="true" data-blank-field="" data-field="story.equipment"></div></div>
+</section>
+<section class="hook card"><label>One clear idea / campaign hook</label><b contenteditable="true" data-blank-field="" data-field="story.campaignHook"></b></section>
+<footer><span>HEROIC 5e</span><b>Identity &amp; Story</b><span>03 / 03</span></footer>
+</article>
+<article class="page page-advancement">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>Character Record</small><h1>Advancement &amp; Session Notes</h1></div><div class="page-number"><b></b><span></span></div></header>
+<div class="section-heading"><h2>Advancement</h2><p>Track major level milestones, power picks, talents, and campaign growth.</p></div>
+<section class="advance-page-grid">
+<div class="advance advance-large card">
+<h3>Advancement Track</h3>
+<div class="advance-head"><span>Level</span><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div>
+<div><span>Power Picks</span><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i></div>
+<div><span>Talent Slots</span><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i></div>
+<div><span>Notes / Rewards</span><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i><i contenteditable="true" data-blank-field=""></i></div>
+</div>
+<div class="milestone-card card"><h3>Class Features &amp; Major Milestones</h3><div contenteditable="true" data-blank-field="" data-field="features.classFeatures"></div></div>
+</section>
+<div class="section-heading"><h2>Session Notes</h2><p>Large writing space for table notes, NPCs, rewards, and next-session reminders.</p></div>
+<section class="session-notes-large card">
+<div class="session-meta">
+<label>Session #<b contenteditable="true" data-blank-field=""></b></label>
+<label>Adventure / Issue Title<b contenteditable="true" data-blank-field=""></b></label>
+<label>Date<b contenteditable="true" data-blank-field=""></b></label>
+</div>
+<div class="session-writing" contenteditable="true" data-blank-field="" data-field="story.sessionNotes"></div>
+</section>
+<footer><span>HEROIC 5e</span><b>Advancement &amp; Notes</b><span></span></footer>
+</article>
+<article class="page page-reference">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>At-the-Table Rules</small><h1>Player Reference</h1></div><div class="page-number"><b></b><span></span></div></header>
+<section class="reference-grid">
+<div class="reference-card card"><h2>Core Rolls</h2><p><b>Skill / Save:</b> 1d20 + ability modifier + Prowess if trained.</p><p><b>Attack:</b> 1d20 + delivery ability + Prowess. <b>Power EV:</b> 10 + governing ability + Prowess.</p><p><b>Strong success:</b> beat EV by 5+; one Momentum Effect. <b>Heroic:</b> beat by 10+; one Heroic Effect or two Momentum Effects.</p><p><b>Natural 20:</b> combat attack critical. <b>Natural 1:</b> attack misses; failed Active Defense lets attacker critical.</p><p><b>HP:</b> Level 1 = CON score + maximum Hit Die × Rank HP multiplier; later levels add die median + CON modifier. Tough adds +2 HP/level.</p></div>
+<div class="reference-card card"><h2>Range Bands</h2><p><b>Close:</b> same zone, 0–25 ft.</p><p><b>Short:</b> adjacent zone, 25–50 ft.</p><p><b>Medium:</b> 2–3 zones, 50–120 ft.</p><p><b>Long:</b> 4–6 zones, 120–300 ft.</p><h3>Turn Economy</h3><p>Move, Action, Bonus Action when granted, Reaction when triggered, one free object interaction, and speech.</p></div>
+<div class="reference-card card wide"><h2>Edge — Spend After the Roll, Before the Outcome; One Use per Roll</h2><div class="edge-uses"><span><b>1</b> Reroll d20</span><span><b>1</b> Advantage / cancel Disadvantage</span><span><b>1</b> Heroic Defense</span><span><b>1</b> Dramatic Rebound</span><span><b>1</b> Resist Defeat (1/encounter)</span><span><b>1</b> Power Stunt</span><span><b>1</b> Add 1 Power Die</span><span><b>1</b> Reduce Collateral</span><span><b>1</b> Narrative Advantage</span><span><b>2</b> Refresh Encounter (1/encounter)</span><span><b>2</b> Push Daily; +1 Burnout</span><span><b>1 each</b> Team Combo</span></div><p>Starting Edge: <b>Street 3, Mid 2, World 1.</b> Cap = <b>Level + Prowess.</b> Starting Edge refreshes each session; refresh does not fill to cap.</p></div>
+<div class="reference-card card"><h2>Recovery</h2><p><b>Breather (5–10 min):</b> spend any Hit Dice. Each heals die + CON + Recovery Mod, minimum die median; refresh Breather abilities.</p><p><b>Second Wind:</b> Bonus Action once/encounter; spend 1 Hit Die; end Shaken, Slowed, or Dazed; Advantage on next save before end of next turn.</p><p><b>Steady On:</b> while Bloodied, Action once/encounter; spend 1 Hit Die + Recovery Mod.</p><p><b>Downtime:</b> full HP and Hit Dice, starting Edge, Daily powers, and most Conditions.</p></div>
+<div class="reference-card card"><h2>Downed &amp; Grit</h2><p>At 0 HP you are <b>Downed</b>. Make Grit checks as directed. Three successes stabilize at 0 HP, unconscious. Three failures mean Defeated. Medicine DC 10 stabilizes.</p><h3>Sustained Powers</h3><p>Use a Bonus Action at the start of your turn. You may sustain only one power at a time. Sustaining ends if Stunned, Incapacitated, or Unconscious.</p></div>
+<div class="reference-card card wide burnout-reference"><h2>Burnout</h2><p><b>Check:</b> 1d20 + CON + Prowess vs DC 10 + (current Burnout × 2). After safely maintaining a Power for Prowess turns, check each extra turn.</p><div><span><b>1</b> −1</span><span><b>2</b> −2</span><span><b>3</b> −3; Disadvantage Initiative</span><span><b>4</b> −4; Speed −10</span><span><b>5</b> −5; no Push Daily / Power Stunt</span><span><b>6th</b> Incapacitated until Breather</span></div><p>Recover 1 Burnout after a Breather; recover 2–3 during Downtime.</p></div>
+</section>
+<aside class="rules-note">Quick table rules for play. Larger condition text is on the next page for easier reading.</aside>
+<footer><span>HEROIC 5e</span><b>Player Reference</b><span></span></footer>
+</article>
+<article class="page page-reference page-conditions">
+<header class="masthead"><img alt="Heroic 5e Logo" class="corner-logo" src="assets/heroic-5e-logo-small.png"/><div class="chapter"><small>At-the-Table Rules</small><h1>Condition Reference</h1></div><div class="page-number"><b></b><span></span></div></header>
+<div class="section-heading"><h2>Condition Reference</h2><p>Large-print table for faster at-the-table use.</p></div>
+<section class="condition-reference card">
+<p><b>Blinded</b><span>Attacks against gain Adv.; own attacks and sight checks have Disadv.</span></p><p><b>Burning</b><span>Source Prowess fire at turn start; Action + reasonable method removes.</span></p><p><b>Charmed</b><span>Cannot willingly attack source; Disadv. on saves against source.</span></p><p><b>Dazed</b><span>Either Action or Bonus Action; no Reactions.</span></p><p><b>Deafened</b><span>Cannot hear; hearing-required effects fail.</span></p><p><b>Frightened</b><span>Disadv. while source visible; cannot willingly move closer.</span></p><p><b>Frozen</b><span>Cannot move; Disadv. Dodge; Restrained; end-turn STR/CON save.</span></p><p><b>Grappled</b><span>Speed 0; Action Athletics/Acrobatics vs grappler Athletics to escape.</span></p><p><b>Hidden</b><span>Against Disadv.; own attacks Adv.; ends when revealed/attacking/visible Power.</span></p><p><b>Immobilized</b><span>Cannot move by any means; no Athletics escape.</span></p><p><b>Incapacitated</b><span>No actions, Bonus Actions, Reactions, or movement; usually until Breather.</span></p><p><b>Injured</b><span>Disadv. one skill/physical save; Medicine DC 15 during Breather/Downtime.</span></p><p><b>Overloaded</b><span>Disadv. next Power or Technology roll; ends after that roll.</span></p><p><b>Paralyzed</b><span>No movement/actions; auto-fail STR/DEX saves; attacks gain Adv.</span></p><p><b>Pinned</b><span>Grappled and Prone; escaping grapple ends both.</span></p><p><b>Poisoned</b><span>Disadvantage on attacks and Skill checks.</span></p><p><b>Power Disrupted</b><span>Named set suppressed; passives inactive; Sustained effects end.</span></p><p><b>Prone</b><span>Melee against Adv.; ranged against Disadv.; stand for half Speed.</span></p><p><b>Restrained</b><span>Speed 0; attacks/Dodge Disadv.; attacks against gain Adv.</span></p><p><b>Shaken</b><span>Disadv. next attack, save, or Skill check, then ends.</span></p><p><b>Slowed</b><span>Half Speed; no Reactions; either Action or Bonus Action.</span></p><p><b>Stunned</b><span>No movement/Action/Bonus Action; Active Defenses have Disadv.</span></p><p><b>Unconscious</b><span>Cannot act/move; Prone; auto-fail STR/DEX; attacks Adv.; Close hits critical.</span></p><p><b>Other</b><span contenteditable="true" data-blank-field=""></span></p>
+</section>
+<aside class="rules-note">This page is a table reference, not a replacement for the full rulebook. Specific powers and features override general rules.</aside>
+<footer><span>HEROIC 5e</span><b>Player Reference</b><span></span></footer>
+</article>
+</main>
+<script>
+    const inkSaver = document.querySelector('#inkSaver');
+    const params = new URLSearchParams(location.search);
+    // RC1 focuses on the single official Modern Heroic style.
+    document.documentElement.classList.remove('classic-sheet', 'dossier-sheet', 'comic-sheet', 'compact-sheet', 'story-sheet');
+    document.documentElement.style.setProperty('--sheet-zoom', '2');
+
+    if (params.get('ink') === '1') {
+      inkSaver.checked = true;
+      document.documentElement.classList.add('ink-saver');
+    }
+    inkSaver.addEventListener('change', () => document.documentElement.classList.toggle('ink-saver', inkSaver.checked));
+    const setCount = document.querySelector('#powerSetPageCount');
+    const setContainer = document.querySelector('#powerSetPages');
+    const setTemplate = document.querySelector('#powerSetTemplate');
+    const clampSetCount = value => Math.max(1, Math.min(16, Number(value) || 1));
+    function renumberPacket() {
+      const pages = [...document.querySelectorAll('.page:not(.page-powers)')];
+      const total = pages.length;
+      pages.forEach((page, index) => {
+        const number = String(index + 1).padStart(2, '0');
+        page.querySelector('.page-number b').textContent = number;
+        page.querySelector('.page-number span').textContent = `of ${String(total).padStart(2, '0')}`;
+        page.querySelector('footer > span:last-child').textContent = `${number} / ${String(total).padStart(2, '0')}`;
+      });
+      document.querySelector('#packetSummary').textContent = `US Letter portrait - ${total} pages (${setCount.value} Power Sets)`;
+    }
+    function updatePowerSetPages(requested) {
+      const target = clampSetCount(requested);
+      setCount.value = target;
+      while (setContainer.children.length < target) {
+        const page = setTemplate.content.firstElementChild.cloneNode(true);
+        setContainer.append(page);
+      }
+      while (setContainer.children.length > target) setContainer.lastElementChild.remove();
+      [...setContainer.children].forEach((page, index) => page.querySelectorAll('[data-set-number]').forEach(node => { node.textContent = index + 1; }));
+      renumberPacket();
+    }
+    setCount.addEventListener('change', () => updatePowerSetPages(setCount.value));
+    document.querySelector('#addPowerSet').addEventListener('click', () => updatePowerSetPages(Number(setCount.value) + 1));
+    document.querySelector('#removePowerSet').addEventListener('click', () => updatePowerSetPages(Number(setCount.value) - 1));
+    updatePowerSetPages(setCount.value);
+
+    const defaultHeroTitle = 'Core Hero';
+    const heroTitleTargets = document.querySelectorAll('[data-character-title]');
+    const heroSubtitleTargets = document.querySelectorAll('[data-character-subtitle]');
+    const namedFields = () => [...document.querySelectorAll('[data-field]')];
+    function cleanHeroName(value) { return (value || '').replace(/\s+/g, ' ').trim(); }
+    function getFieldValue(name) {
+      const node = namedFields().find(field => field.dataset.field === name && cleanHeroName(field.textContent));
+      return cleanHeroName(node?.textContent || '');
+    }
+    function composeSubtitle() {
+      const origin = getFieldValue('origin');
+      const calling = getFieldValue('calling');
+      const klass = getFieldValue('class');
+      const level = getFieldValue('level');
+      const classLevel = getFieldValue('classLevel');
+      const parts = [];
+      if (origin) parts.push(origin);
+      if (calling) parts.push(calling);
+      if (klass) parts.push(klass);
+      if (level) parts.push(`Level ${level}`);
+      if (!parts.length && classLevel) parts.push(classLevel);
+      return parts.join(' • ');
+    }
+    function syncHeroTitle() {
+      const heroName = getFieldValue('heroName');
+      const title = heroName || defaultHeroTitle;
+      heroTitleTargets.forEach(node => { node.textContent = title; });
+      const subtitle = composeSubtitle();
+      heroSubtitleTargets.forEach(node => { node.textContent = subtitle; node.hidden = !subtitle; });
+      document.title = heroName ? `${heroName} - HEROIC 5e Character Record` : 'HEROIC 5e Blank Character Sheet';
+    }
+    function syncMirroredFields(source) {
+      if (!source?.dataset?.field) return;
+      const value = source.textContent;
+      namedFields().forEach(field => {
+        if (field !== source && field.dataset.field === source.dataset.field && field.textContent !== value) field.textContent = value;
+      });
+    }
+    document.addEventListener('input', event => {
+      const field = event.target.closest?.('[data-field]');
+      if (!field) return;
+      syncMirroredFields(field);
+      syncHeroTitle();
+    });
+    document.addEventListener('blur', event => {
+      const field = event.target.closest?.('[data-field]');
+      if (!field) return;
+      syncMirroredFields(field);
+      syncHeroTitle();
+      autoCalcSkillTotals();
+    }, true);
+    document.addEventListener('input', event => {
+      if (event.target.closest?.('.ability') || event.target.closest?.('[data-field="prowess"]')) autoCalcSkillTotals();
+    });
+    document.addEventListener('change', event => {
+      if (event.target.matches?.('[data-skill-trained], [data-skill-expertise], .skill-checks input')) autoCalcSkillTotals();
+    });
+    syncHeroTitle();
+    autoCalcSkillTotals();
+
+    const coverPortraitDropzone = document.querySelector('#coverPortraitDropzone');
+    const coverPortraitButton = document.querySelector('#coverPortraitButton');
+    const coverPortraitInput = document.querySelector('#coverPortraitInput');
+    const coverPortraitImage = document.querySelector('#coverPortraitImage');
+    const coverPortraitPlaceholder = document.querySelector('#coverPortraitPlaceholder');
+    const replacePortrait = document.querySelector('#replacePortrait');
+    const fitPortrait = document.querySelector('#fitPortrait');
+    const fillPortrait = document.querySelector('#fillPortrait');
+    const clearPortrait = document.querySelector('#clearPortrait');
+
+    function setPortraitMode(mode) {
+      if (!coverPortraitImage) return;
+      const safeMode = mode === 'contain' ? 'contain' : 'cover';
+      coverPortraitImage.style.objectFit = safeMode;
+      localStorage.setItem('heroicCoverPortraitMode', safeMode);
+    }
+
+    function setCoverPortrait(dataUrl) {
+      if (!coverPortraitImage || !coverPortraitPlaceholder || !coverPortraitDropzone) return;
+      if (dataUrl) {
+        coverPortraitImage.src = dataUrl;
+        coverPortraitImage.style.display = 'block';
+        coverPortraitPlaceholder.style.display = 'none';
+        coverPortraitDropzone.classList.add('has-portrait');
+        localStorage.setItem('heroicCoverPortrait', dataUrl);
+      } else {
+        coverPortraitImage.removeAttribute('src');
+        coverPortraitImage.style.display = 'none';
+        coverPortraitPlaceholder.style.display = 'grid';
+        coverPortraitDropzone.classList.remove('has-portrait');
+        localStorage.removeItem('heroicCoverPortrait');
+      }
+    }
+
+    function loadPortraitFile(file) {
+      if (!file) return;
+      if (!file.type.startsWith('image/')) {
+        alert('Please choose an image file.');
+        if (coverPortraitInput) coverPortraitInput.value = '';
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = event => setCoverPortrait(event.target.result);
+      reader.readAsDataURL(file);
+    }
+
+    coverPortraitButton?.addEventListener('click', () => coverPortraitInput?.click());
+    coverPortraitButton?.addEventListener('dblclick', () => coverPortraitInput?.click());
+    replacePortrait?.addEventListener('click', () => coverPortraitInput?.click());
+    fitPortrait?.addEventListener('click', () => setPortraitMode('contain'));
+    fillPortrait?.addEventListener('click', () => setPortraitMode('cover'));
+    clearPortrait?.addEventListener('click', () => {
+      setCoverPortrait(null);
+      if (coverPortraitInput) coverPortraitInput.value = '';
+    });
+
+    coverPortraitInput?.addEventListener('change', () => {
+      const file = coverPortraitInput.files && coverPortraitInput.files[0];
+      loadPortraitFile(file);
+    });
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+      coverPortraitDropzone?.addEventListener(eventName, event => {
+        event.preventDefault();
+        coverPortraitDropzone.classList.add('is-dragover');
+      });
+    });
+    ['dragleave', 'drop'].forEach(eventName => {
+      coverPortraitDropzone?.addEventListener(eventName, event => {
+        event.preventDefault();
+        coverPortraitDropzone.classList.remove('is-dragover');
+      });
+    });
+    coverPortraitDropzone?.addEventListener('drop', event => {
+      const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+      loadPortraitFile(file);
+    });
+
+    setPortraitMode(localStorage.getItem('heroicCoverPortraitMode') || 'cover');
+    setCoverPortrait(localStorage.getItem('heroicCoverPortrait'));
+
+    const jsonImportButton = document.querySelector('#importJson');
+    const jsonExportButton = document.querySelector('#exportJson');
+    const jsonImportInput = document.querySelector('#jsonImportInput');
+
+    function getCardValues(title) {
+      const cards = [...document.querySelectorAll('.resource, .defense')];
+      const card = cards.find(el => ((el.querySelector('h3') || el.querySelector('span'))?.textContent || '').trim().toLowerCase() === title.toLowerCase());
+      return [...(card?.querySelectorAll('[data-blank-field]') || [])].map(field => cleanHeroName(field.textContent || ''));
+    }
+
+    function collectAttributes() {
+      const out = {};
+      document.querySelectorAll('.ability').forEach(card => {
+        const code = (card.querySelector('h3 i')?.textContent || '').trim().toLowerCase();
+        if (!code) return;
+        const fields = card.querySelectorAll('[data-blank-field]');
+        const trainedText = card.querySelector('label:nth-of-type(3) em')?.textContent || '';
+        const nameMap = { str:'strength', dex:'dexterity', con:'constitution', fig:'fighting', int:'intelligence', wis:'wisdom', per:'perception', cha:'charisma' };
+        out[nameMap[code] || code] = {
+          score: cleanHeroName(fields[0]?.textContent || ''),
+          modifier: cleanHeroName(fields[1]?.textContent || ''),
+          trainedSave: /☑|checked|trained/i.test(trainedText) && !/□/.test(trainedText),
+          saveTotal: cleanHeroName(fields[2]?.textContent || '')
+        };
+      });
+      return out;
+    }
+
+    function collectSkills() {
+      const out = {};
+      document.querySelectorAll('[data-skill]').forEach(row => {
+        const name = row.dataset.skill;
+        out[name] = {
+          attribute: row.dataset.skillAbility || row.querySelector('i')?.textContent || '',
+          trained: !!row.querySelector('[data-skill-trained]')?.checked,
+          expertise: !!row.querySelector('[data-skill-expertise]')?.checked,
+          total: cleanHeroName(row.querySelector('[data-skill-total], [data-blank-field]')?.textContent || '')
+        };
+      });
+      return out;
+    }
+
+    function collectPowerSets() {
+      return getPowerSetPages().map(page => {
+        const profileFields = page.querySelectorAll('.set-profile [data-blank-field]');
+        const recordRowsToList = rows => [...rows].map(row => {
+          const f = row.querySelectorAll('[data-blank-field]');
+          return {
+            name: cleanHeroName(f[0]?.textContent || ''),
+            action: cleanHeroName(f[1]?.textContent || ''),
+            attack: cleanHeroName(f[2]?.textContent || ''),
+            range: cleanHeroName(f[3]?.textContent || ''),
+            effect: cleanHeroName(f[4]?.textContent || '')
+          };
+        }).filter(item => Object.values(item).some(Boolean));
+        const coreTrack = [...page.querySelectorAll('.core-track .record-row')].map(row => {
+          const f = row.querySelectorAll('[data-blank-field]');
+          return { tier: cleanHeroName(f[0]?.textContent || ''), name: cleanHeroName(f[1]?.textContent || ''), benefit: cleanHeroName(f[2]?.textContent || '') };
+        }).filter(item => Object.values(item).some(Boolean));
+        const bottom = page.querySelectorAll('.set-bottom-grid [data-blank-field]');
+        return {
+          name: cleanHeroName(profileFields[0]?.textContent || ''),
+          governingAbility: cleanHeroName(profileFields[1]?.textContent || ''),
+          powerEffectValue: cleanHeroName(profileFields[2]?.textContent || ''),
+          powerDie: cleanHeroName(profileFields[3]?.textContent || ''),
+          tierAccess: cleanHeroName(profileFields[4]?.textContent || ''),
+          picksSpent: cleanHeroName(profileFields[5]?.textContent || ''),
+          coreTrack,
+          atWillPowers: recordRowsToList(page.querySelectorAll('.power-records:not(.encounter-records) .power-record-row')),
+          encounterPowers: recordRowsToList(page.querySelectorAll('.encounter-records .power-record-row')),
+          passiveBenefits: cleanHeroName(bottom[0]?.textContent || ''),
+          enhancements: cleanHeroName(bottom[1]?.textContent || ''),
+          limitations: cleanHeroName(bottom[2]?.textContent || ''),
+          notes: cleanHeroName(bottom[3]?.textContent || '')
+        };
+      }).filter(ps => ps.name || ps.powerEffectValue || ps.coreTrack.length || ps.atWillPowers.length || ps.encounterPowers.length);
+    }
+
+    function collectCharacterData() {
+      const allFields = [...document.querySelectorAll('[data-blank-field]')].map(field => field.textContent || '');
+      const named = {};
+      namedFields().forEach(field => {
+        const key = field.dataset.field;
+        const value = field.textContent || '';
+        if (key && (value.trim() || !(key in named))) named[key] = value;
+      });
+      const hp = getCardValues('Hit Points');
+      const temp = getCardValues('Temp HP / Bloodied');
+      const hd = getCardValues('Hit Dice');
+      const edge = getCardValues('Edge');
+      return {
+        version: 'heroic-character-record-rc2',
+        schemaVersion: '1.1',
+        exportedAt: new Date().toISOString(),
+        hero: {
+          heroName: cleanHeroName(named.heroName),
+          realName: cleanHeroName(named.identity),
+          identity: cleanHeroName(named.identity),
+          player: cleanHeroName(named.player),
+          campaign: cleanHeroName(named.campaign),
+          gm: cleanHeroName(named.gm),
+          concept: cleanHeroName(named.concept),
+          origin: cleanHeroName(named.origin),
+          calling: cleanHeroName(named.calling),
+          class: cleanHeroName(named.class),
+          level: cleanHeroName(named.level),
+          prowess: cleanHeroName(named.prowess),
+          classLevel: cleanHeroName(named.classLevel),
+          campaignRank: document.querySelector('[data-choice="campaignRank"]:checked')?.value || '',
+          side: document.querySelector('[data-choice="side"]:checked')?.value || ''
+        },
+        attributes: collectAttributes(),
+        combat: {
+          hitPoints: { current: hp[0] || '', maximum: hp[1] || '' },
+          tempHp: temp[0] || '',
+          bloodied: temp[1] || '',
+          hitDie: { current: hd[0] || '', maximum: hd[1] || '' },
+          edge: { current: edge[0] || '', maximum: edge[1] || '' },
+          recoveryModifier: getCardValues('Recovery Mod')[0] || '',
+          powerDie: getCardValues('Power Die')[0] || '',
+          speed: getCardValues('Speed')[0] || '',
+          initiative: getCardValues('Initiative')[0] || '',
+          classEV: getCardValues('Class EV')[0] || '',
+          armorResist: getCardValues('Armor / Resist')[0] || ''
+        },
+        defenses: {
+          parryBlock: getCardValues('Parry / Block')[0] || '',
+          dodge: getCardValues('Dodge')[0] || '',
+          willpower: getCardValues('Willpower')[0] || '',
+          socialDefense: getCardValues('Social Defense')[0] || ''
+        },
+        attacks: {
+          meleeAttack: getCardValues('Melee Attack')[0] || '',
+          rangedAttack: getCardValues('Ranged Attack')[0] || '',
+          mentalAttack: getCardValues('Mental Attack')[0] || '',
+          socialAttack: getCardValues('Social Attack')[0] || ''
+        },
+        skills: collectSkills(),
+        powerSets: collectPowerSets(),
+        fields: allFields,
+        namedFields: named,
+        checkboxes: [...document.querySelectorAll('[data-blank-check]')].map(check => !!check.checked),
+        choices: Object.fromEntries([...document.querySelectorAll('[data-choice]:checked')].map(input => [input.dataset.choice, input.value])),
+        portrait: {
+          image: localStorage.getItem('heroicCoverPortrait') || coverPortraitImage?.getAttribute('src') || '',
+          mode: localStorage.getItem('heroicCoverPortraitMode') || coverPortraitImage?.style.objectFit || 'cover'
+        },
+        settings: {
+          powerSetPages: Number(setCount?.value) || 8,
+          inkSaver: !!inkSaver?.checked,
+        }
+      };
+    }
+
+
+    function setText(el, value) {
+      if (!el || value === undefined || value === null) return;
+      el.textContent = String(value);
+    }
+
+    function abilityModifier(score) {
+      const n = Number(score);
+      if (!Number.isFinite(n)) return '';
+      const mod = Math.floor((n - 10) / 2);
+      return mod >= 0 ? `+${mod}` : String(mod);
+    }
+
+    const abilityAliases = {
+      strength: 'STR', str: 'STR', dexterity: 'DEX', dex: 'DEX', constitution: 'CON', con: 'CON',
+      fighting: 'FIG', fig: 'FIG', intelligence: 'INT', int: 'INT', wisdom: 'WIS', wis: 'WIS',
+      perception: 'PER', per: 'PER', charisma: 'CHA', cha: 'CHA'
+    };
+    function abilityKeyToCode(key) {
+      return abilityAliases[String(key || '').trim().toLowerCase()] || String(key || '').trim().toUpperCase();
+    }
+    function signedNumber(value) {
+      const n = Number(String(value ?? '').replace(/[^0-9+\-.]/g, ''));
+      if (!Number.isFinite(n)) return 0;
+      return n;
+    }
+    function formatSigned(value) {
+      const n = signedNumber(value);
+      return n >= 0 ? `+${n}` : String(n);
+    }
+    function getProwessValue() {
+      return signedNumber(getFieldValue('prowess'));
+    }
+    function getAbilityCard(code) {
+      const normalized = abilityKeyToCode(code);
+      return [...document.querySelectorAll('.ability')].find(el => (el.querySelector('h3 i')?.textContent || '').trim().toUpperCase() === normalized);
+    }
+    function getAbilityModifier(code) {
+      const card = getAbilityCard(code);
+      const fields = card?.querySelectorAll('[data-blank-field]') || [];
+      const visible = cleanHeroName(fields[1]?.textContent || '');
+      if (visible) return signedNumber(visible);
+      return signedNumber(abilityModifier(fields[0]?.textContent || ''));
+    }
+    function setAbilityCard(code, score, modifier, trainedSave = false) {
+      const card = getAbilityCard(code);
+      if (!card) return;
+      const fields = card.querySelectorAll('[data-blank-field]');
+      const mod = modifier ?? abilityModifier(score);
+      setText(fields[0], score);
+      setText(fields[1], mod);
+      if (fields[2]) setText(fields[2], formatSigned(signedNumber(mod) + (trainedSave ? getProwessValue() : 0)));
+      const saveNote = card.querySelector('label:nth-of-type(3) em');
+      if (saveNote) saveNote.textContent = trainedSave ? '☑ trained' : '□ trained';
+    }
+    function autoCalcSkillTotals() {
+      const prowess = getProwessValue();
+      document.querySelectorAll('[data-skill]').forEach(row => {
+        const attr = row.dataset.skillAbility || row.querySelector('i')?.textContent || '';
+        const trained = !!row.querySelector('[data-skill-trained], .skill-checks input:nth-of-type(1)')?.checked;
+        const expertise = !!row.querySelector('[data-skill-expertise], .skill-checks input:nth-of-type(2)')?.checked;
+        const total = getAbilityModifier(attr) + (trained ? prowess : 0) + (expertise ? prowess : 0);
+        const totalField = row.querySelector('[data-skill-total], [data-blank-field]');
+        setText(totalField, formatSigned(total));
+      });
+    }
+
+    function importValue(value) {
+      if (value && typeof value === 'object') {
+        return value.total ?? value.value ?? value.modifier ?? value.text ?? value.formula ?? '';
+      }
+      return value;
+    }
+
+    function setCombatResource(title, values) {
+      const cards = [...document.querySelectorAll('.resource, .defense')];
+      const card = cards.find(el => ((el.querySelector('h3') || el.querySelector('span'))?.textContent || '').trim().toLowerCase() === title.toLowerCase());
+      if (!card) return;
+      const fields = card.querySelectorAll('[data-blank-field]');
+      const list = Array.isArray(values) ? values : [importValue(values)];
+      list.forEach((value, index) => setText(fields[index], importValue(value)));
+    }
+
+    function setSkillRow(name, value, trained = true, expertise = false) {
+      const rows = [...document.querySelectorAll('.skill-list p')];
+      const key = String(name || '').trim().toLowerCase().replace(/s$/, '');
+      const row = rows.find(el => {
+        const label = (el.dataset.skill || el.querySelector('strong')?.textContent || '').trim().toLowerCase();
+        return label === key || label.replace(/s$/, '') === key || label.startsWith(key);
+      });
+      if (!row) return;
+      const checks = row.querySelectorAll('[data-blank-check]');
+      if (checks[0]) checks[0].checked = !!trained;
+      if (checks[1]) checks[1].checked = !!expertise;
+      // If the JSON provides a final total, show it immediately; autoCalcSkillTotals()
+      // will keep it synchronized from ability modifier + trained/expertise + Prowess.
+      if (value !== undefined && value !== null && value !== '') setText(row.querySelector('[data-blank-field]'), formatSigned(value));
+    }
+
+    function getPowerSetPages() {
+      return [...document.querySelectorAll('#powerSetPages .power-set-sheet')];
+    }
+
+    function setFieldsWithin(root, selector, values) {
+      const fields = root ? root.querySelectorAll(selector) : [];
+      (Array.isArray(values) ? values : [values]).forEach((value, index) => setText(fields[index], value ?? ''));
+    }
+
+    function formatPowerEffect(power) {
+      const parts = [];
+      if (power.damage) parts.push(`Damage: ${power.damage}`);
+      if (power.effect) parts.push(power.effect);
+      if (power.duration) parts.push(`Duration: ${power.duration}`);
+      if (power.notes) parts.push(power.notes);
+      return parts.filter(Boolean).join(' ');
+    }
+
+    function normalizePowerList(powerSource) {
+      if (!powerSource) return [];
+      if (Array.isArray(powerSource)) return powerSource;
+      if (typeof powerSource === 'object') {
+        return Object.entries(powerSource).map(([name, value]) => ({ name, ...(value && typeof value === 'object' ? value : { notes: value }) }));
+      }
+      return [];
+    }
+
+    function importPowerSets(data) {
+      const powerSets = normalizePowerList(data.powerSets || data.powers || data.power_sets);
+      if (!powerSets.length) return;
+      updatePowerSetPages(powerSets.length);
+      getPowerSetPages().forEach((page, index) => {
+        const power = powerSets[index] || {};
+        const profile = page.querySelector('.set-profile');
+        const profileFields = profile?.querySelectorAll('[data-blank-field]') || [];
+        setText(profileFields[0], power.name || power.powerSetName || power.setName || '');
+        setText(profileFields[1], power.governingAbility || power.ability || power.primaryAbility || '');
+        setText(profileFields[2], power.powerEffectValue ?? power.powerEV ?? power.pev ?? '');
+        setText(profileFields[3], power.powerDie || data.combat?.powerDie || '');
+        setText(profileFields[4], power.tierAccess || power.tier || (power.rank ? `Rank ${power.rank}` : ''));
+        setText(profileFields[5], power.picksSpent || power.picks || '');
+
+        const coreRows = page.querySelectorAll('.core-track .record-row');
+        const coreItems = normalizePowerList(power.coreTrack || power.track || power.ranks || [{ rank: power.rank || '', name: power.name || '', benefit: power.passiveBenefits || power.passive || power.notes || '' }]);
+        coreItems.slice(0, coreRows.length).forEach((item, rowIndex) => {
+          const fields = coreRows[rowIndex].querySelectorAll('[data-blank-field]');
+          setText(fields[0], item.tier || item.rank || item.tierRank || '');
+          setText(fields[1], item.name || item.title || '');
+          setText(fields[2], item.benefit || item.effect || item.notes || item.description || '');
+        });
+
+        const allPowerActions = normalizePowerList(power.powers || power.actions || power.powerList || power.records);
+        const atWillRows = page.querySelectorAll('.power-records:not(.encounter-records) .power-record-row');
+        const atWillPowers = normalizePowerList(power.atWill || power.atWills || power.atWillPowers).concat(
+          allPowerActions.filter(item => /at.?will|utility/i.test(item.type || item.frequency || ''))
+        );
+        atWillPowers.slice(0, atWillRows.length).forEach((item, rowIndex) => {
+          const fields = atWillRows[rowIndex].querySelectorAll('[data-blank-field]');
+          setText(fields[0], item.name || item.title || '');
+          setText(fields[1], item.action || item.actionType || item.type || '');
+          setText(fields[2], item.attack || item.roll || item.attackDefense || item.defense || '');
+          setText(fields[3], item.range || item.area || '');
+          setText(fields[4], item.description || formatPowerEffect(item));
+        });
+
+        const encounterRows = page.querySelectorAll('.encounter-records .power-record-row');
+        const encounterPowers = normalizePowerList(power.encounter || power.encounters || power.encounterPowers || power.daily || power.apex).concat(
+          allPowerActions.filter(item => /encounter|daily|apex|reaction/i.test(item.type || item.frequency || item.action || ''))
+        );
+        encounterPowers.slice(0, encounterRows.length).forEach((item, rowIndex) => {
+          const fields = encounterRows[rowIndex].querySelectorAll('[data-blank-field]');
+          const useType = item.frequency || item.type || (rowIndex === encounterRows.length - 1 ? '□ Daily / Apex' : '□ Encounter');
+          setText(fields[0], `${useType} — ${item.name || item.title || ''}`.trim());
+          setText(fields[1], item.action || item.actionType || '');
+          setText(fields[2], item.attack || item.roll || item.attackDefense || item.defense || '');
+          setText(fields[3], item.range || item.area || '');
+          setText(fields[4], item.description || formatPowerEffect(item));
+        });
+
+        const bottomFields = page.querySelectorAll('.set-bottom-grid [data-blank-field]');
+        setText(bottomFields[0], [power.passiveBenefits, power.passive, power.utility, power.utilities, power.sustained].flat().filter(Boolean).join('\n'));
+        setText(bottomFields[1], [power.enhancements].flat().filter(Boolean).join('\n'));
+        setText(bottomFields[2], [power.limitations].flat().filter(Boolean).join('\n'));
+        setText(bottomFields[3], [power.combos, power.tactics, power.notes].flat().filter(Boolean).join('\n'));
+      });
+      renumberPacket();
+    }
+
+    function applyStructuredHeroData(data) {
+      const attrs = data.attributes || data.abilities || data.hero?.attributes || data.hero?.abilities || {};
+      Object.entries(attrs).forEach(([code, raw]) => {
+        if (raw && typeof raw === 'object') setAbilityCard(code, raw.score ?? raw.value, raw.modifier ?? raw.mod, raw.trainedSave ?? raw.saveTrained ?? raw.trained ?? false);
+        else setAbilityCard(code, raw);
+      });
+
+      const combat = data.combat || data.hero?.combat || {};
+      if (combat.hitPoints || combat.hp) {
+        const hp = combat.hitPoints || combat.hp;
+        setCombatResource('Hit Points', [hp.current ?? hp.value ?? hp, hp.maximum ?? hp.max ?? hp.total ?? '']);
+      }
+      if (combat.edge) setCombatResource('Edge', [combat.edge.current ?? combat.edge.value ?? combat.edge, combat.edge.maximum ?? combat.edge.max ?? combat.edge.cap ?? '']);
+      if (combat.hitDice || combat.hitDie) {
+        const hd = combat.hitDice || combat.hitDie;
+        setCombatResource('Hit Dice', [hd.current ?? '', hd.maximum ?? hd.max ?? hd.maxDie ?? hd.die ?? hd]);
+      }
+      if (combat.tempHp !== undefined || combat.temporaryHitPoints !== undefined || combat.bloodied !== undefined) setCombatResource('Temp HP / Bloodied', [combat.tempHp ?? combat.temporaryHitPoints ?? '', combat.bloodied ?? '']);
+      if (combat.recoveryModifier !== undefined || combat.recoveryMod !== undefined) setCombatResource('Recovery Mod', combat.recoveryModifier ?? combat.recoveryMod);
+      if (combat.powerDie !== undefined) setCombatResource('Power Die', combat.powerDie);
+      if (combat.speed !== undefined) setCombatResource('Speed', combat.speed);
+      if (combat.initiative !== undefined) setCombatResource('Initiative', typeof combat.initiative === 'object' ? (combat.initiative.text || combat.initiative.formula || `1d20 ${formatSigned(combat.initiative.modifier ?? combat.initiative.value ?? 0)}`) : combat.initiative);
+      if (combat.classEV !== undefined || combat.classEffectValue !== undefined || combat.saveDC !== undefined) setCombatResource('Class EV', combat.classEV ?? combat.classEffectValue ?? combat.saveDC);
+      if (combat.armor !== undefined || combat.armorResist !== undefined || combat.resistance !== undefined) setCombatResource('Armor / Resist', combat.armor ?? combat.armorResist ?? combat.resistance);
+
+      const defenses = data.defenses || data.activeDefenses || data.hero?.defenses || {};
+      setCombatResource('Parry / Block', defenses.parryBlock ?? defenses.parry ?? defenses.block);
+      setCombatResource('Dodge', defenses.dodge);
+      setCombatResource('Willpower', defenses.willpower ?? defenses.will);
+      setCombatResource('Social Defense', defenses.socialDefense ?? defenses.social);
+      const attacks = data.attacks || data.hero?.attacks || {};
+      setCombatResource('Melee Attack', attacks.melee ?? attacks.meleeAttack);
+      setCombatResource('Ranged Attack', attacks.ranged ?? attacks.rangedAttack);
+      setCombatResource('Mental Attack', attacks.mental ?? attacks.mentalAttack);
+      setCombatResource('Social Attack', attacks.social ?? attacks.socialAttack);
+
+      const skills = data.skills || data.hero?.skills || {};
+      Object.entries(skills).forEach(([name, raw]) => {
+        if (raw && typeof raw === 'object') setSkillRow(name, raw.total ?? raw.final ?? raw.score ?? raw.value ?? raw.modifier ?? '', raw.trained ?? false, raw.expertise ?? false);
+        else setSkillRow(name, raw, true, false);
+      });
+
+      autoCalcSkillTotals();
+      importPowerSets(data);
+    }
+
+    function setChoice(name, value) {
+      if (value === undefined || value === null || value === '') return;
+      const wanted = String(value).trim().toLowerCase().replace(/ level$/, '');
+      const input = [...document.querySelectorAll(`[data-choice="${name}"]`)].find(node => String(node.value).trim().toLowerCase() === wanted || String(node.value).trim().toLowerCase().replace(/ level$/, '') === wanted);
+      if (input) input.checked = true;
+    }
+    function clearChoices() {
+      document.querySelectorAll('[data-choice]').forEach(input => { input.checked = false; });
+    }
+
+    function applyCharacterData(data) {
+      if (!data || typeof data !== 'object') throw new Error('Invalid character JSON.');
+      data = (data.character && typeof data.character === 'object') ? data.character : data;
+      const settings = data.settings || {};
+      if (settings.powerSetPages) updatePowerSetPages(settings.powerSetPages);
+      const allFields = [...document.querySelectorAll('[data-blank-field]')];
+      if (Array.isArray(data.fields)) {
+        data.fields.forEach((value, index) => { if (allFields[index]) allFields[index].textContent = value || ''; });
+      }
+      const hero = data.hero || {};
+      const named = { ...(data.namedFields || {}), ...hero };
+      if (!named.identity && hero.realName) named.identity = hero.realName;
+      if (!named.classLevel && (hero.class || hero.level)) named.classLevel = [hero.class, hero.level ? `Level ${hero.level}` : ''].filter(Boolean).join(' / ');
+      Object.entries(named).forEach(([key, value]) => {
+        namedFields().forEach(field => { if (field.dataset.field === key) field.textContent = value || ''; });
+      });
+      setChoice('campaignRank', data.choices?.campaignRank || hero.campaignRank || hero.rank);
+      setChoice('side', data.choices?.side || hero.side);
+      applyStructuredHeroData(data);
+      if (Array.isArray(data.checkboxes)) {
+        [...document.querySelectorAll('[data-blank-check]')].forEach((check, index) => { check.checked = !!data.checkboxes[index]; });
+      }
+      if (data.portrait?.mode) setPortraitMode(data.portrait.mode);
+      if (data.portrait?.image) setCoverPortrait(data.portrait.image);
+      if (typeof settings.inkSaver === 'boolean') {
+        inkSaver.checked = settings.inkSaver;
+        document.documentElement.classList.toggle('ink-saver', settings.inkSaver);
+      }
+      syncHeroTitle();
+      autoCalcSkillTotals();
+    }
+
+    function exportCharacterJson() {
+      const data = collectCharacterData();
+      const safeName = (data.hero.heroName || 'Heroic-5e-character').replace(/[^a-z0-9_-]+/gi, '-').replace(/^-+|-+$/g, '') || 'Heroic-5e-character';
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${safeName}.json`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function importCharacterJsonFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = event => {
+        try {
+          const parsed = JSON.parse(event.target.result);
+          applyCharacterData(parsed);
+          syncHeroTitle();
+          autoCalcSkillTotals();
+        } catch (error) {
+          console.error(error);
+          alert(`Could not import that JSON file. ${error.message || ''}`);
+        } finally {
+          if (jsonImportInput) jsonImportInput.value = '';
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    window.heroicExportJson = function heroicExportJson(event) {
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
+      exportCharacterJson();
+    };
+
+    window.heroicImportJson = function heroicImportJson(event) {
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
+      jsonImportInput?.click();
+    };
+
+    window.heroicPrintSheet = function heroicPrintSheet(event) {
+      event?.preventDefault?.();
+      event?.stopPropagation?.();
+      window.print();
+    };
+
+    jsonExportButton?.addEventListener('click', window.heroicExportJson);
+    jsonImportButton?.addEventListener('click', window.heroicImportJson);
+    jsonImportInput?.addEventListener('change', () => importCharacterJsonFile(jsonImportInput.files && jsonImportInput.files[0]));
+
+    // Capture-phase toolbar fallback. This keeps Print / Import / Export working even if
+    // a future layout layer or rebuilt toolbar interrupts the normal button listeners.
+    document.addEventListener('click', event => {
+      const button = event.target?.closest?.('#printSheet, #importJson, #exportJson');
+      if (!button) return;
+      if (button.id === 'printSheet') window.heroicPrintSheet(event);
+      if (button.id === 'importJson') window.heroicImportJson(event);
+      if (button.id === 'exportJson') window.heroicExportJson(event);
+    }, true);
+
+    document.querySelector('#clearSheet')?.addEventListener('click', () => {
+      if (!confirm('Clear every field typed into this blank sheet?')) return;
+      document.querySelectorAll('[data-blank-field]').forEach(field => { field.textContent = ''; });
+      document.querySelectorAll('[data-blank-check]').forEach(field => { field.checked = false; });
+      clearChoices();
+      setCoverPortrait(null);
+      if (coverPortraitInput) coverPortraitInput.value = '';
+      syncHeroTitle();
+    });
+  </script>
+<script id="heroic-portrait-dragdrop-failsafe">
+(function(){
+  if (window.__heroicPortraitDragDropFailsafe) return;
+  window.__heroicPortraitDragDropFailsafe = true;
+
+  function $(sel){ return document.querySelector(sel); }
+  function hasFileDrag(event){
+    return event && event.dataTransfer && Array.from(event.dataTransfer.types || []).includes('Files');
+  }
+  function setPortrait(dataUrl){
+    const dropzone = $('#coverPortraitDropzone');
+    const img = $('#coverPortraitImage');
+    const placeholder = $('#coverPortraitPlaceholder');
+    if (!dropzone || !img || !placeholder) return;
+    if (dataUrl) {
+      img.src = dataUrl;
+      img.style.display = 'block';
+      placeholder.style.display = 'none';
+      dropzone.classList.add('has-portrait');
+      try { localStorage.setItem('heroicCoverPortrait', dataUrl); } catch(e) {}
+    }
+  }
+  function loadImageFile(file){
+    if (!file) return;
+    if (!/^image\//i.test(file.type || '')) {
+      alert('Please drop or choose an image file.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = function(event){ setPortrait(event.target.result); };
+    reader.readAsDataURL(file);
+  }
+  function bindPortraitDragDrop(){
+    const dropzone = $('#coverPortraitDropzone');
+    const target = $('#coverPortraitButton');
+    const input = $('#coverPortraitInput');
+    if (!dropzone || !target || !input) return;
+
+    // Click / keyboard upload.
+    target.addEventListener('click', function(event){
+      event.preventDefault();
+      input.click();
+    });
+    target.addEventListener('keydown', function(event){
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        input.click();
+      }
+    });
+
+    // Prevent browsers from opening dropped images as a new page.
+    ['dragenter','dragover','drop'].forEach(function(type){
+      document.addEventListener(type, function(event){
+        if (hasFileDrag(event)) {
+          event.preventDefault();
+          if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+        }
+      }, false);
+    });
+
+    ['dragenter','dragover'].forEach(function(type){
+      [dropzone, target].forEach(function(el){
+        el.addEventListener(type, function(event){
+          if (!hasFileDrag(event)) return;
+          event.preventDefault();
+          event.stopPropagation();
+          dropzone.classList.add('is-dragover');
+          if (event.dataTransfer) event.dataTransfer.dropEffect = 'copy';
+        }, false);
+      });
+    });
+
+    ['dragleave','dragend'].forEach(function(type){
+      dropzone.addEventListener(type, function(event){
+        event.preventDefault();
+        dropzone.classList.remove('is-dragover');
+      }, false);
+    });
+
+    [dropzone, target].forEach(function(el){
+      el.addEventListener('drop', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        dropzone.classList.remove('is-dragover');
+        const file = event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files[0];
+        loadImageFile(file);
+      }, false);
+    });
+
+    input.addEventListener('change', function(){
+      const file = input.files && input.files[0];
+      loadImageFile(file);
+      input.value = '';
+    });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', bindPortraitDragDrop);
+  else bindPortraitDragDrop();
+})();
+</script>
+<script id="heroic-toolbar-failsafe">
+(function(){
+  'use strict';
+  function $(sel, root=document){ return root.querySelector(sel); }
+  function $all(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+  function text(el){ return (el && (el.value !== undefined ? el.value : el.textContent) || '').trim(); }
+  function setText(el, value){ if(!el) return; if(el.value !== undefined) el.value = value == null ? '' : String(value); else el.textContent = value == null ? '' : String(value); el.dispatchEvent(new Event('input', {bubbles:true})); }
+  function num(v){ const n=parseInt(String(v ?? '').replace(/[^\-0-9]/g,''),10); return Number.isFinite(n) ? n : ''; }
+  function setNamed(name, value){ setText($(`[data-field="${name}"]`), value); }
+  function getNamed(name){ return text($(`[data-field="${name}"]`)); }
+  function heroTitle(){ return getNamed('heroName') || 'Core Hero'; }
+  function syncTitles(){
+    const title = heroTitle();
+    const origin=getNamed('origin'), calling=getNamed('calling');
+    const classLevel=getNamed('classLevel');
+    let cls='', lvl='';
+    if(classLevel){ const parts=classLevel.split('/'); cls=(parts[0]||'').trim(); lvl=(parts[1]||'').trim(); }
+    cls = getNamed('class') || cls;
+    lvl = getNamed('level') || lvl;
+    const subtitle=[origin, calling, cls, lvl ? `Level ${lvl}` : ''].filter(Boolean).join(' • ');
+    $all('[data-character-title]').forEach(el=>el.textContent=title);
+    $all('[data-character-subtitle]').forEach(el=>el.textContent=subtitle);
+  }
+  function attributeCard(key){
+    const codeMap={strength:'STR',dexterity:'DEX',constitution:'CON',fighting:'FIG',intelligence:'INT',wisdom:'WIS',perception:'PER',charisma:'CHA',str:'STR',dex:'DEX',con:'CON',fig:'FIG',int:'INT',wis:'WIS',per:'PER',cha:'CHA'};
+    const code=codeMap[String(key).toLowerCase()];
+    if(!code) return null;
+    return $all('.ability').find(card => ((card.querySelector('h3 i')||{}).textContent||'').trim().toUpperCase()===code);
+  }
+  function applyAttributes(attrs){
+    if(!attrs) return;
+    Object.entries(attrs).forEach(([key,val])=>{
+      const card=attributeCard(key); if(!card) return;
+      const fields=$all('[data-blank-field]', card);
+      setText(fields[0], val.score ?? '');
+      setText(fields[1], val.modifier ?? val.mod ?? '');
+      const cb=$('input[type="checkbox"]', card); if(cb) cb.checked=!!(val.trainedSave ?? val.trained ?? val.saveTrained);
+    });
+  }
+  function collectAttributes(){
+    const names={STR:'strength',DEX:'dexterity',CON:'constitution',FIG:'fighting',INT:'intelligence',WIS:'wisdom',PER:'perception',CHA:'charisma'};
+    const out={};
+    $all('.ability').forEach(card=>{
+      const code=((card.querySelector('h3 i')||{}).textContent||'').trim().toUpperCase(); if(!names[code]) return;
+      const fields=$all('[data-blank-field]', card);
+      out[names[code]]={score:num(text(fields[0])), modifier:num(text(fields[1])), trainedSave:!!$('input[type="checkbox"]', card)?.checked};
+    });
+    return out;
+  }
+  function skillRow(name){
+    const normalized=String(name).toLowerCase().replace(/culture$/,'cultures');
+    return $all('.skill-row').find(row => ((row.querySelector('b')||{}).textContent||'').trim().toLowerCase().replace(/culture$/,'cultures')===normalized);
+  }
+  function applySkills(skills){
+    if(!skills) return;
+    Object.entries(skills).forEach(([name,val])=>{
+      const row=skillRow(name); if(!row) return;
+      const checks=$all('input[type="checkbox"]', row);
+      if(checks[0]) checks[0].checked=!!val.trained;
+      if(checks[1]) checks[1].checked=!!val.expertise;
+      const fields=$all('[data-blank-field]', row);
+      const total = val.total ?? val.score ?? val.modifier ?? '';
+      setText(fields[0], total);
+    });
+  }
+  function collectSkills(){
+    const out={};
+    $all('.skill-row').forEach(row=>{
+      const name=((row.querySelector('b')||{}).textContent||'').trim().toLowerCase().replace(/\s+/g,'');
+      if(!name) return;
+      const checks=$all('input[type="checkbox"]', row);
+      const fields=$all('[data-blank-field]', row);
+      out[name]={trained:!!checks[0]?.checked, expertise:!!checks[1]?.checked, total:num(text(fields[0]))};
+    });
+    return out;
+  }
+  function applyCombat(combat){
+    if(!combat) return;
+    const cards=$all('.resource,.defense');
+    function cardIncludes(label){ return cards.find(c => c.textContent.toLowerCase().includes(label.toLowerCase())); }
+    function setFirst(label, value){ const c=cardIncludes(label); if(c) setText($('[data-blank-field]', c), value); }
+    if(combat.hitPoints){ const c=cardIncludes('hit points'); const f=$all('[data-blank-field]', c); setText(f[0], combat.hitPoints.current); setText(f[1], combat.hitPoints.maximum); }
+    if(combat.edge){ const c=cardIncludes('edge'); const f=$all('[data-blank-field]', c); setText(f[0], combat.edge.current); setText(f[1], combat.edge.maximum); }
+    setFirst('power die', combat.powerDie);
+    setFirst('recovery', combat.recoveryModifier);
+    setFirst('class ev', combat.classEV);
+    setFirst('speed', combat.speed);
+  }
+  function collectCombat(){ return { hitPoints:{current:'', maximum:''}, edge:{current:'', maximum:''}, powerDie:'', recoveryModifier:'', classEV:'', speed:'' }; }
+  function applyPowers(powers){
+    if(!Array.isArray(powers)) return;
+    const count=$('#powerSetPageCount');
+    const add=$('#addPowerSet');
+    if(count && powers.length){ count.value=Math.max(1, powers.length); count.dispatchEvent(new Event('change',{bubbles:true})); }
+    setTimeout(()=>{
+      const pages=$all('#powerSetPages .page');
+      powers.forEach((power,i)=>{
+        const page=pages[i]; if(!page) return;
+        const fields=$all('[data-blank-field]', page);
+        setText(fields[0], power.name || '');
+        setText(fields[1], power.track || power.type || '');
+        setText(fields[2], power.powerEffectValue ?? power.pev ?? '');
+        setText(fields[3], power.tier ? `Tier ${power.tier}` : '');
+        setText(fields[4], power.description || power.passiveBenefits || '');
+      });
+    }, 0);
+  }
+  function collectPowers(){
+    return $all('#powerSetPages .page').map(page=>{ const f=$all('[data-blank-field]', page); return { name:text(f[0]), track:text(f[1]), powerEffectValue:text(f[2]), tier:text(f[3]), description:text(f[4])}; }).filter(p=>Object.values(p).some(Boolean));
+  }
+  function normalizeData(data){
+    const hero=data.hero || data.identity || data.character || data;
+    return { raw:data, hero:hero, combat:data.combat||hero.combat||{}, attributes:data.attributes||hero.attributes||{}, skills:data.skills||hero.skills||{}, powers:data.powers||data.powerSets||hero.powers||hero.powerSets||[] };
+  }
+  window.heroicApplyCharacterData = function(data){
+    const d=normalizeData(data||{}), h=d.hero||{};
+    setNamed('heroName', h.heroName || h.name || data.heroName || '');
+    setNamed('realName', h.realName || h.identity || h.publicIdentity || '');
+    setNamed('player', h.player || data.player || '');
+    setNamed('campaign', h.campaign || data.campaign || '');
+    setNamed('gm', h.gm || data.gm || '');
+    setNamed('concept', h.concept || data.concept || '');
+    setNamed('origin', h.origin || data.origin || '');
+    setNamed('calling', h.calling || data.calling || '');
+    const cls=h.class || h.heroClass || data.class || '';
+    const lvl=h.level || data.level || '';
+    setNamed('classLevel', [cls,lvl].filter(Boolean).join(' / '));
+    setNamed('class', cls); setNamed('level', lvl);
+    applyAttributes(d.attributes); applyCombat(d.combat); applySkills(d.skills); applyPowers(d.powers);
+    syncTitles();
+  };
+  window.heroicCollectCharacterData = function(){
+    const classLevel=getNamed('classLevel'); const parts=classLevel.split('/');
+    return { version:'1.0', exportedAt:new Date().toISOString(), hero:{ heroName:getNamed('heroName'), realName:getNamed('realName'), player:getNamed('player'), campaign:getNamed('campaign'), gm:getNamed('gm'), concept:getNamed('concept'), origin:getNamed('origin'), calling:getNamed('calling'), class:getNamed('class') || (parts[0]||'').trim(), level:num(getNamed('level') || (parts[1]||'')) }, attributes:collectAttributes(), combat:collectCombat(), skills:collectSkills(), powers:collectPowers(), notes:'' };
+  };
+  window.heroicExportJson = function(event){
+    if(event){ event.preventDefault(); event.stopPropagation(); }
+    const data=window.heroicCollectCharacterData();
+    const name=(data.hero.heroName||'Heroic-5e-character').replace(/[^a-z0-9_-]+/gi,'-').replace(/^-+|-+$/g,'') || 'Heroic-5e-character';
+    const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=name+'.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500);
+  };
+  window.heroicImportJson = function(event){ if(event){ event.preventDefault(); event.stopPropagation(); } $('#jsonImportInput')?.click(); };
+  window.heroicPrintSheet = function(event){ if(event){ event.preventDefault(); event.stopPropagation(); } window.print(); };
+  function bindToolbar(){
+    const importBtn=$('#importJson'), exportBtn=$('#exportJson'), printBtn=$('#printSheet'), input=$('#jsonImportInput');
+    if(importBtn) importBtn.onclick=window.heroicImportJson;
+    if(exportBtn) exportBtn.onclick=window.heroicExportJson;
+    if(printBtn) printBtn.onclick=window.heroicPrintSheet;
+    if(input) input.onchange=function(){ const file=input.files&&input.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=function(e){ try{ window.heroicApplyCharacterData(JSON.parse(e.target.result)); } catch(err){ alert('Could not import that JSON file. '+(err.message||'')); } finally{ input.value=''; } }; reader.readAsText(file); };
+    document.addEventListener('click', function(event){ const btn=event.target.closest && event.target.closest('#importJson,#exportJson,#printSheet'); if(!btn) return; if(btn.id==='importJson') return window.heroicImportJson(event); if(btn.id==='exportJson') return window.heroicExportJson(event); if(btn.id==='printSheet') return window.heroicPrintSheet(event); }, true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bindToolbar); else bindToolbar();
+  document.addEventListener('input', function(e){ if(e.target.matches('[data-field], [data-field] *')) syncTitles(); }, true);
+})();
+</script>
+<script id="heroic-fieldmap-fixes-v2">
+(function(){
+  'use strict';
+  function $(sel, root=document){ return root.querySelector(sel); }
+  function $all(sel, root=document){ return Array.from(root.querySelectorAll(sel)); }
+  function text(el){ if(!el) return ''; return (el.value !== undefined ? el.value : el.textContent || '').trim(); }
+  function setText(el, value){ if(!el) return; const v = value == null ? '' : String(value); if(el.value !== undefined) el.value = v; else el.textContent = v; el.dispatchEvent(new Event('input',{bubbles:true})); }
+  function signedNumber(value){ const n = Number(String(value ?? '').replace(/[^0-9+\-.]/g,'')); return Number.isFinite(n) ? n : 0; }
+  function formatSigned(value){ const n=signedNumber(value); return n>=0 ? '+'+n : String(n); }
+  const codeMap={strength:'STR',dexterity:'DEX',constitution:'CON',fighting:'FIG',intelligence:'INT',wisdom:'WIS',perception:'PER',charisma:'CHA',str:'STR',dex:'DEX',con:'CON',fig:'FIG',int:'INT',wis:'WIS',per:'PER',cha:'CHA'};
+  const nameMap={STR:'strength',DEX:'dexterity',CON:'constitution',FIG:'fighting',INT:'intelligence',WIS:'wisdom',PER:'perception',CHA:'charisma'};
+  function getNamed(name){ const el=$(`[data-field="${CSS.escape(name)}"]`); return text(el); }
+  function setNamed(name, value){ $all(`[data-field="${CSS.escape(name)}"]`).forEach(el=>{ if(el.type==='checkbox') el.checked=!!value; else setText(el,value); }); }
+  function syncTitles(){
+    const title=getNamed('heroName') || 'Core Hero';
+    const origin=getNamed('origin'), calling=getNamed('calling'), cls=getNamed('class'), lvl=getNamed('level');
+    const classLevel=getNamed('classLevel');
+    const subtitle=[origin, calling, cls || (classLevel.split('/')[0]||'').trim(), lvl ? `Level ${lvl}` : (classLevel.split('/')[1]||'').trim()].filter(Boolean).join(' • ');
+    $all('[data-character-title]').forEach(el=>el.textContent=title);
+    $all('[data-character-subtitle]').forEach(el=>{el.textContent=subtitle; el.hidden=!subtitle;});
+  }
+  function getProwess(){ return signedNumber(getNamed('prowess')); }
+  function abilityCard(key){ const code=codeMap[String(key).toLowerCase()] || String(key).toUpperCase(); return $all('.ability').find(card => text(card.querySelector('h3 i')).toUpperCase()===code); }
+  function setAbility(key, val){
+    const card=abilityCard(key); if(!card || !val) return;
+    const fields=$all('[data-blank-field]', card);
+    const cb=$('[data-save-trained]', card);
+    const score=val.score ?? val.value ?? '';
+    const mod=val.modifier ?? val.mod ?? '';
+    const trained=!!(val.trainedSave ?? val.saveTrained ?? val.trained);
+    setText(fields[0], score); setText(fields[1], mod);
+    if(cb) cb.checked=trained;
+    const saveTotal = val.saveTotal ?? val.save ?? formatSigned(signedNumber(mod) + (trained ? getProwess() : 0));
+    setText(fields[2], saveTotal);
+  }
+  function collectAttributes(){
+    const out={};
+    $all('.ability').forEach(card=>{
+      const code=text(card.querySelector('h3 i')).toUpperCase(); if(!nameMap[code]) return;
+      const fields=$all('[data-blank-field]', card);
+      out[nameMap[code]]={score:text(fields[0]), modifier:text(fields[1]), trainedSave:!!$('[data-save-trained]', card)?.checked, saveTotal:text(fields[2])};
+    });
+    return out;
+  }
+  function recalcAbilitySaves(){
+    $all('.ability').forEach(card=>{
+      const fields=$all('[data-blank-field]', card); if(fields.length<3) return;
+      const trained=!!$('[data-save-trained]', card)?.checked;
+      setText(fields[2], formatSigned(signedNumber(text(fields[1])) + (trained ? getProwess() : 0)));
+    });
+  }
+  function skillRow(name){
+    const key=String(name||'').trim().toLowerCase().replace(/s$/,'');
+    return $all('[data-skill]').find(row => (row.dataset.skill || '').toLowerCase().replace(/s$/,'')===key);
+  }
+  function setSkill(name, val){
+    const row=skillRow(name); if(!row || !val) return;
+    const checks=$all('[data-blank-check]', row);
+    if(checks[0]) checks[0].checked=!!val.trained;
+    if(checks[1]) checks[1].checked=!!val.expertise;
+    setText($('[data-skill-total]', row) || $('[data-blank-field]', row), val.total ?? val.value ?? '');
+  }
+  function collectSkills(){ const out={}; $all('[data-skill]').forEach(row=>{ const checks=$all('[data-blank-check]', row); out[row.dataset.skill]={trained:!!checks[0]?.checked, expertise:!!checks[1]?.checked, total:text($('[data-skill-total]',row)||$('[data-blank-field]',row))}; }); return out; }
+  function cardByTitle(title){ return $all('.resource,.defense').find(c => text(c.querySelector('h3,span')).toLowerCase()===String(title).toLowerCase()); }
+  function setCard(title, values){ const c=cardByTitle(title); if(!c) return; const fields=$all('[data-blank-field]', c); (Array.isArray(values)?values:[values]).forEach((v,i)=>setText(fields[i],v)); }
+  function getCard(title){ const c=cardByTitle(title); return $all('[data-blank-field]', c).map(text); }
+  function applyStructured(data){
+    const h=data.hero || data.identity || data.character || {};
+    const named={...(data.namedFields||{}), ...(data.fieldMap||{}), ...h};
+    if(!named.identity && h.realName) named.identity=h.realName;
+    if(!named.classLevel && (h.class || h.level)) named.classLevel=[h.class, h.level ? `Level ${h.level}`:''].filter(Boolean).join(' / ');
+    Object.entries(named).forEach(([k,v])=>{ if(typeof v !== 'object') setNamed(k,v); });
+    const attrs=data.attributes || data.abilities || h.attributes || h.abilities || {};
+    Object.entries(attrs).forEach(([k,v])=>setAbility(k,v));
+    const combat=data.combat || h.combat || {};
+    const hp=combat.hitPoints || combat.hp; if(hp) setCard('Hit Points',[hp.current ?? hp.value ?? '', hp.maximum ?? hp.max ?? hp.total ?? '']);
+    if(combat.tempHp!==undefined || combat.bloodied!==undefined) setCard('Temp HP / Bloodied',[combat.tempHp ?? '', combat.bloodied ?? '']);
+    const hd=combat.hitDice || combat.hitDie; if(hd) setCard('Hit Dice',[hd.current ?? '', hd.maximum ?? hd.max ?? hd.maxDie ?? hd.die ?? '']);
+    const edge=combat.edge; if(edge) setCard('Edge',[edge.current ?? '', edge.maximum ?? edge.max ?? edge.cap ?? '']);
+    setCard('Recovery Mod', combat.recoveryModifier ?? combat.recoveryMod ?? '');
+    setCard('Power Die', combat.powerDie ?? '');
+    setCard('Speed', combat.speed ?? '');
+    setCard('Initiative', combat.initiative ?? '');
+    setCard('Class EV', combat.classEV ?? combat.classEffectValue ?? combat.saveDC ?? '');
+    setCard('Armor / Resist', combat.armorResist ?? combat.armor ?? combat.resistance ?? '');
+    const defenses=data.defenses || data.activeDefenses || {}; setCard('Parry / Block', defenses.parryBlock ?? defenses.parry ?? defenses.block ?? ''); setCard('Dodge', defenses.dodge ?? ''); setCard('Willpower', defenses.willpower ?? defenses.will ?? ''); setCard('Social Defense', defenses.socialDefense ?? defenses.social ?? '');
+    const attacks=data.attacks || {}; setCard('Melee Attack', attacks.meleeAttack ?? attacks.melee ?? ''); setCard('Ranged Attack', attacks.rangedAttack ?? attacks.ranged ?? ''); setCard('Mental Attack', attacks.mentalAttack ?? attacks.mental ?? ''); setCard('Social Attack', attacks.socialAttack ?? attacks.social ?? '');
+    Object.entries(data.skills || h.skills || {}).forEach(([k,v])=>setSkill(k,v));
+    if(Array.isArray(data.checkboxes)) $all('[data-blank-check]').forEach((cb,i)=>{cb.checked=!!data.checkboxes[i];});
+    if(data.choices){ Object.entries(data.choices).forEach(([name,value])=>{ const input=$all(`[data-choice="${CSS.escape(name)}"]`).find(i=>i.value===value); if(input) input.checked=true; }); }
+    recalcAbilitySaves(); syncTitles();
+  }
+  function collectCharacter(){
+    const named={}; $all('[data-field]').forEach(el=>{ const k=el.dataset.field; if(!k) return; named[k]=el.type==='checkbox' ? !!el.checked : text(el); });
+    const hp=getCard('Hit Points'), temp=getCard('Temp HP / Bloodied'), hd=getCard('Hit Dice'), edge=getCard('Edge');
+    return {version:'heroic-character-record-rc2', schemaVersion:'1.3-fieldMap', exportedAt:new Date().toISOString(), hero:{heroName:named.heroName||'', realName:named.identity||named.realName||'', identity:named.identity||'', player:named.player||'', campaign:named.campaign||'', gm:named.gm||'', concept:named.concept||'', origin:named.origin||'', calling:named.calling||'', class:named.class||'', level:named.level||'', prowess:named.prowess||'', classLevel:named.classLevel||'', campaignRank:$('[data-choice="campaignRank"]:checked')?.value||'', side:$('[data-choice="side"]:checked')?.value||''}, attributes:collectAttributes(), combat:{hitPoints:{current:hp[0]||'', maximum:hp[1]||''}, tempHp:temp[0]||'', bloodied:temp[1]||'', hitDie:{current:hd[0]||'', maximum:hd[1]||''}, edge:{current:edge[0]||'', maximum:edge[1]||''}, recoveryModifier:getCard('Recovery Mod')[0]||'', powerDie:getCard('Power Die')[0]||'', speed:getCard('Speed')[0]||'', initiative:getCard('Initiative')[0]||'', classEV:getCard('Class EV')[0]||'', armorResist:getCard('Armor / Resist')[0]||''}, defenses:{parryBlock:getCard('Parry / Block')[0]||'', dodge:getCard('Dodge')[0]||'', willpower:getCard('Willpower')[0]||'', socialDefense:getCard('Social Defense')[0]||''}, attacks:{meleeAttack:getCard('Melee Attack')[0]||'', rangedAttack:getCard('Ranged Attack')[0]||'', mentalAttack:getCard('Mental Attack')[0]||'', socialAttack:getCard('Social Attack')[0]||''}, skills:collectSkills(), fields:$all('[data-blank-field]').map(text), namedFields:named, checkboxes:$all('[data-blank-check]').map(cb=>!!cb.checked), choices:Object.fromEntries($all('[data-choice]:checked').map(input=>[input.dataset.choice,input.value])), settings:{powerSetPages:Number($('#powerSetPageCount')?.value)||8, inkSaver:!!$('#inkSaver')?.checked}};
+  }
+  function doExport(event){ event?.preventDefault?.(); event?.stopPropagation?.(); const data=collectCharacter(); const safe=(data.hero.heroName||'Heroic-5e-character').replace(/[^a-z0-9_-]+/gi,'-').replace(/^-+|-+$/g,'')||'Heroic-5e-character'; const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=safe+'.json'; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),500); }
+  function doImport(event){ event?.preventDefault?.(); event?.stopPropagation?.(); $('#jsonImportInput')?.click(); }
+  function doPrint(event){ event?.preventDefault?.(); event?.stopPropagation?.(); window.print(); }
+  function doClear(event){
+    event?.preventDefault?.(); event?.stopPropagation?.(); event?.stopImmediatePropagation?.();
+    if(!confirm('Clear the entire character sheet?')) return;
+    $all('#blankSheet [data-blank-field], #blankSheet [contenteditable="true"]').forEach(el=>setText(el,''));
+    $all('#blankSheet [data-blank-check], #blankSheet [data-choice]').forEach(el=>{el.checked=false;});
+    const img=$('#coverPortraitImage'), ph=$('#coverPortraitPlaceholder'), dz=$('#coverPortraitDropzone');
+    if(img){ img.removeAttribute('src'); img.style.display='none'; }
+    if(ph) ph.style.display='';
+    if(dz) dz.classList.remove('has-portrait','is-dragover');
+    try{ localStorage.removeItem('heroicCoverPortrait'); }catch(e){}
+    syncTitles();
+  }
+  window.heroicApplyCharacterData=applyStructured;
+  window.heroicCollectCharacterData=collectCharacter;
+  window.heroicExportJson=doExport;
+  window.heroicImportJson=doImport;
+  window.heroicPrintSheet=doPrint;
+  function bind(){
+    const input=$('#jsonImportInput'); if(input) input.onchange=function(){ const file=input.files&&input.files[0]; if(!file) return; const reader=new FileReader(); reader.onload=function(e){ try{ applyStructured(JSON.parse(e.target.result)); }catch(err){ alert('Could not import that JSON file. '+(err.message||'')); } finally{ input.value=''; } }; reader.readAsText(file); };
+    const map={importJson:doImport,exportJson:doExport,printSheet:doPrint,clearSheet:doClear};
+    document.addEventListener('click', function(event){ const btn=event.target.closest && event.target.closest('#importJson,#exportJson,#printSheet,#clearSheet'); if(!btn) return; map[btn.id]?.(event); }, true);
+    document.addEventListener('change', function(event){ if(event.target.matches('[data-save-trained]')) recalcAbilitySaves(); }, true);
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', bind); else bind();
+})();
+</script>
+<script id="heroic-power-set-import-export-v3">
+(function(){
+  if (window.__heroicPowerSetImportExportV3) return;
+  window.__heroicPowerSetImportExportV3 = true;
+
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const text = el => (el && (el.value ?? el.textContent) || '').trim();
+  function setText(el, value){ if(!el) return; el.textContent = value == null ? '' : String(value); }
+  function asArray(value){ if(!value) return []; return Array.isArray(value) ? value : [value]; }
+  function first(...vals){ return vals.find(v => v !== undefined && v !== null && v !== '') ?? ''; }
+
+  function setPowerPageCount(count){
+    const n = Math.max(1, Math.min(16, Number(count) || 1));
+    const input = $('#powerSetPageCount');
+    if (input) {
+      input.value = n;
+      input.dispatchEvent(new Event('change', {bubbles:true}));
+    }
+    return n;
+  }
+
+  function getPowerPages(){
+    return $$('#powerSetPages .power-set-sheet, #powerSetPages .page');
+  }
+
+  function getFieldMapPower(index, data){
+    const fm = data && data.fieldMap || {};
+    const prefix = `powerSets.${index}.`;
+    const out = {};
+    Object.entries(fm).forEach(([key, value]) => {
+      if (!key.startsWith(prefix)) return;
+      const path = key.slice(prefix.length).split('.');
+      let cur = out;
+      path.forEach((part, i) => {
+        const last = i === path.length - 1;
+        const next = path[i+1];
+        const nextIsIndex = /^\d+$/.test(next || '');
+        if (last) {
+          cur[part] = value;
+        } else {
+          if (!(part in cur)) cur[part] = nextIsIndex ? [] : {};
+          cur = cur[part];
+        }
+      });
+    });
+    return out;
+  }
+
+  function mergePower(index, data){
+    const list = Array.isArray(data.powerSets) ? data.powerSets : (Array.isArray(data.powers) ? data.powers : []);
+    const base = list[index] && typeof list[index] === 'object' ? list[index] : {};
+    const flat = getFieldMapPower(index, data);
+    return Object.assign({}, base, flat, {
+      coreTrack: flat.coreTrack || base.coreTrack || base.track || base.ranks || [],
+      atWillPowers: flat.atWillPowers || base.atWillPowers || base.atWill || base.atWills || [],
+      encounterPowers: flat.encounterPowers || base.encounterPowers || base.encounter || base.encounters || [],
+      dailyPowers: flat.dailyPowers || base.dailyPowers || base.daily || base.apex || [],
+      utilityPowers: flat.utilityPowers || base.utilityPowers || base.utility || base.utilities || []
+    });
+  }
+
+  function powerCount(data){
+    const listCount = Array.isArray(data.powerSets) ? data.powerSets.length : (Array.isArray(data.powers) ? data.powers.length : 0);
+    const fm = data.fieldMap || {};
+    let max = listCount;
+    Object.keys(fm).forEach(key => {
+      const m = key.match(/^powerSets\.(\d+)\./);
+      if (m) max = Math.max(max, Number(m[1]) + 1);
+    });
+    return max;
+  }
+
+  function clearPowerPage(page){
+    $$('[data-blank-field]', page).forEach(el => setText(el, ''));
+    $$('.encounter-records .power-record-row', page).forEach((row, i) => {
+      const f = $$('[data-blank-field]', row);
+      if (f[0]) setText(f[0], i === 3 ? '□ Daily / Apex — ' : '□ Encounter — ');
+    });
+  }
+
+  function setRow(row, item, usePrefix){
+    const f = $$('[data-blank-field]', row);
+    if (!item || typeof item !== 'object') item = {name: item || ''};
+    const name = first(item.name, item.title, item.powerName);
+    const usage = first(item.usage, item.frequency, item.type);
+    setText(f[0], usePrefix ? (usage ? `${usage} — ${name}` : name) : name);
+    setText(f[1], first(item.action, item.actionType));
+    setText(f[2], first(item.attack, item.attackDefense, item.roll, item.defense));
+    setText(f[3], first(item.range, item.rangeArea, item.area));
+    setText(f[4], first(item.effect, item.description, item.notes, item.benefit));
+  }
+
+  function importPowerSetsV3(data){
+    if (!data || typeof data !== 'object') return;
+    const count = powerCount(data);
+    if (!count) return;
+    setPowerPageCount(count);
+    const pages = getPowerPages();
+
+    for (let i = 0; i < count; i++) {
+      const page = pages[i];
+      if (!page) continue;
+      clearPowerPage(page);
+      const power = mergePower(i, data);
+
+      const profile = $$('.set-profile [data-blank-field]', page);
+      setText(profile[0], first(power.name, power.powerSetName, power.setName));
+      setText(profile[1], first(power.governingAbility, power.ability, power.primaryAbility));
+      setText(profile[2], first(power.powerEffectValue, power.powerEV, power.pev));
+      setText(profile[3], first(power.powerDie, data.combat && data.combat.powerDie));
+      setText(profile[4], first(power.tierAccess, power.tier, power.rank && `Rank ${power.rank}`));
+      setText(profile[5], first(power.picksSpent, power.picks));
+
+      const coreRows = $$('.core-track .record-row', page);
+      let core = asArray(power.coreTrack);
+      if (!core.length && (power.rank || power.name || power.passiveBenefits)) {
+        core = [{tier: first(power.tierAccess, power.tier, power.rank), name: power.name || '', benefit: first(power.passiveBenefits, power.passive, power.notes)}];
+      }
+      core.slice(0, coreRows.length).forEach((item, r) => {
+        const f = $$('[data-blank-field]', coreRows[r]);
+        setText(f[0], first(item.tier, item.rank, item.tierRank));
+        setText(f[1], first(item.name, item.title));
+        setText(f[2], first(item.benefit, item.effect, item.description, item.notes));
+      });
+
+      const atRows = $$('.power-records:not(.encounter-records) .power-record-row', page);
+      const atPowers = asArray(power.atWillPowers).concat(asArray(power.utilityPowers));
+      atPowers.slice(0, atRows.length).forEach((item, r) => setRow(atRows[r], item, false));
+
+      const encRows = $$('.encounter-records .power-record-row', page);
+      const encPowers = asArray(power.encounterPowers).concat(asArray(power.dailyPowers));
+      encPowers.slice(0, encRows.length).forEach((item, r) => setRow(encRows[r], item, true));
+
+      const bottom = $$('.set-bottom-grid [data-blank-field]', page);
+      setText(bottom[0], [power.passiveBenefits, power.passive, asArray(power.utilityPowers).map(p => typeof p === 'string' ? p : `${first(p.name, p.title)}: ${first(p.effect, p.description, p.notes)}`).filter(Boolean).join('\n')].filter(Boolean).join('\n\n'));
+      setText(bottom[1], asArray(power.enhancements).join('\n'));
+      setText(bottom[2], asArray(power.limitations).join('\n'));
+      setText(bottom[3], [power.combos, power.tactics, power.notes, power.combosNotes].filter(Boolean).join('\n\n'));
+    }
+  }
+
+  function collectPowerSetsV3(){
+    return getPowerPages().map(page => {
+      const profile = $$('.set-profile [data-blank-field]', page);
+      const rowsToList = (rows, encounter=false) => rows.map(row => {
+        const f = $$('[data-blank-field]', row).map(text);
+        return {name:f[0]||'', action:f[1]||'', attack:f[2]||'', range:f[3]||'', effect:f[4]||''};
+      }).filter(p => Object.values(p).some(Boolean));
+      const coreTrack = $$('.core-track .record-row', page).map(row => {
+        const f = $$('[data-blank-field]', row).map(text);
+        return {tier:f[0]||'', name:f[1]||'', benefit:f[2]||''};
+      }).filter(p => Object.values(p).some(Boolean));
+      const bottom = $$('.set-bottom-grid [data-blank-field]', page).map(text);
+      return {
+        name: text(profile[0]),
+        governingAbility: text(profile[1]),
+        powerEffectValue: text(profile[2]),
+        powerDie: text(profile[3]),
+        tierAccess: text(profile[4]),
+        picksSpent: text(profile[5]),
+        coreTrack,
+        atWillPowers: rowsToList($$('.power-records:not(.encounter-records) .power-record-row', page)),
+        encounterPowers: rowsToList($$('.encounter-records .power-record-row', page), true),
+        passiveBenefits: bottom[0] || '',
+        enhancements: bottom[1] || '',
+        limitations: bottom[2] || '',
+        notes: bottom[3] || ''
+      };
+    }).filter(p => p.name || p.powerEffectValue || p.coreTrack.length || p.atWillPowers.length || p.encounterPowers.length || p.passiveBenefits);
+  }
+
+  const oldApply = window.heroicApplyCharacterData;
+  window.heroicApplyCharacterData = function(data){
+    if (oldApply) oldApply(data);
+    importPowerSetsV3(data);
+  };
+
+  const oldCollect = window.heroicCollectCharacterData;
+  window.heroicCollectCharacterData = function(){
+    const data = oldCollect ? oldCollect() : {};
+    data.powerSets = collectPowerSetsV3();
+    data.schemaVersion = '1.4-fieldMap-powerSets';
+    return data;
+  };
+
+  window.heroicExportJson = function(event){
+    event?.preventDefault?.(); event?.stopPropagation?.(); event?.stopImmediatePropagation?.();
+    const data = window.heroicCollectCharacterData();
+    const safe = ((data.hero && data.hero.heroName) || 'Heroic-5e-character').replace(/[^a-z0-9_-]+/gi,'-').replace(/^-+|-+$/g,'') || 'Heroic-5e-character';
+    const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = safe + '.json'; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),500);
+  };
+
+  function importFile(file){
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+      try { window.heroicApplyCharacterData(JSON.parse(e.target.result)); }
+      catch(err){ console.error(err); alert('Could not import that JSON file. ' + (err.message || '')); }
+      finally { const input = $('#jsonImportInput'); if (input) input.value = ''; }
+    };
+    reader.readAsText(file);
+  }
+
+  document.addEventListener('change', function(event){
+    if (!event.target || event.target.id !== 'jsonImportInput') return;
+    event.preventDefault(); event.stopPropagation(); event.stopImmediatePropagation();
+    importFile(event.target.files && event.target.files[0]);
+  }, true);
+
+  document.addEventListener('click', function(event){
+    const btn = event.target && event.target.closest && event.target.closest('#exportJson');
+    if (!btn) return;
+    window.heroicExportJson(event);
+  }, true);
+
+  window.heroicImportPowerSetsV3 = importPowerSetsV3;
+})();
+</script>
+
+<script id="heroic-story-passive-import-export-v4">
+(function(){
+  if (window.__heroicStoryPassiveV4) return;
+  window.__heroicStoryPassiveV4 = true;
+
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const text = el => (el && (el.value ?? el.textContent) || '').trim();
+  function setText(el, value){ if(!el) return; el.textContent = value == null ? '' : String(value); }
+  function asArray(v){ if(!v) return []; return Array.isArray(v) ? v : [v]; }
+  function first(...vals){ return vals.find(v => v !== undefined && v !== null && v !== '') ?? ''; }
+  function setField(name, value){ $$(`[data-field="${CSS.escape(name)}"]`).forEach(el => { if(el.type === 'checkbox') el.checked = !!value; else setText(el, value); }); }
+  function getPath(obj, path){ return String(path).split('.').reduce((cur,key)=>cur == null ? undefined : cur[key], obj); }
+  function setChoiceLoose(name, value){
+    if(value == null || value === '') return;
+    const wanted = String(value).trim().toLowerCase().replace(/\s+level$/, '');
+    const input = $$(`[data-choice="${CSS.escape(name)}"]`).find(i => String(i.value).trim().toLowerCase() === wanted || String(i.value).trim().toLowerCase().replace(/\s+level$/, '') === wanted);
+    if(input) input.checked = true;
+  }
+  function namedTextList(value){
+    if(Array.isArray(value)) return value.map(item => typeof item === 'string' ? item : [first(item.name,item.title), first(item.text,item.effect,item.description,item.notes)].filter(Boolean).join(': ')).filter(Boolean).join('\n\n');
+    if(value && typeof value === 'object') return Object.entries(value).map(([k,v]) => `${k}: ${typeof v === 'object' ? first(v.text,v.effect,v.description,v.notes,JSON.stringify(v)) : v}`).join('\n\n');
+    return value || '';
+  }
+  function importStory(data){
+    if(!data || typeof data !== 'object') return;
+    const fm = data.fieldMap || {};
+    const h = data.hero || data.identity || data.character || {};
+    const story = data.story || {};
+    const features = data.features || {};
+    const triggers = story.triggers || data.callingTriggers || {};
+    const values = {
+      'story.origin': first(getPath(fm,'story.origin'), story.origin, h.origin),
+      'story.classPrimaryAbility': first(getPath(fm,'story.classPrimaryAbility'), story.classPrimaryAbility, story.classPrimary, h.classPrimaryAbility, h.class ? `${h.class} / Primary PER` : ''),
+      'story.callingCode': first(getPath(fm,'story.callingCode'), story.callingCode, story.calling, h.calling),
+      'story.originAbilities': first(getPath(fm,'story.originAbilities'), story.originAbilities, story.originAbilityBonuses, h.originAbilities),
+      'story.originTraitTalent': first(getPath(fm,'story.originTraitTalent'), story.originTraitTalent, story.originTrait, h.originTraitTalent),
+      'story.originSkillsLanguages': first(getPath(fm,'story.originSkillsLanguages'), story.originSkillsLanguages, story.skillsLanguages, h.originSkillsLanguages),
+      'story.campaign': first(getPath(fm,'story.campaign'), story.campaign, h.campaign),
+      'story.originStory': first(getPath(fm,'story.originStory'), story.originStory),
+      'story.personalityVoice': first(getPath(fm,'story.personalityVoice'), story.personalityVoice, story.personality),
+      'story.motivation': first(getPath(fm,'story.motivation'), story.motivation),
+      'story.identityReputation': first(getPath(fm,'story.identityReputation'), story.identityReputation, story.reputation),
+      'story.merits': first(getPath(fm,'story.merits'), story.merits, namedTextList(features.merits)),
+      'story.talents': first(getPath(fm,'story.talents'), getPath(fm,'features.talents'), story.talents, namedTextList(features.talents)),
+      'story.flaws': first(getPath(fm,'story.flaws'), story.flaws, namedTextList(features.flaws)),
+      'story.triggers.minor': first(getPath(fm,'story.triggers.minor'), triggers.minor),
+      'story.triggers.major': first(getPath(fm,'story.triggers.major'), triggers.major),
+      'story.triggers.defining': first(getPath(fm,'story.triggers.defining'), triggers.defining),
+      'story.allies': first(getPath(fm,'story.allies'), story.allies),
+      'story.enemies': first(getPath(fm,'story.enemies'), story.enemies),
+      'story.equipment': first(getPath(fm,'story.equipment'), story.equipment),
+      'story.campaignHook': first(getPath(fm,'story.campaignHook'), story.campaignHook)
+    };
+    Object.entries(values).forEach(([k,v]) => { if(v !== undefined && v !== null && v !== '') setField(k, v); });
+    setChoiceLoose('campaignRank', first(data.choices && data.choices.campaignRank, h.campaignRank, h.rank, story.rank));
+    setChoiceLoose('side', first(data.choices && data.choices.side, h.side, story.side));
+  }
+
+  function splitPassiveUtility(raw){
+    raw = Array.isArray(raw) ? raw.join('\n') : (raw || '');
+    raw = String(raw).trim();
+    if(!raw) return {passive:'', utility:''};
+    const utilityMatch = raw.match(/(?:^|\n\n|\n)\s*Utility\s*:\s*/i);
+    if(utilityMatch){
+      const idx = utilityMatch.index;
+      const passive = raw.slice(0, idx).replace(/^\s*Passive\s*:\s*/i,'').trim();
+      const utility = raw.slice(idx).replace(/^\s*Utility\s*:\s*/i,'Utility: ').trim();
+      return {passive, utility};
+    }
+    return {passive: raw.replace(/^\s*Passive\s*:\s*/i,'').trim(), utility:''};
+  }
+  function fieldMapPower(index, data){
+    const fm = data && data.fieldMap || {};
+    const prefix = `powerSets.${index}.`;
+    const out = {};
+    Object.entries(fm).forEach(([key,value]) => { if(key.startsWith(prefix)) out[key.slice(prefix.length)] = value; });
+    return out;
+  }
+  function powerData(index, data){
+    const list = Array.isArray(data.powerSets) ? data.powerSets : (Array.isArray(data.powers) ? data.powers : []);
+    const base = list[index] && typeof list[index] === 'object' ? list[index] : {};
+    return Object.assign({}, base, fieldMapPower(index, data));
+  }
+  function powerPages(){ return $$('#powerSetPages .power-set-sheet, #powerSetPages .page'); }
+  function normalizeBenefitText(value){
+    return String(value || '')
+      .replace(/^\s*Passive\s*:\s*/i,'')
+      .replace(/\s+/g,' ')
+      .trim()
+      .toLowerCase();
+  }
+  function coreItemFromFlat(flat, rowIndex){
+    const prefix = `coreTrack.${rowIndex}.`;
+    const has = Object.keys(flat).some(k => k.startsWith(prefix));
+    if(!has) return null;
+    return {
+      tier: flat[prefix + 'tier'] || flat[prefix + 'rank'] || '',
+      name: flat[prefix + 'name'] || '',
+      benefit: flat[prefix + 'benefit'] || flat[prefix + 'effect'] || flat[prefix + 'notes'] || ''
+    };
+  }
+  function getCoreItemsForPower(index, data, p){
+    const items = [];
+    asArray(p.coreTrack || p.track || p.ranks).forEach(item => {
+      if(!item) return;
+      if(typeof item === 'string') items.push({tier:'', name:'', benefit:item});
+      else items.push({
+        tier: first(item.tier, item.rank, item.purchasedRank),
+        name: first(item.name, item.title),
+        benefit: first(item.benefit, item.effect, item.text, item.notes)
+      });
+    });
+    const flat = fieldMapPower(index, data);
+    for(let i=0;i<12;i++){
+      const item = coreItemFromFlat(flat, i);
+      if(item) items.push(item);
+    }
+    // Remove exact duplicates created by having both array and fieldMap versions.
+    const seen = new Set();
+    return items.filter(item => {
+      const key = [item.tier,item.name,item.benefit].map(v => String(v||'').trim()).join('|');
+      if(seen.has(key)) return false;
+      seen.add(key);
+      return item.tier || item.name || item.benefit;
+    });
+  }
+  function isDuplicatePassiveTier(item, powerName, passiveText){
+    const tier = String(item.tier || '').toLowerCase();
+    const name = String(item.name || '').toLowerCase();
+    const benefit = normalizeBenefitText(item.benefit);
+    const passive = normalizeBenefitText(passiveText);
+    const tierLooksPassive = tier.includes('passive') || tier === 'tier 1' || tier === '1';
+    const nameLooksSame = !name || name === String(powerName || '').toLowerCase() || name === String((powerName || '') + ' 1').toLowerCase();
+    const benefitLooksSame = !benefit || benefit === passive || passive.includes(benefit) || benefit.includes(passive);
+    return tierLooksPassive && nameLooksSame && benefitLooksSame;
+  }
+  function applyPassiveCore(data){
+    if(!data || typeof data !== 'object') return;
+    powerPages().forEach((page, index) => {
+      const p = powerData(index, data);
+      if(!p || !(p.name || p.powerSetName || p.setName || p.passiveBenefits || p.passive)) return;
+      const rawPassive = first(p.passiveBenefits, p.passive, p['passiveBenefits']);
+      const split = splitPassiveUtility(rawPassive);
+      const rows = $$('.core-track .record-row', page);
+      if(!rows.length) return;
+
+      const powerName = first(p.name, p.powerSetName, p.setName, 'Power Set');
+      const coreItems = getCoreItemsForPower(index, data, p)
+        .filter(item => !isDuplicatePassiveTier(item, powerName, split.passive));
+
+      // Clear the whole Core Track and rebuild it from stable data.
+      rows.forEach(row => $$('[data-blank-field]', row).forEach(field => setText(field, '')));
+
+      const firstRow = $$('[data-blank-field]', rows[0]);
+      setText(firstRow[0], 'Passive Tier 1');
+      setText(firstRow[1], powerName);
+      setText(firstRow[2], split.passive || first(p.notes, p.description, ''));
+
+      coreItems.slice(0, rows.length - 1).forEach((item, i) => {
+        const fields = $$('[data-blank-field]', rows[i + 1]);
+        setText(fields[0], first(item.tier, item.rank, item.purchasedRank));
+        setText(fields[1], first(item.name, item.title));
+        setText(fields[2], first(item.benefit, item.effect, item.text, item.notes));
+      });
+
+      const bottom = $$('.set-bottom-grid [data-blank-field]', page);
+      const utilityText = [split.utility, asArray(p.utilityPowers).map(u => typeof u === 'string' ? u : `${first(u.name,u.title)}: ${first(u.effect,u.description,u.notes)}`).join('\n')].filter(Boolean).join('\n\n');
+      if(bottom[0]) setText(bottom[0], utilityText);
+    });
+  }
+
+  const prevApply = window.heroicApplyCharacterData;
+  window.heroicApplyCharacterData = function(data){
+    if(prevApply) prevApply(data);
+    importStory(data);
+    applyPassiveCore(data);
+    document.dispatchEvent(new CustomEvent('heroic5e:v4Imported', {detail:data}));
+  };
+
+  const prevCollect = window.heroicCollectCharacterData;
+  window.heroicCollectCharacterData = function(){
+    const data = prevCollect ? prevCollect() : {};
+    data.schemaVersion = '1.7-stable-story-layout';
+    const storyKeys = ['origin','classPrimaryAbility','callingCode','originAbilities','originTraitTalent','originSkillsLanguages','campaign','originStory','personalityVoice','motivation','identityReputation','merits','talents','flaws','allies','enemies','equipment','campaignHook'];
+    data.story = data.story || {};
+    storyKeys.forEach(k => { const v = text($(`[data-field="story.${k}"]`)); if(v) data.story[k] = v; });
+    data.story.triggers = {
+      minor: text($('[data-field="story.triggers.minor"]')),
+      major: text($('[data-field="story.triggers.major"]')),
+      defining: text($('[data-field="story.triggers.defining"]'))
+    };
+    return data;
+  };
+})();
+</script>
+
+
+<script>
+/* RC2 Stable v7: automatic skill totals from ability modifiers + Prowess */
+(function(){
+  'use strict';
+  const $ = (sel, root=document) => root.querySelector(sel);
+  const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+  const clean = v => String(v ?? '').trim();
+  function text(el){ return el ? clean(el.value !== undefined ? el.value : el.textContent) : ''; }
+  function setText(el, value){
+    if(!el) return;
+    const v = value == null ? '' : String(value);
+    if(el.value !== undefined) el.value = v; else el.textContent = v;
+  }
+  function signedNumber(value){
+    const raw = String(value ?? '').replace(/[^0-9+\-.]/g, '');
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function formatSigned(value){
+    const n = Number(value) || 0;
+    return n >= 0 ? '+' + n : String(n);
+  }
+  function scoreToMod(score){
+    const raw = String(score ?? '').replace(/[^0-9\-.]/g,'');
+    if(raw === '') return 0;
+    const n = Number(raw);
+    return Number.isFinite(n) ? Math.floor((n - 10) / 2) : 0;
+  }
+  function getProwess(){
+    const el = $('[data-field="prowess"]');
+    return signedNumber(text(el));
+  }
+  function abilityCode(input){
+    const map = {strength:'STR',str:'STR',dexterity:'DEX',dex:'DEX',constitution:'CON',con:'CON',fighting:'FIG',fig:'FIG',intelligence:'INT',int:'INT',wisdom:'WIS',wis:'WIS',perception:'PER',per:'PER',charisma:'CHA',cha:'CHA'};
+    return map[String(input||'').toLowerCase()] || String(input||'').toUpperCase();
+  }
+  function abilityCard(code){
+    const wanted = abilityCode(code);
+    return $$('.ability').find(card => text(card.querySelector('h3 i')).toUpperCase() === wanted);
+  }
+  function abilityModifier(code){
+    const card = abilityCard(code);
+    if(!card) return 0;
+    const fields = $$('[data-blank-field]', card);
+    const modText = text(fields[1]);
+    if(modText !== '') return signedNumber(modText);
+    return scoreToMod(text(fields[0]));
+  }
+  function recalcSkillTotals(){
+    const prowess = getProwess();
+    $$('[data-skill]').forEach(row => {
+      const attr = row.dataset.skillAbility || text(row.querySelector('i'));
+      const checks = $$('input[type="checkbox"]', row);
+      if(checks[1]?.checked && !checks[0]?.checked) checks[0].checked = true;
+      const trained = !!checks[0]?.checked;
+      const expertise = trained && !!checks[1]?.checked;
+      row.classList.toggle('has-expertise', expertise);
+      const total = abilityModifier(attr) + (trained ? prowess : 0) + (expertise ? prowess : 0);
+      setText($('[data-skill-total]', row) || $('[data-blank-field]', row), formatSigned(total));
+    });
+  }
+  function wireSkillAutoTotals(){
+    document.addEventListener('change', ev => {
+      const t = ev.target;
+      if(t?.matches?.('[data-skill-trained], [data-skill-expertise]')) {
+        const row = t.closest('[data-skill]');
+        const trained = row?.querySelector('[data-skill-trained]');
+        const expertise = row?.querySelector('[data-skill-expertise]');
+        if(t.matches('[data-skill-expertise]') && t.checked && trained) trained.checked = true;
+        if(t.matches('[data-skill-trained]') && !t.checked && expertise) expertise.checked = false;
+        recalcSkillTotals();
+      } else if(t?.matches?.('[data-save-trained], [data-blank-check], input[type="checkbox"]')) recalcSkillTotals();
+    }, true);
+    document.addEventListener('input', ev => {
+      const t = ev.target;
+      if(t?.closest?.('.ability') || t?.matches?.('[data-field="prowess"]')) recalcSkillTotals();
+    }, true);
+    document.addEventListener('blur', ev => {
+      const t = ev.target;
+      if(t?.closest?.('.ability') || t?.matches?.('[data-field="prowess"]')) recalcSkillTotals();
+    }, true);
+  }
+  const previousApply = window.heroicApplyCharacterData;
+  window.heroicApplyCharacterData = function(data){
+    if(previousApply) previousApply(data);
+    recalcSkillTotals();
+    document.dispatchEvent(new CustomEvent('heroic5e:skillsRecalculated', {detail:{source:'import'}}));
+  };
+  const previousCollect = window.heroicCollectCharacterData;
+  window.heroicCollectCharacterData = function(){
+    recalcSkillTotals();
+    const data = previousCollect ? previousCollect() : {};
+    data.schemaVersion = '1.8-stable-skill-autototals';
+    return data;
+  };
+  window.heroicRecalcSkillTotals = recalcSkillTotals;
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => { wireSkillAutoTotals(); recalcSkillTotals(); });
+  else { wireSkillAutoTotals(); recalcSkillTotals(); }
+})();
+</script>
+
+<script id="heroic-live-ability-modifiers">
+(function(){
+  'use strict';
+  if(window.__heroicLiveAbilityModifiers) return;
+  window.__heroicLiveAbilityModifiers = true;
+
+  const abilityCards = () => Array.from(document.querySelectorAll('.ability'));
+  const fieldsFor = card => Array.from(card.querySelectorAll('[data-blank-field]'));
+  const numeric = value => {
+    const cleaned = String(value ?? '').replace(/[^0-9+\-.]/g, '');
+    if(cleaned === '') return null;
+    const number = Number(cleaned);
+    return Number.isFinite(number) ? number : null;
+  };
+  const signed = value => value >= 0 ? `+${value}` : String(value);
+  const prowess = () => numeric(document.querySelector('[data-field="prowess"]')?.textContent) || 0;
+
+  function updateAbility(card){
+    if(!card) return;
+    const fields = fieldsFor(card);
+    const score = numeric(fields[0]?.textContent);
+    if(score === null){
+      if(fields[1]) fields[1].textContent = '';
+      if(fields[2]) fields[2].textContent = '';
+      return;
+    }
+    const modifier = Math.floor((score - 10) / 2);
+    if(fields[1]) fields[1].textContent = signed(modifier);
+    const trained = !!card.querySelector('[data-save-trained]')?.checked;
+    if(fields[2]) fields[2].textContent = signed(modifier + (trained ? prowess() : 0));
+  }
+
+  function updateAllAbilities(){
+    abilityCards().forEach(updateAbility);
+    window.heroicRecalcSkillTotals?.();
+  }
+
+  document.addEventListener('input', event => {
+    const target = event.target;
+    if(target?.matches?.('.ability [data-field$="Score"]')) {
+      updateAbility(target.closest('.ability'));
+      window.heroicRecalcSkillTotals?.();
+    } else if(target?.matches?.('[data-field="prowess"]')) {
+      updateAllAbilities();
+    }
+  }, true);
+
+  document.addEventListener('change', event => {
+    if(event.target?.matches?.('[data-save-trained]')) {
+      updateAbility(event.target.closest('.ability'));
+      window.heroicRecalcSkillTotals?.();
+    }
+  }, true);
+
+  const previousApplyCharacterData = window.heroicApplyCharacterData;
+  window.heroicApplyCharacterData = function(data){
+    previousApplyCharacterData?.(data);
+    updateAllAbilities();
+  };
+  window.heroicRecalcAbilityModifiers = updateAllAbilities;
+})();
+</script>
+
+<script id="heroic-generator-output-adapter">
+(function(){
+  'use strict';
+  const STORAGE_KEY = 'heroic5e_generator_output_sheet';
+  const params = new URLSearchParams(location.search);
+  const embedded = params.get('embed') === '1';
+  const shouldPrint = params.get('print') === '1';
+
+  function applyGeneratorOutput(payload){
+    if(!payload || typeof payload !== 'object') return false;
+    const data = payload.output || payload.character || payload;
+    if(typeof window.heroicApplyCharacterData !== 'function') return false;
+    window.heroicApplyCharacterData(data);
+    const extraFields = {
+      'features.classFeatures': data.features && data.features.classFeatures,
+      'story.sessionNotes': data.story && data.story.sessionNotes
+    };
+    Object.entries(extraFields).forEach(([name, value]) => {
+      if(value == null || value === '') return;
+      document.querySelectorAll(`[data-field="${name}"]`).forEach(field => { field.textContent = String(value); });
+    });
+    const portrait = data.hero && data.hero.portrait;
+    if(portrait){
+      const image = document.querySelector('#coverPortraitImage');
+      const placeholder = document.querySelector('#coverPortraitPlaceholder');
+      const dropzone = document.querySelector('#coverPortraitDropzone');
+      if(image){ image.src = portrait; image.style.display = 'block'; }
+      if(placeholder) placeholder.style.display = 'none';
+      if(dropzone) dropzone.classList.add('has-portrait');
+    }
+    document.documentElement.classList.add('generator-populated');
+    return true;
+  }
+
+  function readStoredOutput(){
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch(error) {
+      console.warn('Generator output could not be read.', error);
+      return null;
+    }
+  }
+
+  function initializeGeneratorOutput(){
+    if(embedded) document.documentElement.classList.add('sheet-embedded');
+    const applied = applyGeneratorOutput(readStoredOutput());
+    if(window.parent && window.parent !== window) window.parent.postMessage({type:'heroic5e-sheet-ready'}, '*');
+    if(window.opener) window.opener.postMessage({type:'heroic5e-sheet-ready'}, '*');
+    if(shouldPrint && applied) window.setTimeout(() => window.print(), 350);
+  }
+
+  window.addEventListener('message', event => {
+    if(event.source !== window.parent && event.source !== window.opener) return;
+    const message = event.data;
+    if(!message || message.type !== 'heroic5e-sheet-data') return;
+    applyGeneratorOutput(message.payload);
+  });
+  window.heroicApplyGeneratorOutput = applyGeneratorOutput;
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeGeneratorOutput, {once:true});
+  else initializeGeneratorOutput();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1050 @@
+{
+  "name": "Hardbody",
+  "type": "character",
+  "img": "systems/heroic5e/assets/characters/hardbody/Portrait-Hardbody.png",
+  "system": {
+    "biography": "Sarah Glickman — Hardbody\n\n“The Team’s Living Wall”\n\nClass: Guardian\nOrigin: Enhanced\nCalling: Redeemer\nSide: Heroic\n\nPortrait and biography information can be added here.",
+    "notes": "Combat Reference\nPower Die: d8\nProwess: +2\nTrained Saves: STR, CON.\nTrained Skills: Athletics, Intimidation, Medicine, Notice, Streetwise, Survival.\nClass/Durability EV (CON): 16\nStrength EV (STR): 15",
+    "level": 2,
+    "rank": "Street Level",
+    "className": "Guardian",
+    "powerAbility": "con",
+    "tough": true,
+    "abilities": {
+      "str": {
+        "value": 16,
+        "trained": true
+      },
+      "dex": {
+        "value": 13,
+        "trained": false
+      },
+      "con": {
+        "value": 19,
+        "trained": true
+      },
+      "fig": {
+        "value": 15,
+        "trained": false
+      },
+      "int": {
+        "value": 12,
+        "trained": false
+      },
+      "wis": {
+        "value": 11,
+        "trained": false
+      },
+      "cha": {
+        "value": 10,
+        "trained": false
+      },
+      "per": {
+        "value": 8,
+        "trained": false
+      }
+    },
+    "skills": {
+      "acrobatics": {
+        "trained": false,
+        "expertise": false
+      },
+      "athletics": {
+        "trained": true,
+        "expertise": false
+      },
+      "culture": {
+        "trained": false,
+        "expertise": false
+      },
+      "finesse": {
+        "trained": false,
+        "expertise": false
+      },
+      "influence": {
+        "trained": false,
+        "expertise": false
+      },
+      "insight": {
+        "trained": false,
+        "expertise": false
+      },
+      "intimidation": {
+        "trained": true,
+        "expertise": false
+      },
+      "investigation": {
+        "trained": false,
+        "expertise": false
+      },
+      "medicine": {
+        "trained": true,
+        "expertise": false
+      },
+      "notice": {
+        "trained": true,
+        "expertise": false
+      },
+      "occult": {
+        "trained": false,
+        "expertise": false
+      },
+      "science": {
+        "trained": false,
+        "expertise": false
+      },
+      "stealth": {
+        "trained": false,
+        "expertise": false
+      },
+      "streetwise": {
+        "trained": true,
+        "expertise": false
+      },
+      "survival": {
+        "trained": true,
+        "expertise": false
+      },
+      "technology": {
+        "trained": false,
+        "expertise": false
+      },
+      "vehicles": {
+        "trained": false,
+        "expertise": false
+      }
+    },
+    "hp": {
+      "value": 42,
+      "max": 42
+    },
+    "tempHp": 0,
+    "edge": {
+      "value": 3,
+      "max": 4
+    },
+    "burnout": {
+      "value": 0,
+      "max": 6
+    },
+    "recovery": {
+      "value": 1,
+      "max": 1
+    },
+    "speed": 30,
+    "defenses": {},
+    "attacks": {},
+    "schemaVersion": 1,
+    "conditions": "",
+    "side": "Heroic",
+    "calling": "Redeemer",
+    "triggers": {
+      "minor": "Show mercy or offer a genuine path back to someone who has done wrong.",
+      "major": "Endanger your objective to preserve another person’s chance at redemption.",
+      "defining": "Pay a lasting personal price because you refused to give up on someone’s humanity."
+    }
+  },
+  "prototypeToken": {
+    "name": "Hardbody",
+    "displayName": 20,
+    "actorLink": true,
+    "width": 1,
+    "height": 1,
+    "depth": 1,
+    "texture": {
+      "src": "systems/heroic5e/assets/characters/hardbody/Token-Hardbody-Costume.png",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": false,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 1,
+    "displayBars": 20,
+    "bar1": {
+      "attribute": "hp"
+    },
+    "bar2": {
+      "attribute": "edge"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": {},
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
+  },
+  "items": [
+    {
+      "name": "Guardian",
+      "type": "class",
+      "img": "icons/svg/shield.svg",
+      "system": {
+        "description": "<h3>Guardian</h3><p>The Team’s Living Wall</p>",
+        "subtype": "Class",
+        "action": "Passive",
+        "category": "Class",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "NTz8PoZcZ1sGh99",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enhanced",
+      "type": "origin",
+      "img": "icons/svg/upgrade.svg",
+      "system": {
+        "description": "<p>Sarah Glickman’s origin is <strong>Enhanced</strong>.</p>",
+        "subtype": "Origin",
+        "action": "Passive",
+        "category": "Origin",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "tT38i8VubmQ139Q",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Adaptive Biology",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter on At-Will Power: add +2 to roll, ignore Disadvantage, or gain 2 Temp HP.</p>",
+        "subtype": "Origin",
+        "action": "Action",
+        "category": "Guardian",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "ZBFHpnl6iNYiFp03",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Stand Between",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>Reaction to intercept an attack meant for an ally within 25 ft.</p>",
+        "subtype": "Guardian",
+        "action": "Reaction",
+        "category": "Guardian",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "OidLoLcdqxnQMyLG",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Endure",
+      "type": "feature",
+      "img": "icons/svg/lightning.svg",
+      "system": {
+        "description": "<p>1/encounter, drop to 1 HP instead of 0.</p>",
+        "subtype": "Guardian",
+        "action": "Action",
+        "category": "Guardian",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "6iZlYznDUvILTfhl",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Durable",
+      "type": "talent",
+      "img": "icons/svg/book.svg",
+      "system": {
+        "description": "<p>Advantage on CON saves vs physical effects.</p>",
+        "subtype": "Talent",
+        "action": "Passive",
+        "category": "Guardian",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "bdsgGGm2nXM8rU3q",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Altered Physiology 1 (Enhanced Recovery)",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Altered Physiology 1 (Enhanced Recovery)</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "1UMVrlbecPHOyn4d",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Strong Resolve 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Strong Resolve 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "v6jTBEWIBvsMJZOr",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Wary 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Wary 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "L1I1uHGlTxX5sCna",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Connected 1",
+      "type": "merit",
+      "img": "icons/svg/aura.svg",
+      "system": {
+        "description": "<p>Connected 1</p>",
+        "subtype": "Merit",
+        "action": "Passive",
+        "category": "Merit",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "iSfweYjUVBQVo4su",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Marked by Change 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Marked by Change 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "Z0eeNeDuUBRUANT",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Enemy 2 (Former Crew)",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Enemy 2 (Former Crew)</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 2,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "FqwhJatbYalvGB",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Infamy 1",
+      "type": "flaw",
+      "img": "icons/svg/downgrade.svg",
+      "system": {
+        "description": "<p>Infamy 1</p>",
+        "subtype": "Flaw",
+        "action": "Passive",
+        "category": "Flaw",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 1,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "iBo6hf9zaSJjfimn",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Super Durability 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>+1 CON. Flat damage reduction 2. Gain 4 Temp HP at encounter start.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Super Durability",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Super Durability",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "dRXZdHdJiFe2CxwJ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Brace for Impact",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Reduce incoming damage by 1d8+4.</p>",
+        "subtype": "Reaction",
+        "action": "Reaction",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "1d8+4",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "WleAsOOp2CfHaFZ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Unstoppable Advance",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Move full speed, pushing enemies out of path (STR save vs EV 16).</p>",
+        "subtype": "Encounter",
+        "action": "Action",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "N3D1SPbKGYHlwJhB",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Thick Skin",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Damage reduction 2 applies to environmental hazards.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Super Durability",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Super Durability",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "J415j0spYJIDgd7o",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Super Strength 1",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>+1 STR. Lift 16 tons. Advantage on STR breaking/lifting checks.</p>",
+        "subtype": "Core",
+        "action": "Passive",
+        "category": "Super Strength",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Super Strength",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "cYrHtveFBxH6QMY",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Mighty Blow",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+5 vs Parry/Block. Hit: 1d8+3 bludgeoning. Strong: push 25 ft or Prone.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 5,
+        "damage": "1d20+5",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "m8VYAYi2PjpcNRd6",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Object Throw",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>1d20+5 vs Dodge. Range Short. Hit: 1d8+3 bludgeoning.</p>",
+        "subtype": "At-Will",
+        "action": "Action",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 5,
+        "damage": "1d20+5",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "YVOdISm4zrJsQ8T",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Shockwave Strike",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>15-ft radius. Deal 1d8+7 bludgeoning. STR save vs EV 16 or Prone.</p>",
+        "subtype": "L2 Encounter",
+        "action": "Action",
+        "category": "Martial Mastery",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "Martial Mastery",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "1d8+7",
+        "effect": "",
+        "uses": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "KxgjHEdKeAAaql",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Break Object",
+      "type": "power",
+      "img": "icons/svg/explosion.svg",
+      "system": {
+        "description": "<p>Max damage vs mundane objects.</p>",
+        "subtype": "Utility",
+        "action": "Utility",
+        "category": "Powers",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "con",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true
+      },
+      "_id": "wanpzThRvcKOzoY",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    },
+    {
+      "name": "Redeemer",
+      "type": "calling",
+      "img": "icons/svg/target.svg",
+      "system": {
+        "description": "<p>Redeemer Calling</p>",
+        "subtype": "Calling",
+        "action": "Passive",
+        "category": "Calling",
+        "source": "Heroic 5e v2.4",
+        "prerequisite": "",
+        "tier": 1,
+        "powerSet": "",
+        "cost": 0,
+        "tags": [],
+        "ability": "str",
+        "attackBonus": 0,
+        "damage": "",
+        "effect": "",
+        "uses": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": true,
+        "triggerMinor": "Show mercy or offer a genuine path back to someone who has done wrong.",
+        "triggerMajor": "Endanger your objective to preserve another person’s chance at redemption.",
+        "triggerDefining": "Pay a lasting personal price because you refused to give up on someone’s humanity."
+      },
+      "_id": "EZMnvw8joDEGmsJ",
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "ownership": {
+        "default": 0
+      }
+    }
+  ],
+  "effects": []
+}

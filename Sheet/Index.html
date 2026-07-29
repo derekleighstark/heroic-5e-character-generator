@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HEROIC 5e Blank Character Sheet</title>
+  <link rel="stylesheet" href="blank-character-sheet.css?v=20260702-3">
+</head>
+<body>
+  <nav class="toolbar" aria-label="Character sheet controls">
+    <a href="index.html">Back to Generator</a>
+    <div><strong>HEROIC 5e Blank Sheet</strong><span id="packetSummary">US Letter portrait - 11 pages</span></div>
+    <label class="power-page-control">Power Set pages <input id="powerSetPageCount" type="number" min="1" max="16" value="8"></label>
+    <button id="addPowerSet" type="button">+ Power Set</button>
+    <button id="removePowerSet" type="button">− Last Set</button>
+    <label class="layout-toggle"><input id="classicLayout" type="checkbox"> Classic 5e layout</label>
+    <label><input id="inkSaver" type="checkbox"> Grayscale / ink saver</label>
+    <button id="clearSheet" type="button">Clear typed notes</button>
+    <button id="printSheet" class="primary" type="button">Print / Save PDF</button>
+  </nav>
+
+  <main class="document" id="blankSheet">
+    <article class="page page-core">
+      <header class="masthead">
+        <div class="brand"><b>HEROIC</b><span>5e</span></div>
+        <div class="chapter"><small>Character Record</small><h1>Core Hero</h1></div>
+        <div class="page-number"><b>01</b><span>of 03</span></div>
+      </header>
+
+      <section class="hero-intro card">
+        <div class="field hero-name"><label>Hero name / alias</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field concept"><label>Concept - describe the hero in one clear sentence</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="intro-row">
+          <div class="field"><label>Player</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field"><label>Real / public identity</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field"><label>Class</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Level</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Prowess</label><b contenteditable="true" data-blank-field></b></div>
+        </div>
+      </section>
+
+      <div class="section-heading"><span>01</span><h2>Abilities & Saves</h2><p>Write total score, modifier, and trained save bonus.</p></div>
+      <section class="ability-grid">
+        <div class="ability"><h3>Strength <i>STR</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Dexterity <i>DEX</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Constitution <i>CON</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Fighting <i>FIG</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Intelligence <i>INT</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Wisdom <i>WIS</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Perception <i>PER</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+        <div class="ability"><h3>Charisma <i>CHA</i></h3><label>Score<b contenteditable="true" data-blank-field></b></label><label>Modifier<b contenteditable="true" data-blank-field></b></label><label>Save <em>□ trained</em><b contenteditable="true" data-blank-field></b></label></div>
+      </section>
+
+      <div class="section-heading"><span>02</span><h2>Combat & Resources</h2><p>Use circles for maximums and tracks during play.</p></div>
+      <section class="resource-grid">
+        <div class="resource featured"><h3>Hit Points</h3><div><label>Current<b contenteditable="true" data-blank-field></b></label><i>/</i><label>Maximum<b contenteditable="true" data-blank-field></b></label></div></div>
+        <div class="resource"><h3>Temp HP / Bloodied</h3><div><label>Temp<b contenteditable="true" data-blank-field></b></label><i>/</i><label>Bloodied<b contenteditable="true" data-blank-field></b></label></div></div>
+        <div class="resource"><h3>Hit Dice</h3><div><label>Current<b contenteditable="true" data-blank-field></b></label><i>/</i><label>Max / Die<b contenteditable="true" data-blank-field></b></label></div></div>
+        <div class="resource small-resource"><h3>Recovery Mod</h3><b contenteditable="true" data-blank-field></b></div>
+        <div class="resource small-resource"><h3>Power Die</h3><b contenteditable="true" data-blank-field></b></div>
+        <div class="resource featured"><h3>Edge</h3><div><label>Current<b contenteditable="true" data-blank-field></b></label><i>/</i><label>Start / Cap<b contenteditable="true" data-blank-field></b></label></div></div>
+        <div class="resource small-resource"><h3>Speed</h3><b contenteditable="true" data-blank-field></b></div>
+        <div class="resource small-resource"><h3>Initiative</h3><b contenteditable="true" data-blank-field></b><small>DEX + PER</small></div>
+        <div class="resource small-resource"><h3>Class EV</h3><b contenteditable="true" data-blank-field></b><small>10 + Primary + Prowess</small></div>
+        <div class="resource small-resource"><h3>Armor / Resist</h3><b contenteditable="true" data-blank-field></b></div>
+      </section>
+      <section class="defense-grid">
+        <div class="defense"><span>Parry / Block</span><b contenteditable="true" data-blank-field></b><small>1d20 + FIG + PER + Prowess</small></div>
+        <div class="defense"><span>Dodge</span><b contenteditable="true" data-blank-field></b><small>1d20 + DEX + PER + Prowess</small></div>
+        <div class="defense"><span>Willpower</span><b contenteditable="true" data-blank-field></b><small>1d20 + WIS + PER + Prowess</small></div>
+        <div class="defense"><span>Social Defense</span><b contenteditable="true" data-blank-field></b><small>1d20 + CHA + INT + Prowess</small></div>
+        <div class="defense attack"><span>Melee Attack</span><b contenteditable="true" data-blank-field></b><small>1d20 + FIG + Prowess</small></div>
+        <div class="defense attack"><span>Ranged Attack</span><b contenteditable="true" data-blank-field></b><small>1d20 + DEX + Prowess</small></div>
+        <div class="defense attack"><span>Mental Attack</span><b contenteditable="true" data-blank-field></b><small>1d20 + INT + Prowess</small></div>
+        <div class="defense attack"><span>Social Attack</span><b contenteditable="true" data-blank-field></b><small>1d20 + CHA + Prowess</small></div>
+      </section>
+
+      <div class="section-heading"><span>03</span><h2>Skills</h2><p>T = Trained, E = Expertise, write specialty and total at right.</p></div>
+      <section class="skills card">
+        <div class="skill-list">
+          <p><strong>Acrobatics <i>DEX</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Athletics <i>STR</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Influence <i>CHA</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Insight <i>WIS</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Intimidation <i>CHA</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Investigation <i>INT</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Medicine <i>INT</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Notice <i>PER</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+        </div>
+        <div class="skill-list">
+          <p><strong>Occult <i>WIS</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Science <i>INT</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Sleight <i>DEX</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Stealth <i>DEX</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Streetwise <i>CHA</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Survival <i>WIS</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Technology <i>INT</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+          <p><strong>Vehicles <i>DEX</i></strong><em>□ T&nbsp;&nbsp;□ E</em><b contenteditable="true" data-blank-field></b></p>
+        </div>
+      </section>
+
+      <section class="classic-support" aria-label="Class features, talents, and status notes">
+        <div class="classic-notes card"><h3>Class Features &amp; Talents</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="classic-notes card"><h3>Conditions, Momentum &amp; Burnout</h3><div class="classic-tracks"><span>Conditions</span><b contenteditable="true" data-blank-field></b><span>Momentum</span><b contenteditable="true" data-blank-field></b><span>Burnout</span><b contenteditable="true" data-blank-field></b></div></div>
+      </section>
+
+      <aside class="turn-reference">
+        <h2>Your Turn</h2><p><b>Move</b> up to Speed</p><p><b>Action</b> attack, power, stunt, help</p><p><b>Bonus Action</b> when granted</p><p><b>Reaction</b> when triggered</p><p><b>Interact</b> with one object freely</p>
+        <div><b>Second Wind</b><span>Bonus Action, once/encounter: spend 1 Hit Die; end Shaken, Slowed, or Dazed.</span></div>
+      </aside>
+      <footer><span>HEROIC 5e</span><b>Core Hero</b><span>01 / 03</span></footer>
+    </article>
+
+    <article class="page page-powers">
+      <header class="masthead"><div class="brand"><b>HEROIC</b><span>5e</span></div><div class="chapter"><small>Character Record</small><h1>Powers & Features</h1></div><div class="page-number"><b>02</b><span>of 03</span></div></header>
+
+      <section class="power-profile card">
+        <div class="field"><label>Power set / core track</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Power ability</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field mini"><label>Power EV</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field mini"><label>Power DC</label><b contenteditable="true" data-blank-field></b></div>
+      </section>
+
+      <div class="section-heading"><span>01</span><h2>Powers & Attacks</h2><p>Write complete action, roll, range, effect, duration, and limits.</p></div>
+      <section class="power-cards">
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+        <div class="power-card"><div class="power-name"><span>Name</span><b contenteditable="true" data-blank-field></b><em>□ At-Will&nbsp; □ Encounter&nbsp; □ Daily</em></div><div class="power-meta"><label>Action / Type<b contenteditable="true" data-blank-field></b></label><label>Roll / Defense<b contenteditable="true" data-blank-field></b></label><label>Range / Area<b contenteditable="true" data-blank-field></b></label></div><label class="power-effect">Damage, effect, duration, limits, enhancements<b contenteditable="true" data-blank-field></b></label></div>
+      </section>
+
+      <div class="section-heading"><span>02</span><h2>Features, Talents & Build Notes</h2></div>
+      <section class="feature-grid">
+        <div class="lined card"><h3>Class Features</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Talents</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Enhancements</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Limitations</h3><div contenteditable="true" data-blank-field></div></div>
+      </section>
+
+      <section class="status-grid">
+        <div class="conditions card"><h3>Conditions</h3><div><span>□ Blinded</span><span>□ Charmed</span><span>□ Dazed</span><span>□ Frightened</span><span>□ Grappled</span><span>□ Incapacitated</span><span>□ Injured</span><span>□ Invisible</span><span>□ Overloaded</span><span>□ Paralyzed</span><span>□ Prone</span><span>□ Restrained</span><span>□ Shaken</span><span>□ Slowed</span><span>□ Stunned</span><span>□ Other</span></div><b contenteditable="true" data-blank-field></b></div>
+        <div class="burnout card"><h3>Burnout</h3><div><span>□ 1 / -1</span><span>□ 2 / -2</span><span>□ 3 / -3</span><span>□ 4 / -4</span><span>□ 5 / -5</span><span>□ 6 / -6</span></div><label>Current momentum / ongoing effects<b contenteditable="true" data-blank-field></b></label></div>
+      </section>
+      <footer><span>HEROIC 5e</span><b>Powers & Features</b><span>02 / 03</span></footer>
+    </article>
+
+    <div id="powerSetPages" aria-live="polite"></div>
+
+    <template id="powerSetTemplate">
+      <article class="page power-set-sheet">
+        <header class="masthead"><div class="brand"><b>HEROIC</b><span>5e</span></div><div class="chapter"><small>Character Record</small><h1>Power Set <span data-set-number></span></h1></div><div class="page-number"><b></b><span></span></div></header>
+        <section class="set-profile card">
+          <div class="field set-name"><label>Power Set Name</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field"><label>Governing Ability</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Power EV</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Power Die</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Tier Access</label><b contenteditable="true" data-blank-field></b></div>
+          <div class="field mini"><label>Picks Spent</label><b contenteditable="true" data-blank-field></b></div>
+        </section>
+        <div class="section-heading"><span>01</span><h2>Core Track</h2><p>Record every purchased rank and its complete mechanical benefit.</p></div>
+        <section class="record-table core-track card">
+          <div class="record-head"><b>Tier / Rank</b><b>Name</b><b>Mechanical Benefit, Scaling &amp; Notes</b></div>
+          <div class="record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+        </section>
+        <div class="section-heading"><span>02</span><h2>At-Will Powers</h2><p>Minimum baseline: 2. Add every later pick.</p></div>
+        <section class="power-records card">
+          <div class="power-record-head"><b>Name</b><b>Action</b><b>Attack / Defense</b><b>Range / Area</b><b>Effect, Duration &amp; Scaling</b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+        </section>
+        <div class="section-heading"><span>03</span><h2>Encounter &amp; Daily / Apex Powers</h2><p>Mark expended uses during play.</p></div>
+        <section class="power-records encounter-records card">
+          <div class="power-record-head"><b>Use / Name</b><b>Action</b><b>Attack / Defense</b><b>Range / Area</b><b>Effect, Duration, Recharge &amp; Scaling</b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field>□ Encounter — </b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field>□ Encounter — </b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field>□ Encounter — </b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+          <div class="power-record-row"><b contenteditable="true" data-blank-field>□ Daily / Apex — </b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+        </section>
+        <div class="set-bottom-grid">
+          <section class="lined card"><h3>Utility / Passive / Sustained Powers</h3><div contenteditable="true" data-blank-field></div></section>
+          <section class="lined card"><h3>Enhancements</h3><div contenteditable="true" data-blank-field></div></section>
+          <section class="lined card"><h3>Limitations</h3><div contenteditable="true" data-blank-field></div></section>
+          <section class="lined card"><h3>Combos, Power Stunts &amp; Tactical Notes</h3><div contenteditable="true" data-blank-field></div></section>
+        </div>
+        <aside class="power-reminder"><b>Power attack:</b> 1d20 + delivery ability + Prowess. <b>Power EV:</b> 10 + governing ability + Prowess. <b>Sustain:</b> Bonus Action at start of turn; only one sustained power at a time.</aside>
+        <footer><span>HEROIC 5e</span><b>Power Set <span data-set-number></span></b><span></span></footer>
+      </article>
+    </template>
+
+    <article class="page page-story">
+      <header class="masthead"><div class="brand"><b>HEROIC</b><span>5e</span></div><div class="chapter"><small>Character Record</small><h1>Identity & Story</h1></div><div class="page-number"><b>03</b><span>of 03</span></div></header>
+
+      <section class="campaign-strip card">
+        <div class="field"><label>Origin</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Class / Primary Ability</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Calling / Vigilante Code</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Origin +2 / +1 Abilities</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Origin Trait / Talent</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Origin Skills / Languages</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="field"><label>Campaign</label><b contenteditable="true" data-blank-field></b></div>
+        <div class="choice"><label>Rank</label><span>□ Street</span><span>□ Mid</span><span>□ World</span></div>
+        <div class="choice"><label>Side</label><span>□ Heroic</span><span>□ Vigilante</span><span>□ Unaligned</span><span>□ Villainous</span></div>
+      </section>
+
+      <div class="section-heading"><span>01</span><h2>Who Is This Hero?</h2><p>Write useful truths that generate choices and scenes.</p></div>
+      <section class="story-panels">
+        <div class="story-panel card"><h3>Origin Story</h3><p>Where did the powers come from, and what changed?</p><div contenteditable="true" data-blank-field></div></div>
+        <div class="story-panel card"><h3>Personality & Voice</h3><p>How do they act, speak, and respond under pressure?</p><div contenteditable="true" data-blank-field></div></div>
+        <div class="story-panel card"><h3>Motivation</h3><p>What do they want, protect, fear, or need to prove?</p><div contenteditable="true" data-blank-field></div></div>
+        <div class="story-panel card"><h3>Identity & Reputation</h3><p>Who knows the truth, and what does the public believe?</p><div contenteditable="true" data-blank-field></div></div>
+      </section>
+
+      <section class="merit-grid">
+        <div class="lined card"><h3>Merits</h3><small>Resources, trust, status, access, advantages</small><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Flaws</h3><small>Enemies, duties, weaknesses, complications</small><div contenteditable="true" data-blank-field></div></div>
+      </section>
+
+      <div class="section-heading"><span>02</span><h2>Calling Triggers</h2><p>Record the exact moments that award Edge.</p></div>
+      <section class="trigger-grid card">
+        <label><span>Minor Trigger</span><b contenteditable="true" data-blank-field></b></label>
+        <label><span>Major Trigger</span><b contenteditable="true" data-blank-field></b></label>
+        <label><span>Defining Trigger</span><b contenteditable="true" data-blank-field></b></label>
+      </section>
+
+      <div class="section-heading"><span>03</span><h2>People, Places & Gear</h2></div>
+      <section class="contact-table card">
+        <div class="table-head"><b>Name / Role</b><b>Relationship</b><b>Access, Services, Leverage, Notes</b></div>
+        <div class="table-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+        <div class="table-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+        <div class="table-row"><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b><b contenteditable="true" data-blank-field></b></div>
+      </section>
+      <section class="people-grid">
+        <div class="lined card"><h3>Allies & Key Relationships</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Enemies & Complications</h3><div contenteditable="true" data-blank-field></div></div>
+        <div class="lined card"><h3>Equipment & Headquarters</h3><div contenteditable="true" data-blank-field></div></div>
+      </section>
+
+      <section class="hook card"><label>One clear idea / campaign hook</label><b contenteditable="true" data-blank-field></b></section>
+      <section class="advance-notes">
+        <div class="advance card"><h3>Advancement</h3><div class="advance-head"><span>Level</span><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div><div><span>Power Picks</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div><span>Talent Slots</span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+        <div class="lined card session"><h3>Session Notes</h3><div contenteditable="true" data-blank-field></div></div>
+      </section>
+      <footer><span>HEROIC 5e</span><b>Identity & Story</b><span>03 / 03</span></footer>
+    </article>
+
+    <article class="page page-reference">
+      <header class="masthead"><div class="brand"><b>HEROIC</b><span>5e</span></div><div class="chapter"><small>At-the-Table Rules</small><h1>Player Reference</h1></div><div class="page-number"><b></b><span></span></div></header>
+      <section class="reference-grid">
+        <div class="reference-card card"><h2>Core Rolls</h2><p><b>Skill / Save:</b> 1d20 + ability modifier + Prowess if trained.</p><p><b>Attack:</b> 1d20 + delivery ability + Prowess. <b>Power EV:</b> 10 + governing ability + Prowess.</p><p><b>Strong success:</b> beat EV by 5+; one Momentum Effect. <b>Heroic:</b> beat by 10+; one Heroic Effect or two Momentum Effects.</p><p><b>Natural 20:</b> combat attack critical. <b>Natural 1:</b> attack misses; failed Active Defense lets attacker critical.</p><p><b>HP:</b> Level 1 = CON score + maximum Hit Die × Rank HP multiplier; later levels add die median + CON modifier. Tough adds +2 HP/level.</p></div>
+        <div class="reference-card card"><h2>Range Bands</h2><p><b>Close:</b> same zone, 0–25 ft.</p><p><b>Short:</b> adjacent zone, 25–50 ft.</p><p><b>Medium:</b> 2–3 zones, 50–120 ft.</p><p><b>Long:</b> 4–6 zones, 120–300 ft.</p><h3>Turn Economy</h3><p>Move, Action, Bonus Action when granted, Reaction when triggered, one free object interaction, and speech.</p></div>
+        <div class="reference-card card wide"><h2>Edge — Spend After the Roll, Before the Outcome; One Use per Roll</h2><div class="edge-uses"><span><b>1</b> Reroll d20</span><span><b>1</b> Advantage / cancel Disadvantage</span><span><b>1</b> Heroic Defense</span><span><b>1</b> Dramatic Rebound</span><span><b>1</b> Resist Defeat (1/encounter)</span><span><b>1</b> Power Stunt</span><span><b>1</b> Add 1 Power Die</span><span><b>1</b> Reduce Collateral</span><span><b>1</b> Narrative Advantage</span><span><b>2</b> Refresh Encounter (1/encounter)</span><span><b>2</b> Push Daily; +1 Burnout</span><span><b>1 each</b> Team Combo</span></div><p>Starting Edge: <b>Street 3, Mid 2, World 1.</b> Cap = <b>Level + Prowess.</b> Starting Edge refreshes each session; refresh does not fill to cap.</p></div>
+        <div class="reference-card card"><h2>Recovery</h2><p><b>Breather (5–10 min):</b> spend any Hit Dice. Each heals die + CON + Recovery Mod, minimum die median; refresh Breather abilities.</p><p><b>Second Wind:</b> Bonus Action once/encounter; spend 1 Hit Die; end Shaken, Slowed, or Dazed; Advantage on next save before end of next turn.</p><p><b>Steady On:</b> while Bloodied, Action once/encounter; spend 1 Hit Die + Recovery Mod.</p><p><b>Downtime:</b> full HP and Hit Dice, starting Edge, Daily powers, and most Conditions.</p></div>
+        <div class="reference-card card"><h2>Downed &amp; Grit</h2><p>At 0 HP you are <b>Downed</b>. Make Grit checks as directed. Three successes stabilize at 0 HP, unconscious. Three failures mean Defeated. Medicine DC 10 stabilizes.</p><h3>Sustained Powers</h3><p>Use a Bonus Action at the start of your turn. You may sustain only one power at a time. Sustaining ends if Stunned, Incapacitated, or Unconscious.</p></div>
+        <div class="reference-card card wide burnout-reference"><h2>Burnout</h2><p><b>Check:</b> 1d20 + CON + Prowess vs DC 10 + (current Burnout × 2). After safely maintaining a Power for Prowess turns, check each extra turn.</p><div><span><b>1</b> −1</span><span><b>2</b> −2</span><span><b>3</b> −3; Disadvantage Initiative</span><span><b>4</b> −4; Speed −10</span><span><b>5</b> −5; no Push Daily / Power Stunt</span><span><b>6th</b> Incapacitated until Breather</span></div><p>Recover 1 Burnout after a Breather; recover 2–3 during Downtime.</p></div>
+      </section>
+      <div class="section-heading"><span>01</span><h2>Condition Reference</h2><p>Use the full condition text from the rules when an edge case matters.</p></div>
+      <section class="condition-reference card">
+        <p><b>Blinded</b><span>Attacks against gain Adv.; own attacks and sight checks have Disadv.</span></p><p><b>Burning</b><span>Source Prowess fire at turn start; Action + reasonable method removes.</span></p><p><b>Charmed</b><span>Cannot willingly attack source; Disadv. on saves against source.</span></p><p><b>Dazed</b><span>Either Action or Bonus Action; no Reactions.</span></p><p><b>Deafened</b><span>Cannot hear; hearing-required effects fail.</span></p><p><b>Frightened</b><span>Disadv. while source visible; cannot willingly move closer.</span></p><p><b>Frozen</b><span>Cannot move; Disadv. Dodge; Restrained; end-turn STR/CON save.</span></p><p><b>Grappled</b><span>Speed 0; Action Athletics/Acrobatics vs grappler Athletics to escape.</span></p><p><b>Hidden</b><span>Against Disadv.; own attacks Adv.; ends when revealed/attacking/visible Power.</span></p><p><b>Immobilized</b><span>Cannot move by any means; no Athletics escape.</span></p><p><b>Incapacitated</b><span>No actions, Bonus Actions, Reactions, or movement; usually until Breather.</span></p><p><b>Injured</b><span>Disadv. one skill/physical save; Medicine DC 15 during Breather/Downtime.</span></p><p><b>Overloaded</b><span>Disadv. next Power or Technology roll; ends after that roll.</span></p><p><b>Paralyzed</b><span>No movement/actions; auto-fail STR/DEX saves; attacks gain Adv.</span></p><p><b>Pinned</b><span>Grappled and Prone; escaping grapple ends both.</span></p><p><b>Poisoned</b><span>Disadvantage on attacks and Skill checks.</span></p><p><b>Power Disrupted</b><span>Named set suppressed; passives inactive; Sustained effects end.</span></p><p><b>Prone</b><span>Melee against Adv.; ranged against Disadv.; stand for half Speed.</span></p><p><b>Restrained</b><span>Speed 0; attacks/Dodge Disadv.; attacks against gain Adv.</span></p><p><b>Shaken</b><span>Disadv. next attack, save, or Skill check, then ends.</span></p><p><b>Slowed</b><span>Half Speed; no Reactions; either Action or Bonus Action.</span></p><p><b>Stunned</b><span>No movement/Action/Bonus Action; Active Defenses have Disadv.</span></p><p><b>Unconscious</b><span>Cannot act/move; Prone; auto-fail STR/DEX; attacks Adv.; Close hits critical.</span></p><p><b>Other</b><span contenteditable="true" data-blank-field></span></p>
+      </section>
+      <aside class="rules-note">This page is a table reference, not a replacement for the full rulebook. Specific powers and features override general rules.</aside>
+      <footer><span>HEROIC 5e</span><b>Player Reference</b><span></span></footer>
+    </article>
+  </main>
+
+  <script>
+    const inkSaver = document.querySelector('#inkSaver');
+    const classicLayout = document.querySelector('#classicLayout');
+    const params = new URLSearchParams(location.search);
+    if (params.get('classic') === '1' || localStorage.getItem('heroicBlankSheetLayout') === 'classic') {
+      classicLayout.checked = true;
+      document.documentElement.classList.add('classic-sheet');
+    }
+    classicLayout.addEventListener('change', () => {
+      document.documentElement.classList.toggle('classic-sheet', classicLayout.checked);
+      localStorage.setItem('heroicBlankSheetLayout', classicLayout.checked ? 'classic' : 'modern');
+    });
+    if (params.get('ink') === '1') {
+      inkSaver.checked = true;
+      document.documentElement.classList.add('ink-saver');
+    }
+    inkSaver.addEventListener('change', () => document.documentElement.classList.toggle('ink-saver', inkSaver.checked));
+    const setCount = document.querySelector('#powerSetPageCount');
+    const setContainer = document.querySelector('#powerSetPages');
+    const setTemplate = document.querySelector('#powerSetTemplate');
+    const clampSetCount = value => Math.max(1, Math.min(16, Number(value) || 1));
+    function renumberPacket() {
+      const pages = [...document.querySelectorAll('.page:not(.page-powers)')];
+      const total = pages.length;
+      pages.forEach((page, index) => {
+        const number = String(index + 1).padStart(2, '0');
+        page.querySelector('.page-number b').textContent = number;
+        page.querySelector('.page-number span').textContent = `of ${String(total).padStart(2, '0')}`;
+        page.querySelector('footer > span:last-child').textContent = `${number} / ${String(total).padStart(2, '0')}`;
+      });
+      document.querySelector('#packetSummary').textContent = `US Letter portrait - ${total} pages (${setCount.value} Power Sets)`;
+    }
+    function updatePowerSetPages(requested) {
+      const target = clampSetCount(requested);
+      setCount.value = target;
+      while (setContainer.children.length < target) {
+        const page = setTemplate.content.firstElementChild.cloneNode(true);
+        setContainer.append(page);
+      }
+      while (setContainer.children.length > target) setContainer.lastElementChild.remove();
+      [...setContainer.children].forEach((page, index) => page.querySelectorAll('[data-set-number]').forEach(node => { node.textContent = index + 1; }));
+      renumberPacket();
+    }
+    setCount.addEventListener('change', () => updatePowerSetPages(setCount.value));
+    document.querySelector('#addPowerSet').addEventListener('click', () => updatePowerSetPages(Number(setCount.value) + 1));
+    document.querySelector('#removePowerSet').addEventListener('click', () => updatePowerSetPages(Number(setCount.value) - 1));
+    updatePowerSetPages(setCount.value);
+    document.querySelector('#printSheet').addEventListener('click', () => window.print());
+    document.querySelector('#clearSheet').addEventListener('click', () => {
+      if (!confirm('Clear every field typed into this blank sheet?')) return;
+      document.querySelectorAll('[data-blank-field]').forEach(field => { field.textContent = ''; });
+    });
+  </script>
+</body>
+</html>

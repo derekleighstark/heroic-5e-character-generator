@@ -1,6 +1,6 @@
 import { generalUtilityPowers, powerFramework, powerSetRules } from "./power-data.js";
 import { npcArchetypes, npcCreatures, npcDayPlayers } from "./npc-data.js";
-import { v33Corebook } from "./v33-corebook-data.js";
+import { corebook } from "./corebook-data.js";
 import {
   cloudConfigured,
   cloudPortraitUrl,
@@ -36,16 +36,8 @@ const powerSetByName = Object.fromEntries(powerSetRules.map(powerSet => [powerSe
 const STORAGE_KEY = "heroic5e_generator_sheet";
 const OUTPUT_SHEET_KEY = "heroic5e_generator_output_sheet";
 const LIBRARY_KEY = "heroic5e_generator_library";
-const THEME_KEY = "heroic5e_generator_theme";
-const DYSLEXIA_KEY = "heroic5e_generator_dyslexia";
 const NPC_DRAFT_KEY = "heroic5e_npc_draft";
 const NPC_LIBRARY_KEY = "heroic5e_npc_library";
-const themes = [
-  ["classic", "Heroic Classic"],
-  ["four-color", "Four-Color"],
-  ["tactical", "Modern Tactical"],
-  ["dark", "Dark Style"]
-];
 const abilityArrays = {
   "Street Level": [16, 15, 14, 13, 12, 11, 10, 8],
   "Mid-Level": [18, 16, 15, 14, 13, 12, 10, 8],
@@ -393,11 +385,11 @@ const defaults = {
   intScore: 13,
   wisScore: 12,
   chaScore: 10,
-  perScore: 8
+  perScore: 8,
+  portraitMode: "contain"
 };
 
 const steps = [
-  ["random", "Random Character", "Optional guided random character generation"],
   ["concept", "Create the Concept", "Hero idea, campaign rank, and notes"],
   ["abilities", "Assign Ability Scores", "Set the eight core ability scores"],
   ["origin", "Choose an Origin", "Origin bonuses and built-in mechanics"],
@@ -416,7 +408,6 @@ const steps = [
 ];
 
 const stepArtwork = {
-  random: ["Infinite Possibilities", "A roster of heroes waiting to be discovered"],
   concept: ["Hero Concept", "Portrait, silhouette, or team introduction"],
   abilities: ["Raw Potential", "A hero demonstrating exceptional ability"],
   origin: ["Origin Story", "Transformation, legacy, or first awakening"],
@@ -489,15 +480,14 @@ const originBackgrounds = {
 };
 
 const app = document.querySelector("#app");
-let activeStep = "random";
+let activeStep = "concept";
 let sheet = { ...defaults };
-let activeTheme = localStorage.getItem(THEME_KEY) || "classic";
-let dyslexiaEnabled = localStorage.getItem(DYSLEXIA_KEY) === "true";
-let randomCharacterOptions = { origin: "", className: "", side: "", calling: "" };
+let liveSheetMode = "visual";
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
 let corebookSearch = "";
+let sheetPreviewZoom = "fit";
 let activeGmSection = "core";
 let activeNpcSection = "build";
 let npcSearch = "";
@@ -513,23 +503,19 @@ let activeCloudCharacterId = null;
 let powerChoiceCatalogCache;
 let powerChoiceMapCache;
 
-function applyTheme(theme) {
-  activeTheme = themes.some(([id]) => id === theme) ? theme : "classic";
-  document.documentElement.dataset.theme = activeTheme;
-  localStorage.setItem(THEME_KEY, activeTheme);
-}
-
-function applyDyslexia(enabled) {
-  dyslexiaEnabled = Boolean(enabled);
-  document.documentElement.dataset.dyslexia = dyslexiaEnabled ? "true" : "false";
-  localStorage.setItem(DYSLEXIA_KEY, String(dyslexiaEnabled));
-}
-
-applyTheme(activeTheme);
-applyDyslexia(dyslexiaEnabled);
+document.documentElement.dataset.theme = "dark";
+document.documentElement.dataset.layout = "midnight";
+delete document.documentElement.dataset.dyslexia;
+document.documentElement.style.removeProperty("--ui-font-scale");
 
 function save() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(sheet));
+    return true;
+  } catch (error) {
+    console.error("Could not save the character locally.", error);
+    return false;
+  }
 }
 
 function loadLibrary() {
@@ -831,11 +817,12 @@ function powerBudget() {
   const cores = selectedPowerChoices().filter(choice => choice.group === "core").length;
   const setCount = selectedPowerSetNames().length;
   const warnings = [];
+  const suggestions = [];
   if (setCount > values.maxPowerSets) warnings.push(`Power Set cap exceeded: ${setCount}/${values.maxPowerSets}.`);
   if (startingSpent > startingAvailable) warnings.push(`Starting Power Picks exceeded by ${startingSpent - startingAvailable}.`);
-  if (cores < 1) warnings.push("Choose at least one Core Track purchase.");
-  if (atWills < 2) warnings.push(`Choose at least two At-Will Powers (${atWills}/2).`);
-  if (encounters < 1) warnings.push("Choose at least one Encounter Power.");
+  if (cores < 1) suggestions.push("Suggested: at least one Core Track purchase.");
+  if (atWills < 2) suggestions.push(`Suggested: at least two At-Will Powers (${atWills}/2 selected).`);
+  if (encounters < 1) suggestions.push("Suggested: at least one Encounter Power.");
   if (enhancements % 2 !== 0) warnings.push("Starting Enhancements are purchased in pairs; choose one more Enhancement.");
   if (limitations > values.maxLimitations) warnings.push(`Limitation cap exceeded: ${limitations}/${values.maxLimitations}.`);
   const unavailableSelected = selectedPowerChoices().filter(choice => choice.group !== "limitation" && (Number(choice.tier || 1) > powerTierLimit() || !prerequisiteMet(choice)));
@@ -854,6 +841,7 @@ function powerBudget() {
     setCount,
     enhancements,
     warnings,
+    suggestions,
   };
 }
 
@@ -1263,33 +1251,26 @@ function renderApp() {
       <div class="topbar-primary">
         <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator</span></div>
         <div class="brand-actions">
-          <a class="brand-reference" href="character-sheet.html">Character Sheet</a>
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
           <button type="button" class="brand-reference" data-action="open-npc-builder">NPC Builder</button>
-          <button type="button" class="brand-reference" data-action="open-sheet-preview">Preview Sheet</button>
           <button type="button" class="brand-reference" data-action="open-dice-roller">Dice Roller</button>
         </div>
-        <div class="display-controls">
-          <label class="theme-switcher"><span>Style</span><select id="themeSwitcher" aria-label="Site style">${themes.map(([id, label]) => `<option value="${id}" ${selected(activeTheme, id)}>${label}</option>`).join("")}</select></label>
-          <label class="dyslexia-toggle" title="Use a dyslexia-friendly font throughout the app">
-            <input id="dyslexiaToggle" type="checkbox" ${dyslexiaEnabled ? "checked" : ""}>
-            <span class="toggle-track" aria-hidden="true"></span>
-            <strong>Dyslexia Font</strong>
-          </label>
+        <div class="header-tools">
+          <div class="topbar-group"><button type="button" data-action="new-character">New Character</button><button type="button" data-action="random-character">Random Character</button></div>
+          <div class="topbar-group"><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
+          <input id="importFile" type="file" accept="application/json,.json" hidden>
+          <input id="livePortraitInput" type="file" accept="image/*" hidden>
         </div>
-        <span class="cloud-account-state" data-cloud-state>Checking Cloud</span>
-      </div>
-      <div class="topbar-tools">
-        <div class="topbar-group"><span>Character</span><button type="button" data-action="new-character">New</button><button type="button" data-action="save-character">Save Local</button><button type="button" data-action="open-library">Load Local</button></div>
-        <div class="topbar-group"><span>Cloud</span><button type="button" data-action="save-cloud-character" data-cloud-save>Save Cloud</button><button type="button" data-action="open-cloud" data-cloud-open>Cloud Library</button></div>
-        <div class="topbar-group"><span>Files</span><button type="button" data-action="import-json">Import JSON</button><button type="button" data-action="export-json">Export JSON</button><button type="button" data-action="export-pdf">Export PDF</button></div>
-        <input id="importFile" type="file" accept="application/json,.json" hidden>
       </div>
     </header>
     <main class="generator-shell">
       <aside class="step-rail">
         <nav class="step-list"></nav>
+        <div class="rules-version" aria-label="Rules version">
+          <span>Rules Updated</span>
+          <strong>${html(corebook.version)}</strong>
+        </div>
       </aside>
       <section class="builder-panel"></section>
     </main>
@@ -1377,11 +1358,38 @@ function renderApp() {
             <span>Live sheet view</span>
           </div>
           <div class="sheet-preview-actions">
+            <label class="sheet-preview-size">Size
+              <select id="sheetPreviewZoom" aria-label="Preview size">
+                <option value="fit" ${selected(sheetPreviewZoom, "fit")}>Fit</option>
+                <option value="0.75" ${selected(sheetPreviewZoom, "0.75")}>75%</option>
+                <option value="1" ${selected(sheetPreviewZoom, "1")}>100%</option>
+                <option value="1.25" ${selected(sheetPreviewZoom, "1.25")}>125%</option>
+                <option value="1.5" ${selected(sheetPreviewZoom, "1.5")}>150%</option>
+                <option value="2" ${selected(sheetPreviewZoom, "2")}>200%</option>
+              </select>
+            </label>
             <button type="button" data-action="export-pdf">Export to PDF</button>
             <button type="button" data-action="close-sheet-preview">Close</button>
           </div>
         </header>
         <div class="sheet-preview-content" data-sheet-preview-content></div>
+      </div>
+    </section>
+    <section class="text-sheet-drawer" data-text-sheet-drawer hidden>
+      <div class="text-sheet-panel" role="dialog" aria-modal="true" aria-label="Text-only character sheet">
+        <header>
+          <div>
+            <strong>Text-Only Character Sheet</strong>
+            <span data-text-sheet-status>Readable, copyable, and printer friendly</span>
+          </div>
+          <div class="text-sheet-actions">
+            <button type="button" data-action="copy-text-sheet">Copy Text</button>
+            <button type="button" data-action="download-text-sheet">Download .txt</button>
+            <button type="button" data-action="print-text-sheet">Print</button>
+            <button type="button" data-action="close-text-sheet">Close</button>
+          </div>
+        </header>
+        <div class="text-sheet-content" data-text-sheet-content></div>
       </div>
     </section>
     <section class="dice-drawer" data-dice-drawer hidden>
@@ -1419,9 +1427,10 @@ function renderApp() {
 }
 
 function renderProgress() {
+  const currentIndex = currentStepIndex();
   document.querySelector(".step-list").innerHTML = steps.map(([id, label], index) => `
-    <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""}">
-      <span>${id === "random" ? 0 : index}</span><strong>${label}</strong>
+    <button type="button" data-action="step" data-step="${id}" class="${id === activeStep ? "active" : ""} ${index < currentIndex ? "complete" : ""}">
+      <span>${index + 1}</span><strong>${label}</strong>
     </button>
   `).join("");
 }
@@ -1429,9 +1438,7 @@ function renderProgress() {
 function renderBuilder() {
   const index = currentStepIndex();
   const [id, label] = steps[index] || steps[0];
-  const [artTitle, artPrompt] = stepArtwork[activeStep] || [label, "Character artwork"];
-  const stepLabel = id === "random" ? "Step 0 - Optional Generator" : `Step ${index} of ${steps.length - 1}`;
-  const artNumber = id === "random" ? 0 : index;
+  const stepLabel = `Step ${index + 1} of ${steps.length}`;
   document.querySelector(".builder-panel").innerHTML = `
     <header class="builder-header">
       <div><p>${stepLabel}</p><h1>${label}</h1></div>
@@ -1442,12 +1449,15 @@ function renderBuilder() {
     </header>
     <div class="builder-workspace">
       <section class="builder-step-content">${renderStep(activeStep)}</section>
-      <aside class="step-art" data-art-step="${activeStep}">
-        <div class="step-art-canvas" role="img" aria-label="Artwork placeholder for ${html(artTitle)}">
-          <span>${String(artNumber).padStart(2, "0")}</span>
-          <i></i>
-        </div>
-        <footer><span>Artwork Placeholder</span><strong>${html(artTitle)}</strong><small>${html(artPrompt)}</small></footer>
+      <aside class="live-sheet-panel">
+        <header>
+          <div><span>Live Character Sheet</span><strong>${html(characterName())}</strong></div>
+          <nav class="live-sheet-toggle" aria-label="Character sheet view">
+            <button type="button" data-action="sheet-mode" data-mode="visual" class="${liveSheetMode === "visual" ? "active" : ""}">Live Sheet</button>
+            <button type="button" data-action="sheet-mode" data-mode="text" class="${liveSheetMode === "text" ? "active" : ""}">Text Sheet</button>
+          </nav>
+        </header>
+        <div id="sheet">${liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup()}</div>
       </aside>
     </div>
   `;
@@ -1455,7 +1465,6 @@ function renderBuilder() {
 }
 
 function renderStep(id) {
-  if (id === "random") return renderRandomCharacter();
   if (id === "concept") return renderConcept();
   if (id === "abilities") return renderAbilityScores();
   if (id === "origin") return renderOrigin();
@@ -1481,25 +1490,6 @@ function renderConcept() {
       ${input("level", "Level", "number", 'min="1" max="10"')}
     </div>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
-  `;
-}
-
-function renderRandomCharacter() {
-  const randomSelect = (field, label, items, blankLabel) => `<label>${label}<select data-random-character-field="${field}">${options(items, randomCharacterOptions[field], blankLabel)}</select></label>`;
-  return `
-    <div class="rule-card random-generator-intro">
-      <h2>Guided Random Creation</h2>
-      <p>Lock any choices that matter to the campaign. Leave a category set to Random and the generator will choose it, then complete all remaining character mechanics and identity details automatically.</p>
-    </div>
-    <div class="form-grid three random-generator-grid">
-      ${select("rank", "Campaign Rank", Object.keys(ranks))}
-      ${input("level", "Starting Level", "number", 'min="1" max="10"')}
-      ${randomSelect("origin", "Origin", Object.keys(origins), "Random Origin")}
-      ${randomSelect("className", "Class", Object.keys(classes), "Random Class")}
-      ${randomSelect("side", "Side", ["Heroic", "Unaligned", "Villainous"], "Random PC Side")}
-      ${randomSelect("calling", "Calling", Object.keys(callings), "Random Calling")}
-    </div>
-    <div class="random-generator-action"><button type="button" class="random-character-button" data-action="random-character">Generate Complete Character</button></div>
   `;
 }
 
@@ -1794,9 +1784,10 @@ function renderPowers() {
       <div><span>Power Die</span><strong>${values.powerDie}</strong></div><div><span>Power EV</span><strong>${values.powerEV}</strong></div><div><span>Starting Picks</span><strong>${budget.startingSpent}/${budget.startingAvailable}</strong></div><div><span>Advancement</span><strong>${budget.advancementUsed}/${budget.advancementAvailable}</strong></div><div><span>Power Sets</span><strong>${budget.setCount}/${values.maxPowerSets}</strong></div><div><span>Tier Access</span><strong>${powerTierLimit()}</strong></div>
     </div>
     <section class="power-audit ${budget.warnings.length ? "warning" : "complete"}">
-      <div><strong>${budget.warnings.length ? "Power Build Needs Attention" : "Power Build Complete"}</strong><span>${powerFramework.minimumBaseline}</span></div>
+      <div><strong>${budget.warnings.length ? "Power Build Needs Attention" : "Power Build Within Limits"}</strong><span>${powerFramework.minimumBaseline}</span></div>
       <div class="pill-row"><span>Core ${budget.cores}</span><span>At-Will ${budget.atWills}/2</span><span>Encounter ${budget.encounters}/1</span><span>Limitations ${budget.limitations}/${values.maxLimitations}</span><span>Enhancements ${budget.enhancements}</span></div>
       ${budget.warnings.length ? `<ul>${budget.warnings.map(warning => `<li>${html(warning)}</li>`).join("")}</ul>` : ""}
+      ${budget.suggestions.length ? `<div class="power-suggestions"><strong>Optional baseline suggestions</strong><ul>${budget.suggestions.map(suggestion => `<li>${html(suggestion)}</li>`).join("")}</ul></div>` : ""}
     </section>
     <div class="form-grid two">${input("bonusPicks", "Other Bonus Power Picks", "number", 'min="0"')}<div class="rule-card"><h2>Power Pick Rules</h2><p>${html(powerFramework.advancement)}</p><p>${html(powerFramework.limitations)}</p></div></div>
     <h2 class="power-builder-heading">Choose Power Sets</h2>
@@ -2083,7 +2074,8 @@ function generatorOutputPayload() {
       sessionNotes: sheet.sessionNotes || ""
     },
     features: { classFeatures, talents: talentText, merits: meritText, flaws: flawText },
-    choices: { campaignRank: sheet.rank || "", side: sheet.side || "" }
+    choices: { campaignRank: sheet.rank || "", side: sheet.side || "" },
+    portrait: { image: sheet.portrait || "", mode: "contain" }
   };
 }
 
@@ -2109,7 +2101,7 @@ function listBlock(items) {
 
 function renderSheet() {
   const target = document.querySelector("#sheet");
-  if (target) target.innerHTML = renderSheetMarkup();
+  if (target) target.innerHTML = liveSheetMode === "text" ? textSheetMarkup() : renderSheetMarkup();
 }
 
 function renderSheetMarkup() {
@@ -2119,7 +2111,7 @@ function renderSheetMarkup() {
   return `
     <article class="sheet-page">
       <header class="sheet-title"><p>HEROIC 5e</p><h1>${html(sheet.heroName || "Character Sheet")}</h1></header>
-      <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
+      <section class="sheet-hero-grid"><div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div><div class="portrait-box live-portrait-target" role="button" tabindex="0" data-action="choose-live-portrait" aria-label="${sheet.portrait ? "Replace character portrait" : "Add character portrait"}" title="${sheet.portrait ? "Click to replace portrait" : "Click to add portrait"}" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Click to add portrait"}</div><div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div></section>
       <section class="sheet-section"><h2>Abilities</h2><div class="sheet-abilities">${abilities.map(([key, short]) => `<div><span>${short}</span><strong>${abilityScore(key)}</strong><em>${signed(abilityMod(key))}</em></div>`).join("")}</div></section>
       <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat("Class EV", values.classEV)}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
       <section class="sheet-section"><h2>Skills</h2><div class="sheet-skills">${skills.map(([key, name, ability]) => {
@@ -2171,9 +2163,10 @@ function fieldValue(el) {
 function exportPayload() {
   return {
     type: "HEROIC 5e Character Generator",
-    version: 2,
+    schemaVersion: 3,
+    rulesVersion: corebook.version,
     exportedAt: new Date().toISOString(),
-    sheet
+    sheet: cloneSheet(sheet)
   };
 }
 
@@ -2210,7 +2203,7 @@ function showExportJson() {
 }
 
 function exportJson() {
-  showExportJson();
+  downloadJson();
 }
 
 async function copyJson() {
@@ -2989,7 +2982,7 @@ async function copyNpcText(npc) {
 
 function compendiumSections() {
   return [
-    ["corebook-v33", "v3.3 Corebook"],
+    ["corebook", `${corebook.version.replace(/^Playtest\s+/i, "")} Corebook`],
     ["glossary", "Glossary"],
     ["overview", "Overview"],
     ["origins", "Origins"],
@@ -3021,11 +3014,159 @@ function openSheetPreview() {
   content.innerHTML = `<iframe class="generator-output-sheet" title="HEROIC 5e Character Sheet" src="character-sheet.html?embed=1"></iframe>`;
   drawer.hidden = false;
   const frame = content.querySelector(".generator-output-sheet");
-  frame.addEventListener("load", () => frame.contentWindow?.postMessage({ type: "heroic5e-sheet-data", payload }, "*"), { once: true });
+  frame.addEventListener("load", () => {
+    applySheetPreviewZoom();
+    frame.contentWindow?.postMessage({ type: "heroic5e-sheet-data", payload }, "*");
+  }, { once: true });
+}
+
+function applySheetPreviewZoom() {
+  const content = document.querySelector("[data-sheet-preview-content]");
+  const frame = content?.querySelector(".generator-output-sheet");
+  const frameRoot = frame?.contentDocument?.documentElement;
+  if (!content || !frame || !frameRoot) return;
+  const zoom = sheetPreviewZoom === "fit"
+    ? Math.min(1, Math.max(.5, (content.clientWidth - 34) / 816))
+    : Number(sheetPreviewZoom) || 1;
+  frameRoot.style.setProperty("--sheet-zoom", String(zoom));
+  frame.style.width = sheetPreviewZoom === "fit" ? "100%" : `${Math.ceil(816 * zoom + 36)}px`;
+  frame.style.marginInline = sheetPreviewZoom === "fit" ? "0" : "auto";
 }
 
 function closeSheetPreview() {
   document.querySelector("[data-sheet-preview-drawer]").hidden = true;
+}
+
+function textSheetModel() {
+  const values = calc();
+  const origin = origins[sheet.origin] || origins.Enhanced;
+  const powers = chosenPowers();
+  const trainedSkills = skills.map(([key, name, ability]) => {
+    const trained = Boolean(sheet[`skill_${key}_trained`]);
+    const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+    return `${name} (${ability.toUpperCase()}) ${signed(skillBonus(key, ability, values))}${expert ? " — Expertise" : trained ? " — Trained" : ""}`;
+  });
+  const powerLines = powers.map(power => [power.name || "Power", power.notes].filter(Boolean).join(" — "));
+  const powerSets = selectedPowerSets().map(powerSet => `${powerSet.name} — Effect Value ${10 + abilityMod(powerSetAbility(powerSet)) + values.pro}`);
+  return {
+    title: sheet.heroName || sheet.realName || "Unnamed Hero",
+    subtitle: [sheet.realName, sheet.identity].filter(Boolean).join(" • "),
+    identity: [
+      ["Concept", sheet.concept], ["Origin", sheet.origin], ["Class", sheet.className],
+      ["Calling", sheet.calling], ["Side", sheet.side], ["Campaign Rank", sheet.rank], ["Level", values.level]
+    ],
+    abilities: abilities.map(([key, short, name]) => [name || short, `${abilityScore(key)} (${signed(abilityMod(key))})`]),
+    resources: [
+      ["Hit Points", values.hp], ["Prowess", values.prowess], ["Hit Die", values.hitDie],
+      ["Power Die", values.powerDie], ["Edge", `${values.edgeStart}/${values.edgeCap}`],
+      ["Recovery", values.recovery], ["Initiative", signed(values.initiative)], ["Speed", sheet.speed || "30 ft"]
+    ],
+    defenses: [
+      ["Parry / Block", signed(values.parry)], ["Dodge", signed(values.dodge)],
+      ["Willpower", signed(values.willpower)], ["Social Defense", signed(values.socialDefense)]
+    ],
+    attacks: [
+      ["Melee Attack", signed(values.meleeAttack)], ["Ranged Attack", signed(values.rangedAttack)],
+      ["Mental Attack", signed(values.mentalAttack)], ["Social Attack", signed(values.socialAttack)],
+      ["Class Effect Value", values.classEV], ["Power Effect Value", values.powerEV]
+    ],
+    lists: [
+      ["Skills", trainedSkills],
+      ["Origin Features", [origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note]],
+      ["Class Features", lines(sheet.classFeatures)],
+      ["Edge Triggers", [`Minor: ${sheet.minorTrigger || "-"}`, `Major: ${sheet.majorTrigger || "-"}`, `Defining: ${sheet.definingTrigger || "-"}`]],
+      ["Talents", expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules)],
+      ["Merits", expandedRuleLines(sheet.merits, meritRules)],
+      ["Flaws", expandedRuleLines(sheet.flaws, flawRules)],
+      ["Power Sets", powerSets],
+      ["Powers", powerLines],
+      ["Limitations", lines(sheet.limitationsText)],
+      ["Gear & Equipment", [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume]],
+      ["Languages & Proficiencies", lines(sheet.proficiencies)],
+      ["Specialties", lines(sheet.specialties)],
+      ["Backstory", lines(sheet.backstory)],
+      ["Session Notes", lines(sheet.sessionNotes)]
+    ]
+  };
+}
+
+function textSheetPlainText() {
+  const model = textSheetModel();
+  const rule = "=".repeat(Math.max(24, model.title.length));
+  const rows = entries => entries.map(([label, value]) => `${label}: ${value || "-"}`);
+  const output = ["HEROIC 5e — TEXT CHARACTER SHEET", rule, model.title, model.subtitle, rule, ""];
+  [["IDENTITY", model.identity], ["ABILITIES", model.abilities], ["RESOURCES", model.resources], ["DEFENSES", model.defenses], ["ATTACKS & EFFECT VALUES", model.attacks]]
+    .forEach(([heading, entries]) => output.push(heading, "-".repeat(heading.length), ...rows(entries), ""));
+  model.lists.forEach(([heading, items]) => {
+    const clean = items.flatMap(item => lines(item)).filter(Boolean);
+    if (!clean.length) return;
+    output.push(heading.toUpperCase(), "-".repeat(heading.length), ...clean.map(item => `• ${item}`), "");
+  });
+  output.push(`Rules: ${corebook.version}`);
+  return output.filter((line, index) => line !== "" || output[index - 1] !== "").join("\n").trim();
+}
+
+function textSheetMarkup() {
+  const model = textSheetModel();
+  const definitionList = entries => `<dl>${entries.map(([label, value]) => `<div><dt>${html(label)}</dt><dd>${html(value || "-")}</dd></div>`).join("")}</dl>`;
+  const listSection = ([heading, items]) => {
+    const clean = items.flatMap(item => lines(item)).filter(Boolean);
+    if (!clean.length) return "";
+    return `<section><h2>${html(heading)}</h2><ul>${clean.map(item => `<li>${html(item)}</li>`).join("")}</ul></section>`;
+  };
+  return `<article class="text-character-sheet">
+    <header><span>HEROIC 5e • ${html(corebook.version)}</span><h1>${html(model.title)}</h1>${model.subtitle ? `<p>${html(model.subtitle)}</p>` : ""}</header>
+    <div class="text-sheet-summary">
+      <section><h2>Identity</h2>${definitionList(model.identity)}</section>
+      <section><h2>Abilities</h2>${definitionList(model.abilities)}</section>
+      <section><h2>Resources</h2>${definitionList(model.resources)}</section>
+      <section><h2>Defenses</h2>${definitionList(model.defenses)}</section>
+      <section><h2>Attacks & Effect Values</h2>${definitionList(model.attacks)}</section>
+    </div>
+    <div class="text-sheet-details">${model.lists.map(listSection).join("")}</div>
+  </article>`;
+}
+
+function openTextSheet() {
+  document.querySelector("[data-text-sheet-content]").innerHTML = textSheetMarkup();
+  document.querySelector("[data-text-sheet-drawer]").hidden = false;
+}
+
+function closeTextSheet() {
+  document.querySelector("[data-text-sheet-drawer]").hidden = true;
+  document.body.classList.remove("text-sheet-print-mode");
+}
+
+async function copyTextSheet() {
+  const text = textSheetPlainText();
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+    document.body.append(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+  document.querySelector("[data-text-sheet-status]").textContent = "Copied to clipboard";
+}
+
+function downloadTextSheet() {
+  const blob = new Blob([textSheetPlainText()], { type: "text/plain;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = exportFilename().replace(/\.json$/i, ".txt");
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function printTextSheet() {
+  document.body.classList.add("text-sheet-print-mode");
+  window.print();
 }
 
 function rollActionCard(label, dice, modifier = 0, detail = "") {
@@ -3163,6 +3304,7 @@ function performDiceRoll(label, notation, modifier = 0) {
 
 function clearSheetPrintMode() {
   document.body.classList.remove("sheet-print-mode");
+  document.body.classList.remove("text-sheet-print-mode");
 }
 
 function compendiumCard(title, body, meta = "") {
@@ -3206,7 +3348,7 @@ function corebookSectionCard(section) {
 
 function renderCorebookCompendium() {
   const query = corebookSearch.trim().toLowerCase();
-  const chapters = v33Corebook.chapters.map(chapter => {
+  const chapters = corebook.chapters.map(chapter => {
     const chapterMatch = chapter.title.toLowerCase().includes(query);
     const sections = query
       ? chapter.sections.filter(section => chapterMatch || section.title.toLowerCase().includes(query) || section.body.toLowerCase().includes(query))
@@ -3216,13 +3358,13 @@ function renderCorebookCompendium() {
 
   return `
     <div class="compendium-hero">
-      <h2>${html(v33Corebook.title)} ${html(v33Corebook.version)}</h2>
-      <p>Imported from the v3.3 Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
+      <h2>${html(corebook.title)} ${html(corebook.version)}</h2>
+      <p>Imported from the ${html(corebook.version)} Markdown rules update. Use this as the full rules reference while the builder data is updated chapter by chapter.</p>
     </div>
     <div class="corebook-toolbar">
-      <label>Search v3.3 Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
+      <label>Search ${html(corebook.version.replace(/^Playtest\s+/i, ""))} Rules<input type="search" data-corebook-search value="${html(corebookSearch)}" placeholder="Try Power Stunt, Zenith, Villainous, Falling..."></label>
       <div><strong>${chapters.length}</strong><span>${query ? "matching sections" : "chapters"}</span></div>
-      <div><strong>${v33Corebook.glossary.length}</strong><span>glossary terms</span></div>
+      <div><strong>${corebook.glossary.length}</strong><span>glossary terms</span></div>
     </div>
     <div class="corebook-chapter-list">
       ${chapters.map((chapter, index) => `
@@ -3301,9 +3443,9 @@ function renderCompendium() {
 }
 
 function renderCompendiumSection(id) {
-  if (id === "corebook-v33") return renderCorebookCompendium();
+  if (id === "corebook") return renderCorebookCompendium();
   if (id === "glossary") {
-    const terms = v33Corebook.glossary.length ? v33Corebook.glossary.map(item => [item.term, item.definition]) : glossaryTerms;
+    const terms = corebook.glossary.length ? corebook.glossary.map(item => [item.term, item.definition]) : glossaryTerms;
     return compendiumList(terms.map(([term, definition]) => compendiumCard(term, definition, "Glossary")));
   }
   if (id === "origins") return compendiumList(Object.entries(origins).map(([name, origin]) => compendiumCard(name, [
@@ -3329,7 +3471,7 @@ function renderCompendiumSection(id) {
   return `
     <div class="compendium-hero">
       <h2>HEROIC 5e Core Reference</h2>
-      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. The v3.3 Corebook tab now includes the imported full Markdown rules reference.</p>
+      <p>This Compendium presents the generator's current rules data as a table reference styled like the character builder. The Corebook tab includes the imported full Markdown rules reference.</p>
     </div>
     <div class="compendium-grid">
       ${compendiumCard("Character Creation", "Use the fifteen creation steps plus the final Character Sheet review to build a complete HEROIC 5e character.", "Core")}
@@ -3422,25 +3564,103 @@ function deleteCharacter(id) {
   renderLibrary();
 }
 
-function importJson(file) {
-  const reader = new FileReader();
-  reader.onload = () => {
-    try {
-      const payload = JSON.parse(reader.result);
-      const imported = payload.sheet && typeof payload.sheet === "object" ? payload.sheet : payload;
-      sheet = { ...defaults, ...imported };
-      activeCloudCharacterId = null;
-      updateCloudControls();
-      diceRollHistory = [];
-      initialize(true);
-      renderBuilder();
-      renderSheet();
-      renderProgress();
-    } catch {
-      alert("That JSON file could not be imported.");
+function importedSheetFromPayload(payload) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    throw new Error("The file does not contain a character object.");
+  }
+  if (payload.sheet && typeof payload.sheet === "object" && !Array.isArray(payload.sheet)) return payload.sheet;
+  if (payload.character?.sheet && typeof payload.character.sheet === "object" && !Array.isArray(payload.character.sheet)) return payload.character.sheet;
+  const recognized = Object.keys(defaults).filter(key => Object.hasOwn(payload, key));
+  if (recognized.length >= 3) return payload;
+  throw new Error("This is not a HEROIC 5e generator character file.");
+}
+
+window.addEventListener("message", event => {
+  const message = event.data;
+  if (!message || message.type !== "heroic5e-portrait-change") return;
+  const previewFrame = document.querySelector("[data-sheet-preview-content] .generator-output-sheet");
+  if (!previewFrame || event.source !== previewFrame.contentWindow) return;
+  if (typeof message.image === "string") sheet.portrait = message.image;
+  if (message.mode === "contain" || message.mode === "cover") sheet.portraitMode = message.mode;
+  save();
+  renderSheet();
+});
+
+function normalizeImportedSheet(source) {
+  const imported = {};
+  Object.keys(defaults).forEach(key => {
+    if (Object.hasOwn(source, key)) imported[key] = source[key];
+  });
+  if (Object.hasOwn(imported, "powerPurchases")) {
+    imported.powerPurchases = Array.isArray(imported.powerPurchases)
+      ? [...new Set(imported.powerPurchases.filter(value => typeof value === "string"))]
+      : [];
+  }
+  if (Object.hasOwn(imported, "powerSetAbilities")) {
+    imported.powerSetAbilities = imported.powerSetAbilities && typeof imported.powerSetAbilities === "object" && !Array.isArray(imported.powerSetAbilities)
+      ? { ...imported.powerSetAbilities }
+      : {};
+  }
+  if (Object.hasOwn(imported, "portrait") && typeof imported.portrait !== "string") imported.portrait = "";
+  return { ...defaults, ...imported };
+}
+
+async function importJson(file) {
+  const previousSheet = cloneSheet(sheet);
+  try {
+    if (!file || file.size > 12 * 1024 * 1024) throw new Error("Choose a JSON character file smaller than 12 MB.");
+    const text = (await file.text()).replace(/^\uFEFF/, "");
+    const payload = JSON.parse(text);
+    sheet = normalizeImportedSheet(importedSheetFromPayload(payload));
+    activeCloudCharacterId = null;
+    updateCloudControls();
+    diceRollHistory = [];
+    initialize(true);
+    if (!save()) throw new Error("The imported character could not be stored by this browser.");
+    renderBuilder();
+    renderSheet();
+    renderProgress();
+    alert(`Imported ${characterName()} successfully.`);
+  } catch (error) {
+    sheet = previousSheet;
+    save();
+    alert(`Import failed: ${error instanceof SyntaxError ? "The file is not valid JSON." : error.message || "The character file is invalid."}`);
+  }
+}
+
+async function preparePortrait(file) {
+  const maxFileBytes = 20 * 1024 * 1024;
+  const maxWidth = 1000;
+  const maxHeight = 1400;
+  const targetBytes = 700 * 1024;
+  if (!file.type.startsWith("image/")) throw new Error("Choose an image file.");
+  if (file.size > maxFileBytes) throw new Error("That image is larger than 20 MB. Choose a smaller file.");
+
+  const objectUrl = URL.createObjectURL(file);
+  try {
+    const image = new Image();
+    image.decoding = "async";
+    image.src = objectUrl;
+    await image.decode();
+    const scale = Math.min(1, maxWidth / image.naturalWidth, maxHeight / image.naturalHeight);
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(image.naturalWidth * scale));
+    canvas.height = Math.max(1, Math.round(image.naturalHeight * scale));
+    const context = canvas.getContext("2d", { alpha: false });
+    context.fillStyle = "#f7f3e8";
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+    let quality = .86;
+    let dataUrl = canvas.toDataURL("image/jpeg", quality);
+    while (dataUrl.length * .75 > targetBytes && quality > .5) {
+      quality -= .08;
+      dataUrl = canvas.toDataURL("image/jpeg", quality);
     }
-  };
-  reader.readAsText(file);
+    return dataUrl;
+  } finally {
+    URL.revokeObjectURL(objectUrl);
+  }
 }
 
 function shuffleItems(items) {
@@ -3555,13 +3775,13 @@ function randomizeSkills() {
 }
 
 function randomCharacter() {
-  if (!confirm("Generate a complete character from the selected Step 0 options? Current unsaved changes will be replaced.")) return;
+  if (!confirm("Generate a complete random character? Current unsaved changes will be replaced.")) return;
 
   const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
-  const originName = origins[randomCharacterOptions.origin] ? randomCharacterOptions.origin : randomItem(Object.keys(origins));
-  const className = classes[randomCharacterOptions.className] ? randomCharacterOptions.className : randomItem(Object.keys(classes));
-  const side = ["Heroic", "Unaligned", "Villainous"].includes(randomCharacterOptions.side) ? randomCharacterOptions.side : (Math.random() < .75 ? "Heroic" : "Unaligned");
-  const calling = callings[randomCharacterOptions.calling] ? randomCharacterOptions.calling : randomItem(Object.keys(callings));
+  const originName = randomItem(Object.keys(origins));
+  const className = randomItem(Object.keys(classes));
+  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
+  const calling = randomItem(Object.keys(callings));
   const origin = origins[originName];
   const originPrimaryBonus = randomItem(origin.primary);
   const originSecondaryBonus = randomItem(origin.secondary[originPrimaryBonus]);
@@ -3627,7 +3847,7 @@ function randomCharacter() {
   sheet.costume = `${colors[0]} and ${colors[1]} field costume with a distinctive ${randomItem(["chevron", "circle", "starburst", "shield", "split-mask", "vertical-stripe"])} symbol, reinforced gloves, and concealed communications gear.`;
   sheet.sessionNotes = `Public reputation: ${side}. Primary motivation: ${calling}. The character is ready for the player to refine names, relationships, and campaign-specific details.`;
 
-  activeStep = "identity";
+  activeStep = "concept";
   diceRollHistory = [];
   initialize(true);
   renderBuilder();
@@ -3641,7 +3861,7 @@ function newCharacter() {
   activeCloudCharacterId = null;
   updateCloudControls();
   diceRollHistory = [];
-  activeStep = "random";
+  activeStep = "concept";
   initialize(true);
   renderBuilder();
   renderSheet();
@@ -3677,7 +3897,7 @@ app.addEventListener("input", event => {
   renderProgress();
 });
 
-app.addEventListener("change", event => {
+app.addEventListener("change", async event => {
   const npcFieldElement = event.target.closest("[data-npc-field]");
   if (npcFieldElement) {
     npcDraft[npcFieldElement.dataset.npcField] = fieldValue(npcFieldElement);
@@ -3704,12 +3924,6 @@ app.addEventListener("change", event => {
     return;
   }
 
-  const randomChoice = event.target.closest("[data-random-character-field]");
-  if (randomChoice) {
-    randomCharacterOptions[randomChoice.dataset.randomCharacterField] = randomChoice.value;
-    return;
-  }
-
   const ratedChoice = event.target.closest("[data-rated-choice]");
   if (ratedChoice) {
     const field = ratedChoice.dataset.ratedField;
@@ -3725,13 +3939,9 @@ app.addEventListener("change", event => {
     return;
   }
 
-  if (event.target.id === "themeSwitcher") {
-    applyTheme(event.target.value);
-    return;
-  }
-
-  if (event.target.id === "dyslexiaToggle") {
-    applyDyslexia(event.target.checked);
+  if (event.target.id === "sheetPreviewZoom") {
+    sheetPreviewZoom = event.target.value;
+    applySheetPreviewZoom();
     return;
   }
 
@@ -3764,25 +3974,37 @@ app.addEventListener("change", event => {
     renderSheet();
   }
 
-  if (event.target.id === "portraitInput") {
+  if (event.target.id === "portraitInput" || event.target.id === "livePortraitInput") {
     const [file] = event.target.files;
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      sheet.portrait = reader.result;
-      save();
+    const input = event.target;
+    input.disabled = true;
+    try {
+      const portrait = await preparePortrait(file);
+      sheet.portrait = portrait;
+      if (!save()) throw new Error("The browser could not store the resized portrait.");
       renderBuilder();
       renderSheet();
-    };
-    reader.readAsDataURL(file);
-    event.target.value = "";
+    } catch (error) {
+      alert(`${error.message || "That portrait could not be loaded."} Your character choices are still safe.`);
+      input.disabled = false;
+      input.value = "";
+    }
+    return;
   }
 
   if (event.target.id === "importFile") {
     const [file] = event.target.files;
-    if (file) importJson(file);
+    if (file) await importJson(file);
     event.target.value = "";
   }
+});
+
+app.addEventListener("keydown", event => {
+  const portraitTarget = event.target.closest("[data-action='choose-live-portrait']");
+  if (!portraitTarget || !["Enter", " "].includes(event.key)) return;
+  event.preventDefault();
+  portraitTarget.click();
 });
 
 app.addEventListener("click", async event => {
@@ -3794,12 +4016,17 @@ app.addEventListener("click", async event => {
   if (action === "next") activeStep = steps[Math.min(steps.length - 1, index + 1)][0];
   if (action === "back") activeStep = steps[Math.max(0, index - 1)][0];
   if (["step", "next", "back"].includes(action)) renderBuilder();
+  if (action === "sheet-mode") {
+    liveSheetMode = button.dataset.mode === "text" ? "text" : "visual";
+    renderBuilder();
+  }
   if (action === "export-json") exportJson();
   if (action === "download-json") downloadJson();
   if (action === "copy-json") copyJson();
   if (action === "close-json") document.querySelector("[data-json-drawer]").hidden = true;
   if (action === "new-character") newCharacter();
   if (action === "random-character") randomCharacter();
+  if (action === "choose-live-portrait") document.querySelector("#livePortraitInput")?.click();
   if (action === "open-compendium") openCompendium();
   if (action === "close-compendium") closeCompendium();
   if (action === "open-gm-screen") openGmScreen();
@@ -3843,10 +4070,13 @@ app.addEventListener("click", async event => {
     activeGmSection = button.dataset.section;
     renderGmScreen();
   }
-  if (action === "open-sheet-preview") openSheetPreview();
   if (action === "close-sheet-preview") closeSheetPreview();
   if (action === "open-dice-roller") openDiceRoller();
   if (action === "close-dice-roller") closeDiceRoller();
+  if (action === "close-text-sheet") closeTextSheet();
+  if (action === "copy-text-sheet") await copyTextSheet();
+  if (action === "download-text-sheet") downloadTextSheet();
+  if (action === "print-text-sheet") printTextSheet();
   if (action === "dice-mode") {
     diceRollMode = button.dataset.mode;
     renderDiceRoller();

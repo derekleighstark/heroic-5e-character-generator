@@ -126,11 +126,195 @@ export const powerFramework = {
   "examplePowerSet": {
     "name": "Absorption",
     "governingAbility": "CON",
-    "text": "A design example for absorbing physical impacts, energy, matter, or exotic effects and converting them into protection, healing, stored force, or redirected attacks. Its example Core Track expands absorbed damage types and stored energy; sample powers include Absorb & Redirect, Fortified Shell, Energy Conversion, Kinetic Burst, and Total Absorption; Utilities include Matter Conversion, Power Leech, and Adaptive Resilience. This entry demonstrates the custom Power Set process and is not part of the indexed 37-set catalog."
+    "text": "A selectable Example Creation Power Set for absorbing physical impacts, energy, matter, or exotic effects and converting them into protection, healing, stored force, or redirected attacks."
   }
 };
 
 export const powerSetRules = [
+  {
+    "id": "absorption",
+    "name": "Absorption",
+    "governingAbility": "CON",
+    "abilityOptions": [
+      "con"
+    ],
+    "associatedConditions": "Prone, temporary HP, stored energy",
+    "defaultDamage": "Power Dice x Core Track level + CON modifier",
+    "abilityScoreBonus": "None",
+    "tacticalRole": "Protection, retaliation, and energy conversion",
+    "limitationNote": "Example Creation Power Set; all new Power Sets require GM approval and playtesting.",
+    "description": "You can absorb incoming energy, kinetic force, matter, or exotic effects and convert them into personal power, healing, or redirected force. You are the living sponge, the impact-absorbing tank, or the hero who grows stronger the harder you are hit.",
+    "coreTrack": [
+      {
+        "id": "core-1",
+        "name": "Absorption 1",
+        "level": 1,
+        "tier": 1,
+        "type": "Passive",
+        "action": "Passive",
+        "prerequisite": "",
+        "creationCost": 1,
+        "text": "You can absorb physical impacts and energy attacks. Reduce incoming damage of one chosen type (bludgeoning, piercing, slashing, fire, cold, lightning, radiant, or necrotic) by 1 Power Die."
+      },
+      {
+        "id": "core-2",
+        "name": "Absorption 2",
+        "level": 2,
+        "tier": 2,
+        "type": "Passive",
+        "action": "Passive",
+        "prerequisite": "Absorption 1",
+        "creationCost": 2,
+        "text": "Your absorption now applies to two damage types. Once per encounter when you absorb damage, gain temporary HP equal to half the amount reduced (rounded down)."
+      },
+      {
+        "id": "core-3",
+        "name": "Absorption 3",
+        "level": 3,
+        "tier": 3,
+        "type": "Passive",
+        "action": "Passive",
+        "prerequisite": "Absorption 2",
+        "creationCost": 3,
+        "text": "You can absorb a third damage type. You may store absorbed energy and release it later."
+      },
+      {
+        "id": "core-4",
+        "name": "Absorption 4",
+        "level": 4,
+        "tier": 3,
+        "type": "Apex Passive",
+        "action": "Passive",
+        "prerequisite": "Absorption 3",
+        "creationCost": 3,
+        "text": "Apex: You gain Resistance to all physical and energy damage types you have absorbed this encounter. Stored energy no longer dissipates at the end of the encounter."
+      }
+    ],
+    "powers": [
+      {
+        "id": "absorb-and-redirect",
+        "name": "Absorb & Redirect",
+        "tier": 1,
+        "type": "At-Will",
+        "action": "Reaction",
+        "prerequisite": "Absorption 1",
+        "creationCost": 1,
+        "text": "Reaction when you take damage of an absorbed type. Reduce the damage by 1 Power Die + CON, then make a ranged attack (CON) against a target within Short range dealing the same amount as force damage."
+      },
+      {
+        "id": "fortified-shell",
+        "name": "Fortified Shell",
+        "tier": 1,
+        "type": "At-Will",
+        "action": "Bonus Action",
+        "prerequisite": "Absorption 1",
+        "creationCost": 1,
+        "text": "Bonus Action. Gain temporary HP equal to 2 x CON modifier until the start of your next turn."
+      },
+      {
+        "id": "energy-conversion",
+        "name": "Energy Conversion",
+        "tier": 2,
+        "type": "Encounter",
+        "action": "Reaction",
+        "prerequisite": "Absorption 2",
+        "creationCost": 2,
+        "text": "Reaction when hit by an attack. Absorb the full damage, then immediately make an attack using the absorbed energy: 2 Power Dice + CON damage of a type you can absorb."
+      },
+      {
+        "id": "kinetic-burst",
+        "name": "Kinetic Burst",
+        "tier": 2,
+        "type": "Encounter",
+        "action": "Reaction",
+        "prerequisite": "Absorption 2; absorb at least 10 damage in one hit",
+        "creationCost": 2,
+        "text": "When you absorb at least 10 damage in one hit, release it as a Short area burst: 3 Power Dice force damage. Targets make a DEX save vs. your Effect Value or are pushed 15 ft and knocked Prone."
+      },
+      {
+        "id": "total-absorption",
+        "name": "Total Absorption",
+        "tier": 3,
+        "type": "Daily",
+        "action": "Action",
+        "prerequisite": "Absorption 3",
+        "creationCost": 3,
+        "text": "For 1 minute, you automatically absorb all incoming damage from absorbed types. Each time you absorb damage, gain temporary HP equal to half the absorbed amount. Once during this effect, you may unleash Overload as a Bonus Action: Short range burst dealing 5 Power Dice + CON damage (choose force or one absorbed type)."
+      }
+    ],
+    "utilities": [
+      {
+        "id": "matter-conversion",
+        "name": "Matter Conversion",
+        "tier": 1,
+        "type": "Utility",
+        "action": "Utility",
+        "prerequisite": "Absorption 1",
+        "creationCost": 1,
+        "text": "You can safely absorb and dissipate non-harmful matter (walls, debris, etc.) over 1 minute, clearing paths or creating simple tools."
+      },
+      {
+        "id": "power-leech",
+        "name": "Power Leech",
+        "tier": 2,
+        "type": "Utility",
+        "action": "Utility",
+        "prerequisite": "Absorption 2",
+        "creationCost": 1,
+        "text": "After 1 minute of physical contact with a willing or helpless target, absorb one of their temporary conditions or ongoing effects (GM discretion)."
+      },
+      {
+        "id": "adaptive-resilience",
+        "name": "Adaptive Resilience",
+        "tier": 1,
+        "type": "Utility",
+        "action": "Utility",
+        "prerequisite": "Absorption 1",
+        "creationCost": 1,
+        "text": "During a Breather, change which damage types you can absorb."
+      }
+    ],
+    "enhancements": [
+      {
+        "name": "Rapid Conversion",
+        "text": "When you use Absorb & Redirect, you may do so without spending your Reaction again this turn."
+      },
+      {
+        "name": "Sustained Charge",
+        "text": "Stored energy lasts until the end of the encounter."
+      },
+      {
+        "name": "Feedback Loop",
+        "text": "When you gain temporary HP from absorption, one ally within Close range gains half that amount."
+      },
+      {
+        "name": "Kinetic Rebound",
+        "text": "When you absorb a melee attack, the attacker takes damage equal to your CON modifier."
+      },
+      {
+        "name": "Energy Battery",
+        "text": "You may store up to 3 absorbed hits."
+      },
+      {
+        "name": "Metabolic Absorption",
+        "text": "You can absorb and convert certain toxins, poisons, or diseases into healing."
+      }
+    ],
+    "limitations": [
+      {
+        "name": "Overload Risk",
+        "text": "The GM may call for a Burnout Check when you store large amounts of energy. +1 Power Pick."
+      },
+      {
+        "name": "Selective Only",
+        "text": "You can only absorb two damage types at a time. +1 Power Pick."
+      },
+      {
+        "name": "Painful Conversion",
+        "text": "Whenever you absorb damage, you also take 1 Power Die of untyped damage (cannot be reduced). +1 Power Pick."
+      }
+    ]
+  },
   {
     "id": "animal-powers",
     "name": "Animal Powers",

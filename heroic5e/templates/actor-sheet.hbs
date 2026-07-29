@@ -1,0 +1,80 @@
+<div class="heroic-sheet-content">
+<header class="sheet-header">
+  <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}">
+  <div class="identity">
+    <input class="name" name="name" value="{{actor.name}}" placeholder="Hero name">
+    <div class="identity-grid">
+      <label>Class<select name="system.className">{{selectOptions config.classes selected=system.className}}</select></label>
+      <label>Level<input type="number" name="system.level" value="{{system.level}}" min="1" max="10"></label>
+      <label>Rank<select name="system.rank">{{selectOptions config.ranks selected=system.rank}}</select></label>
+      <label>Power Ability<select name="system.powerAbility">{{selectOptions config.abilities selected=system.powerAbility}}</select></label>
+    </div>
+  </div>
+  <div class="logo-block"><strong>HEROIC</strong><span>5e</span></div>
+  <button type="button" class="mancer-launch" data-character-builder><i class="fa-solid fa-wand-magic-sparkles"></i> Charactermancer</button>
+</header>
+
+<section class="resource-strip">
+  <label>HP <input name="system.hp.value" type="number" value="{{system.hp.value}}"> / <input name="system.hp.max" type="number" value="{{system.hp.max}}" title="Calculated: {{system.calculatedHpMax}}"></label>
+  <label>Temp HP <input name="system.tempHp" type="number" value="{{system.tempHp}}"></label>
+  <label>Edge <input name="system.edge.value" type="number" value="{{system.edge.value}}"> / <input name="system.edge.max" type="number" value="{{system.edge.max}}"></label>
+  <label>Burnout <input name="system.burnout.value" type="number" value="{{system.burnout.value}}"> / <input name="system.burnout.max" type="number" value="{{system.burnout.max}}"></label>
+</section>
+
+<div class="sheet-workspace"><nav class="sheet-tabs">
+  <button type="button" class="active" data-tab-target="core">Core</button><button type="button" data-tab-target="skills">Skills</button><button type="button" data-tab-target="story">Story</button><button type="button" data-tab-target="powers">Powers & Gear</button><button type="button" data-tab-target="bio">Biography</button>
+</nav>
+
+<section class="tab active" data-tab="core">
+  <div class="ability-grid">
+    {{#each config.abilities as |label key|}}
+    <article class="ability-card">
+      <button type="button" data-roll="ability" data-key="{{key}}"><span>{{label}}</span><b>{{key}}</b></button>
+      <input type="number" name="system.abilities.{{key}}.value" value="{{lookup (lookup ../system.abilities key) 'value'}}">
+      <strong>{{numberFormat (lookup (lookup ../system.abilities key) 'mod') sign=true}}</strong>
+      <label><input type="checkbox" name="system.abilities.{{key}}.trained" {{checked (lookup (lookup ../system.abilities key) 'trained')}}> Trained Save</label>
+      <button type="button" class="small-roll" data-roll="save" data-key="{{key}}">Save {{numberFormat (lookup (lookup ../system.abilities key) 'save') sign=true}}</button>
+    </article>
+    {{/each}}
+  </div>
+  <div class="derived-grid">
+    <button type="button" data-roll="initiative">Initiative <b>{{numberFormat system.initiative sign=true}}</b></button>
+    <button type="button" data-roll="defense" data-key="parry">Parry <b>{{numberFormat system.defenses.parry sign=true}}</b></button>
+    <button type="button" data-roll="defense" data-key="dodge">Dodge <b>{{numberFormat system.defenses.dodge sign=true}}</b></button>
+    <button type="button" data-roll="defense" data-key="willpower">Willpower <b>{{numberFormat system.defenses.willpower sign=true}}</b></button>
+    <button type="button" data-roll="defense" data-key="social">Social <b>{{numberFormat system.defenses.social sign=true}}</b></button>
+    <div>Prowess <b>+{{system.prowess}}</b></div><div>Power Die <b>{{system.powerDie}}</b></div><div>Class EV <b>{{system.classEV}}</b></div><div>Power EV <b>{{system.powerEV}}</b></div>
+  </div>
+  <label class="tough"><input type="checkbox" name="system.tough" {{checked system.tough}}> Tough talent <small>Calculated HP maximum: {{system.calculatedHpMax}}</small></label>
+</section>
+
+<section class="tab" data-tab="skills">
+  <div class="skill-list">
+  {{#each config.skills as |definition key|}}
+    <div class="skill-row"><button type="button" data-roll="skill" data-key="{{key}}"><span>{{lookup definition 0}}</span> <small>{{lookup definition 1}}</small></button><label><input type="checkbox" name="system.skills.{{key}}.trained" {{checked (lookup (lookup ../system.skills key) 'trained')}}><span>Trained</span></label><label><input type="checkbox" name="system.skills.{{key}}.expertise" {{checked (lookup (lookup ../system.skills key) 'expertise')}}><span>Expertise</span></label><b>{{numberFormat (lookup (lookup ../system.skills key) 'mod') sign=true}}</b></div>
+  {{/each}}
+  </div>
+</section>
+
+<section class="tab" data-tab="powers">
+  <div class="items-heading"><h2>Powers, Features & Equipment</h2><button type="button" data-item-action="create"><i class="fa-solid fa-plus"></i> Add Power</button></div>
+  <ol class="item-list">
+  {{#each powerItems}}
+    <li data-item-id="{{item.id}}"><img src="{{item.img}}" alt=""><div><strong>{{item.name}}</strong><small>{{item.type}} · {{item.system.action}}</small></div>{{#if isPower}}<button type="button" data-item-action="roll" title="Roll"><i class="fa-solid fa-dice-d20"></i></button>{{/if}}<button type="button" data-item-action="edit" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" data-item-action="delete" title="Delete"><i class="fa-solid fa-trash"></i></button></li>
+  {{/each}}
+  </ol>
+  <label>Conditions<textarea name="system.conditions">{{system.conditions}}</textarea></label>
+</section>
+
+<section class="tab" data-tab="story">
+  <div class="story-identity-grid"><label>Side<select name="system.side">{{selectOptions config.sides selected=system.side}}</select></label><label>Calling<input name="system.calling" value="{{system.calling}}"></label></div>
+  <div class="trigger-grid"><label>Minor Trigger<textarea name="system.triggers.minor">{{system.triggers.minor}}</textarea></label><label>Major Trigger<textarea name="system.triggers.major">{{system.triggers.major}}</textarea></label><label>Defining Trigger<textarea name="system.triggers.defining">{{system.triggers.defining}}</textarea></label></div>
+  <div class="story-traits-grid"><section><div class="items-heading"><h2>Merits</h2><button type="button" data-item-action="create" data-item-type="merit"><i class="fa-solid fa-plus"></i> Add Merit</button></div><ol class="item-list">{{#each meritItems}}<li data-item-id="{{id}}"><img src="{{img}}" alt=""><div><strong>{{name}}</strong><small>{{#if (eq system.subtype "Origin Merit")}}Origin Merit - budget free{{else}}{{#if system.cost}}Rating {{system.cost}}{{else}}Legacy Entry{{/if}}{{/if}}</small></div><button type="button" data-item-action="edit" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" data-item-action="delete" title="Delete"><i class="fa-solid fa-trash"></i></button></li>{{/each}}</ol></section><section><div class="items-heading"><h2>Flaws</h2><button type="button" data-item-action="create" data-item-type="flaw"><i class="fa-solid fa-plus"></i> Add Flaw</button></div><ol class="item-list">{{#each flawItems}}<li data-item-id="{{id}}"><img src="{{img}}" alt=""><div><strong>{{name}}</strong><small>{{#if (eq system.subtype "Origin Flaw")}}Origin Flaw - budget free{{else}}{{#if system.cost}}Rating {{system.cost}}{{else}}Legacy Entry{{/if}}{{/if}}</small></div><button type="button" data-item-action="edit" title="Edit"><i class="fa-solid fa-pen"></i></button><button type="button" data-item-action="delete" title="Delete"><i class="fa-solid fa-trash"></i></button></li>{{/each}}</ol></section></div>
+</section>
+
+<section class="tab" data-tab="bio">
+  <label>Biography<textarea class="long-text" name="system.biography">{{system.biography}}</textarea></label>
+  <label>Notes<textarea class="long-text" name="system.notes">{{system.notes}}</textarea></label>
+</section>
+</div>
+</div>

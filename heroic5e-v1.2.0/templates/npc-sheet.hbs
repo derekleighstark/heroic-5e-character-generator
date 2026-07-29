@@ -1,0 +1,42 @@
+<header class="sheet-header npc-header">
+  <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" alt="{{actor.name}}">
+  <div class="identity"><input class="name" name="name" value="{{actor.name}}" placeholder="NPC name"><input class="concept" name="system.concept" value="{{system.concept}}" placeholder="Concept, role, or archetype"></div>
+  <div class="npc-badges"><strong>NPC</strong>{{#if system.boss}}<span>BOSS</span>{{/if}}</div>
+</header>
+
+<section class="npc-identity-grid">
+  <label>Power Tier<select name="system.powerTier">{{selectOptions tiers selected=system.powerTier}}</select></label>
+  <label>Side<select name="system.side">{{selectOptions sides selected=system.side}}</select></label>
+  <label>Minion Tier<select name="system.minionTier">{{selectOptions minionTiers selected=system.minionTier}}</select></label>
+  <label>Speed<input name="system.speed" value="{{system.speed}}"></label>
+  <label class="npc-check"><input type="checkbox" name="system.boss" {{checked system.boss}}> Boss</label>
+</section>
+
+<section class="resource-strip npc-resources">
+  <label>HP <input name="system.hp.value" type="number" value="{{system.hp.value}}"> / <input name="system.hp.max" type="number" value="{{system.hp.max}}"></label>
+  <label>Temp HP <input name="system.tempHp" type="number" value="{{system.tempHp}}"></label>
+  <div>Suggested HP <b>{{system.calculatedHpMax}}</b></div><div>Power Die <b>{{system.powerDie}}</b></div><div>Tier Bonus <b>+{{system.tierBonus}}</b></div>
+</section>
+
+<nav class="sheet-tabs"><button class="active" data-tab-target="combat">Combat</button><button data-tab-target="powers">Powers</button><button data-tab-target="traits">Traits</button><button data-tab-target="notes">Notes</button></nav>
+
+<section class="tab active" data-tab="combat">
+  <div class="npc-static-grid">
+    <button data-share="attackValue"><span>Attack Value</span><b>{{system.attackValue}}</b></button><button data-share="effectValue"><span>Effect Value</span><b>{{system.effectValue}}</b></button>
+    <button data-share="parry"><span>Parry / Block</span><b>{{system.defenses.parry}}</b></button><button data-share="dodge"><span>Dodge</span><b>{{system.defenses.dodge}}</b></button>
+    <button data-share="willpower"><span>Willpower</span><b>{{system.defenses.willpower}}</b></button><button data-share="social"><span>Social Defense</span><b>{{system.defenses.social}}</b></button>
+  </div>
+  <div class="npc-build-controls"><label>CON Score<input type="number" name="system.conScore" value="{{system.conScore}}"></label><label>Bonus HP<input type="number" name="system.bonusHp" value="{{system.bonusHp}}"></label><label>Attack Ability<select name="system.primaryAbility">{{selectOptions abilities selected=system.primaryAbility}}</select></label><label>Effect Ability<select name="system.effectAbility">{{selectOptions abilities selected=system.effectAbility}}</select></label></div>
+  <h2>Ability Modifiers</h2><div class="npc-ability-grid">{{#each abilities as |label key|}}<label><b>{{key}}</b><input type="number" name="system.abilities.{{key}}.mod" value="{{lookup (lookup ../system.abilities key) 'mod'}}"><span>{{label}}</span></label>{{/each}}</div>
+  <label>Conditions<textarea name="system.conditions">{{system.conditions}}</textarea></label>
+</section>
+
+<section class="tab" data-tab="powers">
+  <div class="items-heading"><h2>NPC Powers & Attacks</h2><button data-item-action="create"><i class="fa-solid fa-plus"></i> Add Power</button></div>
+  <ol class="item-list">{{#each items}}<li data-item-id="{{item.id}}"><img src="{{item.img}}" alt=""><div><strong>{{item.name}}</strong><small>{{item.system.subtype}} · {{item.system.action}}</small></div>{{#if isPower}}<button data-item-action="roll" title="Roll power"><i class="fa-solid fa-dice-d20"></i></button>{{/if}}<button data-item-action="edit" title="Edit"><i class="fa-solid fa-pen"></i></button><button data-item-action="delete" title="Delete"><i class="fa-solid fa-trash"></i></button></li>{{/each}}</ol>
+  <label>Quick Power Summary<textarea class="long-text" name="system.powers">{{system.powers}}</textarea></label>
+  <label>Class Abilities / Signature Features<textarea name="system.classAbilities">{{system.classAbilities}}</textarea></label>
+</section>
+
+<section class="tab" data-tab="traits"><div class="npc-text-grid"><label>Skills<textarea name="system.skillsText">{{system.skillsText}}</textarea></label><label>Talents<textarea name="system.talentsText">{{system.talentsText}}</textarea></label><label>Merits<textarea name="system.meritsText">{{system.meritsText}}</textarea></label><label>Flaws<textarea name="system.flawsText">{{system.flawsText}}</textarea></label></div></section>
+<section class="tab" data-tab="notes"><label>GM Notes, Tactics & Motivation<textarea class="npc-notes" name="system.notes">{{system.notes}}</textarea></label></section>
