@@ -983,6 +983,19 @@ function expandedRuleLines(value, rules) {
   });
 }
 
+function originTalentRuleLines(origin) {
+  const result = [`${origin.talent}: ${origin.note}`];
+  if (sheet.originTrait) result.push(`${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}`);
+  return result.filter(Boolean);
+}
+
+function completeTalentRuleLines(origin) {
+  return [
+    ...originTalentRuleLines(origin),
+    ...expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules)
+  ];
+}
+
 function rulesList(items) {
   return items.length ? `<ul>${items.map(item => `<li>${html(item)}</li>`).join("")}</ul>` : `<p class="empty">-</p>`;
 }
@@ -2043,7 +2056,7 @@ function generatorOutputPayload() {
   const origin = origins[sheet.origin] || origins.Enhanced;
   const originSkills = [sheet.originSkill1, sheet.originSkill2].filter(Boolean).join(", ");
   const originAbilities = [sheet.originPrimaryBonus ? `${sheet.originPrimaryBonus.toUpperCase()} +2` : "", sheet.originSecondaryBonus ? `${sheet.originSecondaryBonus.toUpperCase()} +1` : ""].filter(Boolean).join(" / ");
-  const talentText = outputRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
+  const talentText = completeTalentRuleLines(origin).join("\n\n");
   const meritText = outputRuleLines(sheet.merits, meritRules);
   const flawText = outputRuleLines(sheet.flaws, flawRules);
   const classFeatures = lines(sheet.classFeatures).join("\n\n");
@@ -2100,7 +2113,7 @@ function generatorOutputPayload() {
       classPrimaryAbility: `${sheet.className || ""} / ${values.classPrimary}`,
       callingCode: sheet.calling || "",
       originAbilities,
-      originTraitTalent: [sheet.originTrait ? namedRule(sheet.originTrait, originTraitRules) : "", origin.talent || ""].filter(Boolean).join("\n\n"),
+      originTraitTalent: originTalentRuleLines(origin).join("\n\n"),
       originSkillsLanguages: [originSkills, sheet.proficiencies].filter(Boolean).join("\n"),
       originStory: sheet.backstory || "",
       personalityVoice: "",
@@ -2233,7 +2246,7 @@ function officialSheetMarkup() {
   const meritLines = uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules);
   const flawLines = uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules);
   const limitationLines = selectedLimitationLines();
-  const talentLines = expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules);
+  const talentLines = completeTalentRuleLines(origin);
   const featureLines = lines(sheet.classFeatures);
   const gearLines = [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume].filter(Boolean);
 
@@ -2264,7 +2277,7 @@ function officialSheetMarkup() {
       <article class="official-page">
         ${officialSection("Skills", "1d20 + modifier + PRO if trained", `<div class="official-skill-grid">${skills.map(([key, name, ability]) => { const trained = Boolean(sheet[`skill_${key}_trained`]); const expert = trained && Boolean(sheet[`skill_${key}_expert`]); return `<div><b>${html(name)}</b><small>${ability.toUpperCase()}</small><span>${trained ? "☑" : "☐"} T ${expert ? "☑" : "☐"} E</span><strong>${signed(skillBonus(key, ability, values))}</strong><em>${html(sheet[`skill_${key}_specialty`] || "")}</em></div>`; }).join("")}</div>`)}
         <div class="official-two">
-          ${officialSection("Talents", "Origin Talent + starting Talent", officialRows([origin.talent, ...talentLines], 2))}
+          ${officialSection("Talents", "Origin Talent + selected Talents", officialRows(talentLines, 2))}
           ${officialSection("Class Features", "", officialRows(featureLines, 2))}
           ${officialSection("Merits", "Rating 1-3", officialRows(meritLines, 2))}
           ${officialSection("Flaws", "Rating 1-3", officialRows(flawLines, 2))}
@@ -2318,12 +2331,12 @@ function renderSheetMarkup() {
         const total = skillBonus(key, ability, values);
         return `<div><span>${name}</span><em>${ability.toUpperCase()}</em><strong>${signed(total)}</strong></div>`;
       }).join("")}</div></section>
-      <section class="sheet-row"><div class="sheet-section text-list"><h2>Origin</h2>${listBlock([origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note])}</div><div class="sheet-section text-list"><h2>Concept</h2>${listBlock([sheet.concept, sheet.specialties, sheet.proficiencies])}</div></section>
+      <section class="sheet-row"><div class="sheet-section text-list"><h2>Origin</h2>${listBlock([...originTalentRuleLines(origin), ...uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules).map(line => `Merit — ${line}`), ...uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules).map(line => `Flaw — ${line}`), sheet.originSkill1, sheet.originSkill2])}</div><div class="sheet-section text-list"><h2>Concept</h2>${listBlock([sheet.concept, sheet.specialties, sheet.proficiencies])}</div></section>
     </article>
     <article class="sheet-page">
       <header class="sheet-title"><p>Features and Powers</p><h1>${html(sheet.heroName || "Character")}</h1></header>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Class Features</h2>${listBlock(lines(sheet.classFeatures))}</div><div class="sheet-section text-list"><h2>Edge Triggers</h2>${listBlock([`Minor: ${sheet.minorTrigger || ""}`, `Major: ${sheet.majorTrigger || ""}`, `Defining: ${sheet.definingTrigger || ""}`])}</div></section>
-      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...expandedRuleLines([sheet.startingTalent, sheet.talents].join("\n"), talentRules), ...expandedRuleLines(sheet.merits, meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(expandedRuleLines(sheet.flaws, flawRules))}</div></section>
+      <section class="sheet-row"><div class="sheet-section text-list"><h2>Talents and Merits</h2>${listBlock([...completeTalentRuleLines(origin), ...uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules)])}</div><div class="sheet-section text-list"><h2>Flaws</h2>${listBlock(uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules))}</div></section>
       <section class="sheet-section"><h2>Powers - ${html(selectedPowerSetNames().join(", ") || "Power Sets")}</h2>${selectedPowerSets().length ? `<div class="sheet-stats power-effect-values">${selectedPowerSets().map(powerSet => bigStat(`${powerSet.name} EV`, 10 + abilityMod(powerSetAbility(powerSet)) + values.pro)).join("")}</div>` : ""}<div class="sheet-powers">${(powers.length ? powers : [{ name: "Power Set", notes: "Choose at least one Power Set." }]).map(power => `<div><strong>${html(power.name || "Power Set")}</strong><p>${multilineHtml(power.notes || "")}</p></div>`).join("")}</div>${powerSetNoteLines().length ? `<div class="sheet-power-notes"><h3>Power Notes</h3>${listBlock(powerSetNoteLines())}</div>` : ""}${selectedLimitationLines().length ? `<div class="sheet-power-notes"><h3>Limitations</h3>${listBlock(selectedLimitationLines())}</div>` : ""}</section>
       <section class="sheet-row"><div class="sheet-section text-list"><h2>Gear</h2>${listBlock([...lines(sheet.gear), ...lines(sheet.enhancements), ...lines(sheet.limitationsText), sheet.costume])}</div><div class="sheet-section text-list"><h2>Backstory / Notes</h2>${listBlock([sheet.backstory, sheet.sessionNotes])}</div></section>
     </article>
@@ -3270,12 +3283,12 @@ function textSheetModel() {
     ],
     lists: [
       ["Skills", trainedSkills],
-      ["Origin Features", [origin.talent, `Merit: ${origin.merit}`, `Flaw: ${origin.flaw}`, sheet.originTrait ? `${origin.traitLabel}: ${namedRule(sheet.originTrait, originTraitRules)}` : "", sheet.originSkill1, sheet.originSkill2, origin.note]],
+      ["Origin Features", [...originTalentRuleLines(origin), ...uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules).map(line => `Merit — ${line}`), ...uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules).map(line => `Flaw — ${line}`), sheet.originSkill1, sheet.originSkill2]],
       ["Class Features", lines(sheet.classFeatures)],
       ["Edge Triggers", [`Minor: ${sheet.minorTrigger || "-"}`, `Major: ${sheet.majorTrigger || "-"}`, `Defining: ${sheet.definingTrigger || "-"}`]],
-      ["Talents", expandedRuleLines([sheet.startingTalent, sheet.talents].filter(Boolean).join("\n"), talentRules)],
-      ["Merits", expandedRuleLines(sheet.merits, meritRules)],
-      ["Flaws", expandedRuleLines(sheet.flaws, flawRules)],
+      ["Talents", completeTalentRuleLines(origin)],
+      ["Merits", uniqueOfficialRuleLines(origin.merit, lines(sheet.merits), meritRules)],
+      ["Flaws", uniqueOfficialRuleLines(origin.flaw, lines(sheet.flaws), flawRules)],
       ["Power Sets", powerSets],
       ["Powers", powerLines],
       ["Power Notes", powerSetNoteLines()],
