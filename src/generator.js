@@ -948,11 +948,18 @@ function calc() {
   const primaryPowerSet = selectedPowerSets()[0];
   const primaryPowerAbility = primaryPowerSet ? powerSetAbility(primaryPowerSet) : (sheet.powerAbility || "str");
   const hpRankMultiplier = Number(rank.hpMultiplier || 1);
-  const startingHp = abilityScore("con") + (classInfo.hitDie * hpRankMultiplier);
-  const hpPerLaterLevel = hitAverage(classInfo.hitDie) + conMod;
-  const primaryLaterHp = Math.max(0, allocation.primaryLevel - 1) * hpPerLaterLevel;
-  const secondaryHpPerLevel = secondaryClassInfo ? hitAverage(secondaryClassInfo.hitDie) + conMod : 0;
-  const secondaryHp = allocation.secondaryLevel * secondaryHpPerLevel;
+  const startingHp = ((abilityScore("con") + classInfo.hitDie) * hpRankMultiplier) + prowess(1);
+  const hpPerLaterLevel = hitAverage(classInfo.hitDie) + conMod + pro;
+  let primaryLaterHp = 0;
+  for (let gainedLevel = 2; gainedLevel <= allocation.primaryLevel; gainedLevel += 1) {
+    primaryLaterHp += hitAverage(classInfo.hitDie) + conMod + prowess(gainedLevel);
+  }
+  const secondaryHpPerLevel = secondaryClassInfo ? hitAverage(secondaryClassInfo.hitDie) + conMod + pro : 0;
+  let secondaryHp = 0;
+  for (let secondaryLevel = 1; secondaryLevel <= allocation.secondaryLevel; secondaryLevel += 1) {
+    const gainedLevel = allocation.primaryLevel + secondaryLevel;
+    secondaryHp += hitAverage(secondaryClassInfo.hitDie) + conMod + prowess(gainedLevel);
+  }
   const toughBonus = (sheet.toughTalent || hasTalent("Tough")) ? level * 2 : 0;
   const hp = startingHp + primaryLaterHp + secondaryHp + toughBonus;
   const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
@@ -964,7 +971,9 @@ function calc() {
     startingHp,
     hpRankMultiplier,
     hpPerLaterLevel,
+    primaryLaterHp,
     secondaryHpPerLevel,
+    secondaryHp,
     toughBonus,
     hitDie: `d${classInfo.hitDie}`,
     hitDice: [
@@ -1748,9 +1757,9 @@ function renderHitPoints() {
   const values = calc();
   return `
     <div class="mechanic-grid">
-      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Starting HP</span><strong>${values.startingHp}</strong></div><div><span>Hit Dice Pool</span><strong>${html(values.hitDice)}</strong></div><div><span>Campaign Rank Modifier</span><strong>x${values.hpRankMultiplier}</strong></div><div><span>Primary Later Level</span><strong>${signed(values.hpPerLaterLevel)}</strong></div>${multiclassAllocation().secondaryLevel ? `<div><span>Secondary Later Level</span><strong>${signed(values.secondaryHpPerLevel)}</strong></div>` : ""}<div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div><div><span>Tough Bonus</span><strong>${signed(values.toughBonus)}</strong></div>
+      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Starting HP</span><strong>${values.startingHp}</strong></div><div><span>Hit Dice Pool</span><strong>${html(values.hitDice)}</strong></div><div><span>Campaign Rank Modifier</span><strong>x${values.hpRankMultiplier}</strong></div><div><span>Primary Later-Level HP</span><strong>${signed(values.primaryLaterHp)}</strong></div>${multiclassAllocation().secondaryLevel ? `<div><span>Secondary Later-Level HP</span><strong>${signed(values.secondaryHp)}</strong></div>` : ""}<div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div><div><span>Tough Bonus</span><strong>${signed(values.toughBonus)}</strong></div>
     </div>
-    <div class="rule-card"><h2>Campaign Rank HP</h2><p>Starting HP = Constitution score + maximum Primary Class Hit Die x Campaign Rank. After Level 1, each level adds the median of the Hit Die for the Class gained at that level + CON modifier.</p></div>
+    <div class="rule-card"><h2>Campaign Rank HP</h2><p>Starting HP = (Constitution score + maximum Primary Class Hit Die) x Campaign Rank + Level 1 Prowess. After Level 1, each level adds the median of the Hit Die for the Class gained at that level + CON modifier + Prowess at that level.</p></div>
     <label class="wide-check"><input type="checkbox" data-field="toughTalent" ${checked(sheet.toughTalent)}> Tough talent HP bonus</label>
   `;
 }
