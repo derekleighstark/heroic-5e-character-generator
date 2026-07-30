@@ -19,6 +19,7 @@ import {
   watchCloudSession
 } from "./cloud.js";
 
+const GENERATOR_RULES_VERSION = "Playtest v3.5.3";
 const rulesSource = await fetch("/app.js").then(response => response.text());
 const rulesPrefix = rulesSource.slice(0, rulesSource.indexOf("const STORAGE_KEY"));
 const {
@@ -1383,7 +1384,7 @@ function renderApp() {
   app.innerHTML = `
     <header class="app-topbar">
       <div class="topbar-primary">
-        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator · Playtest v3.5.3</span></div>
+        <div class="brand-title"><strong>HEROIC 5e</strong><span>Character Generator · ${GENERATOR_RULES_VERSION}</span></div>
         <div class="brand-actions">
           <button type="button" class="brand-reference" data-action="open-compendium">Compendium</button>
           <button type="button" class="brand-reference" data-action="open-gm-screen">GM Screen</button>
@@ -1589,6 +1590,7 @@ function renderBuilder() {
           <nav class="live-sheet-toggle" aria-label="Character sheet view">
             <button type="button" data-action="sheet-mode" data-mode="visual" class="${liveSheetMode === "visual" ? "active" : ""}">Live Sheet</button>
             <button type="button" data-action="sheet-mode" data-mode="text" class="${liveSheetMode === "text" ? "active" : ""}">Text Sheet</button>
+            <button type="button" data-action="sheet-mode" data-mode="audit" class="${liveSheetMode === "audit" ? "active" : ""}">Audit Sheet</button>
             <button type="button" data-action="sheet-mode" data-mode="official" class="${liveSheetMode === "official" ? "active" : ""}">Official Sheet</button>
             ${["blue", "red", "purple", "green", "gold"].map(theme => `
               <button type="button" data-action="official-theme" data-theme="${theme}" class="official-theme-button theme-${theme} ${liveSheetMode === "official" && officialSheetTheme === theme ? "active" : ""}" aria-pressed="${liveSheetMode === "official" && officialSheetTheme === theme}">${theme[0].toUpperCase()}${theme.slice(1)}</button>
@@ -2303,6 +2305,7 @@ function renderSheet() {
 
 function sheetViewMarkup() {
   if (liveSheetMode === "text") return textSheetMarkup();
+  if (liveSheetMode === "audit") return auditSheetMarkup();
   if (liveSheetMode === "official") return officialSheetMarkup();
   return renderSheetMarkup();
 }
@@ -2515,7 +2518,7 @@ function fieldValue(el) {
 
 function exportPayload() {
   return createCharacterExport(sheet, {
-    rulesVersion: corebook.version,
+    rulesVersion: GENERATOR_RULES_VERSION,
     activeStep,
     liveSheetMode,
     officialSheetTheme
@@ -3458,7 +3461,7 @@ function textSheetPlainText() {
     if (!clean.length) return;
     output.push(heading.toUpperCase(), "-".repeat(heading.length), ...clean.map(item => `• ${item}`), "");
   });
-  output.push(`Rules: ${corebook.version}`);
+  output.push(`Rules: ${GENERATOR_RULES_VERSION}`);
   return output.filter((line, index) => line !== "" || output[index - 1] !== "").join("\n").trim();
 }
 
@@ -3471,7 +3474,7 @@ function textSheetMarkup() {
     return `<section><h2>${html(heading)}</h2><ul>${clean.map(item => `<li>${html(item)}</li>`).join("")}</ul></section>`;
   };
   return `<article class="text-character-sheet">
-    <header><span>HEROIC 5e • ${html(corebook.version)}</span><h1>${html(model.title)}</h1>${model.subtitle ? `<p>${html(model.subtitle)}</p>` : ""}</header>
+    <header><span>HEROIC 5e • ${html(GENERATOR_RULES_VERSION)}</span><h1>${html(model.title)}</h1>${model.subtitle ? `<p>${html(model.subtitle)}</p>` : ""}</header>
     <div class="text-sheet-summary">
       <section><h2>Identity</h2>${definitionList(model.identity)}</section>
       <section><h2>Abilities</h2>${definitionList(model.abilities)}</section>
@@ -3480,6 +3483,123 @@ function textSheetMarkup() {
       <section><h2>Attacks & Effect Values</h2>${definitionList(model.attacks)}</section>
     </div>
     <div class="text-sheet-details">${model.lists.map(listSection).join("")}</div>
+  </article>`;
+}
+
+function auditSheetMarkup() {
+  const values = calc();
+  const allocation = multiclassAllocation();
+  const rank = ranks[sheet.rank] || ranks["Mid-Level"];
+  const primaryClass = classes[allocation.primaryClass];
+  const secondaryClass = allocation.secondaryLevel ? classes[allocation.secondaryClass] : null;
+  const conScore = abilityScore("con");
+  const conModifier = abilityMod("con");
+  const operation = value => `${Number(value) >= 0 ? "+" : "-"} ${Math.abs(Number(value))}`;
+  const definitionList = entries => `<dl>${entries.map(([label, value]) => `<div><dt>${html(label)}</dt><dd>${html(value)}</dd></div>`).join("")}</dl>`;
+  const section = (title, entries) => `<section><h2>${html(title)}</h2>${definitionList(entries)}</section>`;
+
+  const hpEntries = [
+    ["Level 1", `(${conScore} CON score + ${primaryClass.hitDie} d${primaryClass.hitDie} maximum) x ${values.hpRankMultiplier} ${sheet.rank} + ${prowess(1)} Level 1 Prowess = ${values.startingHp}`]
+  ];
+  for (let gainedLevel = 2; gainedLevel <= allocation.primaryLevel; gainedLevel += 1) {
+    const gain = hitAverage(primaryClass.hitDie) + conModifier + prowess(gainedLevel);
+    hpEntries.push([
+      `Level ${gainedLevel} - ${allocation.primaryClass}`,
+      `${hitAverage(primaryClass.hitDie)} d${primaryClass.hitDie} median ${operation(conModifier)} CON ${operation(prowess(gainedLevel))} Prowess = ${gain}`
+    ]);
+  }
+  for (let secondaryLevel = 1; secondaryLevel <= allocation.secondaryLevel; secondaryLevel += 1) {
+    const gainedLevel = allocation.primaryLevel + secondaryLevel;
+    const gain = hitAverage(secondaryClass.hitDie) + conModifier + prowess(gainedLevel);
+    hpEntries.push([
+      `Level ${gainedLevel} - ${allocation.secondaryClass}`,
+      `${hitAverage(secondaryClass.hitDie)} d${secondaryClass.hitDie} median ${operation(conModifier)} CON ${operation(prowess(gainedLevel))} Prowess = ${gain}`
+    ]);
+  }
+  if (values.toughBonus) hpEntries.push(["Tough Talent", `${values.level} levels x 2 HP = ${signed(values.toughBonus)}`]);
+  hpEntries.push(["Total HP", `${values.startingHp} starting + ${values.primaryLaterHp} primary later-level + ${values.secondaryHp} secondary later-level + ${values.toughBonus} Tough = ${values.hp}`]);
+
+  const abilityEntries = abilities.map(([key, short, name]) => {
+    const base = Number(sheet[`${key}Score`] || 10);
+    const origin = originBonus(key);
+    const power = powerAbilityScoreBonus(key);
+    const total = abilityScore(key);
+    return [`${name} (${short})`, `${base} base + ${origin} Origin + ${power} Power = ${total}; modifier floor((${total} - 10) / 2) = ${signed(abilityMod(key))}`];
+  });
+
+  const saveEntries = abilities.map(([key, short, name]) => {
+    const trained = Boolean(sheet[`save_${key}_trained`]);
+    const bonus = abilityMod(key) + (trained ? values.pro : 0);
+    return [`${name} Save`, `${signed(abilityMod(key))} ${short} ${trained ? `${operation(values.pro)} trained Prowess` : "+ 0 untrained"} = ${signed(bonus)}`];
+  });
+
+  const skillEntries = skills.map(([key, name, ability]) => {
+    const trained = Boolean(sheet[`skill_${key}_trained`]);
+    const expert = trained && Boolean(sheet[`skill_${key}_expert`]);
+    const multiplier = expert ? 2 : trained ? 1 : 0;
+    return [name, `${signed(abilityMod(ability))} ${ability.toUpperCase()} + (${values.pro} Prowess x ${multiplier}) = ${signed(skillBonus(key, ability, values))}${expert ? " - Expertise" : trained ? " - Trained" : " - Untrained"}`];
+  });
+
+  const powerSetEntries = selectedPowerSets().map(powerSet => {
+    const ability = powerSetAbility(powerSet);
+    return [
+      powerSet.name,
+      `10 ${operation(abilityMod(ability))} ${ability.toUpperCase()} ${operation(values.pro)} Prowess = EV ${10 + abilityMod(ability) + values.pro}; Core ${purchasedCoreLevel(powerSet) || 0}; ${selectedPowerChoices().filter(choice => choice.setId === powerSet.id && choice.group !== "limitation").length} purchased entries`
+    ];
+  });
+  const budget = powerBudget();
+  const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
+
+  return `<article class="text-character-sheet audit-character-sheet">
+    <header><span>HEROIC 5e • ${html(GENERATOR_RULES_VERSION)}</span><h1>${html(characterName())} — Audit Sheet</h1><p>Every derived number is shown with its mechanical inputs.</p></header>
+    <div class="audit-sheet-details">
+      ${section("Character Framework", [
+        ["Campaign Rank", `${sheet.rank}: HP x${values.hpRankMultiplier}, ${values.powerDie} Power Die, ${rank.startingPicks} starting Power Picks`],
+        ["Class Levels", `${classLevelLabel()} = ${allocation.primaryLevel} primary + ${allocation.secondaryLevel} secondary = ${values.level} total`],
+        ["Secondary Eligibility", allocation.secondaryClass ? `${classes[allocation.secondaryClass].primary.toUpperCase()} ${abilityScore(classes[allocation.secondaryClass].primary)} vs 13 required: ${allocation.secondaryEligible ? "eligible" : "not eligible"}` : "Single Class"],
+        ["Prowess", `Level ${values.level} uses ${signed(values.pro)} (Levels 1-3 +2; 4-6 +3; 7-9 +4; Level 10 +5)`]
+      ])}
+      ${section("Ability Scores", abilityEntries)}
+      ${section("Hit Points", hpEntries)}
+      ${section("Initiative & Active Defenses", [
+        ["Initiative", `${signed(abilityMod("dex"))} DEX ${operation(abilityMod("per"))} PER = ${values.initiative}`],
+        ["Parry / Block", `${signed(abilityMod("fig"))} FIG ${operation(abilityMod("per"))} PER ${operation(values.pro)} Prowess = ${values.parry}`],
+        ["Dodge", `${signed(abilityMod("dex"))} DEX ${operation(abilityMod("per"))} PER ${operation(values.pro)} Prowess = ${values.dodge}`],
+        ["Willpower", `${signed(abilityMod("wis"))} WIS ${operation(abilityMod("per"))} PER ${operation(values.pro)} Prowess = ${values.willpower}`],
+        ["Social Defense", `${signed(abilityMod("cha"))} CHA ${operation(abilityMod("int"))} INT ${operation(values.pro)} Prowess = ${values.socialDefense}`]
+      ])}
+      ${section("Attacks & Effect Values", [
+        ["Melee Attack", `${signed(abilityMod("fig"))} FIG ${operation(values.pro)} Prowess = ${values.meleeAttack}`],
+        ["Ranged Attack", `${signed(abilityMod("dex"))} DEX ${operation(values.pro)} Prowess = ${values.rangedAttack}`],
+        ["Mental Attack", `${signed(abilityMod("int"))} INT ${operation(values.pro)} Prowess = ${values.mentalAttack}`],
+        ["Social Attack", `${signed(abilityMod("cha"))} CHA ${operation(values.pro)} Prowess = ${values.socialAttack}`],
+        [`${allocation.primaryClass} Effect Value`, `10 ${operation(abilityMod(primaryClass.primary))} ${primaryClass.primary.toUpperCase()} ${operation(values.pro)} Prowess = ${values.classEV}`],
+        ...(secondaryClass ? [[`${allocation.secondaryClass} Effect Value`, `10 ${operation(abilityMod(secondaryClass.primary))} ${secondaryClass.primary.toUpperCase()} ${operation(values.pro)} Prowess = ${values.secondaryClassEV}`]] : [])
+      ])}
+      ${section("Saving Throws", saveEntries)}
+      ${section("Skills", skillEntries)}
+      ${section("Power Budget", [
+        ["Starting Picks", `${rank.startingPicks} Rank + ${limitationPicks} Limitations + ${Number(sheet.bonusPicks || 0)} bonus = ${budget.startingAvailable}`],
+        ["Starting Picks Spent", `${budget.startingSpent}; remaining ${budget.startingRemaining}`],
+        ["Advancement Picks", `${Math.max(0, values.level - 1)} from Levels 2-${values.level}; used ${budget.advancementUsed}; remaining ${budget.advancementRemaining}`],
+        ["Power Sets", `${budget.setCount}/${values.maxPowerSets}`],
+        ["Tier Access", `Tier ${powerTierLimit()}`],
+        ["Limitations", `${budget.limitations}/${values.maxLimitations}`]
+      ])}
+      ${section("Power Set Effect Values", powerSetEntries.length ? powerSetEntries : [["None", "No Power Sets selected"]])}
+      ${section("Resources & Recovery", [
+        ["Starting Edge", `${values.edgeStart} from ${sheet.rank}`],
+        ["Edge Cap", `${values.level} Level + ${values.pro} Prowess = ${values.edgeCap}`],
+        ["Hit Dice", `${values.hitDice}; one die per Class level`],
+        ["Primary Recovery", `d${primaryClass.hitDie} roll, minimum median ${hitAverage(primaryClass.hitDie)}, ${operation(conModifier)} CON ${operation(Number(values.recovery))} ${allocation.primaryClass} Recovery modifier`],
+        ...(secondaryClass ? [["Secondary Hit Die", `d${secondaryClass.hitDie}, minimum median ${hitAverage(secondaryClass.hitDie)}`]] : []),
+        ["Power Die", `${values.powerDie} from ${sheet.rank}`]
+      ])}
+      ${section("Rule Warnings & Suggestions", [
+        ["Warnings", budget.warnings.join(" | ") || "None"],
+        ["Suggestions", budget.suggestions.join(" | ") || "None"]
+      ])}
+    </div>
   </article>`;
 }
 
@@ -3944,7 +4064,7 @@ async function importJson(file) {
     sheet = normalizeImportedSheet(importedSheetFromPayload(payload), defaults);
     if (payload.state && typeof payload.state === "object") {
       if (steps.some(([id]) => id === payload.state.activeStep)) activeStep = payload.state.activeStep;
-      if (["visual", "text", "official"].includes(payload.state.liveSheetMode)) liveSheetMode = payload.state.liveSheetMode;
+      if (["visual", "text", "audit", "official"].includes(payload.state.liveSheetMode)) liveSheetMode = payload.state.liveSheetMode;
       if (["blue", "red", "purple", "green", "gold"].includes(payload.state.officialSheetTheme)) officialSheetTheme = payload.state.officialSheetTheme;
     }
     activeCloudCharacterId = null;
@@ -4410,7 +4530,7 @@ app.addEventListener("click", async event => {
   if (action === "back") activeStep = steps[Math.max(0, index - 1)][0];
   if (["step", "next", "back"].includes(action)) renderBuilder();
   if (action === "sheet-mode") {
-    liveSheetMode = ["visual", "text", "official"].includes(button.dataset.mode) ? button.dataset.mode : "visual";
+    liveSheetMode = ["visual", "text", "audit", "official"].includes(button.dataset.mode) ? button.dataset.mode : "visual";
     renderBuilder();
   }
   if (action === "official-theme") {
@@ -4576,7 +4696,7 @@ app.addEventListener("click", async event => {
 });
 
 const requestedPrintView = new URLSearchParams(window.location.search).get("print-view");
-if (["visual", "text", "official"].includes(requestedPrintView)) {
+if (["visual", "text", "audit", "official"].includes(requestedPrintView)) {
   liveSheetMode = requestedPrintView;
   document.body.classList.add("sheet-print-mode");
 }

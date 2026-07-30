@@ -2140,6 +2140,30 @@ p {
   margin-top: 22px;
 }
 
+.audit-character-sheet {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: .82rem;
+}
+
+.audit-character-sheet > header {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.audit-sheet-details {
+  display: grid;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.audit-character-sheet dl div {
+  grid-template-columns: minmax(145px, .7fr) 2.3fr;
+  padding: 5px 0;
+}
+
+.audit-character-sheet dd {
+  overflow-wrap: anywhere;
+}
+
 .text-character-sheet li {
   margin: 4px 0;
   overflow-wrap: anywhere;
@@ -5286,5 +5310,9 @@ p {
 
   body.sheet-print-mode .text-sheet-details > section {
     break-before: auto;
+  }
+
+  body.sheet-print-mode .audit-character-sheet {
+    font-size: 8pt !important;
   }
 }
