@@ -862,7 +862,7 @@ function calc() {
   const primaryPowerSet = selectedPowerSets()[0];
   const primaryPowerAbility = primaryPowerSet ? powerSetAbility(primaryPowerSet) : (sheet.powerAbility || "str");
   const hpRankMultiplier = Number(rank.hpMultiplier || 1);
-  const startingHp = abilityScore("con") + (classInfo.hitDie * hpRankMultiplier) + pro;
+  const startingHp = (abilityScore("con") + classInfo.hitDie) * hpRankMultiplier + pro;
   const hpPerLaterLevel = hitAverage(classInfo.hitDie) + conMod;
   const toughBonus = (sheet.toughTalent || hasTalent("Tough")) ? level * 2 : 0;
   const hp = startingHp + ((level - 1) * hpPerLaterLevel) + toughBonus;
