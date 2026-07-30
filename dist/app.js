@@ -375,7 +375,7 @@ function calc() {
   const classInfo = classes[sheet.className] || classes.Bruiser;
   const pro = prowess(level);
   const hitDie = classInfo.hitDie;
-  const hp = ((abilityScore("con") + hitDie) * rank.hpMultiplier) + prowess(level) + ((level - 1) * (medianHitDie(hitDie) + abilityMod("con"))) + (sheet.toughTalent ? level * 2 : 0);
+  const hp = abilityScore("con") + (hitDie * rank.hpMultiplier) + ((level - 1) * (medianHitDie(hitDie) + abilityMod("con"))) + (sheet.toughTalent ? level * 2 : 0);
   const totalPicks = rank.startingPicks + Math.max(0, level - 1) + Number(sheet.limitations || 0) + Number(sheet.bonusPicks || 0);
 
   return {

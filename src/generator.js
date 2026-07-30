@@ -379,6 +379,8 @@ const defaults = {
   level: 1,
   origin: "Enhanced",
   className: "Bruiser",
+  secondaryClassName: "",
+  secondaryClassLevel: 0,
   calling: "Protector",
   powerAbility: "str",
   limitations: 0,
@@ -624,6 +626,57 @@ function hitAverage(hitDie) {
   return Math.floor(hitDie / 2) + 1;
 }
 
+function multiclassAllocation() {
+  const totalLevel = Math.max(1, Math.min(10, Number(sheet.level || 1)));
+  const primaryClass = classes[sheet.className] ? sheet.className : "Bruiser";
+  const secondaryClass = classes[sheet.secondaryClassName] && sheet.secondaryClassName !== primaryClass
+    ? sheet.secondaryClassName
+    : "";
+  const secondaryEligible = secondaryClass ? abilityScore(classes[secondaryClass].primary) >= 13 : false;
+  const maxSecondaryLevel = Math.min(5, Math.floor(totalLevel / 2));
+  const requestedSecondaryLevel = secondaryClass ? Number(sheet.secondaryClassLevel || 0) : 0;
+  const secondaryLevel = secondaryEligible ? Math.max(0, Math.min(maxSecondaryLevel, requestedSecondaryLevel)) : 0;
+  return {
+    totalLevel,
+    primaryClass,
+    primaryLevel: totalLevel - secondaryLevel,
+    secondaryClass,
+    secondaryLevel,
+    secondaryEligible,
+    maxSecondaryLevel
+  };
+}
+
+function classLevelLabel() {
+  const allocation = multiclassAllocation();
+  return [
+    `${allocation.primaryClass} ${allocation.primaryLevel}`,
+    allocation.secondaryLevel ? `${allocation.secondaryClass} ${allocation.secondaryLevel}` : ""
+  ].filter(Boolean).join(" / ");
+}
+
+function classSaveKeys() {
+  const allocation = multiclassAllocation();
+  const saves = new Set(classes[allocation.primaryClass].saves || []);
+  if (allocation.secondaryLevel) (classes[allocation.secondaryClass].saves || []).forEach(save => saves.add(save));
+  return saves;
+}
+
+function secondaryClassEligible(className = sheet.secondaryClassName) {
+  const info = classes[className];
+  return Boolean(info && className !== sheet.className && abilityScore(info.primary) >= 13);
+}
+
+function normalizeMulticlassState() {
+  if (!classes[sheet.secondaryClassName] || sheet.secondaryClassName === sheet.className) {
+    sheet.secondaryClassName = "";
+    sheet.secondaryClassLevel = 0;
+    return;
+  }
+  const allocation = multiclassAllocation();
+  sheet.secondaryClassLevel = allocation.secondaryLevel;
+}
+
 function originBonus(key) {
   return (sheet.originPrimaryBonus === key ? 2 : 0) + (sheet.originSecondaryBonus === key ? 1 : 0);
 }
@@ -854,18 +907,23 @@ function powerBudget() {
 }
 
 function calc() {
-  const level = Math.max(1, Math.min(10, Number(sheet.level || 1)));
+  const allocation = multiclassAllocation();
+  const level = allocation.totalLevel;
   const rank = ranks[sheet.rank] || ranks["Mid-Level"];
-  const classInfo = classes[sheet.className] || classes.Bruiser;
+  const classInfo = classes[allocation.primaryClass];
+  const secondaryClassInfo = allocation.secondaryLevel ? classes[allocation.secondaryClass] : null;
   const pro = prowess(level);
   const conMod = abilityMod("con");
   const primaryPowerSet = selectedPowerSets()[0];
   const primaryPowerAbility = primaryPowerSet ? powerSetAbility(primaryPowerSet) : (sheet.powerAbility || "str");
   const hpRankMultiplier = Number(rank.hpMultiplier || 1);
-  const startingHp = (abilityScore("con") + classInfo.hitDie) * hpRankMultiplier + pro;
+  const startingHp = abilityScore("con") + (classInfo.hitDie * hpRankMultiplier);
   const hpPerLaterLevel = hitAverage(classInfo.hitDie) + conMod;
+  const primaryLaterHp = Math.max(0, allocation.primaryLevel - 1) * hpPerLaterLevel;
+  const secondaryHpPerLevel = secondaryClassInfo ? hitAverage(secondaryClassInfo.hitDie) + conMod : 0;
+  const secondaryHp = allocation.secondaryLevel * secondaryHpPerLevel;
   const toughBonus = (sheet.toughTalent || hasTalent("Tough")) ? level * 2 : 0;
-  const hp = startingHp + ((level - 1) * hpPerLaterLevel) + toughBonus;
+  const hp = startingHp + primaryLaterHp + secondaryHp + toughBonus;
   const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
   return {
     level,
@@ -875,8 +933,15 @@ function calc() {
     startingHp,
     hpRankMultiplier,
     hpPerLaterLevel,
+    secondaryHpPerLevel,
     toughBonus,
     hitDie: `d${classInfo.hitDie}`,
+    hitDice: [
+      `${allocation.primaryLevel}d${classInfo.hitDie}`,
+      allocation.secondaryLevel ? `${allocation.secondaryLevel}d${secondaryClassInfo.hitDie}` : ""
+    ].filter(Boolean).join(" + "),
+    classLevels: classLevelLabel(),
+    secondaryClassEV: secondaryClassInfo ? 10 + abilityMod(secondaryClassInfo.primary) + pro : null,
     powerDie: rank.powerDie,
     classEV: 10 + abilityMod(classInfo.primary) + pro,
     powerEV: 10 + abilityMod(primaryPowerAbility) + pro,
@@ -899,7 +964,7 @@ function calc() {
     startingPicks: rank.startingPicks,
     maxLimitations: rank.maxLimitations,
     classPrimary: classInfo.primary.toUpperCase(),
-    classSaves: classInfo.saves.map(save => save.toUpperCase()).join(", ")
+    classSaves: [...classSaveKeys()].map(save => save.toUpperCase()).join(", ")
   };
 }
 
@@ -1210,15 +1275,20 @@ function fillOrigin() {
 }
 
 function fillClassFeatures() {
-  const info = classes[sheet.className] || classes.Bruiser;
-  const level = Number(sheet.level || 1);
+  const allocation = multiclassAllocation();
   const features = [];
-  const featureLine = (levelLabel, name) => `${levelLabel}: ${name} - ${classFeatureRules[name] || "See class feature text."}`;
-  if (level >= 1) features.push(featureLine("Level 1", info.features[0]), featureLine("Level 1", info.features[1]));
-  if (level >= 3) features.push(featureLine("Level 3", info.features[2]));
-  if (level >= 5) features.push(featureLine("Level 5", info.features[3]));
-  if (level >= 7) features.push(featureLine("Level 7", info.features[4]));
-  if (level >= 10) features.push(featureLine("Level 10", info.features[5]));
+  const addClassFeatures = (className, classLevel) => {
+    if (!classLevel) return;
+    const info = classes[className];
+    const featureLine = (levelLabel, name) => `${className} ${levelLabel}: ${name} - ${classFeatureRules[name] || "See class feature text."}`;
+    if (classLevel >= 1) features.push(featureLine("Level 1", info.features[0]), featureLine("Level 1", info.features[1]));
+    if (classLevel >= 3) features.push(featureLine("Level 3", info.features[2]));
+    if (classLevel >= 5) features.push(featureLine("Level 5", info.features[3]));
+    if (classLevel >= 7) features.push(featureLine("Level 7", info.features[4]));
+    if (classLevel >= 10) features.push(featureLine("Level 10", info.features[5]));
+  };
+  addClassFeatures(allocation.primaryClass, allocation.primaryLevel);
+  addClassFeatures(allocation.secondaryClass, allocation.secondaryLevel);
   sheet.classFeatures = features.join("\n");
 }
 
@@ -1231,10 +1301,12 @@ function fillCalling() {
 }
 
 function ensureClassSaves(reset = false) {
-  const classSaves = (classes[sheet.className] || classes.Bruiser).saves;
+  const classSaves = classSaveKeys();
   abilities.forEach(([key]) => {
     const field = `save_${key}_trained`;
-    if (reset || sheet[field] === undefined) sheet[field] = classSaves.includes(key);
+    if (reset) sheet[field] = classSaves.has(key);
+    else if (classSaves.has(key)) sheet[field] = true;
+    else if (sheet[field] === undefined) sheet[field] = false;
   });
 }
 
@@ -1242,6 +1314,7 @@ function initialize(reset = false) {
   ensurePowerState();
   normalizeAbilityScores();
   ensureOrigin();
+  normalizeMulticlassState();
   ensureClassSaves(reset);
   fillOrigin();
   if (reset || !sheet.classFeatures || !sheet.classFeatures.includes(" - ")) fillClassFeatures();
@@ -1558,20 +1631,37 @@ function renderOrigin() {
 }
 
 function renderClass() {
-  const info = classes[sheet.className] || classes.Bruiser;
+  const allocation = multiclassAllocation();
+  const info = classes[allocation.primaryClass];
+  const secondaryInfo = allocation.secondaryClass ? classes[allocation.secondaryClass] : null;
+  const eligibleSecondaryClasses = Object.keys(classes).filter(name => name !== allocation.primaryClass && (name === allocation.secondaryClass || secondaryClassEligible(name)));
   const visibleFeatures = lines(sheet.classFeatures);
+  const multiclassMessage = !allocation.secondaryClass
+    ? "Optional. A secondary Class requires 13+ in its Primary Ability. Total level remains capped at 10."
+    : !secondaryClassEligible(allocation.secondaryClass)
+      ? `${allocation.secondaryClass} requires ${secondaryInfo.primary.toUpperCase()} 13+ before taking or advancing levels in it.`
+      : allocation.secondaryLevel
+        ? `${classLevelLabel()}. Secondary Classes cap at Level 5; only the Primary Class may exceed Level 5.`
+        : `Choose how many of the character's ${allocation.totalLevel} total levels belong to ${allocation.secondaryClass}.`;
   return `
     <div class="form-grid two">
-      ${select("className", "Class", Object.keys(classes))}
+      ${select("className", "Primary Class", Object.keys(classes))}
       ${select("powerAbility", "Power Ability", abilities.map(([key, short, name]) => [key, `${short} - ${name}`]))}
+      ${select("secondaryClassName", "Secondary Class (Optional)", eligibleSecondaryClasses, "Single Class")}
+      ${input("secondaryClassLevel", "Secondary Class Levels", "number", `min="0" max="${allocation.maxSecondaryLevel}"`)}
     </div>
+    <div class="rule-card"><h2>Multiclassing</h2><p>${html(multiclassMessage)}</p></div>
     <div class="mechanic-grid">
       <div><span>Primary</span><strong>${info.primary.toUpperCase()}</strong></div>
       <div><span>Hit Die</span><strong>d${info.hitDie}</strong></div>
-      <div><span>Saves</span><strong>${info.saves.map(save => save.toUpperCase()).join(", ")}</strong></div>
+      <div><span>Class Levels</span><strong>${html(classLevelLabel())}</strong></div>
+      <div><span>Hit Dice Pool</span><strong>${html(calc().hitDice)}</strong></div>
+      <div><span>Saves</span><strong>${[...classSaveKeys()].map(save => save.toUpperCase()).join(", ")}</strong></div>
       <div><span>Recovery</span><strong>${signed(info.recovery)}</strong></div>
+      ${secondaryInfo && allocation.secondaryLevel ? `<div><span>${html(allocation.secondaryClass)} EV</span><strong>${calc().secondaryClassEV}</strong></div>` : ""}
     </div>
-    <div class="rule-card"><h2>${html(sheet.className || "Class")}</h2><p>${html(classText[sheet.className] || "")}</p></div>
+    <div class="rule-card"><h2>${html(allocation.primaryClass)}</h2><p>${html(classText[allocation.primaryClass] || "")}</p></div>
+    ${secondaryInfo ? `<div class="rule-card"><h2>${html(allocation.secondaryClass)}</h2><p>${html(classText[allocation.secondaryClass] || "")}</p></div>` : ""}
     <div class="rule-card"><h2>Class Feature Rules</h2>${rulesList(visibleFeatures)}</div>
   `;
 }
@@ -1617,9 +1707,9 @@ function renderHitPoints() {
   const values = calc();
   return `
     <div class="mechanic-grid">
-      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Starting HP</span><strong>${values.startingHp}</strong></div><div><span>Hit Die</span><strong>${values.hitDie}</strong></div><div><span>Campaign Rank Modifier</span><strong>x${values.hpRankMultiplier}</strong></div><div><span>Later Level Gain</span><strong>${signed(values.hpPerLaterLevel)}</strong></div><div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div><div><span>Tough Bonus</span><strong>${signed(values.toughBonus)}</strong></div>
+      <div><span>Hit Points</span><strong>${values.hp}</strong></div><div><span>Starting HP</span><strong>${values.startingHp}</strong></div><div><span>Hit Dice Pool</span><strong>${html(values.hitDice)}</strong></div><div><span>Campaign Rank Modifier</span><strong>x${values.hpRankMultiplier}</strong></div><div><span>Primary Later Level</span><strong>${signed(values.hpPerLaterLevel)}</strong></div>${multiclassAllocation().secondaryLevel ? `<div><span>Secondary Later Level</span><strong>${signed(values.secondaryHpPerLevel)}</strong></div>` : ""}<div><span>Prowess</span><strong>${values.prowess}</strong></div><div><span>Recovery</span><strong>${values.recovery}</strong></div><div><span>CON Total</span><strong>${abilityScore("con")}</strong></div><div><span>CON Mod</span><strong>${signed(abilityMod("con"))}</strong></div><div><span>Tough Bonus</span><strong>${signed(values.toughBonus)}</strong></div>
     </div>
-    <div class="rule-card"><h2>Campaign Rank HP</h2><p>Starting HP = Constitution score + maximum Hit Die x Campaign Rank. Street Level uses x1, Mid-Level x2, and World Class x3. After Level 1, each level adds the Hit Die median + CON modifier.</p></div>
+    <div class="rule-card"><h2>Campaign Rank HP</h2><p>Starting HP = Constitution score + maximum Primary Class Hit Die x Campaign Rank. After Level 1, each level adds the median of the Hit Die for the Class gained at that level + CON modifier.</p></div>
     <label class="wide-check"><input type="checkbox" data-field="toughTalent" ${checked(sheet.toughTalent)}> Tough talent HP bonus</label>
   `;
 }
@@ -1872,7 +1962,8 @@ function renderDefenses() {
       ${compactStat("Willpower", values.willpower)}
       ${compactStat("Social", values.socialDefense)}
       ${compactStat("Initiative", values.initiative)}
-      ${compactStat("Class EV", values.classEV)}
+      ${compactStat(`${sheet.className} EV`, values.classEV)}
+      ${values.secondaryClassEV !== null ? compactStat(`${sheet.secondaryClassName} EV`, values.secondaryClassEV) : ""}
     </div>
     <div class="defense-layout">
       <section><h2>Saves</h2><div class="check-grid compact">
@@ -1926,7 +2017,7 @@ function renderIdentity() {
   return `
     <div class="form-grid three">${input("heroName", "Hero Name")}${input("realName", "Real Name")}${select("identity", "Identity", ["Secret", "Public", "Not Public"])}</div>
     <div class="builder-split">
-      <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, sheet.className, sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
+      <div>${textarea("costume", "Costume / Symbol", 7)}<div class="rule-card"><h2>${html(sheet.heroName || "Unnamed Hero")}</h2><p>${html([sheet.origin, classLevelLabel(), sheet.calling].filter(Boolean).join(" - "))}</p><div class="pill-row"><span>Level ${values.level}</span><span>${html(sheet.rank)}</span><span>${values.hp} HP</span><span>${values.powerPicks} Picks</span></div></div></div>
       <div class="portrait-uploader"><div class="portrait-preview" style="${sheet.portrait ? `background-image:url(${sheet.portrait})` : ""}">${sheet.portrait ? "" : "Portrait"}</div><label>Portrait Image<input id="portraitInput" type="file" accept="image/*"></label></div>
     </div>
   `;
@@ -2076,10 +2167,10 @@ function generatorOutputPayload() {
       concept: sheet.concept || "",
       origin: sheet.origin || "",
       calling: sheet.calling || "",
-      class: sheet.className || "",
+      class: classLevelLabel(),
       level: values.level,
       prowess: values.prowess,
-      classLevel: `${sheet.className || ""} / Level ${values.level}`,
+      classLevel: classLevelLabel(),
       campaignRank: sheet.rank || "",
       side: sheet.side || "",
       portrait: sheet.portrait || "",
@@ -2095,7 +2186,7 @@ function generatorOutputPayload() {
       hitPoints: { current: values.hp, maximum: values.hp },
       tempHp: "",
       bloodied: Math.floor(values.hp / 2),
-      hitDice: { current: values.level, maximum: `${values.level} ${values.hitDie}` },
+      hitDice: { current: values.level, maximum: values.hitDice },
       edge: { current: values.edgeStart, maximum: `${values.edgeStart} / ${values.edgeCap}` },
       recoveryModifier: values.recovery,
       powerDie: values.powerDie,
@@ -2110,7 +2201,7 @@ function generatorOutputPayload() {
     powerSets: outputPowerSets(values),
     story: {
       origin: sheet.origin || "",
-      classPrimaryAbility: `${sheet.className || ""} / ${values.classPrimary}`,
+      classPrimaryAbility: `${classLevelLabel()} / ${values.classPrimary}`,
       callingCode: sheet.calling || "",
       originAbilities,
       originTraitTalent: originTalentRuleLines(origin).join("\n\n"),
@@ -2219,8 +2310,7 @@ function officialSheetMarkup() {
   const values = calc();
   const powers = chosenPowers();
   const origin = origins[sheet.origin] || origins.Enhanced;
-  const classInfo = classes[sheet.className] || classes.Bruiser;
-  const trainedSaves = new Set(classInfo.saves || []);
+  const trainedSaves = new Set(abilities.filter(([key]) => sheet[`save_${key}_trained`]).map(([key]) => key));
   const identityFlags = ["Secret", "Public", "Known to some", "No civilian life"];
   const powerSetRows = powerSetSheetDetails().map(({ powerSet, notes, limitations }) => [
     powerSet.name,
@@ -2257,14 +2347,14 @@ function officialSheetMarkup() {
           <div class="official-logo"><b>HEROIC<span>5e</span></b><small>Character Sheet</small></div>
           <div class="official-identity-fields">
             <div class="official-wide">${officialBox("Hero Name", sheet.heroName || characterName())}${officialBox("Level", values.level)}${officialBox("Prowess", values.prowess)}</div>
-            <div class="official-wide">${officialBox("Civilian Name", sheet.realName)}${officialBox("Origin", sheet.origin)}${officialBox("Class", sheet.className)}${officialBox("Calling", sheet.calling)}</div>
+            <div class="official-wide">${officialBox("Civilian Name", sheet.realName)}${officialBox("Origin", sheet.origin)}${officialBox("Class", classLevelLabel())}${officialBox("Calling", sheet.calling)}</div>
             <div class="official-wide">${officialBox("Player", sheet.playerName)}${officialBox("Side", sheet.side)}${officialBox("Campaign Rank", sheet.rank)}</div>
           </div>
         </header>
         ${officialSection("Ability Scores", `Prowess ${values.prowess}`, `<div class="official-abilities">${abilities.map(([key, short]) => `<div><b>${short}</b><strong>${abilityScore(key)}</strong><small>${signed(abilityMod(key))}</small></div>`).join("")}</div>`)}
-        ${officialSection("Vitals", `Starting HP ${values.startingHp}`, `<div class="official-vitals">${officialBox("Max HP", values.hp)}${officialBox("Current HP", values.hp)}${officialBox("Temp", "")}${officialBox("Hit Die", values.hitDie)}${officialBox("Recovery", values.recovery)}${officialBox("Speed", sheet.speed || "30 ft")}${officialBox("Initiative", values.initiative)}${officialBox("Vigilance", 10 + abilityMod("per") + values.pro)}</div>`)}
+        ${officialSection("Vitals", `Starting HP ${values.startingHp}`, `<div class="official-vitals">${officialBox("Max HP", values.hp)}${officialBox("Current HP", values.hp)}${officialBox("Temp", "")}${officialBox("Hit Dice", values.hitDice)}${officialBox("Recovery", values.recovery)}${officialBox("Speed", sheet.speed || "30 ft")}${officialBox("Initiative", values.initiative)}${officialBox("Vigilance", 10 + abilityMod("per") + values.pro)}</div>`)}
         <div class="official-three">
-          ${officialSection("Active Defenses", "Roll 1d20 + bonus", `<dl class="official-stat-list"><div><dt>Parry / Block</dt><dd>${values.parry}</dd></div><div><dt>Dodge</dt><dd>${values.dodge}</dd></div><div><dt>Willpower</dt><dd>${values.willpower}</dd></div><div><dt>Social</dt><dd>${values.socialDefense}</dd></div><div><dt>Class Effect Value</dt><dd>${values.classEV}</dd></div></dl>`)}
+          ${officialSection("Active Defenses", "Roll 1d20 + bonus", `<dl class="official-stat-list"><div><dt>Parry / Block</dt><dd>${values.parry}</dd></div><div><dt>Dodge</dt><dd>${values.dodge}</dd></div><div><dt>Willpower</dt><dd>${values.willpower}</dd></div><div><dt>Social</dt><dd>${values.socialDefense}</dd></div><div><dt>${html(sheet.className)} EV</dt><dd>${values.classEV}</dd></div>${values.secondaryClassEV !== null ? `<div><dt>${html(sheet.secondaryClassName)} EV</dt><dd>${values.secondaryClassEV}</dd></div>` : ""}</dl>`)}
           ${officialSection("Saves", "PRO if trained", `<div class="official-saves">${abilities.map(([key, short]) => `<div><b>${short}</b><span>${trainedSaves.has(key) ? "☑ Trained" : "☐"}</span><strong>${signed(abilityMod(key) + (trainedSaves.has(key) ? values.pro : 0))}</strong></div>`).join("")}</div>`)}
           <div>${officialSection("Edge", `Cap ${values.edgeCap}`, `<div class="official-resource"><strong>${values.edgeStart}</strong><span>per session / ${values.edgeCap} cap</span></div>`)}${officialSection("Burnout", "Penalty to rolls & EVs", officialRows([], 1))}</div>
         </div>
@@ -2305,7 +2395,7 @@ function renderSheetMarkup() {
     <article class="sheet-page">
       <header class="sheet-title"><p>HEROIC 5e</p><h1>${html(sheet.heroName || "Character Sheet")}</h1></header>
       <section class="sheet-hero-grid">
-        <div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", sheet.className)}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div>
+        <div class="identity-block">${sheetLine("Real Name", sheet.realName)}${sheetLine("Identity", sheet.identity)}${sheetLine("Origin", sheet.origin)}${sheetLine("Class", classLevelLabel())}${sheetLine("Calling", sheet.calling)}${sheetLine("Rank / Level", `${sheet.rank || ""} / ${values.level}`)}</div>
         <div class="portrait-box-wrap">
           <div class="portrait-box live-portrait-target" role="button" tabindex="0" data-action="choose-live-portrait" aria-label="${sheet.portrait ? "Replace character portrait" : "Add character portrait"}" title="${sheet.portrait ? "Click to replace portrait" : "Click to add portrait"}">
             ${sheet.portrait ? `<img class="live-portrait-image" src="${html(sheet.portrait)}" alt="Character portrait" style="object-fit:${portraitMode};object-position:${portraitX}% ${portraitY}%;transform:scale(${portraitZoom});transform-origin:${portraitX}% ${portraitY}%">` : "Click to add portrait"}
@@ -2323,10 +2413,10 @@ function renderSheetMarkup() {
             <label>Vertical crop <input type="range" min="0" max="100" step="1" value="${portraitY}" data-portrait-setting="portraitY"></label>
           </details>` : ""}
         </div>
-        <div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Die", values.hitDie)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div>
+        <div class="core-block">${bigStat("HP", values.hp)}${bigStat("PRO", values.prowess)}${bigStat("Hit Dice", values.hitDice)}${bigStat("Power Die", values.powerDie)}${bigStat("Edge", `${values.edgeStart}/${values.edgeCap}`)}${bigStat("Recovery", values.recovery)}</div>
       </section>
       <section class="sheet-section"><h2>Abilities</h2><div class="sheet-abilities">${abilities.map(([key, short]) => `<div><span>${short}</span><strong>${abilityScore(key)}</strong><em>${signed(abilityMod(key))}</em></div>`).join("")}</div></section>
-      <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat("Class EV", values.classEV)}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
+      <section class="sheet-row"><div class="sheet-section"><h2>Combat</h2><div class="sheet-stats">${bigStat("Initiative", values.initiative)}${bigStat(`${sheet.className} EV`, values.classEV)}${values.secondaryClassEV !== null ? bigStat(`${sheet.secondaryClassName} EV`, values.secondaryClassEV) : ""}${bigStat("Power EV", values.powerEV)}${bigStat("Primary", values.classPrimary)}${bigStat("Melee", values.meleeAttack)}${bigStat("Ranged", values.rangedAttack)}${bigStat("Mental", values.mentalAttack)}${bigStat("Social", values.socialAttack)}</div></div><div class="sheet-section"><h2>Defenses</h2><div class="sheet-stats">${bigStat("Parry / Block", values.parry)}${bigStat("Dodge", values.dodge)}${bigStat("Willpower", values.willpower)}${bigStat("Social", values.socialDefense)}</div></div></section>
       <section class="sheet-section"><h2>Skills</h2><div class="sheet-skills">${skills.map(([key, name, ability]) => {
         const total = skillBonus(key, ability, values);
         return `<div><span>${name}</span><em>${ability.toUpperCase()}</em><strong>${signed(total)}</strong></div>`;
@@ -2358,11 +2448,11 @@ function updateField(field, value) {
   }
   if (["origin", "originPrimaryBonus", "originSecondaryBonus", "originTrait", "originSkill1", "originSkill2"].includes(field)) fillOrigin();
   if (additionalSkillFields().includes(field)) syncSkillTraining();
-  if (field === "className") {
+  if (["className", "secondaryClassName", "secondaryClassLevel", "level"].includes(field)) {
+    normalizeMulticlassState();
     ensureClassSaves(true);
     fillClassFeatures();
   }
-  if (field === "level") fillClassFeatures();
   if (field === "calling") fillCalling();
   save();
 }
@@ -2449,6 +2539,7 @@ function makeCharacterRecord(name) {
     realName: sheet.realName || "",
     origin: sheet.origin || "",
     className: sheet.className || "",
+    classLevels: classLevelLabel(),
     calling: sheet.calling || "",
     rank: sheet.rank || "",
     level: Number(sheet.level || 1),
@@ -2549,7 +2640,7 @@ async function cloudCharacterItem(record) {
       <div class="library-portrait" style="${portrait ? `background-image:url(${portrait})` : ""}">${portrait ? "" : initialsFor(name)}</div>
       <div>
         <strong>${html(name)}</strong>
-        <span>${html([data.origin, data.className, data.calling].filter(Boolean).join(" - ") || "No build details")}</span>
+        <span>${html([data.origin, data.classLevels || data.className, data.calling].filter(Boolean).join(" - ") || "No build details")}</span>
         <small>Level ${html(data.level || 1)} ${html(data.rank || "")} - Synced ${html(new Date(record.updated_at).toLocaleString())}</small>
       </div>
       <div class="library-item-actions">
@@ -3263,12 +3354,12 @@ function textSheetModel() {
     title: sheet.heroName || sheet.realName || "Unnamed Hero",
     subtitle: [sheet.realName, sheet.identity].filter(Boolean).join(" • "),
     identity: [
-      ["Concept", sheet.concept], ["Origin", sheet.origin], ["Class", sheet.className],
+      ["Concept", sheet.concept], ["Origin", sheet.origin], ["Class", classLevelLabel()],
       ["Calling", sheet.calling], ["Side", sheet.side], ["Campaign Rank", sheet.rank], ["Level", values.level]
     ],
     abilities: abilities.map(([key, short, name]) => [name || short, `${abilityScore(key)} (${signed(abilityMod(key))})`]),
     resources: [
-      ["Hit Points", values.hp], ["Prowess", values.prowess], ["Hit Die", values.hitDie],
+      ["Hit Points", values.hp], ["Prowess", values.prowess], ["Hit Dice", values.hitDice],
       ["Power Die", values.powerDie], ["Edge", `${values.edgeStart}/${values.edgeCap}`],
       ["Recovery", values.recovery], ["Initiative", signed(values.initiative)], ["Speed", sheet.speed || "30 ft"]
     ],
@@ -3279,7 +3370,9 @@ function textSheetModel() {
     attacks: [
       ["Melee Attack", signed(values.meleeAttack)], ["Ranged Attack", signed(values.rangedAttack)],
       ["Mental Attack", signed(values.mentalAttack)], ["Social Attack", signed(values.socialAttack)],
-      ["Class Effect Value", values.classEV], ["Power Effect Value", values.powerEV]
+      [`${sheet.className} Effect Value`, values.classEV],
+      ...(values.secondaryClassEV !== null ? [[`${sheet.secondaryClassName} Effect Value`, values.secondaryClassEV]] : []),
+      ["Power Effect Value", values.powerEV]
     ],
     lists: [
       ["Skills", trainedSkills],
@@ -3431,7 +3524,8 @@ function diceRollerMarkup() {
   const powerNames = selectedPowerSetNames();
   const powerRolls = [1, 2, 3, 4].map(count => rollActionCard(`${count} Power ${count === 1 ? "Die" : "Dice"}`, `${count}${values.powerDie}`, 0, powerNames.join(", ") || "Power damage / effect"));
   const recoveryRolls = [
-    rollActionCard("Hit Die", `1${values.hitDie}`, 0, "Recovery roll"),
+    rollActionCard(`${sheet.className} Hit Die`, `1${values.hitDie}`, 0, "Recovery roll"),
+    ...(multiclassAllocation().secondaryLevel ? [rollActionCard(`${sheet.secondaryClassName} Hit Die`, `1d${classes[sheet.secondaryClassName].hitDie}`, 0, "Recovery roll")] : []),
     rollActionCard("Power Die", `1${values.powerDie}`, 0, "Single power die")
   ];
 
@@ -3719,7 +3813,7 @@ function libraryItem(character, source = "local") {
       <div class="library-portrait" style="${portrait ? `background-image:url(${portrait})` : ""}">${portrait ? "" : initialsFor(name)}</div>
       <div>
         <strong>${html(name)}</strong>
-        <span>${html([character.origin, character.className, character.calling].filter(Boolean).join(" - ") || "No build details")}</span>
+        <span>${html([character.origin, character.classLevels || character.className, character.calling].filter(Boolean).join(" - ") || "No build details")}</span>
         <small>Level ${html(character.level || 1)} ${html(character.rank || "")} - Saved ${html(new Date(character.updatedAt).toLocaleString())}</small>
       </div>
       <div class="library-item-actions">

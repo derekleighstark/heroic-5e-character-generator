@@ -10,6 +10,9 @@ const completeSheet = {
   ...defaults,
   heroName: "Round Trip",
   concept: "Every field survives.",
+  className: "Bruiser",
+  secondaryClassName: "Guardian",
+  secondaryClassLevel: 2,
   powerSet1: "Absorption",
   powerSet7: "Weather Control",
   powerPurchases: ["absorption::core::1", "absorption::at-will::redirect"],
@@ -39,7 +42,7 @@ const exported = createCharacterExport(completeSheet, {
 const imported = normalizeImportedSheet(importedSheetFromPayload(JSON.parse(JSON.stringify(exported))), defaults);
 
 assert.deepEqual(imported, completeSheet);
-assert.equal(exported.schemaVersion, 4);
+assert.equal(exported.schemaVersion, 5);
 assert.deepEqual(exported.state, { activeStep: "powers", liveSheetMode: "official" });
 
 const duplicatePowers = normalizeImportedSheet({ ...completeSheet, powerPurchases: ["a", "a", "b"] }, defaults);

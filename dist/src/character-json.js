@@ -64,7 +64,7 @@ export function createCharacterExport(sheet, {
   const cleanSheet = sanitizeJsonValue(sheet);
   return {
     type: "HEROIC 5e Character Generator",
-    schemaVersion: 4,
+    schemaVersion: 5,
     rulesVersion,
     exportedAt,
     state: {

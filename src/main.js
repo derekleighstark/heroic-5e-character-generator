@@ -1,1 +1,1 @@
-import "./generator.js?v=20260730-hp-formula";
+import "./generator.js?v=20260730-multiclassing";
