@@ -59,6 +59,7 @@ export function createCharacterExport(sheet, {
   rulesVersion = "",
   activeStep = "concept",
   liveSheetMode = "visual",
+  officialSheetTheme = "gold",
   exportedAt = new Date().toISOString()
 } = {}) {
   const cleanSheet = sanitizeJsonValue(sheet);
@@ -69,7 +70,8 @@ export function createCharacterExport(sheet, {
     exportedAt,
     state: {
       activeStep,
-      liveSheetMode
+      liveSheetMode,
+      officialSheetTheme
     },
     sheet: cleanSheet
   };

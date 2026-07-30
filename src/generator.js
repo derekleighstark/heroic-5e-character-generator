@@ -488,11 +488,42 @@ const originBackgrounds = {
   Trained: "spent years preparing for threats most people never believed were real",
   Transcendent: "passed beyond ordinary human limits and returned with an altered view of life and mortality"
 };
+const coherentClassCallings = {
+  Beacon: ["Advocate", "Champion", "Mentor", "Role Model"],
+  Bruiser: ["Avenger", "Champion", "Defender", "Protector"],
+  Guardian: ["Defender", "Protector", "Soldier", "Survivor"],
+  Sentinel: ["Investigator", "Protector", "Seeker", "Soldier"],
+  Strategist: ["Investigator", "Mentor", "Seeker", "Soldier"],
+  Striker: ["Avenger", "Idealist", "Mercenary", "Soldier"],
+  Vanguard: ["Adventurer", "Hotshot", "Seeker", "Wiseacre"],
+  Warden: ["Idealist", "Mentor", "Redeemer", "Survivor"]
+};
+const coherentClassTalents = {
+  Beacon: ["Appeal", "Battlefield Leader", "Inspiring Leader", "Master Negotiator", "Team Player"],
+  Bruiser: ["Athlete", "Durable", "Improvised Fighter", "Pain Tolerance", "Tough"],
+  Guardian: ["Counterguard", "Defensive Fighter", "Durable", "Never Give Up", "Tough"],
+  Sentinel: ["Alert", "Observant", "Surveillance Specialist", "Weapon Specialist"],
+  Strategist: ["Battlefield Leader", "Field Commander", "Forensic Expert", "Pattern Recognition", "Skilled"],
+  Striker: ["Grappler", "Martial Artist", "Master of Combat", "Takedown Artist", "Weapon Specialist"],
+  Vanguard: ["Alert", "Fast Draw", "Mobile", "Sharpshooter", "Tireless"],
+  Warden: ["Iron Will", "Never Give Up", "Psychic Discipline", "Resilient", "War Caster"]
+};
+const coherentClassSkills = {
+  Beacon: ["Influence", "Insight", "Intimidation"],
+  Bruiser: ["Athletics", "Intimidation", "Survival"],
+  Guardian: ["Athletics", "Medicine", "Survival"],
+  Sentinel: ["Investigation", "Notice", "Stealth"],
+  Strategist: ["Investigation", "Science", "Technology"],
+  Striker: ["Acrobatics", "Athletics", "Finesse"],
+  Vanguard: ["Acrobatics", "Finesse", "Stealth"],
+  Warden: ["Insight", "Medicine", "Occult"]
+};
 
 const app = document.querySelector("#app");
 let activeStep = "concept";
 let sheet = { ...defaults };
 let liveSheetMode = "visual";
+let officialSheetTheme = "gold";
 let sampleCharacters = [];
 let sampleStatus = "";
 let activeCompendiumSection = "glossary";
@@ -1550,6 +1581,9 @@ function renderBuilder() {
             <button type="button" data-action="sheet-mode" data-mode="visual" class="${liveSheetMode === "visual" ? "active" : ""}">Live Sheet</button>
             <button type="button" data-action="sheet-mode" data-mode="text" class="${liveSheetMode === "text" ? "active" : ""}">Text Sheet</button>
             <button type="button" data-action="sheet-mode" data-mode="official" class="${liveSheetMode === "official" ? "active" : ""}">Official Sheet</button>
+            ${["blue", "red", "purple", "green", "gold"].map(theme => `
+              <button type="button" data-action="official-theme" data-theme="${theme}" class="official-theme-button theme-${theme} ${liveSheetMode === "official" && officialSheetTheme === theme ? "active" : ""}" aria-pressed="${liveSheetMode === "official" && officialSheetTheme === theme}">${theme[0].toUpperCase()}${theme.slice(1)}</button>
+            `).join("")}
           </nav>
         </header>
         <div id="sheet">${sheetViewMarkup()}</div>
@@ -1634,7 +1668,14 @@ function renderClass() {
   const allocation = multiclassAllocation();
   const info = classes[allocation.primaryClass];
   const secondaryInfo = allocation.secondaryClass ? classes[allocation.secondaryClass] : null;
-  const eligibleSecondaryClasses = Object.keys(classes).filter(name => name !== allocation.primaryClass && (name === allocation.secondaryClass || secondaryClassEligible(name)));
+  const secondaryClassOptions = Object.keys(classes)
+    .filter(name => name !== allocation.primaryClass)
+    .map(name => {
+      const requiredAbility = classes[name].primary.toUpperCase();
+      const currentScore = abilityScore(classes[name].primary);
+      const requirement = currentScore >= 13 ? "Eligible" : `Requires ${requiredAbility} 13+; currently ${currentScore}`;
+      return [name, `${name} — ${requirement}`];
+    });
   const visibleFeatures = lines(sheet.classFeatures);
   const multiclassMessage = !allocation.secondaryClass
     ? "Optional. A secondary Class requires 13+ in its Primary Ability. Total level remains capped at 10."
@@ -1647,7 +1688,7 @@ function renderClass() {
     <div class="form-grid two">
       ${select("className", "Primary Class", Object.keys(classes))}
       ${select("powerAbility", "Power Ability", abilities.map(([key, short, name]) => [key, `${short} - ${name}`]))}
-      ${select("secondaryClassName", "Secondary Class (Optional)", eligibleSecondaryClasses, "Single Class")}
+      ${select("secondaryClassName", "Secondary Class (Optional)", secondaryClassOptions, "Single Class")}
       ${input("secondaryClassLevel", "Secondary Class Levels", "number", `min="0" max="${allocation.maxSecondaryLevel}"`)}
     </div>
     <div class="rule-card"><h2>Multiclassing</h2><p>${html(multiclassMessage)}</p></div>
@@ -2341,7 +2382,7 @@ function officialSheetMarkup() {
   const gearLines = [...lines(sheet.gear), ...lines(sheet.enhancements), sheet.costume].filter(Boolean);
 
   return `
-    <div class="official-sheet" aria-label="Official HEROIC 5e character sheet">
+    <div class="official-sheet official-theme-${officialSheetTheme}" aria-label="Official HEROIC 5e character sheet - ${html(officialSheetTheme)} accent">
       <article class="official-page">
         <header class="official-identity">
           <div class="official-logo"><b>HEROIC<span>5e</span></b><small>Character Sheet</small></div>
@@ -2467,7 +2508,8 @@ function exportPayload() {
   return createCharacterExport(sheet, {
     rulesVersion: corebook.version,
     activeStep,
-    liveSheetMode
+    liveSheetMode,
+    officialSheetTheme
   });
 }
 
@@ -3885,6 +3927,7 @@ async function importJson(file) {
   const previousSheet = cloneSheet(sheet);
   const previousActiveStep = activeStep;
   const previousLiveSheetMode = liveSheetMode;
+  const previousOfficialSheetTheme = officialSheetTheme;
   try {
     if (!file || file.size > 12 * 1024 * 1024) throw new Error("Choose a JSON character file smaller than 12 MB.");
     const text = (await file.text()).replace(/^\uFEFF/, "");
@@ -3893,6 +3936,7 @@ async function importJson(file) {
     if (payload.state && typeof payload.state === "object") {
       if (steps.some(([id]) => id === payload.state.activeStep)) activeStep = payload.state.activeStep;
       if (["visual", "text", "official"].includes(payload.state.liveSheetMode)) liveSheetMode = payload.state.liveSheetMode;
+      if (["blue", "red", "purple", "green", "gold"].includes(payload.state.officialSheetTheme)) officialSheetTheme = payload.state.officialSheetTheme;
     }
     activeCloudCharacterId = null;
     updateCloudControls();
@@ -3907,6 +3951,7 @@ async function importJson(file) {
     sheet = previousSheet;
     activeStep = previousActiveStep;
     liveSheetMode = previousLiveSheetMode;
+    officialSheetTheme = previousOfficialSheetTheme;
     save();
     alert(`Import failed: ${error instanceof SyntaxError ? "The file is not valid JSON." : error.message || "The character file is invalid."}`);
   }
@@ -3975,7 +4020,7 @@ function addRandomPowerChoice(predicate) {
   return choice;
 }
 
-function randomizePowers() {
+function randomizePowers(preferredAbilities = []) {
   ensurePowerState();
   sheet.powerPurchases = [];
   sheet.powerSetAbilities = {};
@@ -3985,10 +4030,16 @@ function randomizePowers() {
   }
 
   const maxSets = Math.min(2, calc().maxPowerSets);
-  const chosenSets = shuffleItems(powerSetRules).slice(0, randomBetween(1, maxSets));
+  const matchingSets = powerSetRules.filter(powerSet => powerSet.abilityOptions.some(ability => preferredAbilities.includes(ability)));
+  const chosenSets = shuffleItems(matchingSets.length >= maxSets ? matchingSets : powerSetRules).slice(0, randomBetween(1, maxSets));
   chosenSets.forEach((powerSet, index) => {
     sheet[`powerSet${index + 1}`] = powerSet.name;
-    sheet.powerSetAbilities[powerSet.id] = randomItem(powerSet.abilityOptions.length ? powerSet.abilityOptions : ["str"]);
+    const abilityOptions = powerSet.abilityOptions.length ? powerSet.abilityOptions : ["str"];
+    sheet.powerSetAbilities[powerSet.id] = [...abilityOptions].sort((left, right) => {
+      const leftPreferred = preferredAbilities.includes(left) ? 10 : 0;
+      const rightPreferred = preferredAbilities.includes(right) ? 10 : 0;
+      return (rightPreferred + abilityMod(right)) - (leftPreferred + abilityMod(left));
+    })[0];
   });
   sheet.powerAbility = sheet.powerSetAbilities[chosenSets[0].id];
 
@@ -4036,7 +4087,7 @@ function randomizePowers() {
   sheet.limitationsText = selectedPowerLimitations().map(choice => `${choice.name}: ${choice.text}`).join("\n");
 }
 
-function randomizeSkills() {
+function randomizeSkills(preferredSkills = []) {
   const origin = origins[sheet.origin];
   const originSkills = shuffleItems(origin.skills).slice(0, origin.skillPicks);
   sheet.originSkill1 = originSkills[0] || "";
@@ -4044,7 +4095,9 @@ function randomizeSkills() {
   fillOrigin();
 
   const additionalCount = additionalSkillPickCount();
-  const additional = shuffleItems(skills.map(([, name]) => name).filter(name => !originSkills.includes(name))).slice(0, additionalCount);
+  const availableSkills = skills.map(([, name]) => name).filter(name => !originSkills.includes(name));
+  const preferred = preferredSkills.filter((name, index, items) => availableSkills.includes(name) && items.indexOf(name) === index);
+  const additional = [...preferred, ...shuffleItems(availableSkills.filter(name => !preferred.includes(name)))].slice(0, additionalCount);
   const needsSpecialty = ["Cosmic", "Monster", "Transcendent"].includes(sheet.origin) || sheet.startingTalent === "Specialist" || Math.random() < .3;
   if (needsSpecialty && originSkills.length && additional.length) {
     additional[0] = originSkills[0];
@@ -4062,18 +4115,35 @@ function randomCharacter() {
   if (!confirm("Generate a complete random character? Current unsaved changes will be replaced.")) return;
 
   const rank = ranks[sheet.rank] ? sheet.rank : "Mid-Level";
-  const originName = randomItem(Object.keys(origins));
   const className = randomItem(Object.keys(classes));
-  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
-  const calling = randomItem(Object.keys(callings));
+  const primaryAbility = classes[className].primary;
+  const compatibleOrigins = Object.keys(origins).filter(name => origins[name].primary.includes(primaryAbility));
+  const originName = randomItem(compatibleOrigins.length ? compatibleOrigins : Object.keys(origins));
   const origin = origins[originName];
-  const originPrimaryBonus = randomItem(origin.primary);
-  const originSecondaryBonus = randomItem(origin.secondary[originPrimaryBonus]);
+  const requestedLevel = Math.max(1, Math.min(10, Number(sheet.level || 1)));
+  const promoteForMulticlass = requestedLevel === 1 && Math.random() < .18;
+  const level = promoteForMulticlass ? randomBetween(2, 5) : requestedLevel;
+  const secondaryAbilityOptions = origin.secondary[primaryAbility] || [];
+  const secondaryCandidates = Object.keys(classes).filter(name => name !== className && secondaryAbilityOptions.includes(classes[name].primary));
+  const shouldMulticlass = level >= 2 && secondaryCandidates.length > 0 && (promoteForMulticlass || Math.random() < .32);
+  const secondaryClassName = shouldMulticlass ? randomItem(secondaryCandidates) : "";
+  const secondaryClassLevel = secondaryClassName ? randomBetween(1, Math.min(5, Math.floor(level / 2))) : 0;
+  const secondaryAbility = secondaryClassName ? classes[secondaryClassName].primary : "";
+  const side = Math.random() < .75 ? "Heroic" : "Unaligned";
+  const primaryCallings = coherentClassCallings[className] || Object.keys(callings);
+  const secondaryCallings = secondaryClassName ? coherentClassCallings[secondaryClassName] || [] : [];
+  const sharedCallings = primaryCallings.filter(callingName => secondaryCallings.includes(callingName));
+  const calling = randomItem(sharedCallings.length ? sharedCallings : [...new Set([...primaryCallings, ...secondaryCallings])]);
+  const originPrimaryBonus = primaryAbility;
+  const originSecondaryBonus = secondaryAbilityOptions.includes(secondaryAbility) ? secondaryAbility : randomItem(secondaryAbilityOptions);
   const realName = `${randomItem(randomNames.first)} ${randomItem(randomNames.last)}`;
   let heroName = `${randomItem(randomNames.heroPrefix)} ${randomItem(randomNames.heroSuffix)}`;
   if (Math.random() < .35) heroName = randomItem(randomNames.heroPrefix);
   const identity = randomItem(["Secret", "Public", "Not Public"]);
-  const level = Math.max(1, Math.min(10, Number(sheet.level || 1)));
+  const talentPool = [...new Set([
+    ...(coherentClassTalents[className] || talents),
+    ...(secondaryClassName ? coherentClassTalents[secondaryClassName] || [] : [])
+  ])];
 
   sheet = {
     ...defaults,
@@ -4081,12 +4151,14 @@ function randomCharacter() {
     level,
     origin: originName,
     className,
+    secondaryClassName,
+    secondaryClassLevel,
     side,
     calling,
     originPrimaryBonus,
     originSecondaryBonus,
     originTrait: randomItem(origin.traits),
-    startingTalent: randomItem(talents),
+    startingTalent: randomItem(talentPool),
     heroName,
     realName,
     identity,
@@ -4095,13 +4167,21 @@ function randomCharacter() {
   activeCloudCharacterId = null;
   updateCloudControls();
 
-  const abilityValues = shuffleItems(rankAbilityArray(rank));
-  abilities.forEach(([key], index) => {
-    sheet[`${key}Score`] = abilityValues[index];
+  const abilityValues = [...rankAbilityArray(rank)].sort((left, right) => right - left);
+  const assignedAbilities = new Map([[primaryAbility, abilityValues.shift()]]);
+  if (secondaryAbility && !assignedAbilities.has(secondaryAbility)) assignedAbilities.set(secondaryAbility, abilityValues.shift());
+  const remainingAbilityKeys = shuffleItems(abilities.map(([key]) => key).filter(key => !assignedAbilities.has(key)));
+  remainingAbilityKeys.forEach(key => assignedAbilities.set(key, abilityValues.shift()));
+  abilities.forEach(([key]) => {
+    sheet[`${key}Score`] = assignedAbilities.get(key);
   });
 
   ensurePowerState();
-  randomizeSkills();
+  const preferredSkills = [...new Set([
+    ...(coherentClassSkills[className] || []),
+    ...(secondaryClassName ? coherentClassSkills[secondaryClassName] || [] : [])
+  ])];
+  randomizeSkills(preferredSkills);
   const randomMerit = randomItem(merits);
   const randomFlaw = randomItem(flaws);
   addLine("merits", ratedRuleLine(randomMerit, meritRules, 1));
@@ -4110,15 +4190,14 @@ function randomCharacter() {
   fillClassFeatures();
   fillCalling();
   ensureClassSaves(true);
-  randomizePowers();
+  randomizePowers([primaryAbility, secondaryAbility].filter(Boolean));
 
-  const gearChoices = [
-    randomItem(gearCatalog.standard),
-    randomItem(gearCatalog.weapon),
-    randomItem(gearCatalog.armor),
-    randomItem(gearCatalog.gadget)
-  ];
-  if (Math.random() < .55) gearChoices.push(randomItem(gearCatalog.vehicle));
+  const gearChoices = [randomItem(gearCatalog.standard)];
+  if (["Bruiser", "Guardian", "Striker", "Vanguard"].includes(className)) gearChoices.push(randomItem(gearCatalog.weapon));
+  if (["Bruiser", "Guardian", "Striker"].includes(className) || secondaryClassName === "Guardian") gearChoices.push(randomItem(gearCatalog.armor));
+  if (["Beacon", "Sentinel", "Strategist", "Vanguard", "Warden"].includes(className) || ["Artificial", "Gearbound"].includes(originName)) gearChoices.push(randomItem(gearCatalog.gadget));
+  if (gearChoices.length < 3) gearChoices.push(randomItem(gearCatalog.standard));
+  if (Math.random() < .35) gearChoices.push(randomItem(gearCatalog.vehicle));
   sheet.gear = gearChoices.map(gearLine).join("\n");
   sheet.enhancements = /Vehicle/.test(sheet.gear) || gearChoices.some(name => gearCatalog.vehicle.includes(name)) ? gearLine(randomItem(gearCatalog.feature)) : "";
 
@@ -4126,10 +4205,11 @@ function randomCharacter() {
   sheet.proficiencies = shuffleItems(randomLanguages).slice(0, languageCount).join("\n");
   const colors = shuffleItems(randomColors).slice(0, 2);
   const powerNames = selectedPowerSetNames();
-  sheet.concept = `${side} ${className} with ${powerNames.join(" and ")} powers, driven by the ${calling} Calling.`;
-  sheet.backstory = `Before becoming ${heroName}, ${realName} ${originBackgrounds[originName]}. A defining crisis forced them into the open, where their talent for ${className.toLowerCase()} tactics and commitment to the ${calling.toLowerCase()} path became impossible to ignore.`;
+  const classConcept = secondaryClassName ? `${className}/${secondaryClassName} multiclass hero` : `${className} hero`;
+  sheet.concept = `${side} ${classConcept} whose ${powerNames.join(" and ") || "developing"} powers reinforce a ${calling.toLowerCase()} approach.`;
+  sheet.backstory = `Before becoming ${heroName}, ${realName} ${originBackgrounds[originName]}. A defining crisis forced them into the open, where their ${className.toLowerCase()} instincts${secondaryClassName ? ` and ${secondaryClassName.toLowerCase()} training` : ""} shaped how they use ${powerNames.join(" and ") || "their emerging abilities"} in pursuit of the ${calling.toLowerCase()} path.`;
   sheet.costume = `${colors[0]} and ${colors[1]} field costume with a distinctive ${randomItem(["chevron", "circle", "starburst", "shield", "split-mask", "vertical-stripe"])} symbol, reinforced gloves, and concealed communications gear.`;
-  sheet.sessionNotes = `Public reputation: ${side}. Primary motivation: ${calling}. The character is ready for the player to refine names, relationships, and campaign-specific details.`;
+  sheet.sessionNotes = `Public reputation: ${side}. Primary motivation: ${calling}. Build: ${classLevelLabel()}. The character is ready for the player to refine relationships and campaign-specific details.`;
 
   activeStep = "concept";
   diceRollHistory = [];
@@ -4322,6 +4402,11 @@ app.addEventListener("click", async event => {
   if (["step", "next", "back"].includes(action)) renderBuilder();
   if (action === "sheet-mode") {
     liveSheetMode = ["visual", "text", "official"].includes(button.dataset.mode) ? button.dataset.mode : "visual";
+    renderBuilder();
+  }
+  if (action === "official-theme") {
+    officialSheetTheme = ["blue", "red", "purple", "green", "gold"].includes(button.dataset.theme) ? button.dataset.theme : "gold";
+    liveSheetMode = "official";
     renderBuilder();
   }
   if (action === "export-json") exportJson();

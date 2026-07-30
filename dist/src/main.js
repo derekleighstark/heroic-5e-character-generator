@@ -1,1 +1,1 @@
-import "./generator.js?v=20260730-multiclassing";
+import "./generator.js?v=20260730-official-colors";

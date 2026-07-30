@@ -37,13 +37,14 @@ const exported = createCharacterExport(completeSheet, {
   rulesVersion: "Playtest v3.5.3",
   activeStep: "powers",
   liveSheetMode: "official",
+  officialSheetTheme: "purple",
   exportedAt: "2026-07-29T00:00:00.000Z"
 });
 const imported = normalizeImportedSheet(importedSheetFromPayload(JSON.parse(JSON.stringify(exported))), defaults);
 
 assert.deepEqual(imported, completeSheet);
 assert.equal(exported.schemaVersion, 5);
-assert.deepEqual(exported.state, { activeStep: "powers", liveSheetMode: "official" });
+assert.deepEqual(exported.state, { activeStep: "powers", liveSheetMode: "official", officialSheetTheme: "purple" });
 
 const duplicatePowers = normalizeImportedSheet({ ...completeSheet, powerPurchases: ["a", "a", "b"] }, defaults);
 assert.deepEqual(duplicatePowers.powerPurchases, ["a", "b"]);

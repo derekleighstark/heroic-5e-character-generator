@@ -4802,6 +4802,8 @@ p {
 
 .live-sheet-toggle {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 4px;
 }
 
@@ -4814,6 +4816,24 @@ p {
 .live-sheet-toggle button.active {
   background: var(--gold);
   color: var(--button-ink);
+}
+
+.live-sheet-toggle .official-theme-button {
+  --theme-color: #e6a900;
+  border-color: var(--theme-color);
+  box-shadow: inset 0 -3px 0 var(--theme-color);
+}
+
+.live-sheet-toggle .official-theme-button.theme-blue { --theme-color: #247eb8; }
+.live-sheet-toggle .official-theme-button.theme-red { --theme-color: #c63f3a; }
+.live-sheet-toggle .official-theme-button.theme-purple { --theme-color: #7650a8; }
+.live-sheet-toggle .official-theme-button.theme-green { --theme-color: #33815a; }
+.live-sheet-toggle .official-theme-button.theme-gold { --theme-color: #e6a900; }
+
+.live-sheet-toggle .official-theme-button.active {
+  border-color: var(--theme-color);
+  background: var(--theme-color);
+  color: #fff;
 }
 
 .live-sheet-panel #sheet {
@@ -4833,11 +4853,44 @@ p {
 }
 
 .official-sheet {
+  --official-accent: #e6a900;
+  --official-highlight: #f4bc1b;
+  --official-accent-dark: #bd7e00;
   display: grid;
   gap: 14px;
   width: 100%;
   color: #172536;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.official-sheet.official-theme-blue {
+  --official-accent: #247eb8;
+  --official-highlight: #50aee5;
+  --official-accent-dark: #17618f;
+}
+
+.official-sheet.official-theme-red {
+  --official-accent: #c63f3a;
+  --official-highlight: #e0645d;
+  --official-accent-dark: #942b27;
+}
+
+.official-sheet.official-theme-purple {
+  --official-accent: #7650a8;
+  --official-highlight: #9a73ca;
+  --official-accent-dark: #56377e;
+}
+
+.official-sheet.official-theme-green {
+  --official-accent: #33815a;
+  --official-highlight: #57a77c;
+  --official-accent-dark: #246142;
+}
+
+.official-sheet.official-theme-gold {
+  --official-accent: #e6a900;
+  --official-highlight: #f4bc1b;
+  --official-accent-dark: #bd7e00;
 }
 
 .official-page {
@@ -4864,13 +4917,13 @@ p {
   flex-direction: column;
   justify-content: center;
   padding: 12px;
-  border-left: 5px solid #e6a900;
+  border-left: 5px solid var(--official-accent);
   background: #172536;
   color: #fff;
 }
 
 .official-logo b { font-size: 2.6em; letter-spacing: -.08em; }
-.official-logo b span { color: #e6a900; font-size: .55em; }
+.official-logo b span { color: var(--official-accent); font-size: .55em; }
 .official-logo small { letter-spacing: .25em; text-transform: uppercase; }
 .official-identity-fields, .official-wide { display: grid; gap: 4px; }
 .official-wide { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); }
@@ -4901,7 +4954,7 @@ p {
   white-space: normal;
 }
 
-.official-section { margin-top: 5px; border-left: 4px solid #e6a900; }
+.official-section { margin-top: 5px; border-left: 4px solid var(--official-accent); }
 .official-section > header {
   display: flex;
   align-items: center;
@@ -4912,13 +4965,13 @@ p {
   color: #fff;
 }
 .official-section > header h2 { margin: 0; font-size: 1.08em; letter-spacing: .16em; text-transform: uppercase; }
-.official-section > header small { color: #f4bc1b; font-size: .76em; }
+.official-section > header small { color: var(--official-highlight); font-size: .76em; }
 
 .official-abilities { display: grid; grid-template-columns: repeat(8, 1fr); }
 .official-abilities > div { min-height: 52px; padding: 5px; border-right: 1px solid #c9c1ad; border-bottom: 1px solid #c9c1ad; text-align: center; }
 .official-abilities b, .official-abilities strong, .official-abilities small { display: block; }
 .official-abilities strong { font-size: 1.65em; }
-.official-abilities small { color: #c98700; font-weight: 800; }
+.official-abilities small { color: var(--official-accent-dark); font-weight: 800; }
 
 .official-vitals { display: grid; grid-template-columns: repeat(8, 1fr); }
 .official-three { display: grid; grid-template-columns: 1.15fr 1fr .9fr; gap: 5px; }
@@ -4976,7 +5029,7 @@ p {
 }
 
 .official-continuation-title > div:last-child span {
-  color: #bd7e00;
+  color: var(--official-accent-dark);
   font-weight: 900;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -4994,7 +5047,7 @@ p {
 
 .official-skill-grid { display: grid; grid-template-columns: 1fr 1fr; }
 .official-skill-grid > div { display: grid; grid-template-columns: 1.3fr 32px 65px 32px 1.7fr; align-items: center; min-height: 25px; padding: 2px 5px; border-bottom: 1px solid #d7d0bd; }
-.official-skill-grid small { color: #bd7e00; font-weight: 800; }
+.official-skill-grid small { color: var(--official-accent-dark); font-weight: 800; }
 .official-skill-grid em {
   overflow: visible;
   overflow-wrap: anywhere;
