@@ -19,7 +19,7 @@ import {
   watchCloudSession
 } from "./cloud.js";
 
-const GENERATOR_RULES_VERSION = "Playtest v3.5.3";
+const GENERATOR_RULES_VERSION = "Playtest v3.7";
 const rulesSource = await fetch("/app.js").then(response => response.text());
 const rulesPrefix = rulesSource.slice(0, rulesSource.indexOf("const STORAGE_KEY"));
 const {
@@ -97,10 +97,12 @@ const glossaryTerms = [
   ["Breather", "A short recovery pause between scenes or encounters where recovery rules may apply."],
   ["Burnout", "A strain track used when a hero pushes powers beyond normal limits, especially through Power Stunts or Emulation."],
   ["Calling", "The emotional engine beneath the mask. Callings define what earns Edge and what pressures the hero's story."],
-  ["Campaign Rank", "The scale of the campaign: Street Level, Mid-Level, or World Class. Rank affects arrays, power limits, and starting assumptions."],
+  ["Campaign Rank", "The fixed scale of the campaign: Street Level, Mid-Level, or World Class. It is set when the campaign begins and does not increase through advancement."],
+  ["Core Reference", "The authoritative formula reference in Chapter 14. If another passage disagrees with it, the Core Reference controls."],
   ["Class", "The hero's combat and action chassis, defining primary ability, Hit Die, saves, recovery, and class features."],
   ["Condition", "A status effect such as Shaken, Dazed, Prone, Restrained, Slowed, Stunned, Blinded, Frightened, Charmed, Poisoned, or Frozen."],
   ["Daily Power", "A powerful power option generally usable once per day or major narrative cycle."],
+  ["Damage Source", "Where damage originated: Mundane, Technological, Powered, Mystical, Cosmic, or Environmental. Source matters only when a rule specifically references it."],
   ["Defense Value", "A static defensive number used for NPCs and enemies when heroes roll against them."],
   ["Disadvantage", "Roll two d20s and use the lower result."],
   ["Edge", "A narrative resource earned through Calling triggers and spent to push heroic moments."],
@@ -128,7 +130,8 @@ const glossaryTerms = [
   ["Temporary HP", "Extra hit points that absorb damage before normal HP and usually do not stack unless a rule says otherwise."],
   ["Tier", "A power scale within Power Sets, often limited by Campaign Rank."],
   ["Trained", "A Skill, save, or competency that adds Prowess to the roll."],
-  ["Utility Power", "A non-attack power used for movement, sensing, protection, problem solving, or narrative effect."]
+  ["Utility Power", "A non-attack power used for movement, sensing, protection, problem solving, or narrative effect."],
+  ["Valid Target", "A creature or object satisfying a Power's hearing, language, perception, sapience, line-of-sight, and machine-interaction requirements."]
 ];
 const originTraitRules = {
   "Environmental Adaptation": "Gain Advantage on saves against one chosen environment: cold, heat, low oxygen, pressure, radiation, or low gravity.",
@@ -1629,6 +1632,7 @@ function renderConcept() {
       ${select("rank", "Campaign Rank", Object.keys(ranks))}
       ${input("level", "Level", "number", 'min="1" max="10"')}
     </div>
+    <div class="rule-card"><h2>Campaign Rank Is Fixed</h2><p>Choose the campaign's scale with the group. Campaign Rank stays fixed for the life of the campaign and does not increase through character advancement.</p></div>
     <div class="form-grid two">${textarea("concept", "Concept", 8)}${textarea("backstory", "Backstory", 8)}</div>
   `;
 }
@@ -2413,7 +2417,7 @@ function officialSheetMarkup() {
         </div>
         ${officialSection("Conditions", "Burnout 3: Disadv.; Initiative -4; Speed -10 ft.", `<div class="official-check-grid">${["Shaken","Slowed","Dazed","Prone","Grappled","Restrained","Frightened","Stunned","Blinded","Deafened","Poisoned","Burning","Immobilized","Overheated","Power Disrupted","Hidden"].map(item => `<span>☐ ${item}</span>`).join("")}</div>`)}
         ${officialSection("Power Sets", `Max sets ${values.maxPowerSets}`, `<div class="official-table official-power-sets"><div class="head"><b>Power Set</b><b>Governs</b><b>Core Track</b><b>Limitations & Notes</b><b>Power EV</b></div>${[...powerSetRows, ...Array(Math.max(0, 5 - powerSetRows.length)).fill(["","","","",""])].map(row => `<div>${row.map(cell => `<span>${html(cell)}</span>`).join("")}</div>`).join("")}</div>`)}
-        ${officialSection("Powers & Attacks", "Attack = 1d20 + PRO + governing modifier", officialPowerTable(firstPowerRows, 4))}
+        ${officialSection("Powers & Attacks", "Power attack = 1d20 + delivery modifier + governing modifier + PRO", officialPowerTable(firstPowerRows, 4))}
         <footer>HEROIC 5e - Official Character Sheet <span>Page 1 - Play Side</span></footer>
       </article>
       ${continuationPages}
@@ -3547,6 +3551,20 @@ function auditSheetMarkup() {
       `10 ${operation(abilityMod(ability))} ${ability.toUpperCase()} ${operation(values.pro)} Prowess = EV ${10 + abilityMod(ability) + values.pro}; Core ${purchasedCoreLevel(powerSet) || 0}; ${selectedPowerChoices().filter(choice => choice.setId === powerSet.id && choice.group !== "limitation").length} purchased entries`
     ];
   });
+  const powerAttackEntries = selectedPowerChoices()
+    .filter(choice => choice.group === "power")
+    .map(choice => {
+      const powerSet = powerSetRules.find(entry => entry.id === choice.setId);
+      if (!powerSet) return [choice.name, "Power Set data unavailable"];
+      const governing = powerSetAbility(powerSet);
+      const deliveryMatch = choice.text.match(/Attack:\s*1d20\s*\+\s*(STR|DEX|CON|FIG|INT|WIS|CHA|PER)/i);
+      const delivery = deliveryMatch?.[1]?.toLowerCase() || governing;
+      const total = abilityMod(delivery) + abilityMod(governing) + values.pro;
+      return [
+        choice.name,
+        `1d20 ${operation(abilityMod(delivery))} ${delivery.toUpperCase()} delivery ${operation(abilityMod(governing))} ${governing.toUpperCase()} governing ${operation(values.pro)} Prowess = 1d20 ${signed(total)}`
+      ];
+    });
   const budget = powerBudget();
   const limitationPicks = Math.min(powerLimitationCount(), rank.maxLimitations);
 
@@ -3587,6 +3605,7 @@ function auditSheetMarkup() {
         ["Limitations", `${budget.limitations}/${values.maxLimitations}`]
       ])}
       ${section("Power Set Effect Values", powerSetEntries.length ? powerSetEntries : [["None", "No Power Sets selected"]])}
+      ${section("Power Attack Rolls", powerAttackEntries.length ? powerAttackEntries : [["None", "No Power attacks selected"]])}
       ${section("Resources & Recovery", [
         ["Starting Edge", `${values.edgeStart} from ${sheet.rank}`],
         ["Edge Cap", `${values.level} Level + ${values.pro} Prowess = ${values.edgeCap}`],
@@ -3687,10 +3706,12 @@ function diceRollerMarkup() {
     ["Social Attack", abilityMod("cha") + values.pro, "CHA + Prowess"]
   ].map(([label, modifier, detail]) => rollActionCard(label, "1d20", modifier, detail));
   const purchasedPowerAttacks = selectedPowerChoices().filter(choice => /Attack:\s*1d20/i.test(choice.text || "")).map(choice => {
-    const explicit = (choice.text.match(/Attack:\s*1d20\s*\+\s*(STR|DEX|CON|FIG|INT|WIS|CHA|PER)/i) || [])[1]?.toLowerCase();
+    const delivery = (choice.text.match(/Attack:\s*1d20\s*\+\s*(STR|DEX|CON|FIG|INT|WIS|CHA|PER)/i) || [])[1]?.toLowerCase();
     const powerSet = powerSetRules.find(item => item.id === choice.setId);
-    const ability = explicit || powerSetAbility(powerSet);
-    return rollActionCard(choice.name, "1d20", abilityMod(ability) + values.pro, `${choice.setName} - ${ability.toUpperCase()} + Prowess`);
+    const governing = powerSetAbility(powerSet);
+    const deliveryAbility = delivery || governing;
+    const modifier = abilityMod(deliveryAbility) + abilityMod(governing) + values.pro;
+    return rollActionCard(choice.name, "1d20", modifier, `${choice.setName} - ${deliveryAbility.toUpperCase()} delivery + ${governing.toUpperCase()} governing + Prowess`);
   });
   const powerNames = selectedPowerSetNames();
   const powerRolls = [1, 2, 3, 4].map(count => rollActionCard(`${count} Power ${count === 1 ? "Die" : "Dice"}`, `${count}${values.powerDie}`, 0, powerNames.join(", ") || "Power damage / effect"));
@@ -3891,6 +3912,9 @@ function renderPowerCompendium() {
       ${compendiumCard("Limitations", powerFramework.limitations, "Core Rule")}
       ${compendiumCard("Core Tracks", powerFramework.coreTracks, "Core Rule")}
       ${compendiumCard("Attack Roll vs. Effect Value", powerFramework.attackAndEffect, "Core Rule")}
+      ${compendiumCard("Campaign Rank Is Fixed", powerFramework.campaignRank, "v3.7 Rule")}
+      ${compendiumCard("Damage Sources", powerFramework.damageSources, "v3.7 Rule")}
+      ${compendiumCard("Perception, Language, and Valid Targets", powerFramework.validTargets, "v3.7 Rule")}
       ${compendiumCard("Tier Access", powerFramework.tierAccess, "Campaign Rank")}
       ${compendiumCard("Enhancements", powerFramework.enhancementRules, "Power Economy")}
       ${compendiumCard("Power Stunts", powerFramework.powerStunts, "Edge")}

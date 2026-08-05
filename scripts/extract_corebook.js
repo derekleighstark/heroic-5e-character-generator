@@ -4,7 +4,7 @@ const path = require("path");
 const root = path.resolve(__dirname, "..");
 const source = process.argv[2]
   ? path.resolve(process.argv[2])
-  : path.join(root, "rules", "HEROIC_5e_v3_4_RAW.md");
+  : path.join(root, "rules", "HEROIC_5e_v3_7_RAW.md");
 const output = path.join(root, "src", "corebook-data.js");
 
 function cleanTitle(value) {

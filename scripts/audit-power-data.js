@@ -8,8 +8,8 @@ const data = Function(`const data = {}; ${executable}; return data;`)();
 const { powerFramework, powerSetRules, generalUtilityPowers } = data;
 const errors = [];
 
-if (!Array.isArray(powerSetRules) || powerSetRules.length !== 38) {
-  errors.push(`Expected 38 Power Sets, found ${powerSetRules?.length ?? "none"}.`);
+if (!Array.isArray(powerSetRules) || powerSetRules.length !== 41) {
+  errors.push(`Expected 41 Power Sets, found ${powerSetRules?.length ?? "none"}.`);
 }
 
 if (!Array.isArray(generalUtilityPowers) || generalUtilityPowers.length !== 36) {
@@ -37,7 +37,7 @@ for (const powerSet of powerSetRules || []) {
   }
 }
 
-for (const requiredSet of ["absorption", "earth-control", "water-control"]) {
+for (const requiredSet of ["absorption", "air-control", "earth-control", "gravity-control", "magnetism", "water-control"]) {
   if (!seenSetIds.has(requiredSet)) errors.push(`Required Power Set missing: ${requiredSet}.`);
 }
 
@@ -76,11 +76,11 @@ const setUtilityCount = powerSetRules.reduce((total, powerSet) => total + powerS
 const coreCount = powerSetRules.reduce((total, powerSet) => total + powerSet.coreTrack.length, 0);
 const enhancementCount = powerSetRules.reduce((total, powerSet) => total + powerSet.enhancements.length, 0);
 const limitationCount = powerSetRules.reduce((total, powerSet) => total + powerSet.limitations.length, 0);
-if (combatCount !== 238) errors.push(`Expected 238 Combat Powers, found ${combatCount}.`);
-if (setUtilityCount !== 161) errors.push(`Expected 161 set utilities, found ${setUtilityCount}.`);
-if (coreCount !== 152) errors.push(`Expected 152 Core Track entries, found ${coreCount}.`);
-if (enhancementCount !== 154) errors.push(`Expected 154 set Enhancements, found ${enhancementCount}.`);
-if (limitationCount !== 114) errors.push(`Expected 114 set Limitations, found ${limitationCount}.`);
+if (combatCount !== 262) errors.push(`Expected 262 Combat Powers, found ${combatCount}.`);
+if (setUtilityCount !== 176) errors.push(`Expected 176 set utilities, found ${setUtilityCount}.`);
+if (coreCount !== 164) errors.push(`Expected 164 Core Track entries, found ${coreCount}.`);
+if (enhancementCount !== 167) errors.push(`Expected 167 set Enhancements, found ${enhancementCount}.`);
+if (limitationCount !== 123) errors.push(`Expected 123 set Limitations, found ${limitationCount}.`);
 
 if (errors.length) {
   console.error(errors.join("\n"));
